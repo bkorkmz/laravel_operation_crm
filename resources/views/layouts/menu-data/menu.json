@@ -1,0 +1,76 @@
+{
+  "menu": [
+    {
+      "text": "Ana Sayfa",
+      "icon": "feather icon-home",
+      "route": "admin.index",
+      "path": "/^backend/"
+    },
+    {
+      "text": "Kullanıcı Ayarları",
+      "icon": "feather icon-users",
+      "route": "",
+      "path": "/^(user|roles)$/",
+
+      "submenu": [
+        {
+          "text": "Kullanıcı Listesi",
+          "icon": "feather icon-users",
+          "route": "user.index",
+          "path": "/^user/"
+        },
+        {
+          "text": "Roller",
+          "icon": "",
+          "route": "roles.index",
+          "path": "/^roles/"
+        },
+          {
+          "text": "Satın Alma",
+          "icon": "",
+          "route": "",
+          "path": "/^user(\\/$|\\/sales)/"
+        },
+          {
+          "text": "Destek Masası",
+          "icon": "",
+          "route": "",
+          "path": "/^user(\\/$|\\/help)/"
+        },
+          {
+          "text": "Pazarlama İletişimi",
+          "icon": "",
+          "route": "",
+          "path": "/^user(\\/$|\\/sales-info)/"
+        },
+          {
+          "text": "Geribildirim Yönetimi",
+          "icon": "",
+          "route": "",
+          "path": "/^user(\\/$|\\/feedback)/"
+        }
+      ]
+    },
+    {
+      "text": "Ürünler",
+      "icon": "feather icon-users",
+      "route": "",
+      "path": "/^product/",
+      "submenu": [
+        {
+          "text": "Ürün Listesi",
+          "icon": "feather icon-users",
+          "route": "product.index",
+          "path": "/^product/"
+        }
+      ]
+    }
+    
+    
+  ]
+}
+
+
+
+
+
