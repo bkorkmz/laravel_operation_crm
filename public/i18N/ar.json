@@ -1,0 +1,31 @@
+{
+  "sDecimal": ",",
+  "sEmptyTable": " لم يتم العثور على بيانات.",
+  "sInfo": "عرض السجلات من _TOTAL_ سجل من _START_ إلى _END_",
+  "sInfoEmpty": "لا سجلات",
+  "sInfoFiltered": "(وجد في سجل _MAX_)",
+  "sInfoPostFix": "",
+  "sInfoThousands": ".",
+  "sLengthMenu": "إظهار سجل _MENU_ على الصفحة",
+  "sLoadingRecords": "جار التحميل...",
+  "sProcessing": "معالجة ...",
+  "sSearch": "اتصلي:",
+  "sZeroRecords": "لم يتم العثور على سجلات مطابقة",
+  "oPaginate": {
+    "sFirst": "أولا",
+    "sLast": "نهاية",
+    "sNext": "التالي",
+    "sPrevious": "سابق"
+  },
+  "oAria": {
+    "sSortAscending": ": تمكين الفرز التصاعدي العمود",
+    "sSortDescending": ": تنشيط فرز العمود التنازلي"
+  },
+  "select": {
+    "rows": {
+      "0": "",
+      "1": "1 تم تحديد السجل",
+      "_": "%d تم تحديد السجل"
+    }
+  }
+}
