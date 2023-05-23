@@ -4,50 +4,57 @@
       "text": "Ana Sayfa",
       "icon": "feather icon-home",
       "route": "admin.index",
-      "path": "/^backend/"
+      "path": "/^backend/",
+      "permission":""
     },
     {
       "text": "Kullanıcı Ayarları",
       "icon": "feather icon-users",
       "route": "",
       "path": "/^(user|roles)$/",
-
+      "permission":["view_menu_users","view_menu_roles"],
       "submenu": [
         {
           "text": "Kullanıcı Listesi",
           "icon": "feather icon-users",
           "route": "user.index",
-          "path": "/^user/"
+          "path": "/^user/",
+          "permission":"view_menu_users"
         },
         {
           "text": "Roller",
           "icon": "",
           "route": "roles.index",
-          "path": "/^roles/"
+          "path": "/^roles/",
+          "permission":"view_menu_roles"
         },
           {
           "text": "Satın Alma",
           "icon": "",
           "route": "",
-          "path": "/^user(\\/$|\\/sales)/"
+          "path": "/^user(\\/$|\\/sales)/",
+          "permission":""
         },
           {
           "text": "Destek Masası",
           "icon": "",
           "route": "",
-          "path": "/^user(\\/$|\\/help)/"
+          "path": "/^user(\\/$|\\/help)/",
+          "permission":""
         },
           {
           "text": "Pazarlama İletişimi",
           "icon": "",
           "route": "",
-          "path": "/^user(\\/$|\\/sales-info)/"
+          "path": "/^user(\\/$|\\/sales-info)/",
+          "permission":""
         },
           {
           "text": "Geribildirim Yönetimi",
           "icon": "",
           "route": "",
-          "path": "/^user(\\/$|\\/feedback)/"
+          "path": "/^user(\\/$|\\/feedback)/",
+          "permission":""
         }
       ]
     },
@@ -56,17 +63,19 @@
       "icon": "feather icon-users",
       "route": "",
       "path": "/^product/",
+      "permission":"view_menu_product",
       "submenu": [
         {
           "text": "Ürün Listesi",
           "icon": "feather icon-users",
           "route": "product.index",
-          "path": "/^product/"
+          "path": "/^product/",
+          "permission":""
         }
       ]
     }
-    
-    
+
+
   ]
 }
 

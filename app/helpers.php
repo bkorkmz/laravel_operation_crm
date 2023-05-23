@@ -58,10 +58,33 @@ if(!function_exists('menu')) {
         $MenuJson = file_get_contents(base_path('resources/views/layouts/menu-data/menu.json'));
         $MenuData = json_decode($MenuJson,true);
         return $MenuData;
-        
+
 
     }
 
+}
+
+if(!function_exists('permissionCheck')) {
+    function permissionCheck($permission)
+    {
+
+        $isSuperAdmin = auth()->check() && auth()->user()->hasRole('super admin');
+        if( $isSuperAdmin)
+        {
+            return true;
+        }
+        else if(auth()->user()->hasAnyPermission($permission) || $permission == "")
+        {
+            return true;
+        }else{
+            return false;
+        }
+
+
+        return $MenuData;
+
+
+    }
 
 }
 
