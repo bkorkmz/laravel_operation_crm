@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="wrapper">
 
-    <div class="bg-light p-y-4 my-lg-5 p-3">
+    <div class=" p-y-4 my-lg-5  shadow-lg">
 
        <div class="card text-center">
         {{-- <div class="card-header">
