@@ -26,7 +26,8 @@ class User extends Authenticatable
         'password',
         'status',
         'user_check',
-        'avatar'
+        'avatar',
+        'tc_no'
     
     ];
 

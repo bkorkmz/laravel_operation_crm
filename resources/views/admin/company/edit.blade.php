@@ -3,8 +3,10 @@
     {{ __('Firma Düzenleme Sayfası ') }}
 @endsection
 @section('content')
-
-
+<div class="pcoded-inner-content">
+    <div class="main-body">
+        <div class="page-wrapper">
+            
     <div class="card">
         <div class="card-header">
             <h3>Firma Düzenle</h3>
@@ -19,7 +21,6 @@
                     </ul>
                 </div>
             @endif
-{{--            {{dd($user)}}--}}
             <form action="{{ route('company.update',$user->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @include('flash::message')
@@ -59,44 +60,7 @@
                                value="{{ $user->phone }}" required>
                     </div>
                 </div>
-{{--                <div class="form-group row">--}}
-{{--                    <label class="col-sm-2 col-form-label">Şifre<span class="text-danger"></span></label>--}}
-{{--                    <div class="col-sm-10">--}}
-{{--                        <input id="password"--}}
-{{--                               type="password"--}}
-{{--                               minlength="8"--}}
-{{--                               class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"--}}
-{{--                               autocomplete="off" name="password">--}}
 
-{{--                        @if ($errors->has('password'))--}}
-{{--                            <span class="invalid-feedback" role="alert">--}}
-{{--                                        <strong>{{ $errors->first('password') }}</strong>--}}
-{{--                                    </span>--}}
-{{--                        @endif--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="form-group row">--}}
-{{--                    <label class="col-sm-2 col-form-label">Şifre Tekrar</label>--}}
-{{--                    <div class="col-sm-10">--}}
-{{--                        <input id="password-confirm"--}}
-{{--                               type="password"--}}
-{{--                               minlength="8"--}}
-{{--                               class="form-control"--}}
-{{--                               name="password_confirmation"--}}
-{{--                               autocomplete="off">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="form-group row">--}}
-{{--                    <label class="col-sm-2 col-form-label">Yetkisi</label>--}}
-{{--                    <div class="col-sm-10">--}}
-{{--                        <select name="status" class="form-control fill">--}}
-{{--                            <option value="0" @if($user->status==0) selected @endif >Stajer </option>--}}
-{{--                            <option value="1" @if($user->status==1) selected @endif >Admin</option>--}}
-{{--                            <option value="2" @if($user->status==2) selected @endif >Firma Yetkilisi</option>--}}
-{{--                            <option value="3" @if($user->status==3) selected @endif >İçerik Editörü</option>--}}
-{{--                        </select>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Yerleşim Yeri </label>
                     <div class="col-sm-3">
@@ -115,22 +79,12 @@
                             @endforeach
                         </select>
                     </div>
-{{--                    <div class="col-sm-3" id="country_select" >--}}
-{{--                        <select id="county" name="county" class="form-control fill" >--}}
-{{--                            <option value="{{$user->county}}">{{$user->county}}</option>--}}
-{{--                        </select>--}}
-{{--                    </div>--}}
+
                 </div>
 
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Meslek  Bilgileri</label>
-{{--                    <div class="col-sm-5">--}}
-{{--                        <select name="birim" class="form-control fill" >--}}
-{{--                            <option value="">Öğrenim Tipi Seçiniz</option>--}}
-{{--                            <option value="Lise" {{  $user->birim =='Lise' ? 'selected' : '' }}>Lise</option>--}}
-{{--                            <option value="Üniversite" {{  $user->birim =='Üniversite' ? 'selected' : '' }}>Üniversite</option>--}}
-{{--                        </select>--}}
-{{--                    </div>--}}
+
                     <div class="col-sm-5">
                         <select name="category" class="form-control fill" >
                             <option value="">Meslek Seçiniz</option>
@@ -140,75 +94,7 @@
                         </select>
                     </div>
                 </div>
-{{--                <div class="form-group row">--}}
-{{--                    <label class="col-sm-2 col-form-label">Cinsiyet</label>--}}
-{{--                    <div class="col-sm-4">--}}
-{{--                        <select name="gender" class="form-control fill" >--}}
-{{--                            <option value="">Seçim Yapınız</option>--}}
-{{--                            <option value="Male" {{  $user->gender =='Male' ? 'selected' : '' }}>Erkek</option>--}}
-{{--                            <option value="Female" {{  $user->gender == 'Female' ? 'selected' : '' }}>Kadın</option>--}}
-{{--                        </select>--}}
-{{--                    </div>--}}
 
-{{--                    <label class="col-sm-2 col-form-label mr-0">Doğum Günü</label>--}}
-{{--                    <div class="col-sm-4">--}}
-{{--                        <input type="date" name="birthday" class="form-control" value="{{$user->birthday}}" >--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="form-group row">--}}
-{{--                    <label class="col-sm-2 col-form-label">Biyografi</label>--}}
-{{--                    <div class="col-sm-10">--}}
-{{--                        <textarea rows="5" cols="5" class="form-control" placeholder="Staj başvurusu yapıldığında İş Yerine gösterilmektedir.  " name="about" >{{ $user->about }}</textarea>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="form-group row">--}}
-{{--                    <label class="col-sm-2 col-form-label">Facebook</label>--}}
-{{--                    <div class="col-sm-10">--}}
-{{--                        <input type="text" class="form-control form-control-normal" placeholder="" name="fb" value="{{ $user->fb }}">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="form-group row">--}}
-{{--                    <label class="col-sm-2 col-form-label">Twitter</label>--}}
-{{--                    <div class="col-sm-10">--}}
-{{--                        <input type="text" class="form-control form-control-normal" placeholder="" name="tw" value="{{ $user->tw }}">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="form-group row">--}}
-{{--                    <label class="col-sm-2 col-form-label">Google Plus</label>--}}
-{{--                    <div class="col-sm-10">--}}
-{{--                        <input type="text" class="form-control form-control-normal" placeholder="" name="gp" value="{{ $user->gp }}">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="form-group row">--}}
-{{--                    <label class="col-sm-2 col-form-label">İnstagram</label>--}}
-{{--                    <div class="col-sm-10">--}}
-{{--                        <input type="text" class="form-control form-control-normal" placeholder="" name="in" value="{{ $user->in }}">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="form-group row">--}}
-{{--                    <label class="col-sm-2 col-form-label">Youtube</label>--}}
-{{--                    <div class="col-sm-10">--}}
-{{--                        <input type="text" class="form-control form-control-normal" placeholder="" name="yt" value="{{ $user->yt }}">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="form-group row">--}}
-{{--                    <label class="col-sm-2 col-form-label">Linkedin</label>--}}
-{{--                    <div class="col-sm-10">--}}
-{{--                        <input type="text" class="form-control form-control-normal" placeholder="" name="linkedin" value="{{ $user->linkedin }}">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="form-group row">--}}
-{{--                    <label class="col-sm-2 col-form-label">Profil Fotoğrafı</label>--}}
-{{--                    <div class="col-sm-10">--}}
-{{--                        <input type="file" class="form-control form-control-normal" placeholder="" name="avatar">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="form-group row">--}}
-{{--                    <label class="col-sm-2 col-form-label">Mevcut Fotoğrafı</label>--}}
-{{--                    <div class="col-sm-10">--}}
-{{--                        <img src="{{ $user->avatar }}" alt="" style="width: 200px;">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-6">
@@ -236,6 +122,10 @@
             </form>
         </div>
     </div>
+        </div>
+    </div>
+</div>
+
 
 
 @endsection

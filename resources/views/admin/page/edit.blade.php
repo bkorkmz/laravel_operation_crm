@@ -3,20 +3,16 @@
     {{ __('Sayfa Düzenle ') }}
 @endsection
 @section('content')
+<div class="pcoded-inner-content">
+    <div class="main-body">
+        <div class="page-wrapper">
+            
     <div class="card">
         <div class="card-header">
             <h3>Sayfa Düzenle</h3>
         </div>
         <div class="card-block">
-{{--            @if ($errors->any())--}}
-{{--                <div class="alert alert-danger">--}}
-{{--                    <ul>--}}
-{{--                        @foreach ($errors->all() as $error)--}}
-{{--                            <li>{{ $error }}</li>--}}
-{{--                        @endforeach--}}
-{{--                    </ul>--}}
-{{--                </div>--}}
-{{--            @endif--}}
+
             <form action="{{ route('page.update', $page->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group row">
@@ -122,6 +118,9 @@
             </form>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 

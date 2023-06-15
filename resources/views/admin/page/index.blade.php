@@ -3,6 +3,10 @@
     {{ __('Tüm Sayfalar') }}
 @endsection
 @section('content')
+<div class="pcoded-inner-content">
+    <div class="main-body">
+        <div class="page-wrapper">
+            
     <div class="card">
         <div class="card-header">
             <h3>Sayfa Listesi</h3>
@@ -41,7 +45,6 @@
                                 @if($page->page_type==3) <label class="label label-inverse-danger">Referans</label>@endif
 
                             </td>
-{{--                            <td><a href="{{ route('admin.translate', ['postId' => $page->id, 'postType' => $page->post_type]) }}" class="btn btn-sm"><i class="icon feather icon-box"></i></a></td>--}}
                             <td>
                                 <a href="{{ route('page.edit', $page->id) }}"><i class="icon feather icon-edit f-w-600 f-16 m-r-15 text-c-green"></i></a>
                                 <a href="{{ route('page.destroy', $page->id) }}"  onclick="return confirm('Silme İşlemi onaylıyormusunuz ?')"><i class="feather icon-trash-2 f-w-600 f-16 text-c-red"></i></a>
@@ -54,4 +57,7 @@
             </div>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 @endsection

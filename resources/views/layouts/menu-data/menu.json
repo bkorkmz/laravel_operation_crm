@@ -12,70 +12,138 @@
       "icon": "feather icon-users",
       "route": "",
       "path": "/^(user|roles)$/",
-      "permission":["view_menu_users","view_menu_roles"],
+      "permission":["view_menu_users",
+      "view_menu_roles"
+
+    ],
       "submenu": [
         {
           "text": "Kullanıcı Listesi",
           "icon": "feather icon-users",
           "route": "user.index",
           "path": "/^user/",
-          "permission":"view_menu_users"
+          "permission":["view_menu_users"]
         },
         {
           "text": "Roller",
           "icon": "",
           "route": "roles.index",
           "path": "/^roles/",
-          "permission":"view_menu_roles"
+          "permission":["view_menu_roles"]
         },
           {
           "text": "Satın Alma",
           "icon": "",
           "route": "",
           "path": "/^user(\\/$|\\/sales)/",
-          "permission":""
+          "permission":[""]
         },
           {
           "text": "Destek Masası",
           "icon": "",
           "route": "",
           "path": "/^user(\\/$|\\/help)/",
-          "permission":""
+          "permission":[""]
         },
           {
           "text": "Pazarlama İletişimi",
           "icon": "",
           "route": "",
           "path": "/^user(\\/$|\\/sales-info)/",
-          "permission":""
+          "permission":[""]
         },
           {
           "text": "Geribildirim Yönetimi",
           "icon": "",
           "route": "",
           "path": "/^user(\\/$|\\/feedback)/",
-          "permission":""
+          "permission":[""]
+        }
+      ]
+    },
+    {
+      "text": "Haber Bülteni ",
+      "icon": "feather icon-globe",
+      "route": "",
+      "path": "/^(post)$/",
+      "permission":[  "view_menu_post",
+        "view_category",
+        "view_photogallery",
+        "view_videogallery",
+        "view_comment"
+      ],
+      "submenu": [
+        {
+          "text": "Haber Listesi",
+          "icon": "feather icon-users",
+          "route": "product.index",
+          "path": "/^post/",
+          "permission":["view_menu_post","view_all_post"]
+        },
+        {
+          "text": "Kategoriler",
+          "icon": "",
+          "route": "",
+          "path": "/^category/",
+          "permission":["view_category","view_all_category"]
+        },
+          {
+          "text": "Foto Galeri",
+          "icon": "",
+          "route": "",
+          "path": "/^photo_gallery/",
+          "permission":["view_photogallery","view_all_photogallery"]
+        },
+          {
+          "text": "Video Galeri",
+          "icon": "",
+          "route": "",
+          "path": "/^video_gallery/",
+          "permission":["view_videogallery","view_all_videogallery"]
+        },
+          {
+          "text": "Yorumlar",
+          "icon": "",
+          "route": "",
+          "path": "/^comments/",
+          "permission":["view_comment","view_all_comment"]
         }
       ]
     },
     {
       "text": "Ürünler",
-      "icon": "feather icon-users",
+      "icon": "feather icon-pie-chart",
       "route": "",
       "path": "/^product/",
-      "permission":"view_menu_product",
+      "permission":["view_menu_product","view_product"],
       "submenu": [
         {
           "text": "Ürün Listesi",
           "icon": "feather icon-users",
           "route": "product.index",
           "path": "/^product/",
-          "permission":""
+          "permission":["view_product"]
+        }
+      ]
+    },
+    {
+      "text": "Ayarlar",
+      "icon": "feather icon-settings",
+      "route": "",
+      "path": "/^settings/",
+      "permission":["view_menu_settings","view_settings"],
+      "submenu": [
+        {
+          "text": "Site  Ayarları ",
+          "icon": "feather icon-users",
+          "route": "settings.index",
+          "path": "/^settings/",
+          "permission":["view_menu_settings"]
         }
       ]
     }
-
-
+    
+    
   ]
 }
 

@@ -226,46 +226,5 @@
                 </div>
             </form>
         </div>
-
-
-
-{{--     <div class="card-block">--}}
-{{--        <form action="{{ route('generalsetting.slider-update') }}" method="post" enctype="multipart/form-data">--}}
-{{--            @csrf--}}
-{{--            <div class="card dropify-image-avatar">--}}
-{{--                <div class="card-header ">--}}
-{{--                    <h3 class="card-title">Mini Slider Ayarları</h3>--}}
-{{--                </div>--}}
-
-{{--                <div class="card-body">--}}
-{{--                    <div class="row">--}}
-{{--                         <div class="col-lg-3 mb-4 mb-lg-0">--}}
-{{--                            <input type="file" name="slider_1" class="dropify"--}}
-{{--                            data-default-file="{{asset('frontend/rejoin/images/users/avatar.png')}}" data-height="180"/>--}}
-{{--                        </div>--}}
-
-{{--                      <div class="col-lg-3 mb-4 mb-lg-0">--}}
-{{--                            <input type="file" name="slider_2" class="dropify"--}}
-{{--                            data-default-file="{{asset('frontend/rejoin/images/users/avatar.png')}}" data-height="180"/>--}}
-{{--                        </div>--}}
-{{--                        <div class="col-lg-3 mb-4 mb-lg-0">--}}
-{{--                            <input type="file" name="slider_3" class="dropify"--}}
-{{--                            data-default-file="{{asset('frontend/rejoin/images/users/avatar.png')}}" data-height="180"/>--}}
-{{--                        </div>--}}
-{{--                        <div class="col-lg-3 mb-4 mb-lg-0">--}}
-{{--                            <input type="file" name="slider_4" class="dropify"--}}
-{{--                            data-default-file="{{asset('frontend/rejoin/images/users/avatar.png')}}" data-height="180"/>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="text-right mb-1 mr-1">--}}
-{{--                    <button class="btn btn-primary rounded">Kaydet</button>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-
-
-{{--        </form>--}}
-{{--     </div>--}}
-
     </div>
 @endsection

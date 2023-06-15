@@ -21,7 +21,7 @@
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:500,700" rel="stylesheet">
-    <link href="{{asset('frontend/rejoin/plugins/fileuploads/css/dropify.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('vendor/dropify/dist/css/dropify.css')}}" rel="stylesheet" type="text/css" />
 
 
 
@@ -40,7 +40,8 @@
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/css/widget.css') }}">
-    <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src=".{{asset('admin/bower_components/switchery/css/switchery.min.css')}}"></script>
+
 
 
 
@@ -50,13 +51,12 @@
 
 <body>
 <!-- [ Pre-loader ] start -->
-<div class="loader-bg">
+{{-- <div class="loader-bg">
     <div class="loader-bar"></div>
 </div>
-{{--<!-- [ Pre-loader ] end -->--}}
 <div class="loader-bg">
     <div class="loader-bar"></div>
-</div>
+</div> --}}
 <!-- [ Pre-loader ] end -->
 <div id="pcoded" class="pcoded">
     <div class="pcoded-overlay-box"></div>
@@ -66,7 +66,7 @@
             <div class="navbar-wrapper">
                 <div class="navbar-logo">
                     <a href="/">
-                        <img class="img-fluid" src="../files/assets/images/logo.png" alt="Theme-Logo" />
+                        <img class="img-fluid img-100" src="{{asset('admin/assets/images/logo.png')}}" alt="Theme-Logo" />
                     </a>
                     <a class="mobile-menu" id="mobile-collapse" href="#!">
                         <i class="feather icon-menu icon-toggle-right"></i>
@@ -361,7 +361,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-4 d-none">
                                 <div class="page-header-breadcrumb">
                                     <ul class=" breadcrumb breadcrumb-title">
                                         <li class="breadcrumb-item">
@@ -373,10 +373,7 @@
                             </div>
                         </div>
                     </div>
-                    
-                    
-                    @yield('content')
-
+                        @yield('content')
                 </div>
                 <!-- [ style Customizer ] start -->
                 <div id="styleSelector">
@@ -404,13 +401,13 @@
 {{--<script src="{{ asset('admin/assets/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>--}}
 
 <!-- dropify  -->
+<script src="{{ asset('vendor/dropify/dist/js/dropify.js') }}"></script>
 
 <!-- Custom js -->
 <script src="{{ asset('admin/assets/js/pcoded.min.js') }}"></script>
 <script src="{{ asset('admin/assets/js/vertical/vertical-layout.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('admin/assets/js/script.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('admin/bower_components/jquery-slimscroll/js/jquery.slimscroll.js') }}"></script>
-<script  src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
 
 
@@ -423,8 +420,9 @@
 <script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
 {{--@include('sweetalert::alert')--}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+{{-- swich  --}}
+<script type="text/javascript" src=".{{asset('admin/bower_components/switchery/js\switchery.min.js')}}"></script>
 
 <script>
     $(function () {

@@ -1,63 +1,61 @@
 @php $menus = menu();
-
+  
  $currentpath = request()->path();
-
+ 
  if (strpos($currentpath, 'backend/') === 0) {
     $currentpath = str_replace('backend/', '', $currentpath); // Eğer "backend" başlangıçta varsa sadece path'i alınır
 } else {
     $currentpath = explode('/', $currentpath)[0]; // "backend" yoksa ilk parçayı alınır
 }
-
+ 
 @endphp
 
-{{--@dd($currentpath,request()->path())--}}
-
-
-
-
-
-
-
-
-
-
 <ul class="pcoded-item pcoded-left-item">
-    @foreach($menus as $menu)
+   
 
-        @foreach($menu as $menuitem)
-{{--            @dd($menuitem['path'],$currentpath)--}}
-                @if(permissionCheck($menuitem['permission']))
-                    <li class="pcoded-hasmenu {{preg_match($menuitem['path'], $currentpath) ? "active pcoded-trigger" : ""}}">
+        @foreach($menus['menu'] as $menuitem)
+        @php
+        if (isset($menuitem['submenu'])) {
+           $has_sub = "pcoded-hasmenu";
+        }else {
+              $has_sub = "";
+        }
+            
+        @endphp
+           {{-- @dd(isset($menuitem['submenu']),$currentpath) --}}
+            @if(preg_match($menuitem['path'], $currentpath))
+                <li class="{{ $has_sub}}  active pcoded-trigger">
+            @else
+                <li class="{{ $has_sub }}">
+            @endif
                     <a href="{{$menuitem['route'] != "" ? route($menuitem['route']) : "javascript:void(0)"}} " class="waves-effect waves-dark">
                         <span class="pcoded-micon"><i class="{{$menuitem['icon']}} "></i></span>
                         <span class="pcoded-mtext">{{$menuitem['text']}} </span>
                     </a>
-                  @endif
+                
                     @if(isset($menuitem['submenu']))
                         <ul class="pcoded-submenu">
                             @foreach($menuitem['submenu'] as $submenu)
-                            @if(permissionCheck($submenu['permission']))
-                                    <li class="{{preg_match($submenu['path'],$currentpath) ? "active" :""}}">
-
+                                @if(preg_match($submenu['path'],$currentpath))
+                                    <li class="active">
+                                @else
+                                    <li>
+                                        @endif
                                         <a href="{{$submenu['route'] != "" ? route($submenu['route']) : "javascript:void(0)"}}" class="waves-effect waves-dark">
                                             <span class="pcoded-mtext">{{$submenu['text']}}</span>
                                         </a>
                                     </li>
-                                    @endif
                                     @endforeach
                         </ul>
                     @endif
                 </li>
                 @endforeach
-
-    @endforeach
-
 </ul>
-
-
-
-{{--
-
+    
+    
+    
+{{-- 
+    
     <li class="pcoded-hasmenu">
         <a href="javascript:void(0)" class="waves-effect waves-dark">
             <span class="pcoded-micon"><i class="feather icon-users"></i></span>

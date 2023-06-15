@@ -166,6 +166,8 @@ class ProductsController extends Controller
      */
     public function update(Request $request, Products $products)
     {
+        
+      
         $validatedData = $request->validate([
             'name' => 'required',
             'description' => 'nullable|max:255',
@@ -188,17 +190,19 @@ class ProductsController extends Controller
         ]);
         
         
-//        $product = new Products;
-        $products->name = $validatedData['name'];
-        $products->description = $validatedData['description'];
-        $products->quantity = $validatedData['stock'];
-        $products->price = $validatedData['price'];
-//        $products->status = $validatedData['status'];
+
         if($request->hasFile('image'))
         {
-            $products->photo = 'storage/'.$validatedData['image']->store('products', 'public');
+            $products['photo'] = 'storage/'.$validatedData['image']->store('products', 'public');
         }
-        $products->save();
+        $products->update([
+            'name'=>$validatedData['name'],
+            'description'=>$validatedData['description'],
+            'stock'=>$validatedData['stock'],
+            'price'=>$validatedData['price'],
+            'status'=>$validatedData['status'],
+        ]);
+        dd($products);
         toastr()->success('Ürün Güncelleme İşlemi Tamamlandı.', 'Başarılı');
         
         return redirect(route('product.index'));
@@ -230,7 +234,63 @@ class ProductsController extends Controller
     }
        
     public function trashed_data() {
-        
+        $products = Products::onlyTrashed()->CreatedBy()
+        ->select('id','name','status','created_at','quantity','price')->orderBy('id','ASC');
+        return Datatables::of($products)
+            ->addIndexColumn()
+            ->editColumn('name', '<strong>{{$name}}</strong>')
+            ->editColumn('description', function($data){
+                return $data->description ? $data->description: "";
+            })
+            ->editColumn('status', function ($data) {
+                if ($data->status == 0) {
+                    return '<span class="badge badge-primary">' . __('Onay Bekliyor') . ' </span >';
+                }
+                if ($data->status == 1) {
+                    return '<span class="badge badge-success ">' . __('Yayında') . '</span>';
+                }
+                if ($data->status == 2) {
+                    return '<span class="badge badge-warning">' . __('Tükendi') . '</span >';
+                }
+                if ($data->status == 3) {
+                    return '<span class="badge badge-danger">' . __('Yayından Kaldırıldı') . '</span>';
+                }
+            })
+            ->editColumn('price', function ($data) {
+             
+               
+                    return '<span class="badge" > ' .$data->price ? $data->price ." TL" : "". ' </span >';
+                
+            })
+            ->editColumn('quantity', function ($data) {
+                if($data->quantity == 0){
+                    $msg = "<span class='badge badge-danger' >".$data->quantity."</span>";
+                }
+                else
+                {
+                    $msg = "<span class='badge' >".$data->quantity. "  Adet  </span >";
+                }
+                return $msg;
+            })
+            
+            ->addColumn('action', function ($data) {
+                
+                return  '
+                      <div class="text-center">
+                        <a href="'.route('product.edit', $data->id).'"  data-toggle="tooltip" data-placement="top" title="Düzenle"><i class="icon feather icon-edit f-w-600 f-16 m-r-15 text-c-green"></i></a>
+                        <a href="'.route('product.destroy', $data->id).'" onclick="return confirm(\'Silme İşlemi onaylıyormusunuz ?\')"  data-toggle="tooltip" 
+                        data-placement="top" title="Sil"><i class="feather icon-trash-2 f-w-600 f-16 text-c-red"></i></a>
+                      </div>
+                ';
+//
+                 
+//                return view('admin.user.include.user_action', compact('data'));
+            })
+            ->escapeColumns([])
+            ->rawColumns(['name','status','action'])
+            ->make(true);
+
+            
     }
     
     

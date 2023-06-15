@@ -3,7 +3,10 @@
     {{ __('İletişim Talepleri ') }}
 @endsection
 @section('content')
-    <div class="card">
+<div class="pcoded-inner-content">
+    <div class="main-body">
+        <div class="page-wrapper">
+              <div class="card">
         <div class="card-header">
             <h3>İletişim Talepleri</h3>
         </div>
@@ -59,7 +62,6 @@
                             </td>
                             <td>{{ $message->ip }}</td>
                             <td>
-{{--                                <a class="btn-default rounded  btn-sm btn-mini" href=""  title="Cevapla"><i class="feather icon-message-square f-w-600 f-16 text-c-red"></i>&nbsp;Cevapla</a>--}}
                                 <a class="btn-default rounded  btn-sm btn-mini" href="{{ route('message.edit', $message->id) }}"> <i class="feather icon-check f-w-600 f-16 text-c-green"></i>&nbsp;Onayla </a>
                             </td>
                         </tr>
@@ -70,4 +72,8 @@
             </div>
         </div>
     </div>
+        </div>
+    </div>
+</div> 
+ 
 @endsection

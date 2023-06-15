@@ -4,7 +4,10 @@
 @endsection
 @section('content')
 
-
+<div class="pcoded-inner-content">
+    <div class="main-body">
+        <div class="page-wrapper">
+            
     <div class="card">
         <div class="card-header">
             <h3>Kullanıcı Düzenle</h3>
@@ -19,7 +22,6 @@
                     </ul>
                 </div>
             @endif
-{{--            {{dd($user)}}--}}
             <form action="{{ route('user.update', $user->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @include('flash::message')
@@ -98,7 +100,6 @@
                             <option value="0" @if($user->status==0) selected @endif >Stajer </option>
                             <option value="1" @if($user->status==1) selected @endif >Admin</option>
                             <option value="2" @if($user->status==2) selected @endif >Firma Yetkilisi</option>
-{{--                            <option value="3" @if($user->status==3) selected @endif >İçerik Editörü</option>--}}
                         </select>
                     </div>
                 </div>
@@ -249,6 +250,9 @@
             </form>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 
 
 @endsection

@@ -4,6 +4,10 @@
 @endsection
 
 @section('content')
+<div class="pcoded-inner-content">
+    <div class="main-body">
+        <div class="page-wrapper">
+            
     <div class="card">
         <div class="card-header">
             <h3>Kullanıcı Ekle</h3>
@@ -250,6 +254,9 @@
             </form>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 

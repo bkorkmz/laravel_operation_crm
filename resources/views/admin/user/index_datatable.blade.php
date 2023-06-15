@@ -8,7 +8,7 @@
     <div class="pcoded-inner-content">
         <div class="page-wrapper">
             <div class="page-body">
-                <div class="row">
+                <div class="">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
@@ -50,8 +50,8 @@
 
 
 @section('js')
-{{--    <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">--}}
-{{--    <script  src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>--}}
+   <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+   <script  src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
 
     <script>
