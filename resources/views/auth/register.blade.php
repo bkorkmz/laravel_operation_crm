@@ -4,13 +4,14 @@
 @stop
 @section('css')
 
-@endsection
+
 <style>
     body {
     background-image:url("{{config('settings.site_register_img')}}");
     background-size:cover;   
     }
 </style>
+@endsection
 @section('content')
 
 
