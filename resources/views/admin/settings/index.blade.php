@@ -1,6 +1,6 @@
 @extends('layouts.layout-admin')
 @section('title')
-    {{ __('Roller ') }}
+    {{ __('Ayarlar') }}
 @endsection
 
 @section('content')

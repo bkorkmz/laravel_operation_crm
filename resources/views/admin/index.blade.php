@@ -4,10 +4,10 @@
 @endsection
 @section('content')
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/css/widget.css') }}">
-    <style> 
-       .text-c-black {
-          color: #000000;
-}
+    <style>
+        .text-c-black {
+            color: #000000;
+        }
     </style>
 
     <!-- [ breadcrumb ] end -->
@@ -32,7 +32,8 @@
                                             <i class="fas fa-money-bill-alt text-c-red f-18"></i>
                                         </div>
                                     </div>
-                                    <p class="m-b-0 text-white"><span class="label label-danger m-r-10">+11%</span>From Previous Month</p>
+                                    <p class="m-b-0 text-white"><span class="label label-danger m-r-10">+11%</span>From
+                                        Previous Month</p>
                                 </div>
                             </div>
                         </div>
@@ -48,7 +49,8 @@
                                             <i class="fas fa-database text-c-blue f-18"></i>
                                         </div>
                                     </div>
-                                    <p class="m-b-0 text-white"><span class="label label-primary m-r-10">+12%</span>From Previous Month</p>
+                                    <p class="m-b-0 text-white"><span class="label label-primary m-r-10">+12%</span>From
+                                        Previous Month</p>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +66,8 @@
                                             <i class="fas fa-dollar-sign text-c-green f-18"></i>
                                         </div>
                                     </div>
-                                    <p class="m-b-0 text-white"><span class="label label-success m-r-10">+52%</span>From Previous Month</p>
+                                    <p class="m-b-0 text-white"><span class="label label-success m-r-10">+52%</span>From
+                                        Previous Month</p>
                                 </div>
                             </div>
                         </div>
@@ -80,7 +83,8 @@
                                             <i class="fas fa-tags text-c-yellow f-18"></i>
                                         </div>
                                     </div>
-                                    <p class="m-b-0 text-white"><span class="label label-warning m-r-10">+52%</span>From Previous Month</p>
+                                    <p class="m-b-0 text-white"><span class="label label-warning m-r-10">+52%</span>From
+                                        Previous Month</p>
                                 </div>
                             </div>
                         </div>
@@ -93,7 +97,8 @@
                                     <h5>What’s New</h5>
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
-                                            <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i></li>
+                                            <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i>
+                                            </li>
                                             <li><i class="feather icon-maximize full-card"></i></li>
                                             <li><i class="feather icon-minus minimize-card"></i></li>
                                             <li><i class="feather icon-refresh-cw reload-card"></i></li>
@@ -106,10 +111,13 @@
                                     <div class="latest-update-box">
                                         <div class="row p-t-20 p-b-30">
                                             <div class="col-auto text-right update-meta p-r-0">
-                                                <img src="../files/assets/images/avatar-4.jpg" alt="user image" class="img-radius img-40 align-top m-r-15 update-icon">
+                                                <img src="public\admin\assets\images\avatar-4.jpg" alt="user image"
+                                                    class="img-radius img-40 align-top m-r-15 update-icon">
                                             </div>
                                             <div class="col p-l-5">
-                                                <a href="#!"><h6>Your Manager Posted.</h6></a>
+                                                <a href="#!">
+                                                    <h6>Your Manager Posted.</h6>
+                                                </a>
                                                 <p class="text-muted m-b-0">Jonny michel</p>
                                             </div>
                                         </div>
@@ -118,7 +126,9 @@
                                                 <i class="feather icon-briefcase bg-c-red update-icon"></i>
                                             </div>
                                             <div class="col p-l-5">
-                                                <a href="#!"><h6>You have 3 pending Task.</h6></a>
+                                                <a href="#!">
+                                                    <h6>You have 3 pending Task.</h6>
+                                                </a>
                                                 <p class="text-muted m-b-0">Hemilton</p>
                                             </div>
                                         </div>
@@ -127,16 +137,21 @@
                                                 <i class="feather icon-check f-w-600 bg-c-green update-icon"></i>
                                             </div>
                                             <div class="col p-l-5">
-                                                <a href="#!"><h6>New Order Received.</h6></a>
+                                                <a href="#!">
+                                                    <h6>New Order Received.</h6>
+                                                </a>
                                                 <p class="text-muted m-b-0">Hemilton</p>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-auto text-right update-meta p-r-0">
-                                                <img src="../files/assets/images/avatar-4.jpg" alt="user image" class="img-radius img-40 align-top m-r-15 update-icon">
+                                                <img src="../files/assets/images/avatar-4.jpg" alt="user image"
+                                                    class="img-radius img-40 align-top m-r-15 update-icon">
                                             </div>
                                             <div class="col p-l-5">
-                                                <a href="#!"><h6>Your Manager Posted.</h6></a>
+                                                <a href="#!">
+                                                    <h6>Your Manager Posted.</h6>
+                                                </a>
                                                 <p class="text-muted m-b-0">Jonny michel</p>
                                             </div>
                                         </div>
@@ -150,7 +165,8 @@
                                     <h5>New Customers</h5>
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
-                                            <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i></li>
+                                            <li class="first-opt"><i
+                                                    class="feather icon-chevron-left open-card-option"></i></li>
                                             <li><i class="feather icon-maximize full-card"></i></li>
                                             <li><i class="feather icon-minus minimize-card"></i></li>
                                             <li><i class="feather icon-refresh-cw reload-card"></i></li>
@@ -161,33 +177,46 @@
                                 </div>
                                 <div class="card-block">
                                     <div class="align-middle m-b-35">
-                                        <img src="../files/assets/images/avatar-2.jpg" alt="user image" class="img-radius img-40 align-top m-r-15">
+                                        <img src="../files/assets/images/avatar-2.jpg" alt="user image"
+                                            class="img-radius img-40 align-top m-r-15">
                                         <div class="d-inline-block">
-                                            <a href="#!"><h6>Alex Thompson</h6></a>
+                                            <a href="#!">
+                                                <h6>Alex Thompson</h6>
+                                            </a>
                                             <p class="text-muted m-b-0">Cheers!</p>
                                             <span class="status active"></span>
                                         </div>
                                     </div>
                                     <div class="align-middle m-b-35">
-                                        <img src="../files/assets/images/avatar-3.jpg" alt="user image" class="img-radius img-40 align-top m-r-15">
+                                        <img src="../files/assets/images/avatar-3.jpg" alt="user image"
+                                            class="img-radius img-40 align-top m-r-15">
                                         <div class="d-inline-block">
-                                            <a href="#!"><h6>John Doue</h6></a>
+                                            <a href="#!">
+                                                <h6>John Doue</h6>
+                                            </a>
                                             <p class="text-muted m-b-0">stay hungry stay foolish!</p>
                                             <span class="status active"></span>
                                         </div>
                                     </div>
                                     <div class="align-middle m-b-35">
-                                        <img src="../files/assets/images/avatar-3.jpg" alt="user image" class="img-radius img-40 align-top m-r-15">
+                                        <img src="../files/assets/images/avatar-3.jpg" alt="user image"
+                                            class="img-radius img-40 align-top m-r-15">
                                         <div class="d-inline-block">
-                                            <a href="#!"><h6>Alex Thompson</h6></a>
+                                            <a href="#!">
+                                                <h6>Alex Thompson</h6>
+                                            </a>
                                             <p class="text-muted m-b-0">Cheers!</p>
-                                            <span class="status deactive text-mute"><i class="far fa-clock m-r-10"></i>30 min ago</span>
+                                            <span class="status deactive text-mute"><i class="far fa-clock m-r-10"></i>30
+                                                min ago</span>
                                         </div>
                                     </div>
                                     <div class="align-middle m-b-0">
-                                        <img src="../files/assets/images/avatar-2.jpg" alt="user image" class="img-radius img-40 align-top m-r-15">
+                                        <img src="../files/assets/images/avatar-2.jpg" alt="user image"
+                                            class="img-radius img-40 align-top m-r-15">
                                         <div class="d-inline-block">
-                                            <a href="#!"><h6>Alex Thompson</h6></a>
+                                            <a href="#!">
+                                                <h6>Alex Thompson</h6>
+                                            </a>
                                             <p class="text-muted m-b-0">Cheers!</p>
                                             <span class="status active"></span>
                                         </div>
@@ -330,7 +359,8 @@
                                     <h5>Latest Activity</h5>
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
-                                            <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i></li>
+                                            <li class="first-opt"><i
+                                                    class="feather icon-chevron-left open-card-option"></i></li>
                                             <li><i class="feather icon-maximize full-card"></i></li>
                                             <li><i class="feather icon-minus minimize-card"></i></li>
                                             <li><i class="feather icon-refresh-cw reload-card"></i></li>
@@ -347,9 +377,12 @@
                                             </div>
                                             <div class="col">
                                                 <h6>John Deo</h6>
-                                                <p class="text-muted m-b-15">The trip was an amazing and a life changing experience!!</p>
-                                                <img src="../files/assets/images/mega-menu/01.jpg" alt="" class="img-fluid img-100 m-r-15 m-b-10">
-                                                <img src="../files/assets/images/mega-menu/03.jpg" alt="" class="img-fluid img-100 m-r-15 m-b-10">
+                                                <p class="text-muted m-b-15">The trip was an amazing and a life changing
+                                                    experience!!</p>
+                                                <img src="../files/assets/images/mega-menu/01.jpg" alt=""
+                                                    class="img-fluid img-100 m-r-15 m-b-10">
+                                                <img src="../files/assets/images/mega-menu/03.jpg" alt=""
+                                                    class="img-fluid img-100 m-r-15 m-b-10">
                                             </div>
                                         </div>
                                         <div class="row p-b-30">
@@ -358,7 +391,8 @@
                                             </div>
                                             <div class="col">
                                                 <h6>Administrator</h6>
-                                                <p class="text-muted m-b-0">Free courses for all our customers at A1 Conference Room - 9:00 am tomorrow!</p>
+                                                <p class="text-muted m-b-0">Free courses for all our customers at A1
+                                                    Conference Room - 9:00 am tomorrow!</p>
                                             </div>
                                         </div>
                                         <div class="row p-b-30">
@@ -367,7 +401,9 @@
                                             </div>
                                             <div class="col">
                                                 <h6>Jeny William</h6>
-                                                <p class="text-muted m-b-15">Happy Hour! Free drinks at <span> <a href="#!" class="text-c-blue">Cafe-Bar all </a> </span>day long!</p>
+                                                <p class="text-muted m-b-15">Happy Hour! Free drinks at <span> <a
+                                                            href="#!" class="text-c-blue">Cafe-Bar all </a>
+                                                    </span>day long!</p>
                                                 <div id="markers-map" style="height:245px;width:100%"></div>
                                             </div>
 
@@ -385,7 +421,8 @@
                                     <h5>Chat history</h5>
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
-                                            <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i></li>
+                                            <li class="first-opt"><i
+                                                    class="feather icon-chevron-left open-card-option"></i></li>
                                             <li><i class="feather icon-maximize full-card"></i></li>
                                             <li><i class="feather icon-minus minimize-card"></i></li>
                                             <li><i class="feather icon-refresh-cw reload-card"></i></li>
@@ -397,7 +434,8 @@
                                 <div class="card-block">
                                     <div class="row m-b-20 received-chat">
                                         <div class="col-auto p-r-0">
-                                            <img src="../files/assets/images/avatar-2.jpg" alt="user image" class="img-radius img-40">
+                                            <img src="../files/assets/images/avatar-2.jpg" alt="user image"
+                                                class="img-radius img-40">
                                         </div>
                                         <div class="col">
                                             <div class="msg">
@@ -414,12 +452,14 @@
                                             <p class="text-muted m-b-0"><i class="fa fa-clock-o m-r-10"></i>10:20am</p>
                                         </div>
                                         <div class="col-auto p-l-0">
-                                            <img src="../files/assets/images/avatar-3.jpg" alt="user image" class="img-radius img-40">
+                                            <img src="../files/assets/images/avatar-3.jpg" alt="user image"
+                                                class="img-radius img-40">
                                         </div>
                                     </div>
                                     <div class="row m-b-20 received-chat">
                                         <div class="col-auto p-r-0">
-                                            <img src="../files/assets/images/avatar-2.jpg" alt="user image" class="img-radius img-40">
+                                            <img src="../files/assets/images/avatar-2.jpg" alt="user image"
+                                                class="img-radius img-40">
                                         </div>
                                         <div class="col">
                                             <div class="msg">
@@ -438,12 +478,14 @@
                                             <p class="text-muted m-b-0"><i class="fa fa-clock-o m-r-10"></i>10:20am</p>
                                         </div>
                                         <div class="col-auto p-l-0">
-                                            <img src="../files/assets/images/avatar-3.jpg" alt="user image" class="img-radius img-40">
+                                            <img src="../files/assets/images/avatar-3.jpg" alt="user image"
+                                                class="img-radius img-40">
                                         </div>
                                     </div>
                                     <div class="row m-b-20 received-chat">
                                         <div class="col-auto p-r-0">
-                                            <img src="../files/assets/images/avatar-2.jpg" alt="user image" class="img-radius img-40">
+                                            <img src="../files/assets/images/avatar-2.jpg" alt="user image"
+                                                class="img-radius img-40">
                                         </div>
                                         <div class="col">
                                             <div class="msg">
@@ -457,7 +499,8 @@
                                         <div class="input-group input-group-button">
                                             <input type="text" class="form-control" placeholder="Send message">
                                             <div class="input-group-append">
-                                                <button class="btn btn-primary waves-effect waves-light" type="button"><i class="feather icon-message-circle"></i></button>
+                                                <button class="btn btn-primary waves-effect waves-light" type="button"><i
+                                                        class="feather icon-message-circle"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -473,14 +516,5 @@
         </div>
     </div>
 
-    <script>
-
-
-
-    </script>
-
-
-
+    <script></script>
 @endsection
-
-

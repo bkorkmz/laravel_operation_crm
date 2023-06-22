@@ -1,9 +1,25 @@
 @extends('layouts.app')
+@section('title')
+Şifre Yenile
+@endsection
+@section('css')
+
+
+<style>
+    body {
+    background-image:url("{{config('settings.site_register_img')}}");
+    background-size:cover;   
+    }
+</style>
+@endsection
 
 @section('content')
+
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class=" p-y-4 my-lg-5 p-3">
+ 
+        <div class="card text-center">
+
             <div class="card">
                 <div class="card-header">{{ __('Confirm Password') }}</div>
 
@@ -43,7 +59,17 @@
                     </form>
                 </div>
             </div>
+    
         </div>
+    
     </div>
 </div>
+
+
+
+
+
+
+
+
 @endsection
