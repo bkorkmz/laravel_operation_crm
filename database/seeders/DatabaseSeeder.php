@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             PermissionsSeeders::class,
 //            GeneralSeeder::class,
             CitySeeder::class,
+            SettingsSeeder::class,
         ]);
         
         

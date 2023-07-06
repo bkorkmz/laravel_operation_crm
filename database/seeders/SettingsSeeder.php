@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Settings;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Config;
 use function PHPUnit\Framework\never;
 
 class SettingsSeeder extends Seeder
@@ -38,10 +39,10 @@ class SettingsSeeder extends Seeder
             ["name"=>"site_meta_tag","value"=>"","group"=>"ceo","type"=>"string"],
             ["name"=>"site_analytics","value"=>"","group"=>"ceo","type"=>"string"],
             
-            ["name"=>"site_logo","value"=>"","group"=>"image","type"=>"string"],
-            ["name"=>"site_icon","value"=>"","group"=>"image","type"=>"string"],
-            ["name"=>"site_login_img","value"=>"","group"=>"image","type"=>"string"],
-            ["name"=>"site_register_img","value"=>"","group"=>"image","type"=>"string"],
+            ["name"=>"site_logo","value"=>"images/logo.png","group"=>"image","type"=>"string"],
+            ["name"=>"site_icon","value"=>"images/logo.png","group"=>"image","type"=>"string"],
+            ["name"=>"site_login_img","value"=>"images/background_images.jpg","group"=>"image","type"=>"string"],
+            ["name"=>"site_register_img","value"=>"images/background_images.jpg","group"=>"image","type"=>"string"],
             
             ["name"=>"CAPTCHA_SECRET","value"=>"","group"=>"general","type"=>"string"],
             ["name"=>"CAPTCHA_SITEKEY","value"=>"","group"=>"general","type"=>"string"],

@@ -67,7 +67,8 @@
             <div class="navbar-wrapper">
                 <div class="navbar-logo">
                     <a href="/">
-                        <img class="img-fluid img-100" src="{{asset('admin/assets/images/logo.png')}}" alt="Theme-Logo" />
+                        <img class="img-fluid img-100" src="
+{{--                        {{asset('admin/assets/images/logo.png')}}--}}{{asset(config('settings.site_logo') )}}" alt="Theme-Logo" />
                     </a>
                     <a class="mobile-menu" id="mobile-collapse" href="#!">
                         <i class="feather icon-menu icon-toggle-right"></i>

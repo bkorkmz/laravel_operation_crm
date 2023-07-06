@@ -20,6 +20,13 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::domain('{subdomain}.laravel_operation_crm.test')->group(function () {
+    Route::get('/', function ($subdomain) {
+        // Subdomain verisini kullanarak işlemler yapabilirsiniz
+        return 'Subdomain: ' . $subdomain;
+    });
+});
+
 
 Route::get('/', function () {
     return redirect(route('login'));
