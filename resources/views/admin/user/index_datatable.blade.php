@@ -46,11 +46,11 @@
 
   
 @endsection
-
-
-
-@section('js')
+@section('css')
    <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+
+@endsection
+@section('js')
    <script  src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
 
@@ -65,7 +65,11 @@
                     // { data: 'id', name: 'id' },
                     { data: 'name', name: 'name' },
                     { data: 'email', name: 'email' },
-                    { data: 'status', name: 'status' },
+                    { data: 'roles', name: 'roles',orderable: true,sortable: false,
+                      render: function(e){
+                        return `${e}`;
+                    }
+                    },
                     { data: 'user_check', name: 'user_check' },
                     { data: 'created_at', name: 'created_at' },
                     { data: 'action', name: 'action',searchable:false,orderable:false }

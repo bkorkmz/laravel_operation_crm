@@ -25,7 +25,7 @@ class SettingsSeeder extends Seeder
             ["name"=>"site_address","value"=>"","group"=>"general","type"=>"string"],
             ["name"=>"site_copyright","value"=>"Poyraz Yazılım","group"=>"general","type"=>"string"],
             ["name"=>"site_refresh","value"=>"","group"=>"general","type"=>"string"],
-            ["name"=>"site_publish","value"=>"","group"=>"general","type"=>"string"],
+            ["name"=>"site_publish","value"=>"1","group"=>"general","type"=>"string"],
             
             ["name"=>"site_url","value"=>"","group"=>"ceo","type"=>"string"],
             ["name"=>"site_facebookapp_id","value"=>"00000","group"=>"ceo","type"=>"string"],
@@ -44,14 +44,19 @@ class SettingsSeeder extends Seeder
             ["name"=>"site_login_img","value"=>"images/background_images.jpg","group"=>"image","type"=>"string"],
             ["name"=>"site_register_img","value"=>"images/background_images.jpg","group"=>"image","type"=>"string"],
             
-            ["name"=>"CAPTCHA_SECRET","value"=>"","group"=>"general","type"=>"string"],
-            ["name"=>"CAPTCHA_SITEKEY","value"=>"","group"=>"general","type"=>"string"],
+
+            // Only super admin 
+            ["name"=>"CAPTCHA_SECRET","value"=>"","group"=>"secret","type"=>"string"],
+            ["name"=>"CAPTCHA_SITEKEY","value"=>"","group"=>"secret","type"=>"string"],
+
+
         ];
         foreach ($data as $item) {
             Settings::firstOrCreate([
                 'name' => $item['name'],
                 'value' => $item['value'],
-                'group' => $item['group']
+                'group' => $item['group'],
+                'type' => $item['type']
             ]);
         }
         

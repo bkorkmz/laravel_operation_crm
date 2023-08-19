@@ -46,6 +46,10 @@ return [
         ]
         
     ],
-
+    "super admin" =>"Super Admin",
+    "administrator" =>"Yönetici",
+    "teacher" =>"Öğretmen",
+    "student" =>"Öğrenci",
+    "user" =>"Kullanıcı",
   
 ];

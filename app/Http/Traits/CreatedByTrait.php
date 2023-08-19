@@ -8,7 +8,7 @@ trait CreatedByTrait
 
     public function scopeCreatedBy($query)
     {
-        if (auth()->user()->status != 1)
+        if (auth()->id() != 1) 
         {
             return $query->where('created_by',auth()->id() );
         }

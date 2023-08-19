@@ -69,7 +69,7 @@ class SystemController extends Controller
                     'site_register_img.max'=>'Yüklenen dosya en fazla 4MB (4000 Kb ) olmalıdır'                    
                 ]
             );
-            $dataArray['site_register_img'] = 'storage/'.$request->site_register_img->store('settings', 'public');
+            $dataArray['site_register_img'] = '/storage/'.$request->site_register_img->store('settings', 'public');
             
             
         }
@@ -84,7 +84,7 @@ class SystemController extends Controller
                     'site_login_img.max'=>'Yüklenen dosya en fazla 4MB (4000 Kb ) olmalıdır',
                 ]
             );
-            $dataArray['site_login_img'] = 'storage/'.$request->site_login_img->store('settings', 'public');
+            $dataArray['site_login_img'] = '/storage/'.$request->site_login_img->store('settings', 'public');
             
         }
         if($request->hasFile('site_icon')){
@@ -98,7 +98,7 @@ class SystemController extends Controller
                     'site_icon.max'=>'Yüklenen dosya en fazla 4MB (4000 Kb ) olmalıdır',
                                 ]
             );
-            $dataArray['site_icon'] = 'storage/'.$request->site_icon->store('settings', 'public');
+            $dataArray['site_icon'] = '/storage/'.$request->site_icon->store('settings', 'public');
             
         }
         if($request->hasFile('site_logo')){
@@ -113,7 +113,7 @@ class SystemController extends Controller
                 
                 ]
             );
-            $dataArray['site_logo'] = 'storage/'.$request->site_logo->store('settings', 'public');
+            $dataArray['site_logo'] = '/storage/'.$request->site_logo->store('settings', 'public');
             
         }
         

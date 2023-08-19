@@ -8,11 +8,14 @@ return [
             "image"=>"Resim Ayarları",
             "email_sms"=>"Sms Mail Ayarları",
             "ceo"=>"Dış Bağlantılar",
+            "secret"=>"Admin Ayarları",
+
             
             "general_desc"=>"Genel Ayarlar",
             "image_desc"=>"Resim Ayarları",
             "email_sms_desc"=>"Sms Mail Ayarları",
             "ceo_desc"=>"Dış Bağlantılar",
+            "secret_desc"=>"Admin Ayarları",
             
             "site_title"=>"Site Başlığı",
             "site_keywords"=>"Site Anahtar Kelimeleri",
@@ -46,6 +49,15 @@ return [
         ]
         
     ],
-
+    "Super admin" =>"Super Admin",
+    "administrator" =>"Yönetici",
+    "manager" =>"Yönetici",
+    "admin" =>"Yönetici",
+    "teacher" =>"Öğretmen",
+    "student" =>"Öğrenci",
+    "user" =>"Kullanıcı",
+    //slider
+    "slider"=>"Slider",
+    "portfolio"=>"Portfolyo"
   
 ];

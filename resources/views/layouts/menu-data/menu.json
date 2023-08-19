@@ -5,59 +5,89 @@
       "icon": "feather icon-home",
       "route": "admin.index",
       "path": "/^backend/",
-      "permission":""
+      "badge": "false",
+      "permission": ""
     },
     {
       "text": "Kullanıcı Ayarları",
       "icon": "feather icon-users",
       "route": "",
-      "path": "/^(user|roles)$/",
-      "permission":["view_menu_users",
-      "view_menu_roles"
-
-    ],
+      "path": "/^(user|roles)/",
+      "badge": "false",
+      "permission": [
+        "view_menu_users",
+        "view_menu_roles"
+      ],
       "submenu": [
         {
           "text": "Kullanıcı Listesi",
           "icon": "feather icon-users",
           "route": "user.index",
-          "path": "/^user/",
-          "permission":["view_menu_users"]
+          "path": "/^user(\\/index|\\/create|\\/edit|\\/trashed_index|\\/)?$/",
+          "badge": "false",
+          "permission": [
+            "view_menu_users"
+          ]
         },
         {
           "text": "Roller",
           "icon": "",
           "route": "roles.index",
-          "path": "/^roles/",
-          "permission":["view_menu_roles"]
+          "path": "/^user\\/roles(\\/index|\\/create|\\/edit|\\/trashed_index|\\/)?$/",
+          "badge": "false",
+          "permission": 
+            "view_menu_roles"
+          
         },
-          {
+        {
+          "text": "Takım Listesi",
+          "icon": "",
+          "route": "user.teams.index",
+          "path": "/^user\\/teams(\\/index|\\/create|\\/edit|\\/)?$/",
+          "badge": "false",
+          "permission": [
+            "view_menu_teams"
+          ]
+        },
+        {
           "text": "Satın Alma",
           "icon": "",
           "route": "",
-          "path": "/^user(\\/$|\\/sales)/",
-          "permission":[""]
+          "path": "/^sales/",
+          "badge": "false",
+          "permission": [
+            ""
+          ]
         },
-          {
+        {
           "text": "Destek Masası",
           "icon": "",
           "route": "",
-          "path": "/^user(\\/$|\\/help)/",
-          "permission":[""]
+          "path": "/^help/",
+          "badge": "false",
+          "permission": [
+            ""
+          ]
         },
-          {
+        {
           "text": "Pazarlama İletişimi",
           "icon": "",
           "route": "",
-          "path": "/^user(\\/$|\\/sales-info)/",
-          "permission":[""]
+          "path": "/^sales-info/",
+          "badge": "false",
+          "permission": [
+            ""
+          ]
         },
-          {
+        {
           "text": "Geribildirim Yönetimi",
           "icon": "",
           "route": "",
-          "path": "/^user(\\/$|\\/feedback)/",
-          "permission":[""]
+          "path": "/^feedback/",
+          "badge": "false",
+          "permission": [
+            ""
+          ]
         }
       ]
     },
@@ -65,48 +95,138 @@
       "text": "Haber Bülteni ",
       "icon": "feather icon-globe",
       "route": "",
-      "path": "/^(post)$/",
-      "permission":[  "view_menu_post",
-        "view_category",
+      "path": "/^(post|photo_gallery|video_gallery)/",
+      "badge": "false",
+      "permission": [
+        "view_menu_post",
         "view_photogallery",
-        "view_videogallery",
-        "view_comment"
+        "view_videogallery"
       ],
       "submenu": [
         {
           "text": "Haber Listesi",
           "icon": "feather icon-users",
-          "route": "product.index",
-          "path": "/^post/",
-          "permission":["view_menu_post","view_all_post"]
+          "route": "post.index",
+          "path": "/^post(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
+          "badge": "false",
+          "permission": [
+            "view_menu_post",
+            "view_all_post"
+          ]
         },
         {
-          "text": "Kategoriler",
-          "icon": "",
-          "route": "",
-          "path": "/^category/",
-          "permission":["view_category","view_all_category"]
-        },
-          {
           "text": "Foto Galeri",
           "icon": "",
           "route": "",
-          "path": "/^photo_gallery/",
-          "permission":["view_photogallery","view_all_photogallery"]
+          "path": "/^photo_gallery(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
+          "badge": "false",
+          "permission": [
+            "view_photogallery",
+            "view_all_photogallery"
+          ]
         },
-          {
+        {
           "text": "Video Galeri",
           "icon": "",
           "route": "",
           "path": "/^video_gallery/",
-          "permission":["view_videogallery","view_all_videogallery"]
-        },
-          {
-          "text": "Yorumlar",
-          "icon": "",
+          "badge": "false",
+          "permission": [
+            "view_videogallery",
+            "view_all_videogallery"
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Kategoriler",
+      "icon": "feather icon-layers",
+      "route": "",
+      "path": "/^(category)/",
+      "badge": "false",
+      "permission": [
+        "view_menu_category",
+        "view_category"
+      ],
+      "submenu": [
+        {
+          "text": "Kategori Listesi",
+          "icon": "feather icon-users",
+          "route": "category.index",
+          "path": "/^category(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
+          "badge": "false",
+          "permission": [
+            "view_category"
+          ]
+        }
+      ]
+    },
+    {
+      "text": "PortFolyo",
+      "icon": "feather icon-image",
+      "route": "",
+      "path": "/^(slider)/",
+      "badge": "false",
+      "permission": [
+        "view_menu_slider",
+        "view_slider"
+      ],
+      "submenu": [
+        {
+          "text": "Listeyi Görüntüle",
+          "icon": "feather icon-users",
+          "route": "slider.index",
+          "path": "/^(slider)/",
+          "badge": "false",
+          "permission": [
+            "view_slider"
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Makaleler",
+      "icon": "feather icon-edit",
+      "route": "",
+      "path": "/^article/",
+      "badge": "false",
+      "permission": [
+        "view_menu_article",
+        "view_article"
+      ],
+      "submenu": [
+        {
+          "text": "Makaleler Listesi",
+          "icon": "feather icon-users",
+          "route": "article.index",
+          "path": "/^article(\\/index|\\/create|\\/edit\\/|\\/trashed_index)?$/",
+          "badge": "false",
+          "permission": [
+            "view_article"
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Yorumlar",
+      "icon": "feather icon-message-circle",
+      "route": "",
+      "path": "/^comments/",
+      "badge": "false",
+      "permission": [
+        "view_comment",
+        "view_all_comment"
+      ],
+      "submenu": [
+        {
+          "text": "Yorumlar Listesi",
+          "icon": "feather icon-users",
           "route": "",
-          "path": "/^comments/",
-          "permission":["view_comment","view_all_comment"]
+          "path": "/^article/",
+          "badge": "true",
+          "permission": [
+            "view_comment"
+          ]
         }
       ]
     },
@@ -115,14 +235,21 @@
       "icon": "feather icon-pie-chart",
       "route": "",
       "path": "/^product/",
-      "permission":["view_menu_product","view_product"],
+      "badge": "false",
+      "permission": [
+        "view_menu_product",
+        "view_product"
+      ],
       "submenu": [
         {
           "text": "Ürün Listesi",
           "icon": "feather icon-users",
           "route": "product.index",
           "path": "/^product/",
-          "permission":["view_product"]
+          "badge": "false",
+          "permission": [
+            "view_product"
+          ]
         }
       ]
     },
@@ -131,23 +258,23 @@
       "icon": "feather icon-settings",
       "route": "",
       "path": "/^settings/",
-      "permission":["view_menu_settings","view_settings"],
+      "badge": "false",
+      "permission": [
+        "view_menu_settings",
+        "view_settings"
+      ],
       "submenu": [
         {
           "text": "Site  Ayarları ",
           "icon": "feather icon-users",
           "route": "settings.index",
           "path": "/^settings/",
-          "permission":["view_menu_settings"]
+          "badge": "false",
+          "permission": [
+            "view_menu_settings"
+          ]
         }
       ]
     }
-    
-    
   ]
 }
-
-
-
-
-

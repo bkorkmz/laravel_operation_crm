@@ -129,7 +129,7 @@
                                 <div class="row mb-0 justify-content-left ">
                                     <div class="col-md-12 ">
                                         <button type="submit" class="btn btn-primary p-lg-2 w-50">
-                                            {{ __('Login') }}
+                                            {{ __('Giriş yap') }}
                                         </button>
                                     </div>
                                     <span class="mt-2" style="font-weight: 600;"> Bir hesabınız yok mu ? <a

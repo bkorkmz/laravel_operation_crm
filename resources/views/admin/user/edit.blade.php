@@ -10,6 +10,8 @@
             <div class="card">
                 <div class="card-header">
                     <h3>Kullanıcı Düzenle</h3>
+                    <button type="button" class="btn btn-linkedin btn-sm float-right rounded mr-1 "
+                    onclick="return window.history.back()"><i class="fa fa-reply"></i>Geri Dön</button>
                 </div>
                 <div class="card-block">
                     @if ($errors->any())
@@ -31,9 +33,10 @@
                         </div>
         
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">E Posta</label>
+                            <label class="col-sm-2 col-form-label">E Posta <span class="text-danger"> *</span></label>
                             <div class="col-sm-10">
-                                <input id="email" readonly type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" maxlength="80" autocomplete="off"  value="{{ $user->email }}"  >
+                                <input id="email" readonly type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" 
+                                name="email" maxlength="80" autocomplete="off"  value="{{ $user->email }}"  >
         
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
@@ -51,17 +54,20 @@
                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\.*?)\.*/g, '$1');" class
                                        ="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}"
                                        name="phone"
-                                       value="{{ $user->phone }}" required>
+                                       value="{{ $user->phone }}" >
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Şifre<span class="text-danger"></span></label>
+                            <label class="col-sm-2 col-form-label">Şifre</label>
                             <div class="col-sm-10">
                                 <input id="password" 
                                        type="password"
                                        minlength="8"
                                        class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
                                        autocomplete="off" name="password">
+                                       <small>
+                                        <span class=" text-danger " readonly>Şifre en az 8 karakter olmalıdır</span>
+                                    </small>
         
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback" role="alert">
@@ -81,18 +87,28 @@
                                        autocomplete="off">
                             </div>
                         </div>
+                        {{-- @dd(blank($userrole))   --}}
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Yetkisi</label>
+                            <label class="col-sm-2 col-form-label">Rol Seçiniz<span class="text-danger"> *</span></label>
                             <div class="col-sm-10">
-                                <select name="status" class="form-control fill">
-                                    <option value="0" @if($user->status==0) selected @endif >Müşteri</option>
-                                    <option value="1" @if($user->status==1) selected @endif >Admin</option>
-                                    <option value="2" @if($user->status==2) selected @endif >Firma</option>
-                                    <option value="3" @if($user->status==3) selected @endif >Editör</option>{{--                            <option value="3" @if($user->status==3) selected @endif >İçerik Editörü</option>--}}
+                                <select name="role" class="form-control fill" required>
+                                    @foreach ($roles as $role)
+                                    <option value="{{ $role->id}}" {{  (!blank($userrole) ? $userrole[0]->id  == $role->id : "") ? "selected" : ""}}>@lang('general.'.$role->name)</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Onay Durumu  <span class="text-danger"> *</span></label>
+                            <div class="col-sm-10">
+                                <select name="status" class="form-control fill">
+                                    <option value="0" @if($user->status==0) selected @endif >Onaysız</option>
+                                    <option value="1" @if($user->status==1) selected @endif >Onaylı</option>
+                                      
+                                </select>
+                            </div>
+                        </div>
+                        {{-- <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Yerleşim Yeri </label>
                             <div class="col-sm-3">
                                 <select name="country" class="form-control fill" required >
@@ -114,7 +130,7 @@
                                     <option value="{{$user->county}}">{{$user->county}}</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
         
                        
                             <div class="form-group row">
@@ -122,37 +138,35 @@
                                 <div class="col-sm-10">
                                     <div class="form-check form-check-inline">
                                         <label class="form-check-label">
-                                            <input class="form-check-input"  {{$user->gender=="male" ? 'checked' : ""}} type="radio" name="gender" id="gender-1" value="male" required> @lang('Erkek')
+                                            <input class="form-check-input"  {{$user->gender=="male" ? 'checked' : ""}} type="radio" name="gender" id="gender-1" value="male" > @lang('Erkek')
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <label class="form-check-label">
-                                            <input class="form-check-input"  {{$user->gender=="female" ? 'checked' : ""}} type="radio" name="gender" id="gender-2" value="female" required> @lang('Kadın')
+                                            <input class="form-check-input"  {{$user->gender=="female" ? 'checked' : ""}} type="radio" name="gender" id="gender-2" value="female" > @lang('Kadın')
                                         </label>
                                     </div>
                                     <span class="messages"></span>
                                 </div>
                             </div>
-                        <div class="form-group row">
+                        {{-- <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Biyografi</label>
                             <div class="col-sm-10">
                                 <textarea rows="5" cols="5" class="form-control" placeholder="Staj başvurusu yapıldığında İş Yerine gösterilmektedir.  " 
                                           name="about" >{{ $user->about }}</textarea>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Profil Fotoğrafı</label>
-                            <div class="col-sm-10">
-                                <input type="file" class="form-control form-control-normal" placeholder="" name="avatar">
+                            <div class="col-sm-5">
+                                <input type="file" class="form-control form-control-normal dropify" placeholder="" 
+                                data-show-remove="false"
+                                data-default-file="{{ $user->avatar }}"
+                                name="avatar">
                             </div>
                         </div>
         
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Mevcut Fotoğrafı</label>
-                            <div class="col-sm-10">
-                                <img src="{{asset($user->avatar)}}" alt="" style="width: 200px;">
-                            </div>
-                        </div>
+                       
                         <div class="text-right m-t-20">
                             <button class="btn btn-primary rounded">Kaydet</button>
                         </div>

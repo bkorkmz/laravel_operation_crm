@@ -28,7 +28,7 @@
 
 
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"> --}}
     <!-- Required Fremwork -->
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/bower_components/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/bower_components/bootstrap-maxlength/js/bootstrap-maxlength.js') }}">
@@ -150,30 +150,30 @@
                                 </ul>
                             </div>
                         </li>
-                        <li class="header-notification">
+                        {{-- <li class="header-notification">
                             <div class="dropdown-primary dropdown">
                                 <div class="displayChatbox dropdown-toggle" data-toggle="dropdown">
                                     <i class="feather icon-message-square"></i>
                                     <span class="badge bg-c-green">3</span>
                                 </div>
                             </div>
-                        </li>
+                        </li> --}}
                         <li class="user-profile header-notification">
 
                             <div class="dropdown-primary dropdown">
                                 <div class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="{{asset('admin/assets/images/avatar-4.jpg')}}" class="img-radius" alt="User-Profile-Image">
+                                    <img src="{{auth()->user()->avatar ?? asset('admin/assets/images/avatar-4.jpg')}}" class="img-radius" alt="User-Profile-Image">
                                     <span>{{auth()->user()->name ?? "Admin"}}</span>
                                     <i class="feather icon-chevron-down"></i>
                                 </div>
                                 <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                    <li>
+                                    {{-- <li>
                                         <a href="#!">
                                             <i class="feather icon-settings"></i> Settings
 
                                         </a>
-                                    </li>
-                                    <li>
+                                    </li> --}}
+                                    {{-- <li>
                                         <a href="#">
                                             <i class="feather icon-user"></i> Profile
 
@@ -190,11 +190,11 @@
                                             <i class="feather icon-lock"></i> Lock Screen
 
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li>
                                         <a onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            <i class="feather icon-log-out"></i> @lang('logout')
+                                            <i class="feather icon-log-out"></i> @lang('Çıkış yap')
                                         </a>
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                             @csrf
@@ -208,7 +208,7 @@
             </div>
         </nav>
         <!-- [ chat user list ] start -->
-        <div id="sidebar" class="users p-chat-user showChat">
+        <div id="sidebar" class="users p-chat-user showChat d-none">
             <div class="had-container">
                 <div class="p-fixed users-main">
                     <div class="user-box">
@@ -330,36 +330,27 @@
         </div>
         <!-- [ chat message ] end -->
        
-{{--        @foreach(menu() as $menu)--}}
-{{--           @foreach($menu as $menuitem)--}}
-{{--            @dd($menuitem)--}}
-{{--        @endforeach--}}
-{{--        @endforeach--}}
+
         <div class="pcoded-main-container">
             <div class="pcoded-wrapper">
-                <!-- [ navigation menu ] start -->
                 <nav class="pcoded-navbar">
                     <div class="nav-list">
                         <div class="pcoded-inner-navbar main-menu">
 
                             @include('admin.menu');
-{{--                            @dd(Route::currentRouteName())--}}
                         </div>
                         
                     </div>
                 </nav>
-                <!-- [ navigation menu ] end -->
                 <div class="pcoded-content">
-                    <!-- [ breadcrumb ] start -->
-
                     <div class="page-header card">
                         <div class="row align-items-end">
                             <div class="col-lg-8">
                                 <div class="page-header-title">
                                     <i class="feather icon-home bg-c-blue"></i>
                                     <div class="d-inline">
-                                        <h5>Dashboard CRM</h5>
-                                        <span>Yönetim Paneli </span>
+                                        <h5>Yönetim Paneli</h5>
+                                        <span>CRM Panel </span>
                                     </div>
                                 </div>
                             </div>
@@ -416,22 +407,30 @@
 
 
 
-<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+{{-- <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
-<script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
+<script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script> --}}
 {{--@include('sweetalert::alert')--}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 {{-- swich  --}}
-<script type="text/javascript" src=".{{asset('admin/bower_components/switchery/js\switchery.min.js')}}"></script>
+{{-- <script type="text/javascript" src=".{{asset('admin/bower_components/switchery/js\switchery.min.js')}}"></script> --}}
 
 <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
         $('[data-toggle="modal"]').tooltip()
     })
-        // $('.dropify').dropify();
+
+       $('.dropify').dropify({
+            messages: {
+                'default': 'Resim yükle ya da sürükle',
+                'replace': 'Resim değiştir ya da sürükle',
+                'remove': 'Kaldır',
+                'error': 'Hata! Desteklenen dosya tipinden farklı bir dosya yüklediniz.'
+            }
+        });
 </script>
 
 @yield('js')

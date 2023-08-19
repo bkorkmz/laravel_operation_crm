@@ -18,11 +18,16 @@ class RolesController extends Controller
     public function index_data()
     {
         $data = Role::orderBy('id','ASC');
-        
+        if ( !auth()->user()->hasRole('Super admin')){
+            $data->where('id', '!=', 1);
+        }
         
         return DataTables::of($data)
             ->addIndexColumn()
-            ->editColumn('name', '<strong>{{$name}}</strong>')
+            ->editColumn('name',function($data){
+                return __('roles.'.$data->name);
+
+            })
             ->addColumn('action', function ($data) {
                 
                 return  '
@@ -66,19 +71,19 @@ class RolesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    protected function edit(string $id)
     {
         $role = Role::findOrFail($id);
         $permission = Permission::latest()->pluck('name')->toarray();
 
        $group_permission =  $this->groupPermissionsByModel($permission);
-       
-       return view('admin.roles.edit',compact('group_permission','role'));
+//       return $group_permission;
+       return view("admin.roles.edit",  compact('group_permission','role'));
     }
+    
 
     function groupPermissionsByModel($permissions) {
         $groups = [];
-    
         foreach ($permissions as $permission) {
             // İzin adını boşluğa göre parçalayarak son kelimeyi alınması
             $words = explode('_', $permission);
@@ -102,7 +107,35 @@ class RolesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+      
+        $request->validate([
+            'display_name' => 'required',
+
+
+        ],[
+            'display_name.required' => 'Rol Alanı Gereklidir.',
+
+        ]);
+
+
+        $role = Role::findOrFail($id);
+
+        $permissions = $request['permissions'];
+
+      
+        if ($role->hasPermissionto($request->permissions)) {
+            $role->revokePermissionTo($request->permissions);
+
+        }else {
+            $role->givePermissionTo($request->permissions);
+        }
+//   dd($role->hasPermissionto($request->permissions));
+
+        //Log::info(label_case($module_title . ' ' . $module_action) . ' | User:' . auth()->user()->name . '(ID:' . auth()->user()->id . ')');
+
+        // Flash::success(__('labels.updated_successfully'))->success()->important();
+       return response()->json(['status'=>'success','msg'=>true],200);
     }
     
     /**

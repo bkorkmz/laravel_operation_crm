@@ -1,59 +1,82 @@
-@php $menus = menu();
-  
- $currentpath = request()->path();
- 
- if (strpos($currentpath, 'backend/') === 0) {
-    $currentpath = str_replace('backend/', '', $currentpath); // Eğer "backend" başlangıçta varsa sadece path'i alınır
+@php
+    $menus = menu();
+    
+    $currentpath = request()->path();
+    
+    if (strpos($currentpath, 'backend/') === 0) {
+        $currentpath = str_replace('backend/', '', $currentpath); // Eğer "backend" başlangıçta varsa sadece path'i alınır
 } else {
     $currentpath = explode('/', $currentpath)[0]; // "backend" yoksa ilk parçayı alınır
-}
- 
+    }
+    
 @endphp
+{{-- @dd($currentpath,$menus['menu'][1]) --}}
 
 <ul class="pcoded-item pcoded-left-item">
-   
 
-        @foreach($menus['menu'] as $menuitem)
-        @php
-        if (isset($menuitem['submenu'])) {
-           $has_sub = "pcoded-hasmenu";
-        }else {
-              $has_sub = "";
-        }
-            
-        @endphp
-           {{-- @dd(isset($menuitem['submenu']),$currentpath) --}}
-            @if(preg_match($menuitem['path'], $currentpath))
-                <li class="{{ $has_sub}}  active pcoded-trigger">
-            @else
+
+    @foreach ($menus['menu'] as $menuitem)
+
+        @if (permissionCheck($menuitem['permission']) || $menuitem['permission'] == "" )
+            {{-- @canany($menuitem['permission']) --}}
+            {{-- @dd($menuitem) --}}
+
+            @php
+                if (isset($menuitem['submenu'])) {
+                    $has_sub = 'pcoded-hasmenu';
+                } else {
+                    $has_sub = '';
+                }
+                
+            @endphp
+            {{-- @dd(isset($menuitem['submenu']),$currentpath) --}}
+            @if (preg_match($menuitem['path'], $currentpath)
+             )
+                <li class="{{ $has_sub }}  active pcoded-trigger">
+                @else
                 <li class="{{ $has_sub }}">
             @endif
-                    <a href="{{$menuitem['route'] != "" ? route($menuitem['route']) : "javascript:void(0)"}} " class="waves-effect waves-dark">
-                        <span class="pcoded-micon"><i class="{{$menuitem['icon']}} "></i></span>
-                        <span class="pcoded-mtext">{{$menuitem['text']}} </span>
-                    </a>
-                
-                    @if(isset($menuitem['submenu']))
-                        <ul class="pcoded-submenu">
-                            @foreach($menuitem['submenu'] as $submenu)
-                                @if(preg_match($submenu['path'],$currentpath))
-                                    <li class="active">
+            <a href="{{ $menuitem['route'] != '' ? route($menuitem['route']) : 'javascript:void(0)' }} "
+                class="waves-effect waves-dark">
+                <span class="pcoded-micon"><i class="{{ $menuitem['icon'] }} "></i></span>
+                <span class="pcoded-mtext">{{ $menuitem['text'] }} </span>
+                @if ($menuitem['badge'] == 'true')
+                    <span class="pcoded-badge label label-danger {{ $menuitem['badge'] }}"></span>
+                @endif
+            </a>
+
+
+            @if (isset($menuitem['submenu']))
+                <ul class="pcoded-submenu">
+                    @foreach ($menuitem['submenu'] as $submenu)
+                        {{-- @can($menuitem['permission']) --}}
+                        @if (permissionCheck($submenu['permission']) || $menuitem['permission'] == "")
+                            @if (preg_match($submenu['path'], $currentpath))
+                                <li class="active">
                                 @else
-                                    <li>
-                                        @endif
-                                        <a href="{{$submenu['route'] != "" ? route($submenu['route']) : "javascript:void(0)"}}" class="waves-effect waves-dark">
-                                            <span class="pcoded-mtext">{{$submenu['text']}}</span>
-                                        </a>
-                                    </li>
-                                    @endforeach
-                        </ul>
-                    @endif
-                </li>
-                @endforeach
+                                <li>
+                            @endif
+                            <a href="{{ $submenu['route'] != '' ? route($submenu['route']) : 'javascript:void(0)' }}"
+                                class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">{{ $submenu['text'] }}</span>
+                                @if ($menuitem['badge'] == 'true')
+                                    <span class="pcoded-badge label label-danger {{ $menuitem['badge'] }}"></span>
+                                @endif
+                            </a>
+                            </li>
+                        {{-- @endcan --}}
+                         @endif
+                    @endforeach
+                </ul>
+            @endif
+            </li>
+            {{-- @endcanany --}}
+        @endif
+    @endforeach
 </ul>
-    
-    
-    
+
+
+
 {{-- 
     
     <li class="pcoded-hasmenu">
@@ -249,7 +272,7 @@
 
 
                 <span class="pcoded-mtext">İletişim Talepleri
-                    @if($message_count > 0)
+                    @if ($message_count > 0)
                 <span class="badge badge-danger">&nbsp;{{$message_count}}</span>
                     @endif
                 </span>
@@ -266,7 +289,7 @@
             </a>
         </li>
     </ul>
-    @if(auth()->id() == 1)
+    @if (auth()->id() == 1)
     <ul class="pcoded-item pcoded-left-item">
         <li>
             <a href="/log-viewer" class="waves-effect waves-dark">

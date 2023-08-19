@@ -69,21 +69,13 @@ return Validator::make($data, [
     protected function create(array $data)
     {
        
-       $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'tc_no' => $data['tc_no'],
-            'password' => Hash::make($data['password']),
-        ]);
-
-
-
-        
-        
-        
-        
-        
-        
+           $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'tc_no' => $data['tc_no'],
+                'password' => Hash::make($data['password']),
+            ]);
+            $user->assignRole(['student']);
         return $user;
     }
 }

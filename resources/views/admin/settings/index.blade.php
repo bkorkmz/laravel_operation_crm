@@ -16,12 +16,23 @@
                             <div class="col-lg-12 col-xl-12">
                                 <ul class="nav  nav-pills" role="tablist">
                                     @foreach ($settings->groupBy('group') as $key => $tab_settings)
-                                        <li class="nav-item">
-                                            <a class="nav-link {{ $loop->iteration == 1 ? 'active' : '' }}" data-toggle="tab"
-                                                href="#{{ $key }}" role="tab"><i
-                                                    class="icofont icofont-home"></i>@lang('general.tabs.settings.' . $key)</a>
-                                            <div class="slide"></div>
-                                        </li>
+                                        @role('Super admin')
+                                            <li class="nav-item ">
+                                                <a class="nav-link {{ $loop->iteration == 1 ? 'active' : '' }}"
+                                                    data-toggle="tab" href="#{{ $key }}" role="tab"><i
+                                                        class="icofont icofont-home"></i>@lang('general.tabs.settings.' . $key)</a>
+                                                <div class="slide"></div>
+                                            </li>
+                                        @else
+                                            @if ($key != 'secret')
+                                                <li class="nav-item">
+                                                    <a class="nav-link {{ $loop->iteration == 1 ? 'active' : '' }}"
+                                                        data-toggle="tab" href="#{{ $key }}" role="tab"><i
+                                                            class="icofont icofont-home"></i>@lang('general.tabs.settings.' . $key)</a>
+                                                    <div class="slide"></div>
+                                                </li>
+                                            @endif
+                                        @endrole
                                     @endforeach
                                 </ul>
 
@@ -71,7 +82,7 @@
                                                                         <input type="file"
                                                                             class="form-control form-control-normal dropify"
                                                                             data-show-remove="false"
-                                                                            data-default-file="/{{ $form_element->value }}"
+                                                                            data-default-file="{{ $form_element->value }}"
                                                                             name="{{ $form_element->name }}"
                                                                             accept=".jpg,.jpeg,.png,.tiff,.gif,.svg,.webp,.bmp,.ico">
                                                                     </div>

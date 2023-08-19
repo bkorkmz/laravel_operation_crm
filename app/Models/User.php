@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Contracts\Role;
+
 
 class User extends Authenticatable
 {
@@ -68,6 +70,11 @@ class User extends Authenticatable
         }
         
         return $products->countBy('id')->sortDesc();
+    }
+    
+    public function get_role_names()
+    {
+        return $this->getRoleNames();
     }
     
     

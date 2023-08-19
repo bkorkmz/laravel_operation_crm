@@ -44,12 +44,13 @@ if(!function_exists('system_settings')) {
      * @return string
      */
     function system_settings($string)
-
     {
         $system = 'Merhaba Dünya';
         return $system;
     }
 }
+
+
 
 if(!function_exists('menu')) {
     function menu()
@@ -57,14 +58,14 @@ if(!function_exists('menu')) {
 
         $MenuJson = file_get_contents(base_path('resources/views/layouts/menu-data/menu.json'));
         $MenuData = json_decode($MenuJson,true);
+       
         return $MenuData;
-
-
     }
 
 }
 
 if(!function_exists('permissionCheck')) {
+ 
     function permissionCheck($permission)
     {
 
@@ -79,11 +80,6 @@ if(!function_exists('permissionCheck')) {
         }else{
             return false;
         }
-
-
-        return $MenuData;
-
-
     }
 
 }

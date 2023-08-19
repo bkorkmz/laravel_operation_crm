@@ -128,7 +128,7 @@ class ProductsController extends Controller
         $product->status = $validatedData['status'];
         if($request->image)
         {
-            $product->photo = 'storage/'.$validatedData['image']->store('products', 'public');
+            $product->photo = '/storage/'.$validatedData['image']->store('products', 'public');
             
         }
         
@@ -193,7 +193,7 @@ class ProductsController extends Controller
 
         if($request->hasFile('image'))
         {
-            $products['photo'] = 'storage/'.$validatedData['image']->store('products', 'public');
+            $products['photo'] = '/storage/'.$validatedData['image']->store('products', 'public');
         }
         $products->update([
             'name'=>$validatedData['name'],
@@ -202,7 +202,6 @@ class ProductsController extends Controller
             'price'=>$validatedData['price'],
             'status'=>$validatedData['status'],
         ]);
-        dd($products);
         toastr()->success('Ürün Güncelleme İşlemi Tamamlandı.', 'Başarılı');
         
         return redirect(route('product.index'));

@@ -1,6 +1,6 @@
 @extends('layouts.layout-admin')
 @section('title')
-    {{ __('ÜRün Oluşturma Sayfası  ') }}
+    {{ __('Ürün Ekleme Sayfası  ') }}
 @endsection
 @section('content')
     <div class="pcoded-inner-content">
