@@ -36,9 +36,14 @@ class PortFolioController extends Controller
             ->editColumn('created_at', function ($data) {
                 return $data->created_at ? $data->created_at->format('d-m-Y') : "";
             })
-            ->editColumn('type', function ($data) {
+            ->editColumn('status', function ($data) {
+                if ($data->status == 1) {
+                   $span = '<span class="badge badge-inverse-primary p-2 w-100">' . __('general.active') . ' </span >';
+                }else {
+                    $span = '<span class="badge badge-inverse-danger p-2 w-100">' . __('general.passive') . ' </span >';
+                }
 
-                return '<span class="badge badge-inverse-danger p-2 w-100">' . __('general.'.$data->type) . ' </span >';
+                return  $span;
             })
 
             ->addColumn('action', function ($data) {
@@ -149,8 +154,8 @@ class PortFolioController extends Controller
     public function delete(PortFolio $model)
     {
 
-        $user->delete();
-        Log::info($user . ' ' . 'Forcedelete user_job' . ' | User:' . Auth::user()->name);
+        $model->delete();
+        // Log::info($user . ' ' . 'Forcedelete user_job' . ' | User:' . Auth::user()->name);
         //        session()->flash('message', 'Delete Successfully');
         toastr()->success('İşlem başarılı şekilde tamamlanmıştır.', 'Başarılı');
         return redirect()->back();

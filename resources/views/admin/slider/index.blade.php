@@ -41,6 +41,8 @@
 
 
 @section('css')
+<link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+
 <style>
 .slider__images{
 
@@ -59,7 +61,6 @@ height: auto;
 @endsection
 
 @section('js')
-    <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
 
@@ -90,6 +91,11 @@ height: auto;
                         title: 'Bağlantı Linki',
                         data: 'link',
                         name: 'link'
+                    },
+                    {
+                        title: 'Durum',
+                        data: 'status',
+                        name: 'status'
                     },
                     {
                         title: "Kayıt Tarihi",

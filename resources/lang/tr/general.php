@@ -58,6 +58,8 @@ return [
     "user" =>"Kullanıcı",
     //slider
     "slider"=>"Slider",
-    "portfolio"=>"Portfolyo"
+    "portfolio"=>"Portfolyo",
+    "active"=>"Aktif",
+    "passive"=>"Pasif",
   
 ];
