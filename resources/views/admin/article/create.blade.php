@@ -11,7 +11,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3>Makale Ekeleme Sayfası</h3>
-                                <button type="button" class="btn btn-linkedin btn-sm float-right rounded mr-1 "
+                                <button type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
                                     onclick="return window.history.back()"><i class="fa fa-reply"></i>Geri Dön</button>
 
                             </div>
@@ -73,9 +73,9 @@
                                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                                     @endforeach
                                                 </select>
-                                                <a type="button" class="float-right badge badge-inverse-danger"
+                                                {{-- <a type="button" class="float-right badge badge-inverse-danger"
                                                     href="javascript:void(0)" data-toggle="modal"
-                                                    data-target="#addCategoryModal">Kategori Ekle</a>
+                                                    data-target="#addCategoryModal">Kategori Ekle</a> --}}
                                             </div>
                                             <div class="col-sm-3 float-center">
                                                 <label>Manşette Başlık</label>
@@ -255,13 +255,9 @@
     @endsection
 
     @section('js')
-        {{-- <script type="text/javascript" src="{{ asset('admin/assets/bower_components/sweetalert/js/sweetalert.min.js') }}"> --}}
+        <script type="text/javascript" src="{{ asset('admin/assets/bower_components/sweetalert/js/sweetalert.min.js') }}">
         <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/translations/tr.js"></script>
-        {{-- <script src="{{ asset('vendor/dropify/dist/js/dropify.js') }}"></script> --}}
-
-
-        {{-- <script src="{{ asset('admin/assets/partials/ckeditor/ckeditor.js') }}"></script> --}}
         <script>
             $(document).ready(function() {
 

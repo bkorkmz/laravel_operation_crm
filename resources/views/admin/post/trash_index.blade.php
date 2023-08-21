@@ -15,7 +15,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h3>Silinen Haberler Listesi</h3>
-                            <button type="button" class="btn btn-linkedin btn-sm float-right rounded mr-1 "
+                            <button type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
                                     onclick="return window.history.back()"><i class="fa fa-reply"></i>Geri Dön</button>
 
                         </div>

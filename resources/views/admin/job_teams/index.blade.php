@@ -62,11 +62,7 @@
                         data: 'name',
                         name: 'user.name'
                     },
-                    {
-                        title:'Email',
-                        data: 'email',
-                        name: 'user.email'
-                    },
+  
                     {
                         title:"Görev",
                         data: 'job',

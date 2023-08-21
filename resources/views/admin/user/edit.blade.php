@@ -10,7 +10,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3>Kullanıcı Düzenle</h3>
-                    <button type="button" class="btn btn-linkedin btn-sm float-right rounded mr-1 "
+                    <button type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
                     onclick="return window.history.back()"><i class="fa fa-reply"></i>Geri Dön</button>
                 </div>
                 <div class="card-block">
@@ -157,7 +157,7 @@
                             </div>
                         </div> --}}
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Profil Fotoğrafı</label>
+                            <label class="col-sm-2 col-form-label">Profil Fotoğrafı (min:300x300)</label>
                             <div class="col-sm-5">
                                 <input type="file" class="form-control form-control-normal dropify" placeholder="" 
                                 data-show-remove="false"

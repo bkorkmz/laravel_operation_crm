@@ -34,6 +34,8 @@ return [
             "site_twitter_url"=>"Twitter Bağlantı Linki",
             "site_instagram_url"=>"İnstagram Bağlantı Linki",
             "site_youtube_url"=>"Youtube Bağlantı Linki",
+            "site_google_plus_url" => "Google_plus Bağlantı Linki ",
+            "site_linkedin_url" => "LinkedinBağlantı Linki ",
             "site_cookie_text"=>"Cerez Politikası Mesajı ",
             "site_cookie_url"=>"Cerez Politikası Url ",
             "site_meta_tag"=>"Meta Etiketleri",
@@ -43,11 +45,22 @@ return [
             "site_login_img"=>"Giriş Sayfası Resmi ",
             "site_register_img"=>"Kayıt Sayfası Resmi ",
             "CAPTCHA_SECRET"=>"Recaptca SecretKey",
-            "CAPTCHA_SITEKEY"=>"Recaptca SiteKey"
+            "CAPTCHA_SITEKEY"=>"Recaptca SiteKey",
+            "frontend_color"=>"Frontend Color"
             
             
         ]
         
+    ],
+    'categories' => [
+        "slider" => "Slider",
+        "portfolio" => "Portfolyo",
+        "services" => "Hizmet",
+        "article" => "Makale",
+        "post" => "Haber",
+        "product" => "Ürün",
+        "photo_gallery" => "Foto Galer",
+        "video_gallery" => "Video Galeri",
     ],
     "Super admin" =>"Super Admin",
     "administrator" =>"Yönetici",

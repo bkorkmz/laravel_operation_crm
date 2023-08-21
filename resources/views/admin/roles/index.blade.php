@@ -48,7 +48,7 @@
                 ajax: '{{route('roles.index_data')}}',
                 columns: [
                     {title:'ID', data: 'DT_RowIndex', orderable: false, searchable: false, },
-                    {title:'Adı', data: 'name', name: 'name'},
+                    {title:'Rol Adı', data: 'name', name: 'name'},
                     {title:'Eylemler', data: 'action', name: 'action',searchable:false,orderable:false,class:'text-center' }
                 ],
                 language: {

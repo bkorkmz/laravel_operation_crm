@@ -14,7 +14,7 @@
                 <div class="page-body">
                     <div class="card">
                         <div class="card-header">
-                            <h3>PortFolyo Listesi</h3>
+                            <h3>Slider Listesi</h3>
                             {{-- <a href="{{ route('user.teams.trashed') }}" type="button"
                                 class="btn btn-warning btn-sm float-right rounded mr-1 " data-toggle="tooltip"
                                 data-placement="top" title="Çöp Kutusu"><i class="fa fa-trash"></i></a> --}}
@@ -69,7 +69,7 @@ height: auto;
             $('#datatable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('slider.index_data') }}',
+                ajax: '{{ route($module_name.'.index_data') }}',
                 columns: [{
                         title: 'ID',
                         data: 'id',

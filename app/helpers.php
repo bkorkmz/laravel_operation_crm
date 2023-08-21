@@ -69,7 +69,7 @@ if(!function_exists('permissionCheck')) {
     function permissionCheck($permission)
     {
 
-        $isSuperAdmin = auth()->check() && auth()->user()->hasRole('super admin');
+        $isSuperAdmin = auth()->check() && auth()->user()->hasRole('Super admin');
         if( $isSuperAdmin)
         {
             return true;

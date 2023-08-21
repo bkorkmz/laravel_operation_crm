@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Settings;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -16,7 +17,7 @@ class SettingsServiceProvider extends ServiceProvider
     public function register(): void
     {
         if (Schema::hasTable('settings')) {
-            $settings = \DB::connection()->table('settings')->pluck('value', 'name')->toArray();
+            $settings = DB::connection()->table('settings')->pluck('value', 'name')->toArray();
             Config::set('settings', $settings);
         }
         

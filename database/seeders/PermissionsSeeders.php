@@ -23,6 +23,12 @@ class PermissionsSeeders extends Seeder
         Permissions::firstOrCreate(['name' => 'view_users', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'view_menu_users', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'view_trashed_users', 'guard_name' => 'web']);
+
+        Permissions::firstOrCreate(['name' => 'view_my_profile_users', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'edit_my_profile_users', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'update_my_profile_users', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'bloke_my_profile_users', 'guard_name' => 'web']);
+
         ///Roles Permissions
         Permissions::firstOrCreate(['name' => 'view_menu_roles', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'view_all_roles', 'guard_name' => 'web']);
@@ -79,6 +85,9 @@ class PermissionsSeeders extends Seeder
         Permissions::firstOrCreate(['name' => 'read_comment', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'delete_comment', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'publish_comment', 'guard_name' => 'web']);
+        
+        Permissions::firstOrCreate(['name' => 'message_information_comment', 'guard_name' => 'web']);
+
         //settings
         Permissions::firstOrCreate(['name' => 'view_menu_settings', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'view_settings', 'guard_name' => 'web']);
@@ -107,6 +116,13 @@ class PermissionsSeeders extends Seeder
         Permissions::firstOrCreate(['name' => 'edit_slider', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'update_slider', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'delete_slider', 'guard_name' => 'web']);
+       //Services
+        Permissions::firstOrCreate(['name' => 'view_menu_services', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'view_services', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'create_services', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'edit_services', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'update_services', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'delete_services', 'guard_name' => 'web']);
 
 
         //        $super_admin = Role::whereName('Super admin')->first();
@@ -124,13 +140,13 @@ class PermissionsSeeders extends Seeder
             'view_users',
             'view_menu_users',
             'view_trashed_users',
-            'view_menu_post',
-            'view_all_post',
-            'view_post',
-            'add_post',
-            'edit_post',
-            'delete_post',
-            'restore_post',
+            // 'view_menu_post',
+            // 'view_all_post',
+            // 'view_post',
+            // 'add_post',
+            // 'edit_post',
+            // 'delete_post',
+            // 'restore_post',
             'view_menu_category',
             'view_category',
             'view_all_category',
@@ -138,12 +154,6 @@ class PermissionsSeeders extends Seeder
             'edit_category',
             'delete_category',
             'restore_category',
-            'view_menu_comment',
-            'view_comment',
-            'view_all_comment',
-            'read_comment',
-            'delete_comment',
-            'publish_comment',
             'view_menu_settings',
             'view_settings',
             'view_all_settings',
@@ -156,6 +166,26 @@ class PermissionsSeeders extends Seeder
             'edit_teams',
             'update_teams',
             'delete_teams',
+            'view_menu_article',
+            'view_article',
+            'view_all_article',
+            'create_article',
+            'edit_article',
+            'update_article',
+            'view_menu_slider',
+            'view_slider',
+            'create_slider',
+            'edit_slider',
+            'update_slider',
+            'delete_slider',
+            "view_menu_services",
+            "view_services",
+            "create_services",
+            "edit_services",
+            "update_services",
+            "delete_services",
+            "message_information_comment",
+
 
         ];
 

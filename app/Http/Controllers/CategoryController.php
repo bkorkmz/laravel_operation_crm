@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -40,11 +41,48 @@ class CategoryController extends Controller
                 return $data->name;
             })
             ->editColumn('model', function ($data) {
-                return $data->model;
+                switch ($data->model) {
+                    case 'services':
+                        $model = '<span class="badge badge-info">' . __('general.categories.' . $data->model) . '</span>';
+                        break;
+                    case 'article':
+                        $model = '<span class="badge badge-secondary">' . __('general.categories.' . $data->model) . '</span>';
+                        break;
+                    case 'post':
+                        $model = '<span class="badge badge-danger">' . __('general.categories.' . $data->model) . '</span>';
+                        break;
+                    case 'product':
+                        $model = '<span class="badge badge-warning">' . __('general.categories.' . $data->model) . '</span>';
+                        break;
+                    case 'photo_gallery':
+                        # code...
+                        break;
+                    case 'video_gallery':
+                        $model = '<span class="badge badge-default">' . __('general.categories.' . $data->model) . '</span>';
+                        break;
+
+                    default:
+                        $model = '<span class="badge badge-info">' . __('general.categories.' . $data->model) . '</span>';
+                        break;
+                }
+
+
+
+                return $model;
             })
 
-            ->editColumn('user', function ($data) {
-                return $data['author'] ? $data['author']->name : "";
+            ->editColumn('show', function ($data) {
+                // return $data->show;
+
+                if ($data->show == 1) {
+                    $span = '<span class="badge badge-inverse-primary">Aktif</span>';
+                } else {
+                    $span = '<span class="badge badge-inverse-danger">Pasif</span>';
+                }
+
+
+
+                return $span;
             })
 
             ->editColumn('created_at', function ($data) {
@@ -77,10 +115,12 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
 
+
         $request->validate(
             [
                 'name' => 'required|max:50',
                 'model' => 'required|max:50',
+                'description' => 'nullable|max:250',
 
             ],
             [
@@ -88,6 +128,7 @@ class CategoryController extends Controller
                 'name.max' => 'Başlık alanı en fazla 50 karakter olömalıdır.',
                 'model.required' => 'Model gereklidir.',
                 'model.max' => 'Model alanı en fazla 50 karakter olömalıdır.',
+                'description.max' => 'Açıklama alanı en fazla 550 karakter olömalıdır.',
             ]
         );
         if ($request->parent_id) {
@@ -98,7 +139,7 @@ class CategoryController extends Controller
             '_token',
             'image'
         );
-        $data_array['slug'] = slug_format(Str::limit($request->title, 60));
+        $data_array['slug'] = slug_format(Str::limit($request->name, 60));
 
         if (request()->hasFile('image')) {
             $this->validate(request(), array('image_mini' => 'sometimes|mimes:png,jpg,jpeg,gif|max:4096'));
@@ -149,6 +190,8 @@ class CategoryController extends Controller
             [
                 'name' => 'required|max:50',
                 'model' => 'required|max:50',
+                'description' => 'nullable|max:250',
+
 
             ],
             [
@@ -156,6 +199,7 @@ class CategoryController extends Controller
                 'name.max' => 'Başlık alanı en fazla 50 karakter olömalıdır.',
                 'model.required' => 'Model gereklidir.',
                 'model.max' => 'Model alanı en fazla 50 karakter olömalıdır.',
+                'description.max' => 'Açıklama alanı en fazla 250 karakter olömalıdır.',
             ]
         );
 
@@ -164,7 +208,7 @@ class CategoryController extends Controller
             'image'
         );
 
- 
+
         $data_array['slug'] = slug_format(Str::limit($request->title, 60));
 
         if (request()->hasFile('image')) {
@@ -211,7 +255,8 @@ class CategoryController extends Controller
     public function trashed_index()
     {
         // $post = $this->model_name::onlyTrashed()->orderBy('deleted_at', 'desc')->paginate(20);
-        return view('admin.' . $this->directory . '.trash_index');
+        $modul_name = $this->module_name;
+        return view('admin.' . $this->directory . '.trash_index', compact('modul_name'));
     }
 
 
@@ -261,4 +306,8 @@ class CategoryController extends Controller
         toastr()->success('İşlem başarılı şekilde tamamlanmıştır.', 'Başarılı');
         return redirect()->back();
     }
+
+
+
+    
 }

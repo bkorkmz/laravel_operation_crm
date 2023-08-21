@@ -11,9 +11,9 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3>Kategori Listesi</h3>
-                                <a href="{{ route($modul_name . '.trashed_index') }}" type="button"
+                                {{-- <a href="{{ route($modul_name . '.trashed_index') }}" type="button"
                                     class="btn btn-warning btn-sm float-right rounded mr-1 " data-toggle="tooltip"
-                                    data-placement="top" title="Çöp Kutusu"><i class="fa fa-trash"></i></a>
+                                    data-placement="top" title="Çöp Kutusu"><i class="fa fa-trash"></i></a> --}}
                                 <a href="{{ route($modul_name . '.create') }}" type="button"
                                     class="btn btn-primary btn-sm float-right rounded mr-1 "><i class="fa fa-plus"></i>Yeni
                                     ekle</a>
@@ -61,13 +61,13 @@
                         title: 'Kategori',
                         data: 'model',
                         name: 'model',
-                        orderable: false,
-                        sortable: false
+                        orderable: true,
+                        sortable: true
                     },
                     {
-                        title: 'Ekleyen Kişi',
-                        data: 'user',
-                        name: 'author.name',
+                        title: 'Durum',
+                        data: 'show',
+                        name: 'show',
                         orderable: true,
                         sortable: false,
                         render: function(e) {

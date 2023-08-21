@@ -16,7 +16,8 @@
       "badge": "false",
       "permission": [
         "view_menu_users",
-        "view_menu_roles"
+        "view_menu_roles",
+        "view_menu_teams"
       ],
       "submenu": [
         {
@@ -145,8 +146,8 @@
       "path": "/^(category)/",
       "badge": "false",
       "permission": [
-        "view_menu_category",
-        "view_category"
+        "view_menu_category"
+        
       ],
       "submenu": [
         {
@@ -159,13 +160,14 @@
             "view_category"
           ]
         }
+        
       ]
     },
     {
-      "text": "PortFolyo",
+      "text": "Modüller ",
       "icon": "feather icon-image",
       "route": "",
-      "path": "/^(slider)/",
+      "path": "/^(slider|portfolio|faq_sss)/",
       "badge": "false",
       "permission": [
         "view_menu_slider",
@@ -173,36 +175,77 @@
       ],
       "submenu": [
         {
-          "text": "Listeyi Görüntüle",
+          "text": "PortFolyo ",
+          "icon": "feather icon-users",
+          "route": "portfolio.index",
+          "path": "/^portfolio(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
+          "badge": "false",
+          "permission": [
+            "view_slider"
+          ]
+        },
+        {
+          "text": "Çözüm Ortaklarımız",
           "icon": "feather icon-users",
           "route": "slider.index",
-          "path": "/^(slider)/",
+          "path": "/^slider(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
+          "badge": "false",
+          "permission": [
+            "view_slider"
+          ]
+        },
+        {
+          "text": "Hakkımızda Sayfası",
+          "icon": "feather icon-users",
+          "route": "page.about",
+          "path": "/^page(\\/about)?$/",
+          "badge": "false",
+          "permission": [
+            "view_slider"
+          ]
+        },
+        {
+          "text": "Sıkça Sorulan Sorular",
+          "icon": "feather icon-users",
+          "route": "faq_sss.index",
+          "path": "/^faq_sss(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
           "badge": "false",
           "permission": [
             "view_slider"
           ]
         }
+       
       ]
     },
     {
-      "text": "Makaleler",
+      "text": "İçerik Üreticisi ",
       "icon": "feather icon-edit",
       "route": "",
-      "path": "/^article/",
+      "path": "/^(article|services)/",
       "badge": "false",
       "permission": [
         "view_menu_article",
-        "view_article"
+        "view_menu_services"
       ],
       "submenu": [
         {
-          "text": "Makaleler Listesi",
+          "text": "Makaleler",
           "icon": "feather icon-users",
           "route": "article.index",
           "path": "/^article(\\/index|\\/create|\\/edit\\/|\\/trashed_index)?$/",
           "badge": "false",
           "permission": [
             "view_article"
+          ]
+        },
+        {
+          "text": "Hizmetler",
+          "icon": "feather icon-users",
+          "route": "services.index",
+          "path": "/^services(\\/index|\\/create|\\/edit\\/|\\/trashed_index)?$/",
+          "badge": "false",
+          "permission": [
+            "view_menu_services"
           ]
         }
       ]
@@ -230,6 +273,14 @@
         }
       ]
     },
+    {
+      "text": "İletişim Talepleri",
+      "icon": "feather icon-message-circle",
+      "route": "",
+      "path": "/^comment_message/",
+      "badge": "false",
+      "permission": [
+        "message_information_comment"]},
     {
       "text": "Ürünler",
       "icon": "feather icon-pie-chart",

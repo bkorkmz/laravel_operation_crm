@@ -25,15 +25,15 @@
                                 <div class="card-body">
                                     <div class="row align-items-center m-b-30">
                                         <div class="col">
-                                            <h6 class="m-b-5 text-white">Total Profit</h6>
-                                            <h3 class="m-b-0 f-w-700 text-white">$1,783</h3>
+                                            <h6 class="m-b-5 text-white">Aktif Takım Üyesi</h6>
+                                            <h3 class="m-b-0 f-w-700 text-white">{{$user_count}}</h3>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-money-bill-alt text-c-red f-18"></i>
+                                            <i class="fas fa-user text-c-red f-18"></i>
                                         </div>
                                     </div>
-                                    <p class="m-b-0 text-white"><span class="label label-danger m-r-10">+11%</span>From
-                                        Previous Month</p>
+                                    {{-- <p class="m-b-0 text-white"><span class="label label-danger m-r-10">+11%</span>From
+                                        Previous Month</p> --}}
                                 </div>
                             </div>
                         </div>
@@ -42,15 +42,15 @@
                                 <div class="card-body">
                                     <div class="row align-items-center m-b-30">
                                         <div class="col">
-                                            <h6 class="m-b-5 text-white">Total Orders</h6>
-                                            <h3 class="m-b-0 f-w-700 text-white">15,830</h3>
+                                            <h6 class="m-b-5 text-white">Toplam Hizmet</h6>
+                                            <h3 class="m-b-0 f-w-700 text-white">{{$total_services}}</h3>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-database text-c-blue f-18"></i>
                                         </div>
                                     </div>
-                                    <p class="m-b-0 text-white"><span class="label label-primary m-r-10">+12%</span>From
-                                        Previous Month</p>
+                                    {{-- <p class="m-b-0 text-white"><span class="label label-primary m-r-10">+12%</span>From
+                                        Previous Month</p> --}}
                                 </div>
                             </div>
                         </div>
@@ -59,15 +59,15 @@
                                 <div class="card-body">
                                     <div class="row align-items-center m-b-30">
                                         <div class="col">
-                                            <h6 class="m-b-5 text-white">Average Price</h6>
-                                            <h3 class="m-b-0 f-w-700 text-white">$6,780</h3>
+                                            <h6 class="m-b-5 text-white">Toplam Makale</h6>
+                                            <h3 class="m-b-0 f-w-700 text-white">{{$total_article}}</h3></h3>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign text-c-green f-18"></i>
                                         </div>
                                     </div>
-                                    <p class="m-b-0 text-white"><span class="label label-success m-r-10">+52%</span>From
-                                        Previous Month</p>
+                                    {{-- <p class="m-b-0 text-white"><span class="label label-success m-r-10">+52%</span>From
+                                        Previous Month</p> --}}
                                 </div>
                             </div>
                         </div>
@@ -83,8 +83,8 @@
                                             <i class="fas fa-tags text-c-yellow f-18"></i>
                                         </div>
                                     </div>
-                                    <p class="m-b-0 text-white"><span class="label label-warning m-r-10">+52%</span>From
-                                        Previous Month</p>
+                                    {{-- <p class="m-b-0 text-white"><span class="label label-warning m-r-10">+52%</span>From
+                                        Previous Month</p> --}}
                                 </div>
                             </div>
                         </div>
@@ -278,7 +278,7 @@
                         <!-- imprestion, goal, impect end -->
 
                         <!-- income start -->
-                        <div class="col-xl-4 col-md-6">
+                        {{-- <div class="col-xl-4 col-md-6">
                             <div class="card o-hidden">
                                 <div class="card-header">
                                     <h5>Total Leads</h5>
@@ -349,11 +349,11 @@
                                 </div>
                                 <div id="income-analysis" style="height:100px"></div>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- income end -->
 
                         <!-- Latest Activity, Feeds, Upcoming Deadlines start -->
-                        <div class="col-xl-8 col-md-12">
+                        {{-- <div class="col-xl-8 col-md-12">
                             <div class="card latest-update-card">
                                 <div class="card-header">
                                     <h5>Latest Activity</h5>
@@ -414,8 +414,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-xl-4 col-md-12">
+                        </div> --}}
+                        {{-- <div class="col-xl-4 col-md-12">
                             <div class="card chat-card">
                                 <div class="card-header">
                                     <h5>Chat history</h5>
@@ -506,12 +506,13 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- Latest Activity, Feeds, Upcoming Deadlines end -->
 
                     </div>
                     <!-- [ page content ] end -->
                 </div>
+                
             </div>
         </div>
     </div>

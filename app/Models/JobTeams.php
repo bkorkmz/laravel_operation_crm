@@ -12,7 +12,14 @@ class JobTeams extends Model
     protected $guarded = [];
     protected $table = "job_teams";
 
-
+    // protected static function boot(): void
+    // {
+    //     parent::boot();
+    //     static::saving(function ($product) {
+    //          $product->user_id = auth()->id();
+            
+    //     });
+    // }
 
     public function user()
     {

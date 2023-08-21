@@ -11,7 +11,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3>Kategori Ekeleme Sayfası</h3>
-                                <button type="button" class="btn btn-linkedin btn-sm float-right rounded mr-1 "
+                                <button type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
                                     onclick="return window.history.back()"><i class="fa fa-reply"></i>Geri Dön</button>
 
                             </div>
@@ -55,6 +55,8 @@
                                             <div class="col-sm-3">
                                                 <select name="model" class="form-control fill">
                                                     <option value="">Bir modül seçiniz </option>
+                                                    <option value="portfolio">Portfolyo</option>
+                                                    <option value="services">Hizmet</option>
                                                     <option value="article">Makale</option>
                                                     <option value="post">Haber</option>
                                                     <option value="product">Ürün</option>
@@ -71,20 +73,20 @@
 
                                         <div class="form-group row my-4">
                                             <label class="col-sm-2 col-form-label">Durum
-                                               +</label>
+                                               </label>
                                             <div class="col-sm-3 row align-self-center" >
                                                 
                                                 <div class="form-check m-2">
                                                     <input class="form-check-input" checked type="radio" name="show"
                                                         id="active" value="1"
-                                                        {{ old('show') == 1 ? 'checked' : '' }}>
+                                                        {{ old('show',1) == 1 ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="active">Aktif</label>
                                                 </div>
                                                 <div class="form-check m-2">
                                                    
                                                     <input class="form-check-input"  type="radio" name="show"
                                                         id="passive" value="0"
-                                                        {{ old('show') == 0 ? 'checked' : '' }}>
+                                                        {{ old('show',1) == 0 ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="passive">Pasif </label>
                                                 </div>
                                             </div>

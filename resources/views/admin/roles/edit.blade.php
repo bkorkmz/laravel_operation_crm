@@ -74,7 +74,7 @@
                                                                                 @if ($rolePermissions->contains('name', $permission)) checked @endif
                                                                                 onclick="permissionUpdate('{{ $permission }}')">
                                                                             <label for="{{ $permission }}"
-                                                                                style="font-size: 14px;">@lang('roles.role.name.' . $permission)</label>
+                                                                                style="font-size: 14px;white-space: break-spaces;">@lang('roles.role.name.' . $permission)</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>

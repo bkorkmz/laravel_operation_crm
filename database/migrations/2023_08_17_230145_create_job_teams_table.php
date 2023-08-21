@@ -13,17 +13,18 @@ return new class extends Migration
     {
         Schema::create('job_teams', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
+            $table->string('name');
             $table->text('job');
             $table->tinyInteger('status');
             $table->tinyInteger('raiting')->nullable();
+            $table->string('fb')->nullable();
+            $table->string('tw')->nullable();
+            $table->string('gp')->nullable();
+            $table->string('in')->nullable();
+            $table->string('yt')->nullable();
+            $table->string('linkedin')->nullable();
+            $table->string('avatar')->nullable();
             $table->timestamps();
-
-
-            // $table->foreign('user_id')
-            // ->references('id')
-            // ->on('users')
-            // ->onDelete('cascade'); // onDelete işlemi
         });
 
 

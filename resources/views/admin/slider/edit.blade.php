@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3>Potfolyo Ekle</h3>
-                    <button type="button" class="btn btn-linkedin btn-sm float-right rounded mr-1 "
+                    <button type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
                     onclick="return window.history.back()"><i class="fa fa-reply"></i>Geri Dön</button>
                 </div>
                 <div class="card-block">
@@ -41,15 +41,14 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        {{-- <div class="form-group row">
                             <label class="col-sm-2 col-form-label">İçerik Türü<span class="text-danger"> *</span></label>
                             <div class="col-sm-10">
                                 <select name="type" class="form-control fill" required>
-                                    {{-- <option value="slider">Slider</option> --}}
                                     <option value="portfolio" {{$slider->type == "portfolio" ? "selected" : "" }} selected>Portfolyo</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Onay Durumu<span class="text-danger">
                                     *</span></label>

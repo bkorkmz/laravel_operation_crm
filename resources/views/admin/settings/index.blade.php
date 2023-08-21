@@ -16,23 +16,12 @@
                             <div class="col-lg-12 col-xl-12">
                                 <ul class="nav  nav-pills" role="tablist">
                                     @foreach ($settings->groupBy('group') as $key => $tab_settings)
-                                        @role('Super admin')
                                             <li class="nav-item ">
                                                 <a class="nav-link {{ $loop->iteration == 1 ? 'active' : '' }}"
                                                     data-toggle="tab" href="#{{ $key }}" role="tab"><i
                                                         class="icofont icofont-home"></i>@lang('general.tabs.settings.' . $key)</a>
                                                 <div class="slide"></div>
                                             </li>
-                                        @else
-                                            @if ($key != 'secret')
-                                                <li class="nav-item">
-                                                    <a class="nav-link {{ $loop->iteration == 1 ? 'active' : '' }}"
-                                                        data-toggle="tab" href="#{{ $key }}" role="tab"><i
-                                                            class="icofont icofont-home"></i>@lang('general.tabs.settings.' . $key)</a>
-                                                    <div class="slide"></div>
-                                                </li>
-                                            @endif
-                                        @endrole
                                     @endforeach
                                 </ul>
 
@@ -69,11 +58,11 @@
                                                                     <div class="col-sm-2">
                                                                         <select name="{{ $form_element->name }}"
                                                                             class="form-control fill">
-                                                                            <option value="0"
-                                                                                {{ $form_element->value == '0' ? 'selected' : '' }}>
+                                                                            <option value="1"
+                                                                                {{ $form_element->value == '1' ? 'selected' : '' }}>
                                                                                 Yayında</option>
                                                                             <option
-                                                                                value="1"{{ $form_element->value == '1' ? 'selected' : '' }}>
+                                                                                value="0"{{ $form_element->value == '0' ? 'selected' : '' }}>
                                                                                 Yapım Aşamasında</option>
                                                                         </select>
                                                                     </div>

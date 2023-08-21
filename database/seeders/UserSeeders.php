@@ -50,16 +50,16 @@ class UserSeeders extends Seeder
 //        ]);
 //        $user_editor->assignRole($role3);
         $user_creator= User::firstOrCreate([
-            'name' => 'Öğretmen',
-            'email' => 'teacher@crm.com ',
+            'name' => 'Admin',
+            'email' => 'admin@crm.com ',
             'password'=>     Hash::make('123123123'),
             'tc_no'=>     '1234567890',
             'user_check'=>   '1',
         ]);
             $user_creator->assignRole($role3);
         $user_user= User::firstOrCreate([
-            'name' => 'Öğrenci',
-            'email' => 'student@crm.com ',
+            'name' => 'user',
+            'email' => 'user@crm.com ',
             'password'=>     Hash::make('123123123'),
             'tc_no'=>     '1234567890',
             'user_check'=>   '1',

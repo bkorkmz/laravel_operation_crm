@@ -27,6 +27,14 @@ use Termwind\Components\Dd;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->model_name = "App\Models\User";
+        $this->module_name = "user";
+        $this->directory = "user";
+    }
+
     public function index()
     {
         return view('admin.user.index_datatable');
@@ -277,18 +285,18 @@ class UserController extends Controller
 
     public function teams_index_data()
     {
-        $data = JobTeams::with('user:id,name,avatar,email');
+        $data = JobTeams::select('id','name','job','created_at');
         // dd($data->get());
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('name', function ($data) {
-                return '<strong>' . $data['user']->name . '</strong>';
+                return '<strong>' . $data->name . '</strong>';
             })
-            ->editColumn('email', function ($data) {
-                return '<strong>' . $data['user']->email . '</strong>';
-            })
+            // ->editColumn('email', function ($data) {
+            //     return '<strong>' . $data['user']->email . '</strong>';
+            // })
             ->editColumn('created_at', function ($data) {
-                return $data->created_at ? $data->created_at->format('d-m-Y') : "";
+                return$data->created_at->format('d-m-Y H:i');
             })
             ->editColumn('job', function ($data) {
 
@@ -314,7 +322,7 @@ class UserController extends Controller
 
     public function teams_create()
     {
-        $users =  User::where('id', '<>', 1)->select('id', 'name', 'user_check', 'email')->get();
+        $users =  JobTeams::where('status', 1)->select('id', 'name', 'job', 'avatar')->get();
 
         return view('admin.job_teams.create', compact('users'));
     }
@@ -330,19 +338,27 @@ class UserController extends Controller
     public function teams_store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|unique:job_teams|exists:users,id',
-            'job' => 'required',
+            // 'user_id' => 'required|unique:job_teams|exists:users,id',
+            'job' => 'required|string',
+            'name' => 'required|string',
             'status' => 'required',
-        ], [
-            'user_id.required' => 'Kullanıcı seçilmesi sorunludur',
-            'user_id.exists' => 'Sadece kayıtlı kullanıcılardan seçim yapabilirsiniz',
-            'user_id.unique' => 'Üye daha önce kayıt edilmiş tekrar kayıt edilemez ',
-            'job.required' => 'Görev alanı zorunludur',
-            'status.required' => 'Durum alanı zorunludur',
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
 
+        ], [
+            'name.required' => 'Ad-Soyad   alanı  zorunludur',
+            'name.string' => 'Ad-Soyad   alanı  sadece text olmalıdır',
+            'job.required' => 'Görev alanı zorunludur',
+            'job.string' => 'Görev alanı sadece text olmalıdır',
+            'status.required' => 'Durum alanı zorunludur',
+            'avatar.image' => 'Profil resmi bir resim dosyası olmalıdır.',
+            'avatar.mimes' => 'Profil resmi yalnızca jpeg, png, jpg, gif,webp veya svg formatında olabilir.',
+            'avatar.max' => 'Profil resmi en fazla 2 MB boyutunda olabilir.',
         ]);
 
-        $data = $request->except('_token');
+        $data = $request->except('_token', 'avatar');
+        if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
+            $data['avatar'] = '/storage/' . $request->avatar->store('teams', 'public');
+        }
         JobTeams::create($data);
 
         toastr()->success('İşlem başarılı şekilde tamamlanmıştır.', 'Başarılı');
@@ -363,18 +379,27 @@ class UserController extends Controller
 
 
         $request->validate([
-            'user_id' => $user_vailate,
-            'job' => 'required',
+            // 'user_id' => 'required|unique:job_teams|exists:users,id',
+            'job' => 'required|string',
+            'name' => 'required|string',
             'status' => 'required',
-        ], [
-            'user_id.required' => 'Kullanıcı seçilmesi sorunludur',
-            'user_id.exists' => 'Sadece kayıtlı kullanıcılardan seçim yapabilirsiniz',
-            'user_id.unique' => 'Üye daha önce kayıt edilmiş tekrar kayıt edilemez ',
-            'job.required' => 'Görev alanı zorunludur',
-            'status.required' => 'Durum alanı zorunludur',
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
 
+        ], [
+            'name.required' => 'Ad-Soyad   alanı  zorunludur',
+            'name.string' => 'Ad-Soyad   alanı  sadece text olmalıdır',
+            'job.required' => 'Görev alanı zorunludur',
+            'job.string' => 'Görev alanı sadece text olmalıdır',
+            'status.required' => 'Durum alanı zorunludur',
+            'avatar.image' => 'Profil resmi bir resim dosyası olmalıdır.',
+            'avatar.mimes' => 'Profil resmi yalnızca jpeg, png, jpg, gif,webp veya svg formatında olabilir.',
+            'avatar.max' => 'Profil resmi en fazla 2 MB boyutunda olabilir.',
         ]);
-        $data = $request->except('_token');
+
+        $data = $request->except('_token','avatar');
+        if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
+            $data['avatar'] = '/storage/' . $request->avatar->store('teams', 'public');
+        }
 
         $model->update($data);
 

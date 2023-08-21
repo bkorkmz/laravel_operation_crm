@@ -11,7 +11,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h3>Kategori Düzenleme Sayfası</h3>
-                                    <button type="button" class="btn btn-linkedin btn-sm float-right rounded mr-1 "
+                                    <button type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
                                         onclick="return window.history.back()"><i class="fa fa-reply"></i>Geri Dön</button>
 
                                 </div>
@@ -41,10 +41,9 @@
     
 
                                             <div class="form-group row">
-                                                <label class="col-sm-2 col-form-label">Kategori Açıklaması <span
-                                                        class="text-danger"> *</span></label>
+                                                <label class="col-sm-2 col-form-label">Kategori Açıklaması </label>
                                                 <div class="col-sm-10">
-                                                    <textarea type="text" class="form-control form-control-normal" required placeholder="" name="description"
+                                                    <textarea type="text" class="form-control form-control-normal"  placeholder="" name="description"
                                                         maxlength="250">{{ $model->description }}</textarea>
                                                 </div>
                                             </div>
@@ -56,6 +55,8 @@
                                                 <div class="col-sm-3">
                                                     <select name="model" class="form-control fill">
                                                         <option value="">Bir modül seçiniz </option>
+                                                        <option {{ $model->model == 'portfolio' ? 'selected' :"" }} value="portfolio">Portfolyo</option>
+                                                        <option {{ $model->model == 'services' ? 'selected' :"" }} value="services">Hizmet</option>
                                                         <option {{ $model->model == 'article' ? 'selected' :"" }} value="article">Makale</option>
                                                         <option {{ $model->model == 'post' ? 'selected' :"" }} value="post">Haber</option>
                                                         <option {{ $model->model == 'product' ? 'selected' :"" }} value="product">Ürün</option>

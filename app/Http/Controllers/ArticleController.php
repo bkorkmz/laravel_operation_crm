@@ -33,8 +33,10 @@ class ArticleController extends Controller
 
     public function index_data()
     {
-        $article = $this->model_name::latest()
-            ->with('category', 'author:id,name,avatar')
+        $model_data = $this->model_name::whereRelation('category',function($query){
+            $query->where('model','article');
+        })->latest()
+            ->with('author:id,name,avatar')
             ->select(
                 'id',
                 'short_detail',
@@ -43,8 +45,7 @@ class ArticleController extends Controller
                 'user_id',
                 'created_at'
             );
-            
-        return DataTables::of($article)
+        return DataTables::of($model_data)
             ->addIndexColumn()
 
             ->editColumn('category', function ($data) {
@@ -52,7 +53,7 @@ class ArticleController extends Controller
             })
 
             ->editColumn('user', function ($data) {
-                return $data['author']->name ?  $data['author'] : "";
+                return $data['author'] ?  $data['author']->name : "";
             })
 
             ->editColumn('created_at', function ($data) {
@@ -260,15 +261,27 @@ class ArticleController extends Controller
 
     public function trashed_index()
     {
-        // $post = $this->model_name::onlyTrashed()->orderBy('deleted_at', 'desc')->paginate(20);
-        return view('admin.' . $this->directory . '.trash_index');
+        $modul_name = $this->module_name;
+        return view('admin.' . $this->directory . '.trash_index',compact('modul_name'));
     }
 
 
     public function trashed_data()
     {
-        $posts = $this->model_name::onlyTrashed()->orderBy('deleted_at', 'desc');
-        return DataTables::of($posts)
+        $model_data = $this->model_name::onlyTrashed()
+        ->whereRelation('category',function($query){
+            $query->where('model','article');
+        })->with('author:id,name,avatar')
+        ->select(
+            'id',
+            'short_detail',
+            'title',
+            'category_id',
+            'user_id',
+            'deleted_at'
+        )->orderBy('deleted_at', 'desc');
+           
+        return DataTables::of($model_data)
             ->addIndexColumn()
 
             ->editColumn('category', function ($data) {
@@ -309,4 +322,191 @@ class ArticleController extends Controller
         toastr()->success('İşlem başarılı şekilde tamamlanmıştır.', 'Başarılı');
         return redirect()->back();
     }
+
+
+
+// Services
+
+public function services_index()
+{
+    // dd('burdasın');
+    $modul_name = "services";
+    return view('admin.services.index',compact('modul_name'));
+}
+
+public function services_index_data()
+{
+
+   
+    $model_data = $this->model_name::whereRelation('category',function($query){
+        $query->where('model','services');
+    })
+    ->select(
+        'id',
+        'short_detail',
+        'title',
+        'category_id',
+        'user_id',
+        'created_at'
+    )->with('author:id,name,avatar');
+
+
+    return DataTables::of($model_data)
+        ->addIndexColumn()
+
+        ->editColumn('category', function ($data) {
+            return $data['category']->name;
+        })
+
+        ->editColumn('user', function ($data) {
+            return $data['author']->name;
+        })
+
+        ->editColumn('created_at', function ($data) {
+            return $data->created_at->format('d.m.Y h:i');
+        })
+
+
+        ->editColumn('action', function ($data) {
+            return $data->id;
+        })
+
+        ->escapeColumns([])
+        ->rawColumns(['action'])
+        ->toJson(true);
+}
+
+public function services_create()
+{
+    $modul_name = "services";
+    $post_category = Category::where(['model' => 'services','show' => '1'])->get();
+    return view('admin.services.create', compact('modul_name', 'post_category'));
+}
+
+public function services_store(Request $request)
+{
+
+    $request->validate(
+        [
+            'title' => 'required|max:50',
+            'short_detail' => 'required|max:250',
+            'detail' => 'required',
+        ],
+        [
+            'title.required' => 'Başlık gereklidir.',
+            'title.max' => 'Başlık alanı en fazla 50 karakter olmalıdır.',
+            'short_detail.required' => 'Makale Özeti gereklidir.',
+            'short_detail.max' => 'Makale Özeti alanı en fazla 250 karakter olmalıdır.',
+            'detail.required' => 'Makale detayı gereklidir.',
+        ]
+    );
+
+
+
+
+
+    $data_array = $request->except(
+        'image',
+        '_token'
+
+    );
+
+    $post = Article::create($data_array);
+
+    $slug = slug_format(Str::limit($request->title, 60)) . '-' . $post->id;
+
+
+    if (request()->hasFile('image')) {
+        $this->validate(request(), array('image' => 'sometimes|mimes:png,jpg,jpeg,gif|max:4096'));
+        $image = request()->file('image');
+        if ($image->isValid()) {
+            $post->image = '/storage/' . $request->image->store('articles', 'public');
+        }
+    }
+
+    $post->slug =  $slug;
+
+    $post->save();
+
+    if ($post) {
+        toastr()->success('Makale Düzenlendi  ', 'Başarılı ');
+    } else {
+        toastr()->error('Makale Düzenleme İşlemi Sırasında Bir Hata Oluştu ', 'Başarısız !!! ');
+    }
+
+    return redirect()->back();
+
+
+}
+
+public function services_edit(Article  $model)
+{
+    $modul_name = "services";
+    $category = Category::where(['model' => 'services','show' => '1'])->get();
+
+    return view('admin.services.edit', compact('modul_name','model','category'));
+}
+
+public function services_update(Request $request, string $id)
+{
+
+    $request->validate(
+        [
+            'title' => 'required|max:50',
+            'short_detail' => 'required|max:250',
+            'detail' => 'required',
+        ],
+        [
+            'title.required' => 'Başlık gereklidir.',
+            'title.max' => 'Başlık alanı en fazla 50 karakter olmalıdır.',
+            'short_detail.required' => 'Makale Özeti gereklidir.',
+            'short_detail.max' => 'Makale Özeti alanı en fazla 250 karakter olmalıdır.',
+            'detail.required' => 'Makale detayı gereklidir.',
+        ]
+    );
+
+    $data_array = $request->except(
+        'image',
+        'image_main',
+        'image_top',
+        'image_mini',
+        '_token'
+    );
+    $slug = slug_format(Str::limit($request->title, 60)) . '-' . $id;
+
+    if (request()->hasFile('image')) {
+        $this->validate(request(), array('image' => 'sometimes|mimes:png,jpg,jpeg,gif|max:4096'));
+        $image = request()->file('image');
+        if ($image->isValid()) {
+            $data_array['image'] = '/storage/' . $request->image->store('articles', 'public');
+        }
+    }
+
+
+    $post = Article::where('id', $id)->update($data_array);
+    // }
+    if ($post) {
+        toastr()->success('Makale Düzenlendi  ', 'Başarılı ');
+    } else {
+        toastr()->error('Makale Düzenleme İşlemi Sırasında Bir Hata Oluştu ', 'Başarısız !!! ');
+    }
+
+    return redirect()->back();
+}
+
+public function services_destroy(string $id)
+{
+
+    $post = Article::findOrFail($id);
+    if ($post) {
+        $post->delete();
+        // Log::info($post . ' ' . 'Delete user' . ' | User:' . Auth::user()->name);
+        toastr()->success('İşlem başarılı şekilde tamamlanmıştır.', 'Başarılı');
+    } else {
+        toastr()->error('Başarısız', 'İşlem sırasında bir hata meydana gelmiştir.');
+    }
+    return back();
+}
+
+
 }

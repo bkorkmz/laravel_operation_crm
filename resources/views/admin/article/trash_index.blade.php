@@ -1,6 +1,6 @@
 @extends('layouts.layout-admin')
 @section('title')
-    {{ __('Sİlinen Haberler') }}
+    {{ __('Sİlinen Makaleler') }}
 @endsection
 
 
@@ -14,8 +14,8 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3>Silinen Haberler Listesi</h3>
-                            <button type="button" class="btn btn-linkedin btn-sm float-right rounded mr-1 "
+                            <h3>Silinen Makaleler Listesi</h3>
+                            <button type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
                                     onclick="return window.history.back()"><i class="fa fa-reply"></i>Geri Dön</button>
 
                         </div>
@@ -51,7 +51,7 @@
             $('#datatable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{route('post.trashed_data')}}',
+                ajax: '{{route($modul_name.'.trashed_data')}}',
                 columns: 
                 [
                     { title:'İD' , data: 'DT_RowIndex', orderable: false, searchable: false, },

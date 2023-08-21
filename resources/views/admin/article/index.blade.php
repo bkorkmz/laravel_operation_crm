@@ -21,7 +21,7 @@
                             </div>
                             <div class="card-block table-border-style">
                                 <div class="table-responsive">
-                                    <table id="datatable" class="dataTable table table-hover table-responsive-sm">
+                                    <table id="datatable" class="dataTable table table-hover table-responsive-sm w-100">
 
                                     </table>
                                 </div>
