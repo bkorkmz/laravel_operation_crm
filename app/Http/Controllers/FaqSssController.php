@@ -66,15 +66,17 @@ class FaqSssController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'question' => 'required|string',
-            'answer' => 'required|string',
+            'question' => 'required|string|max:255',
+            'answer' => 'required|string|max:255',
             'order' => 'nullable|integer',
         ], [
-            'question.required'  => "Soru alanı zorunludur.",
-            'question.string'  => "Soru alanı sadece yazı olmalıdır.",
-            'answer.required'  => "Cevap alanı zorunludur.",
-            'answer.string'  => "Cevap alanı sadece yazı olmalıdır.",
-            'order.integer'  => "Sıralama sadec sayı girilebilir.",
+            'question.required' => "Soru alanı zorunludur.",
+            'question.string' => "Soru alanı sadece yazı olmalıdır.",
+            'question.max' => "Soru alanı en fazla 255 karakter olmalıdır.",
+            'answer.required' => "Cevap alanı zorunludur.",
+            'answer.string' => "Cevap alanı sadece yazı olmalıdır.",
+            'answer.max' => "Cevap alanı en fazla 255 karakter olmalıdır.",
+            'order.integer' => "Sıralama sadece sayı olmalıdır.",
         ]);
 
 
@@ -97,30 +99,27 @@ class FaqSssController extends Controller
 
 
         $request->validate([
-            'question' => 'required|string',
-            'answer' => 'required|string',
+            'question' => 'required|string|max:255',
+            'answer' => 'required|string|max:255',
             'order' => 'nullable|integer',
-
         ], [
-            'question.required'  => "Soru alanı zorunludur.",
-            'question.string'  => "Soru alanı sadece yazı olmalıdır.",
-            'answer.required'  => "Cevap alanı zorunludur.",
-            'answer.string'  => "Cevap alanı sadece yazı olmalıdır.",
-            'order.integer'  => "Sıralama sadec sayı girilebilir.",
-
+            'question.required' => "Soru alanı zorunludur.",
+            'question.string' => "Soru alanı sadece yazı olmalıdır.",
+            'question.max' => "Soru alanı en fazla 255 karakter olmalıdır.",
+            'answer.required' => "Cevap alanı zorunludur.",
+            'answer.string' => "Cevap alanı sadece yazı olmalıdır.",
+            'answer.max' => "Cevap alanı en fazla 255 karakter olmalıdır.",
+            'order.integer' => "Sıralama sadece sayı olmalıdır.",
         ]);
 
-
         $array_data = $request->except('_token');
-
-        $create = $model->update($array_data);
+// dd( $request->all());
+        $update = $model->update($array_data);
         toastr()->success('İşlem başarılı şekilde tamamlanmıştır.', 'Başarılı');
         return redirect()->back();
     }
     public function destroy(FaqSss $model)
     {
-
-
         $model->delete();
         toastr()->success('İşlem başarılı şekilde tamamlanmıştır.', 'Başarılı');
 

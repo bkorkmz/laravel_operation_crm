@@ -47,7 +47,7 @@
                                 <label class="col-sm-2 col-form-label">Kategori <i
                                         class="feather icon-info  text-c-blue"></i></label>
                                 <div class="col-sm-3">
-                                    <select name="model" class="form-control fill">
+                                    <select name="category_id" class="form-control fill">
                                         <option value="">Kategori seçiniz</option>
                                         @foreach ($category as $cat)
                                             <option value="{{ $cat->id }}">{{ $cat->name }}</option>
@@ -75,7 +75,7 @@
 
 
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">İçerik Resmi</label>
+                                <label class="col-sm-2 col-form-label">İçerik Resmi (800x600)</label>
                                 <div class="col-sm-5">
                                     <input type="file" class="form-control form-control-normal dropify" placeholder=""
                                         name="image" accept=".png,.jpg,.jpeg,.gif,.webp,.bmp">

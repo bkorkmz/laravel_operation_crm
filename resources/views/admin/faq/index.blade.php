@@ -85,7 +85,12 @@ height: auto;
                         title: "Cevap",
                         data: 'answer',
                         name: 'answer',
-                        class: 'w-25'
+                        class: 'w-25',
+                        render: function (row) {
+
+                            return `<span style="    white-space: pre-wrap;">${row}</span>`;
+                            
+                        }
                     },
                     {
                         title: 'Durum',
@@ -95,7 +100,7 @@ height: auto;
                     {
                         title: 'Sıralama',
                         data: 'order',
-                        name: 'order'
+                        name: 'order',
                         with:'5%'
                     },
                 

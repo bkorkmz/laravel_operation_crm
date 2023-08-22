@@ -1,39 +1,71 @@
 <section id="portfolio" class="portfolio">
     <div class="container" data-aos="fade-up">
-
-      <div class="section-title">
-        <h2>Portfolyo</h2>
-      </div>
-
-      <div class="row" data-aos="fade-up" data-aos-delay="100">
-        <div class="col-lg-12 d-flex justify-content-center">
-          <ul id="portfolio-flters">
-            <li data-filter="*" class="filter-active">Tümü</li>
-            <li data-filter=".filter-app">Uygulama</li>
-            <li data-filter=".filter-card">Tasarım</li>
-            <li data-filter=".filter-web">Web</li>
-          </ul>
+        <div class="section-title">
+            <h2>Portfolyo</h2>
         </div>
-      </div>
 
-      <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+        <div class="row" data-aos="fade-up" data-aos-delay="100">
+            <div class="col-lg-12 d-flex justify-content-center">
+                <ul id="portfolio-flters">
+                    <li data-filter="*" class="filter-active">Tümü</li>
+                    @foreach ($portfolio->groupBy('category') as $key => $category)
+                        @php
+                            $keyData = json_decode($key, true);
+                            $id = $keyData['id'];
+                            $name = $keyData['name'];
+                            $slug = $keyData['slug'];
+                        @endphp
 
-        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-          <div class="portfolio-wrap">
-            <img src="{{asset('frontend/img/portfolio/portfolio-1.jpg')}}" class="img-fluid" alt="">
-            <div class="portfolio-info">
-              <h4>App 1</h4>
-              <p>App</p>
-              <div class="portfolio-links">
-                <a href="{{asset('frontend/img/portfolio/portfolio-1.jpg')}}" data-gallery="portfolioGallery"
-                  class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
+                        <li data-filter=".filter-{{ $slug }}">{{ $name }}</li>
+                    @endforeach
+                </ul>
             </div>
-          </div>
         </div>
 
-        <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+            @foreach ($portfolio as $img)
+                @php
+                    $keyData =$img['category'];
+                    $cat_id = $keyData->id;
+                    $cat_name = $keyData->name;
+                    $cat_slug = $keyData->slug;
+                @endphp
+
+                <div class="col-lg-4 col-md-6 portfolio-item filter-{{$cat_slug}}">
+                  <div class="portfolio-wrap">
+                      <img src="{{ $img->image }}" class="img-fluid" alt="">
+                      <div class="portfolio-info">
+                          <h4>{{$img->name}}</h4>
+                          <p>{{ $cat_name}}</p>
+                          <div class="portfolio-links">
+                              <a href="{{ $img->image }}"
+                                  data-gallery="portfolioGallery" class="portfolio-lightbox" title="{{$img->name}}"><i
+                                      class="bx bx-plus"></i></a>
+                              <a href="{{$img->link}}" title="Daha Fazla ... "><i class="bx bx-link"></i></a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+  
+            @endforeach
+
+            {{-- <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+                <div class="portfolio-wrap">
+                    <img src="{{ asset('frontend/img/portfolio/portfolio-1.jpg') }}" class="img-fluid" alt="">
+                    <div class="portfolio-info">
+                        <h4>App 1</h4>
+                        <p>App</p>
+                        <div class="portfolio-links">
+                            <a href="{{ asset('frontend/img/portfolio/portfolio-1.jpg') }}"
+                                data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1"><i
+                                    class="bx bx-plus"></i></a>
+                            <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
+
+            {{-- <div class="col-lg-4 col-md-6 portfolio-item filter-web">
           <div class="portfolio-wrap">
             <img src="{{asset('frontend/img/portfolio/portfolio-2.jpg')}}" class="img-fluid" alt="">
             <div class="portfolio-info">
@@ -151,9 +183,9 @@
               </div>
             </div>
           </div>
+        </div> --}}
+
         </div>
 
-      </div>
-
     </div>
-  </section>
+</section>

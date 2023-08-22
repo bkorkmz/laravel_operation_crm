@@ -1,8 +1,6 @@
 @extends('layouts.layout-frontend')
 
 
-
-
 @section('css')
 @endsection
 
@@ -13,10 +11,10 @@
         <div class="container" data-aos="zoom-out" data-aos-delay="100">
             <div class="row">
                 <div class="col-xl-6">
-                    <h1>Hello New Media ile daha iyi dijital</h1>
-                    <h2>Markanızın doğru iletişim için kurulmuş, yetenekli tasarımcılar ve yazılımcılardan oluşan bir ekip
+                    <h1>{{config('settings.landing_slider_title')}}</h1>
+                    <h2>{{config('settings.landing_slider_slogan')}}
                     </h2>
-                    <a href="#about" class="btn-get-started scrollto">Hadi Başlayalım</a>
+                    <a href="#about" class="{{config('settings.landing_slider_button_title') == "" ?"d-none" :""}}btn-get-started scrollto">{{config('settings.landing_slider_button_title')}}</a>
                 </div>
             </div>
         </div>
@@ -31,6 +29,7 @@
         <!-- End Clients Section -->
         <!-- ======= About Section ======= -->
 
+        
         @include('frontend.pages.about_us',['data' =>$about_page])
         <!-- End About Section -->
 
@@ -93,7 +92,7 @@
         <!-- End Services Section -->
 
         <!-- ======= Portfolio Section ======= -->
-        @include('frontend.pages.portfolio')
+        @include('frontend.pages.portfolio',['data'=>$portfolio])
         <!-- End Portfolio Section -->
 
         <!-- ======= Testimonials Section ======= -->
@@ -280,7 +279,7 @@
         </section><!-- End Pricing Section --> --}}
 
         <!-- ======= Frequently Asked Questions Section ======= -->
-        @include('frontend.pages.sss')
+        @include('frontend.pages.sss',['data'=>$faq_sss])
         <!-- End Frequently Asked Questions Section -->
 
         <!-- ======= Team Section ======= -->
@@ -294,4 +293,8 @@
         <!-- End Contact Section -->
 
     </main><!-- End #main -->
+@endsection
+
+
+@section('js')
 @endsection

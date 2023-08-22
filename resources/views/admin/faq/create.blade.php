@@ -30,14 +30,14 @@
                             <label class="col-sm-2 col-form-label">Soru Metni  <span class="text-danger"> *</span></label>
                             <div class="col-sm-10">
                                 <textarea  class="form-control form-control-normal" placeholder="Soru metni  giriniz" rows="2" cols="2"
-                                    name="question"  required></textarea>
+                                    name="question" maxlength="254"  required></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Bağlantı (Url)</label>
                             <div class="col-sm-10">
                                 <textarea  class="form-control form-control-normal" placeholder="Soru metni  giriniz" rows="2" cols="2"
-                                name="answer"  required></textarea>
+                                name="answer" maxlength="254"  required></textarea>
                                 
                             </div>
                         </div>
@@ -45,7 +45,7 @@
                             <label class="col-sm-2 col-form-label">Sıralama <span class="text-danger">
                                     *</span></label>
                             <div class="col-sm-10">
-                               <input type="number" class="form-control form-control-normal" value="0" placeholder="Sıralama için bir sayı giriniz">
+                               <input name="order"  type="number" class="form-control form-control-normal" value="0" placeholder="Sıralama için bir sayı giriniz">
                             </div>
                         </div>
                         

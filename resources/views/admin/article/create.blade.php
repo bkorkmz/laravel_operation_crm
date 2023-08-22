@@ -77,7 +77,7 @@
                                                     href="javascript:void(0)" data-toggle="modal"
                                                     data-target="#addCategoryModal">Kategori Ekle</a> --}}
                                             </div>
-                                            <div class="col-sm-3 float-center">
+                                            {{-- <div class="col-sm-3 float-center">
                                                 <label>Manşette Başlık</label>
                                                 <div class="form-check text-left">
                                                     <input class="form-check-input" checked type="radio" name="mtitle"
@@ -89,7 +89,7 @@
                                                         id="hideMtitle" value="1"{{old('mtitle') == 1 ? 'checked' :"" }}>
                                                     <label class="form-check-label" for="hideMtitle">Gösterme</label>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="col-sm-3">
                                                 <label>Durum</label>
                                                 <div class="form-check">
@@ -151,7 +151,7 @@
 
                                         @endcanany
                                        
-                                        <hr>
+                                        {{-- <hr>
                                         <div class="form-group has-warning row">
                                             <div class="col-sm-2">
                                                 <label class="col-form-label" for="meta1">Meta anahtar kelimeler
@@ -176,13 +176,13 @@
                                                     geçmeyecek şekilde doldurulabilir.</div>
                                             </div>
                                         </div>
-                                        <hr>
+                                        <hr> --}}
 
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Makale Fotoğrafı</label>
+                                            <label class="col-sm-2 col-form-label">Makale Fotoğrafı (min:630x470)</label>
                                             <div class="col-sm-5">
                                                 <input type="file" class="form-control form-control-normal dropify"
-                                                    placeholder="" name="image">
+                                                    placeholder="" name="image" accept=".jpg,.jpeg,.png,.tiff,.gif,.svg,.webp,.bmp,.ico">
                                              </div>
                                         </div>
 

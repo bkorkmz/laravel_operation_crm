@@ -158,8 +158,8 @@ $data = $section_page[0];
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="country-floating">Hizmet 1 Açıklama</label>
-                                            <input type="text" id="country-floating" class="form-control"
-                                                value="{{$page->service_1_description}}" name="service_1_description" placeholder="Hizmet 1 Başlık" />
+                                            <textarea id="country-floating" class="form-control" name="service_1_description"  cols="10" rows="2">{{$page->service_1_description}}</textarea>
+                                           
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-12">

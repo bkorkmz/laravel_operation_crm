@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\FaqSss;
 use App\Models\InfoMessage;
 use App\Models\JobTeams;
 use App\Models\ModelLandingPage;
@@ -38,6 +39,14 @@ class FrontendController extends Controller
 
         $about_page = ModelLandingPage::where('section_name', 'about')->first();
 
+        $faq_sss = FaqSss::where('status',1)->get();
+
+        $portfolio = PortFolio::where(['status' => 1, 'type' => 'portfolio'])
+        ->select('id', 'name', 'link', 'category_id', 'image')
+        ->with('category:id,name,slug')
+        ->get();
+        // dd( $faq_sss);
+
 
 
 
@@ -58,7 +67,7 @@ class FrontendController extends Controller
             "article",
             "services",
             "teams",
-            "portfolio","slider","services_category",'about_page'
+            "portfolio","slider","services_category",'about_page','faq_sss'
         ));
     }
 

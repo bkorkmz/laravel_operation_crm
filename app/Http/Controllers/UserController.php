@@ -300,16 +300,16 @@ class UserController extends Controller
             })
             ->editColumn('job', function ($data) {
 
-                return '<span class="badge badge-inverse-danger p-2 w-100">' . $data->job . ' </span >';
+                return '<span class="badge badge-inverse-info p-2 w-50">' . $data->job . ' </span >';
             })
 
             ->addColumn('action', function ($data) {
 
                 $btn = '
-                                     <div class="text-center">
-                                       <a href="' . route('user.teams.edit', $data->id) . '" class="edit  btn-sm " data-toggle="tooltip" data-placement="top" title="Düzenle"><i class="icon feather icon-edit f-w-600 f-16 m-r-15 text-c-green"></i></a>
-                                       <a href="' . route('user.teams.destroy', $data->id) . '" onclick="return confirm(\'Silme İşlemi onaylıyormusunuz ?\')"  data-toggle="tooltip" data-placement="top" title="Sil"><i class="feather icon-trash-2 f-w-600 f-16 text-c-red"></i></a>
-                               </div>
+                        <div class="text-center">
+                            <a href="' . route('user.teams.edit', $data->id) . '" class="edit  btn-sm " data-toggle="tooltip" data-placement="top" title="Düzenle"><i class="icon feather icon-edit f-w-600 f-16 m-r-15 text-c-green"></i></a>
+                            <a href="' . route('user.teams.destroy', $data->id) . '" onclick="return confirm(\'Silme İşlemi onaylıyormusunuz ?\')"  data-toggle="tooltip" data-placement="top" title="Sil"><i class="feather icon-trash-2 f-w-600 f-16 text-c-red"></i></a>
+                        </div>
                                ';
 
                 return $btn;

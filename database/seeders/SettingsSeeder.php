@@ -15,8 +15,6 @@ class SettingsSeeder extends Seeder
         $data= [
             ["name"=>"site_title","value"=>"Site başlık mesajı","group"=>"general","type"=>"string"],
             ["name"=>"site_keywords","value"=>"Site anahtar kelimeleri","group"=>"general","type"=>"string"],
-            ["name"=>"about_us_title","value"=>"Veri odaklı dijital pazarlama ajansı olarak, uzman ve profesyonel ekibimiz ile birlikte ihtiyacınız olan dijital pazarlama, tasarım ve yazılım ihtiyaçlarınıza yüksek standartlarda çözüm üretiyoruz!
-            ","group"=>"general","type"=>"string"],
             ["name"=>"site_description","value"=>"Site Açıklaması ","group"=>"general","type"=>"string"],
             ["name"=>"site_newsname","value"=>"news name","group"=>"general","type"=>"string"],
             ["name"=>"site_email","value"=>"info@hellonewmedia.com","group"=>"general","type"=>"string"],
@@ -39,14 +37,19 @@ class SettingsSeeder extends Seeder
             ["name"=>"site_meta_tag","value"=>"#!","group"=>"ceo","type"=>"string"],
             ["name"=>"site_analytics","value"=>"#!","group"=>"ceo","type"=>"string"],
             
-            ["name"=>"site_logo","value"=>"images/logo.png","group"=>"image","type"=>"string"],
-            ["name"=>"site_icon","value"=>"images/logo.png","group"=>"image","type"=>"string"],
-            ["name"=>"site_login_img","value"=>"images/background_images.jpg","group"=>"image","type"=>"string"],
-            ["name"=>"site_register_img","value"=>"images/background_images.jpg","group"=>"image","type"=>"string"],
+            ["name"=>"site_logo","value"=>"images/logo.png","group"=>"image","type"=>"image"],
+            ["name"=>"site_icon","value"=>"images/logo.png","group"=>"image","type"=>"image"],
+            ["name"=>"site_login_img","value"=>"images/background_images.jpg","group"=>"image","type"=>"image"],
+            ["name"=>"site_register_img","value"=>"images/background_images.jpg","group"=>"image","type"=>"image"],
+
+            ["name"=>"landing_slider_img","value"=>"images/background_images.jpg","group"=>"frontend","type"=>"image"],
+            ["name"=>"landing_slider_title","value"=>"Hello New Media ile daha iyi dijital ","group"=>"frontend","type"=>"string"],
+            ["name"=>"landing_slider_slogan","value"=>"Markanızın doğru iletişim için kurulmuş, yetenekli tasarımcılar ve yazılımcılardan oluşan bir ekip ","group"=>"frontend","type"=>"string"],
+            ["name"=>"landing_slider_button_title","value"=>"Hadi Başla","group"=>"frontend","type"=>"string"],
             
 
             // Only super admin 
-            ["name"=>"site_publish","value"=>"1","group"=>"secret","type"=>"string"],
+            ["name"=>"site_publish","value"=>"1","group"=>"secret","type"=>"select"],
             ["name"=>"frontend_color","value"=>"#1f5cf5","group"=>"secret","type"=>"string"],
             ["name"=>"CAPTCHA_SECRET","value"=>"","group"=>"secret","type"=>"string"],
             ["name"=>"CAPTCHA_SITEKEY","value"=>"","group"=>"secret","type"=>"string"],

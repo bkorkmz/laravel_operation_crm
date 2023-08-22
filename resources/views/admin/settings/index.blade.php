@@ -54,19 +54,15 @@
                                                             <div class="form-group row">
                                                                 <label
                                                                     class="col-sm-2 col-form-label">@lang('general.tabs.settings.' . $form_element->name)</label>
-                                                                @if ($form_element->name == 'site_publish')
+                                                                @if ($form_element->type == 'select')
                                                                     <div class="col-sm-2">
                                                                         <select name="{{ $form_element->name }}"
                                                                             class="form-control fill">
-                                                                            <option value="1"
-                                                                                {{ $form_element->value == '1' ? 'selected' : '' }}>
-                                                                                Yayında</option>
-                                                                            <option
-                                                                                value="0"{{ $form_element->value == '0' ? 'selected' : '' }}>
-                                                                                Yapım Aşamasında</option>
+                                                                            <option value="1" {{ $form_element->value == '1' ? 'selected' : '' }}>FALSE</option>
+                                                                            <option value="0"{{ $form_element->value == '0' ? 'selected' : '' }}>TRUE </option>
                                                                         </select>
                                                                     </div>
-                                                                @elseif($key == 'image')
+                                                                @elseif($form_element->type == 'image')
                                                                     <div class="col-sm-6">
                                                                         <input type="file"
                                                                             class="form-control form-control-normal dropify"
@@ -82,6 +78,7 @@
                                                                             placeholder="" name="{{ $form_element->name }}"
                                                                             value="{{ $form_element->value }}">
                                                                     </div>
+                                                                   
                                                                 @endif
 
                                                             </div>

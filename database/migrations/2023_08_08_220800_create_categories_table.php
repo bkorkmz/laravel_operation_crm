@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-
             $table->string('name')->nullable();
             $table->string('slug');
             $table->string('description')->nullable();
@@ -24,6 +23,7 @@ return new class extends Migration
             $table->bigInteger('sortby')->nullable();
             $table->bigInteger('user_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

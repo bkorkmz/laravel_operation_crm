@@ -21,5 +21,9 @@ class PortFolio extends Model
             
         });
     }
+
+    public function category (){
+        return $this->hasOne(Category::class,'id','category_id')->select('id','name','slug');
+    }
     
 }

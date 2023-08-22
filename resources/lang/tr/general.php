@@ -9,14 +9,18 @@ return [
             "email_sms"=>"Sms Mail Ayarları",
             "ceo"=>"Dış Bağlantılar",
             "secret"=>"Admin Ayarları",
+            "frontend"=>"Giriş Anasayfa ",
 
-            
+
+            "frontend_desc"=>"Anasayfa Ayarları",
             "general_desc"=>"Genel Ayarlar",
             "image_desc"=>"Resim Ayarları",
             "email_sms_desc"=>"Sms Mail Ayarları",
             "ceo_desc"=>"Dış Bağlantılar",
             "secret_desc"=>"Admin Ayarları",
             
+
+
             "site_title"=>"Site Başlığı",
             "site_keywords"=>"Site Anahtar Kelimeleri",
             "site_description"=>"Site Açıklması",
@@ -40,13 +44,18 @@ return [
             "site_cookie_url"=>"Cerez Politikası Url ",
             "site_meta_tag"=>"Meta Etiketleri",
             "site_analytics"=>"Analitic Kod Alanı",
-            "site_logo"=>"Logo",
-            "site_icon"=>"İcon",
-            "site_login_img"=>"Giriş Sayfası Resmi ",
+            "site_logo"=>"Site Logo",
+            "site_icon"=>"Site İkon",
+            "site_login_img"=>"Login Sayfası Resmi ",
             "site_register_img"=>"Kayıt Sayfası Resmi ",
             "CAPTCHA_SECRET"=>"Recaptca SecretKey",
             "CAPTCHA_SITEKEY"=>"Recaptca SiteKey",
-            "frontend_color"=>"Frontend Color"
+            "frontend_color"=>"Anasayfa Rengi",
+
+            "landing_slider_title"=> "Anasayfa Slider Başlık",
+            "landing_slider_slogan"=> "Anasayfa Slider Slogan ",
+            "landing_slider_button_title"=>"Anasayfa Slider Buton Yazısı",
+            "landing_slider_img"=>"Anasayfa Slider Resmi ",
             
             
         ]

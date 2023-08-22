@@ -33,7 +33,7 @@ class CategoryController extends Controller
 
     public function index_data()
     {
-        $article = $this->model_name::latest()->with('author');
+        $article = $this->model_name::with('author')->orderBy('model');
 
         return DataTables::of($article)
             ->addIndexColumn()

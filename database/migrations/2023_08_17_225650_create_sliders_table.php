@@ -20,7 +20,7 @@ return new class extends Migration
                 $table->tinyText('type')->nullable();
                 $table->text('image')->nullable();
                 $table->bigInteger('user_id')->nullable();
-                $table->tinyInteger('category')->nullable();
+                $table->tinyInteger('category_id')->nullable();
                 $table->timestamps();
         });
     }

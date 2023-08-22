@@ -30,7 +30,7 @@
                             <label class="col-sm-2 col-form-label">Soru Metni  <span class="text-danger"> *</span></label>
                             <div class="col-sm-10">
                                 <textarea  class="form-control form-control-normal" placeholder="Soru metni  giriniz" rows="2" cols="2"
-                                name="question"  required>{{ $model->question }}</textarea>
+                                name="question" maxlength="255" required>{{ $model->question }}</textarea>
                             
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                             <div class="col-sm-10">
 
                                 <textarea  class="form-control form-control-normal" placeholder="Soru metni  giriniz" rows="2" cols="2"
-                                name="answer"  required>{{$model->answer }}</textarea>
+                                name="answer" maxlength="255" required>{{$model->answer }}</textarea>
                              
                             </div>
                         </div>
@@ -48,7 +48,7 @@
                             <label class="col-sm-2 col-form-label">Sıralama <span class="text-danger">
                                     *</span></label>
                             <div class="col-sm-10">
-                               <input type="number" class="form-control form-control-normal" value="{{ $model->order }}" placeholder="Sıralama için bir sayı giriniz">
+                               <input type="number" name="order" class="form-control form-control-normal" value="{{ $model->order }}" placeholder="Sıralama için bir sayı giriniz">
                             </div>
                         </div>
 

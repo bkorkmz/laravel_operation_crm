@@ -31,21 +31,21 @@
                                         @csrf
                                         {{-- @dd($post) --}}
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Makale başlığı</label>
+                                            <label class="col-sm-2 col-form-label">Makale başlığı <span class="text-danger"> *</span></label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control form-control-normal" 
                                                     placeholder="" name="title" maxlength="50" value="{{$model->title}}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Makale özeti</label>
+                                            <label class="col-sm-2 col-form-label">Makale özeti <span class="text-danger"> *</span></label>
                                             <div class="col-sm-10">
                                                 <textarea type="text" class="form-control form-control-normal"
                                                     placeholder="" name="short_detail" maxlength="250">{{$model->short_detail}}</textarea>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Makale içeriği</label>
+                                            <label class="col-sm-2 col-form-label">Makale içeriği <span class="text-danger"> *</span></label>
                                             <div class="col-sm-10">
                                                 <textarea id="ckeditor" name="detail" rows="5">{!! $model->detail !!}</textarea>
                                             </div>
@@ -71,7 +71,7 @@
                                                     href="javascript:void(0)" data-toggle="modal"
                                                     data-target="#addCategoryModal">Kategori Ekle</a> --}}
                                             </div>
-                                            <div class="col-sm-3 float-center">
+                                            {{-- <div class="col-sm-3 float-center">
                                                 <label>Manşette Başlık</label>
                                                 <div class="form-check text-left">
                                                     <input class="form-check-input" {{$model->mtitle == 0 ? 'checked' : ""}} type="radio" name="mtitle"
@@ -83,7 +83,7 @@
                                                         id="hideMtitle" value="1">
                                                     <label class="form-check-label" for="hideMtitle">Gösterme</label>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="col-sm-3">
                                                 <label>Durum</label>
                                                 <div class="form-check">
@@ -108,51 +108,44 @@
                                             </div> --}}
                                         </div>
 
-
+                                        @canany(['view_photogallery', 'view_videogallery'])
                                         <div class="form-group row clearfix my-4">
-                                            <label class="col-sm-2 col-form-label">Fotograf Galeri / Video Galeri</label>
+                                       <label class="col-sm-2 col-form-label">Fotograf Galeri / Video Galeri</label>
+                                       @canany('view_photogallery')
+                                           <div class="col-sm-5">
+                                               <select name="photogallery_id" class="form-control fill">
+                                                   <option value="0">Foto Galeri Seçilmedi</option>
+                                                   @if (!empty($photogalleries))
+                                                       @foreach ($photogalleries as $photogallery)
+                                                           <option value="{{ $photogallery->id }}">
+                                                               {{ $photogallery->title }}</option>
+                                                       @endforeach
+                                                   @endif
+                                               </select>
+                                           </div>
+                                       @endcanany
+                                       @canany('view_videogallery')
+                                           <div class="col-sm-5">
+                                               <select name="videogallery_id" class="form-control fill">
+                                                   <option value="0">Video Galeri Seçilmedi</option>
+                                                   @if (!empty($photogalleries))
+                                                       @foreach ($videogalleries as $videogallery)
+                                                           <option value="{{ $videogallery->id }}">
+                                                               {{ $videogallery->title }}
+                                                           </option>
+                                                       @endforeach
+                                                   @endif
+                                               </select>
 
-                                            {{-- <div class="col-sm-2">
-                                                <select name="location" class="form-control fill">
-                                                    <option value="0">Standart</option>
-                                                    <option value="1">Manşet</option>
-                                                    <option value="2">Mini Manşet</option>
-                                                    <option value="3">Top Manşet</option>
-                                                </select>
-                                            </div> --}}
-                                            @canany('view_photogallery')
-                                                <div class="col-sm-5">
-                                                    <select name="photogallery_id" class="form-control fill">
-                                                        <option value="0">Foto Galeri Seçilmedi</option>
-                                                        @if (!empty($photogalleries))
-                                                            @foreach ($photogalleries as $photogallery)
-                                                                <option {{$model->photogallery_id == $photogallery->id ? 'selected': ""}} value="{{ $photogallery->id }}">
-                                                                    {{ $photogallery->title }}</option>
-                                                            @endforeach
-                                                        @endif
-                                                    </select>
-                                                </div>
-                                            @endcanany
-                                            @canany('view_videogallery')
-                                                <div class="col-sm-5">
-                                                    <select name="videogallery_id" class="form-control fill">
-                                                        <option value="0">Video Galeri Seçilmedi</option>
-                                                        @if (!empty($photogalleries))
-                                                            @foreach ($videogalleries as $videogallery)
-                                                                <option {{$model->videogallery_id == $videogallery->id ?'selected' :""}} value="{{ $videogallery->id }}">
-                                                                    {{ $videogallery->title }}
-                                                                </option>
-                                                            @endforeach
-                                                        @endif
-                                                    </select>
+                                           </div>
+                                       @endcanany
 
-                                                </div>
-                                            @endcanany
+                                   </div>
 
-                                        </div>
+                                   @endcanany
 
                                         <hr>
-                                        <div class="form-group has-warning row">
+                                        {{-- <div class="form-group has-warning row">
                                             <div class="col-sm-2">
                                                 <label class="col-form-label" for="meta1">Meta anahtar kelimeler
                                                     (Opsiyonel)</label>
@@ -175,11 +168,11 @@
                                                 <div class="col-form-label">Arama motorları maksimum 200 karakteri
                                                     geçmeyecek şekilde doldurulabilir.</div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <hr>
 
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Standart Makale Fotoğrafı</label>
+                                            <label class="col-sm-2 col-form-label">Makale Fotoğrafı (min:630x470)</label>
                                             <div class="col-sm-6"> 
                                                 <input type="file" class="form-control form-control-normal dropify"
                                                 data-show-remove="false"

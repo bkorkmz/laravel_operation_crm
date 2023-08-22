@@ -42,7 +42,7 @@
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/css/widget.css') }}">
-    <script type="text/javascript" src=".{{ asset('admin/bower_components/switchery/css/switchery.min.css') }}"></script>
+    {{-- <script type="text/javascript" src=".{{ asset('admin/bower_components/switchery/css/switchery.min.css') }}"></script> --}}
 
 
 
@@ -253,7 +253,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="main-friend-list">
+                            {{-- <div class="main-friend-list">
                                 <div class="media userlist-box waves-effect waves-light" data-id="1"
                                     data-status="online" data-username="Josephin Doe">
                                     <a class="media-left" href="#!">
@@ -316,7 +316,7 @@
                                                 ago</small></div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -324,7 +324,7 @@
             <!-- [ chat user list ] end -->
 
             <!-- [ chat message ] start -->
-            <div class="showChat_inner">
+            {{-- <div class="showChat_inner">
                 <div class="media chat-inner-header">
                     <a class="back_chatBox">
                         <i class="feather icon-x"></i> Josephin Doe
@@ -376,7 +376,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <!-- [ chat message ] end -->
 
 

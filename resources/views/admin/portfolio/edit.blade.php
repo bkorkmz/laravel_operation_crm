@@ -24,39 +24,43 @@
                             </ul>
                         </div>
                     @endif
-                    <form action="{{ route('slider.update',$slider->id) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route( $module_name.'.update',$model->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">İçerik Adı <span class="text-danger"> *</span></label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control form-control-normal" placeholder="İçerik adı giriniz"
-                                    name="name" value="{{ $slider->name }}" required>
+                                    name="name" value="{{ $model->name }}" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Bağlantı (Url)</label>
                             <div class="col-sm-10">
                                 <input type="url" class="form-control form-control-normal" placeholder="İçerik bağlantısı"
-                                    name="link" value="{{ $slider->link }}" >
+                                    name="link" value="{{ $model->link }}" >
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">İçerik Türü<span class="text-danger"> *</span></label>
-                            <div class="col-sm-10">
-                                <select name="type" class="form-control fill" required>
-                                    {{-- <option value="slider">Slider</option> --}}
-                                    <option value="portfolio" {{$slider->type == "portfolio" ? "selected" : "" }} selected>Portfolyo</option>
+                        <div class="form-group row my-4">
+                            <label class="col-sm-2 col-form-label">Kategori <i
+                                    class="feather icon-info  text-c-blue"></i></label>
+                            <div class="col-sm-3">
+                                <select name="category_id" class="form-control fill">
+                                    <option value="">Kategori seçiniz</option>
+                                    @foreach ($category as $cat)
+                                        <option value="{{ $cat->id }}" {{$model->category_id ==  $cat->id ? 'selected' : ""}}>{{ $cat->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
+
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Onay Durumu<span class="text-danger">
                                     *</span></label>
                             <div class="col-sm-10">
                                 <select name="status" class="form-control fill" required>
-                                    <option value="1" {{$slider->status  == 1 ? "selected" : "" }}>Yayında</option>
-                                    <option value="0" {{$slider->status  == 0 ? "selected" : "" }}>Taslak</option>
+                                    <option value="1" {{$model->status  == 1 ? "selected" : "" }}>Yayında</option>
+                                    <option value="0" {{$model->status  == 0 ? "selected" : "" }}>Taslak</option>
 
                                 </select>
                             </div>
@@ -67,12 +71,12 @@
                         
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">İçerik Resmi</label>
+                            <label class="col-sm-2 col-form-label">İçerik Resmi  (800x600)</label>
                             <div class="col-sm-5">
                                 <input type="file" class="form-control form-control-normal dropify" placeholder=""
                                 placeholder="" name="image"
                                 data-show-remove="false"
-                                data-default-file="{{ $slider->image  }}"
+                                data-default-file="{{ $model->image  }}"
                                 accept=".png,.jpg,.jpeg,.gif,.webp,.bmp" >
                             </div>
                         </div>

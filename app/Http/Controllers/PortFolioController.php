@@ -24,14 +24,14 @@ class PortFolioController extends Controller
 
     public function index()
     {
-        $module_name = 'portfolio';
+        $module_name = 'slider';
         return view('admin.slider.index', compact('module_name'));
     }
 
     public function index_data()
     {
+        $module_name = 'slider';
         $data = PortFolio::where('type', 'slider');
-        // dd($data->get());
         return DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('name', function ($data) {
@@ -56,12 +56,12 @@ class PortFolioController extends Controller
                 return  $span;
             })
 
-            ->addColumn('action', function ($data) {
+            ->addColumn('action', function ($data) use( $module_name ) {
 
                 $btn = '
                                      <div class="text-center">
-                                       <a href="' . route('portfolio.edit', $data->id) . '" class="edit  btn-sm " data-toggle="tooltip" data-placement="top" title="Düzenle"><i class="icon feather icon-edit f-w-600 f-16 m-r-15 text-c-green"></i></a>
-                                       <a href="' . route('portfolio.destroy', $data->id) . '" onclick="return confirm(\'Silme İşlemi onaylıyormusunuz ?\')"  data-toggle="tooltip" data-placement="top" title="Sil"><i class="feather icon-trash-2 f-w-600 f-16 text-c-red"></i></a>
+                                       <a href="' . route( $module_name .'.edit', $data->id) . '" class="edit  btn-sm " data-toggle="tooltip" data-placement="top" title="Düzenle"><i class="icon feather icon-edit f-w-600 f-16 m-r-15 text-c-green"></i></a>
+                                       <a href="' . route( $module_name .'.destroy', $data->id) . '" onclick="return confirm(\'Silme İşlemi onaylıyormusunuz ?\')"  data-toggle="tooltip" data-placement="top" title="Sil"><i class="feather icon-trash-2 f-w-600 f-16 text-c-red"></i></a>
                                </div>
                                ';
 
@@ -75,13 +75,16 @@ class PortFolioController extends Controller
 
     public function create()
     {
+        $module_name = 'slider';
 
-        return view('admin.slider.create');
+        return view('admin.slider.create',compact('module_name'));
     }
     public function edit($id)
     {
+        $module_name = 'slider';
+
         $slider =  PortFolio::where('id', $id)->first();
-        return view('admin.slider.edit', compact('slider'));
+        return view('admin.slider.edit', compact('slider','module_name'));
     }
 
 
@@ -89,16 +92,16 @@ class PortFolioController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "name" => "required",
-            "image" => "required|image|mimes:jpeg,png,jpg,gif,bmp|max:2048",
-            "value" => "nullable",
+            "image" => "required|image|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:2048",
+            "name" => "required|max:50",
             "link" => "nullable",
             'status' => 'required',
         ], [
             'name.required' => 'İçerik adızorunludur',
+            'name.max' => 'İçerik adı en fazla 50 karakter olmalıdır adızorunludur',
             'image.required' => 'İçerik resmi alanı zorunludur',
             'image.image' => 'İçerik resmi bir resim dosyası olmalıdır.',
-            'image.mimes' => 'İçerik resmi yalnızca jpeg, png, jpg, gif veya bmp formatında olabilir.',
+            'image.mimes' => 'İçerik resmi yalnızca jpg,jpeg,png,tiff,gif,svg,webp,ico veya bmp formatında olabilir.',
             'image.max' => 'İçerik resmi en fazla 2 MB boyutunda olabilir.',
             'status.required' => 'Durum alanı zorunludur',
         ]);
@@ -130,16 +133,16 @@ class PortFolioController extends Controller
 
 
         $request->validate([
-            "name" => "required",
-            "image" => "image|mimes:jpeg,png,jpg,gif,bmp|max:2048",
-            "value" => "nullable",
+            "name" => "required|max:50",
+            "image" => "image|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:2048",
             "link" => "nullable",
             "type" => "required",
             'status' => 'required',
         ], [
-            'name.required' => 'İçerik adızorunludur',
+            'name.required' => 'İçerik adı zorunludur',
+            'name.max' => 'İçerik adı en fazla 50 karakter olmalıdır adızorunludur',
             'image.required' => 'İçerik resmi alanı zorunludur',
-            'image.mimes' => 'İçerik resmi yalnızca jpeg, png, jpg, gif veya bmp formatında olabilir.',
+            'image.mimes' => 'İçerik resmi yalnızca jpg,jpeg,png,tiff,gif,svg,webp,ico veya bmp formatında olabilir.',
             'image.max' => 'İçerik resmi en fazla 2 MB boyutunda olabilir.',
             'type.required' => 'İçerik türü alanı zorunludur',
             'status.required' => 'Durum alanı zorunludur',
@@ -183,11 +186,13 @@ class PortFolioController extends Controller
     {
 
         $module_name = 'portfolio';
-        return view('admin.portfolio.index',compact('module_name'));
+        return view('admin.'.$module_name.'.index',compact('module_name'));
     }
 
     public function portfolio_index_data()
     {
+        $module_name = 'portfolio';
+
         $data = PortFolio::where('type', 'portfolio');
         // dd($data->get());
         return DataTables::of($data)
@@ -214,12 +219,12 @@ class PortFolioController extends Controller
                 return  $span;
             })
 
-            ->addColumn('action', function ($data) {
+            ->addColumn('action', function ($data) use ($module_name) {
 
                 $btn = '
                                      <div class="text-center">
-                                       <a href="' . route('slider.edit', $data->id) . '" class="edit  btn-sm " data-toggle="tooltip" data-placement="top" title="Düzenle"><i class="icon feather icon-edit f-w-600 f-16 m-r-15 text-c-green"></i></a>
-                                       <a href="' . route('slider.destroy', $data->id) . '" onclick="return confirm(\'Silme İşlemi onaylıyormusunuz ?\')"  data-toggle="tooltip" data-placement="top" title="Sil"><i class="feather icon-trash-2 f-w-600 f-16 text-c-red"></i></a>
+                                       <a href="' . route($module_name.'.edit', $data->id) . '" class="edit  btn-sm " data-toggle="tooltip" data-placement="top" title="Düzenle"><i class="icon feather icon-edit f-w-600 f-16 m-r-15 text-c-green"></i></a>
+                                       <a href="' . route($module_name.'.destroy', $data->id) . '" onclick="return confirm(\'Silme İşlemi onaylıyormusunuz ?\')"  data-toggle="tooltip" data-placement="top" title="Sil"><i class="feather icon-trash-2 f-w-600 f-16 text-c-red"></i></a>
                                </div>
                                ';
 
@@ -233,14 +238,17 @@ class PortFolioController extends Controller
 
     public function portfolio_create()
     {
-        $category = Category::where(['model'=>'portfolio','show'=>1])->get();
+        $module_name = 'portfolio';
 
-        return view('admin.portfolio.create',compact('category'));
+        $category = Category::where(['model'=>'portfolio','show'=>1])->get();
+        return view('admin.'. $module_name.'.create',compact('category','module_name'));
     }
     public function portfolio_edit(PortFolio $model)
     {
+        $module_name = 'portfolio';
+
         $category = Category::where(['model'=>'portfolio','show'=>1])->get();
-        return view('admin.slider.edit', compact('model','category'));
+        return view('admin.'. $module_name.'.edit', compact('model','category','module_name'));
     }
 
 
@@ -249,7 +257,7 @@ class PortFolioController extends Controller
     {
         $request->validate([
             "name" => "required",
-            "image" => "required|image|mimes:jpeg,png,jpg,gif,bmp|max:2048",
+            "image" => "required|image|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:2048",
             "value" => "nullable",
             "link" => "nullable",
             'status' => 'required',
@@ -257,7 +265,7 @@ class PortFolioController extends Controller
             'name.required' => 'İçerik adı zorunludur',
             'image.required' => 'İçerik resmi alanı zorunludur',
             'image.image' => 'İçerik resmi bir resim dosyası olmalıdır.',
-            'image.mimes' => 'İçerik resmi yalnızca jpeg, png, jpg, gif veya bmp formatında olabilir.',
+            'image.mimes' => 'İçerik resmi yalnızca jpg,jpeg,png,tiff,gif,svg,webp,ico veya bmp formatında olabilir.',
             'image.max' => 'İçerik resmi en fazla 2 MB boyutunda olabilir.',
             'status.required' => 'Durum alanı zorunludur',
         ]);
@@ -283,7 +291,7 @@ class PortFolioController extends Controller
 
         $request->validate([
             "name" => "required",
-            "image" => "image|mimes:jpeg,png,jpg,gif,bmp|max:2048",
+            "image" => "image|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:2048",
             "value" => "nullable",
             "link" => "nullable",
             "type" => "required",
@@ -291,7 +299,7 @@ class PortFolioController extends Controller
         ], [
             'name.required' => 'İçerik adızorunludur',
             'image.required' => 'İçerik resmi alanı zorunludur',
-            'image.mimes' => 'İçerik resmi yalnızca jpeg, png, jpg, gif veya bmp formatında olabilir.',
+            'image.mimes' => 'İçerik resmi yalnızca jpg,jpeg,png,tiff,gif,svg,webp,ico veya bmp formatında olabilir.',
             'image.max' => 'İçerik resmi en fazla 2 MB boyutunda olabilir.',
             'type.required' => 'İçerik türü alanı zorunludur',
             'status.required' => 'Durum alanı zorunludur',
