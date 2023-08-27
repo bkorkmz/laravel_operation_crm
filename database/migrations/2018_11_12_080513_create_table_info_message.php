@@ -17,10 +17,12 @@ return new class extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('email')->nullable();
+            $table->tinyText('subject')->nullable();
             $table->text('content')->nullable();
-            $table->integer('publish')->default(1);
+            $table->integer('publish')->default(0);
             $table->string('ip')->nullable();
             $table->string('location')->nullable();
+            $table->string('resume_file')->nullable();
             $table->timestamps();
         });
     }

@@ -1,6 +1,6 @@
 @extends('layouts.layout-admin')
 @section('title')
-    {{ __('Hizmet Kayıt Sayfası ') }}
+    {{ __('Hizmeti Düzenle ') }}
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
         <div class="page-wrapper">
             <div class="card">
                 <div class="card-header">
-                    <h3>Hizmet Ekle</h3>
+                    <h3>Hizmeti Düzenle</h3>
                     <button type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
                     onclick="return window.history.back()"><i class="fa fa-reply"></i>Geri Dön</button>
                 </div>
@@ -24,13 +24,13 @@
                             </ul>
                         </div>
                     @endif
-
-                    <form action="{{ route($modul_name.'.store') }}" method="post" enctype="multipart/form-data">
+{{-- @dd($model->id) --}}
+                    <form action="{{ route($modul_name.'.update',$model->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Hizmet Başlığı <span class="text-danger"> *</span></label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control form-control-normal" value="{{old('title')}}"
+                                <input type="text" class="form-control form-control-normal" value="{{$model->title}}"
                                     placeholder="" name="title" maxlength="50" required>
                             </div>
                         </div>
@@ -46,13 +46,13 @@
                             <label class="col-sm-2 col-form-label">Hizmet Özeti <span class="text-danger"> *</span></label>
                             <div class="col-sm-10">
                                     <textarea type="text" class="form-control form-control-normal" required
-                                        placeholder="" name="short_detail" maxlength="250">{{old('short_detail')}}</textarea>
+                                        placeholder="" name="short_detail" maxlength="250">{{$model->short_detail}}</textarea>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Hizmet Açıklaması <span class="text-danger"> *</span></label>
                             <div class="col-sm-10">
-                                <textarea id="ckeditor" class="form-control form-control-normal" name="detail" rows="5"  >{{old('detail')}}</textarea>
+                                <textarea id="ckeditor" class="form-control form-control-normal" name="detail" rows="5"  >{{$model->detail}}</textarea>
                             </div>
                         </div>
 
@@ -60,46 +60,68 @@
                             <label class="col-sm-2 col-form-label">Anahtar Kelimeler</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control form-control-normal"
-                                    placeholder="" name="keywords" maxlength="50" value="{{old('keywords')}}">
+                                    placeholder="" name="keywords" maxlength="50" value="{{$model->keywords}}">
                             </div>
                         </div>
 
+                        {{-- @dd($model) --}}
                         <div class="form-group row my-4">
                             <label class="col-sm-2 col-form-label">Kategori</label>
                             <div class="col-sm-3">
                                 <select name="category_id" class="form-control fill">
                                     @foreach ($category as $cat)
-                                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                        <option value="{{ $cat->id }} {{$model->category_id == $cat->id ? 'selected': '' }}">{{ $cat->name }}</option>
                                     @endforeach
                                 </select>
                                 {{-- <a type="button" class="float-right badge badge-inverse-danger"
                                     href="javascript:void(0)" data-toggle="modal"
                                     data-target="#addCategoryModal">Kategori Ekle</a> --}}
                             </div>
-                            <div class="col-sm-3 float-center">
+                            {{-- <div class="col-sm-3 float-center">
                                 <label>Manşette Başlık</label>
                                 <div class="form-check text-left">
                                     <input class="form-check-input" checked type="radio" name="mtitle"
-                                        id="showMtitle" value="0"{{old('mtitle') == 0 ? 'checked' :"" }}>
+                                        id="showMtitle" value="0"{{$model->mtitle == 0 ? 'checked' :"" }}>
                                     <label class="form-check-label" for="showMtitle">Göster</label>
                                 </div>
                                 <div class="form-check text-left">
                                     <input class="form-check-input" type="radio" name="mtitle"
-                                        id="hideMtitle" value="1"{{old('mtitle') == 1 ? 'checked' :"" }}>
+                                        id="hideMtitle" value="1"{{$model->mtitle == 1 ? 'checked' :"" }}>
                                     <label class="form-check-label" for="hideMtitle">Gösterme</label>
                                 </div>
-                            </div>
-                            <div class="col-sm-3">
+                            </div> --}}
+                            {{-- <div class="col-sm-3">
                                 <label>Durum</label>
                                 <div class="form-check">
                                     <input class="form-check-input" checked type="radio" name="publish"
-                                        id="showpublish" value="0" {{old('publish') == 0 ? 'checked' :"" }}>
+                                        id="showpublish" value="0" {{$model->publish == 0 ? 'checked' :"" }}>
                                     <label class="form-check-label" for="showpublish">Yayında</label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="publish"
-                                        id="hidepublish" value="1" {{old('publish') == 1 ? 'checked' :"" }}>
+                                        id="hidepublish" value="1" {{$model->publish == 1 ? 'checked' :"" }}>
                                     <label class="form-check-label" for="hidepublish">Taslak</label>
+                                </div>
+                            </div>
+                             --}}
+                            <div class="form-group row my-4">
+                                <label class="col-sm-2 col-form-label">Durum
+                                   </label>
+                                <div class="col-sm-3 row align-self-center" >
+                                    
+                                    <div class="form-check m-2">
+                                        <input class="form-check-input" checked type="radio" name="publish"
+                                            id="active" value="1"
+                                            {{$model->publish == 1 ? 'checked' :"" }}>
+                                        <label class="form-check-label" for="active">Aktif</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                       
+                                        <input class="form-check-input"  type="radio" name="publish"
+                                            id="passive" value="0"
+                                            {{$model->publish == 0 ? 'checked' :"" }}>
+                                        <label class="form-check-label" for="passive">Pasif </label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -151,7 +173,7 @@
                         @endcanany
                        
                         <hr>
-                        <div class="form-group has-warning row">
+                        {{-- <div class="form-group has-warning row">
                             <div class="col-sm-2">
                                 <label class="col-form-label" for="meta1">Meta anahtar kelimeler
                                     (Opsiyonel)</label>
@@ -175,13 +197,15 @@
                                     geçmeyecek şekilde doldurulabilir.</div>
                             </div>
                         </div>
-                        <hr>
+                        <hr> --}}
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Hizmet Fotoğrafı</label>
+                            <label class="col-sm-2 col-form-label">Hizmet Fotoğrafı (min:630x470)</label>
                             <div class="col-sm-5">
                                 <input type="file" class="form-control form-control-normal dropify"
-                                    placeholder="" name="image">
+                                data-show-remove="false" data-default-file="{{ $model->image }}"
+                                accept=".jpg,.jpeg,.png,.tiff,.gif,.svg,.webp,.bmp,.ico"
+                                placeholder="" name="image">
                              </div>
                         </div>
 

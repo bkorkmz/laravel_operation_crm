@@ -42,10 +42,10 @@ class FaqSssController extends Controller
             })
 
             ->editColumn('status', function ($data) {
-                if ($data->user_check == 0) {
+                if ($data->status == 0) {
                     return '<span class="badge badge-danger" > ' . __('Pasif') . ' </span >';
                 }
-                if ($data->user_check == 1) {
+                if ($data->status == 1) {
                     return '<span class="badge badge-success">' . __('Aktif') . '</span>';
                 }
             })

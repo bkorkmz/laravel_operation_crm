@@ -1,15 +1,8 @@
 @extends('layouts.app')
 @section('title')
     @lang('Giriş Sayfası')
-@stop
-@section('css')
-    <style>
-        body {
-            background-image: url({{config('settings.site_login_img')}});
-            background-size: cover;
-        }
-    </style>
 @endsection
+
 
 @section('content')
 
@@ -33,11 +26,6 @@
                                 <img src="{{ config('settings.site_logo') }}" class="mt-3 mb-4" alt="logo"
                                     width="180px">
                             </div>
-
-
-
-
-
 
                             <form method="POST" action="{{ route('login') }}"
                                 class="form-control border-0 justify-contend-center">
@@ -114,7 +102,7 @@
                                     </div>
 
 
-                                    {{-- <div class="col-md-6 ">
+                                    <div class="col-md-6 ">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="remember" id="remember"
                                             {{ old('remember') ? 'checked' : '' }}>
@@ -123,7 +111,7 @@
                                             {{ __('Remember Me') }}
                                         </label>
                                     </div>
-                                </div> --}}
+                                </div>
                                 </div>
 
                                 <div class="row mb-0 justify-content-left ">
@@ -132,8 +120,8 @@
                                             {{ __('Giriş yap') }}
                                         </button>
                                     </div>
-                                    <span class="mt-2" style="font-weight: 600;"> Bir hesabınız yok mu ? <a
-                                            class="text-danger" href="/register"> Kayıt ol </a></span>
+                                    {{-- <span class="mt-2" style="font-weight: 600;"> Bir hesabınız yok mu ? <a --}}
+                                            {{-- class="text-danger" href="/register"> Kayıt ol </a></span>  --}}
                                 </div>
                             </form>
 

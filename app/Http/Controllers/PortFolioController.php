@@ -109,7 +109,7 @@ class PortFolioController extends Controller
 
 
         $data = $request->except('_token');
-        $data['type'] = "portfolio";
+       
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $data['image'] = '/storage/' . $request->image->store('sliders', 'public');
         }

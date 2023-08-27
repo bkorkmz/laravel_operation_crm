@@ -22,11 +22,8 @@
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:500,700" rel="stylesheet">
-    <link href="{{ asset('vendor/dropify/dist/css/dropify.css') }}" rel="stylesheet" type="text/css" />
-
-
-
-
+    <link href="{{ asset('vendor/dropify/dist/css/dropify.css') }}" rel="stylesheet" type="text/css" />,
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/> 
 
     {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"> --}}
     <!-- Required Fremwork -->
@@ -197,19 +194,22 @@
 
                                         </a>
                                     </li> --}}
-                                        {{-- <li>
-                                        <a href="#">
+                                    @can('view_my_profile_users')
+                                               <li>
+                                        <a href="{{route('profile.index')}}">
                                             <i class="feather icon-user"></i> Profile
 
                                         </a>
                                     </li>
-                                    <li>
+                                    @endcan
+                                 
+                                    {{-- <li>
                                         <a href="">
                                             <i class="feather icon-mail"></i> My Messages
 
                                         </a>
-                                    </li>
-                                    <li>
+                                    </li> --}}
+                                    {{-- <li>
                                         <a href="">
                                             <i class="feather icon-lock"></i> Lock Screen
 

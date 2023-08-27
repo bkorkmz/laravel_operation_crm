@@ -20,6 +20,8 @@
     <meta name="MobileOptimized" content="320">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    @yield('head')
+
     <!-- Favicons -->
     <link href="{{ asset(config('settings.site_icon')) }}" rel="icon">
     <link href="{{ asset(config('settings.site_icon')) }}" rel="apple-touch-icon">
@@ -60,7 +62,8 @@
 <body>
     @include('frontend.includes.header')
 
-
+    
+    @yield('breadcrumbs')
 
 
     @yield('content')

@@ -19,8 +19,58 @@
                     <!-- [ page content ] start -->
                     <div class="row">
 
+                        <div class="col-xl-4 col-md-12">
+                            <div class="card comp-card">
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <h6 class="m-b-25">Aktif Takım Üyesi</h6>
+                                            <h3 class="f-w-700 text-c-green">{{$user_count}}</h3>
+                                            <p class="m-b-0">{{date('d.m.Y')}}</p>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-eye bg-c-blue"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6">
+                            <div class="card comp-card">
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <h6 class="m-b-25">Toplam Hizmet</h6>
+                                            <h3 class="f-w-700 text-c-blue">{{$total_services}}</h3>
+                                            <p class="m-b-0">{{date('d.m.Y')}}</p>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-bullseye bg-c-green"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6">
+                            <div class="card comp-card">
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <h6 class="m-b-25">Toplam Makale</h6>
+                                            <h3 class="f-w-700 text-c-yellow">{{$total_article}}</h3>
+                                            <p class="m-b-0">{{date('d.m.Y')}}</p>
+                                        </div>
+                                           
+                                        <div class="col-auto">
+                                            <i class="fas fa-hand-paper bg-c-yellow"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- product profit start -->
-                        <div class="col-xl-3 col-md-6">
+                        {{-- <div class="col-xl-3 col-md-6">
                             <div class="card prod-p-card card-red">
                                 <div class="card-body">
                                     <div class="row align-items-center m-b-30">
@@ -32,8 +82,6 @@
                                             <i class="fas fa-user text-c-red f-18"></i>
                                         </div>
                                     </div>
-                                    {{-- <p class="m-b-0 text-white"><span class="label label-danger m-r-10">+11%</span>From
-                                        Previous Month</p> --}}
                                 </div>
                             </div>
                         </div>
@@ -49,8 +97,7 @@
                                             <i class="fas fa-database text-c-blue f-18"></i>
                                         </div>
                                     </div>
-                                    {{-- <p class="m-b-0 text-white"><span class="label label-primary m-r-10">+12%</span>From
-                                        Previous Month</p> --}}
+                    
                                 </div>
                             </div>
                         </div>
@@ -66,8 +113,7 @@
                                             <i class="fas fa-dollar-sign text-c-green f-18"></i>
                                         </div>
                                     </div>
-                                    {{-- <p class="m-b-0 text-white"><span class="label label-success m-r-10">+52%</span>From
-                                        Previous Month</p> --}}
+                     
                                 </div>
                             </div>
                         </div>
@@ -83,18 +129,18 @@
                                             <i class="fas fa-tags text-c-yellow f-18"></i>
                                         </div>
                                     </div>
-                                    {{-- <p class="m-b-0 text-white"><span class="label label-warning m-r-10">+52%</span>From
-                                        Previous Month</p> --}}
+                                    <p class="m-b-0 text-white"><span class="label label-warning m-r-10">+52%</span>From
+                                        Previous Month</p>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- product profit end -->
 
                         <!-- lattest update, new client start -->
                         <div class="col-xl-6 col-md-12">
                             <div class="card latest-update-card">
                                 <div class="card-header">
-                                    <h5>What’s New</h5>
+                                    <h5>Son İletişim Mesajları</h5>
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
                                             <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i>
@@ -109,57 +155,31 @@
                                 </div>
                                 <div class="card-block">
                                     <div class="latest-update-box">
-                                        <div class="row p-t-20 p-b-30">
-                                            <div class="col-auto text-right update-meta p-r-0">
-                                                <img src="public\admin\assets\images\avatar-4.jpg" alt="user image"
-                                                    class="img-radius img-40 align-top m-r-15 update-icon">
-                                            </div>
-                                            <div class="col p-l-5">
-                                                <a href="#!">
-                                                    <h6>Your Manager Posted.</h6>
-                                                </a>
-                                                <p class="text-muted m-b-0">Jonny michel</p>
-                                            </div>
-                                        </div>
+                                        @foreach ($infoMessages as $message )
+
                                         <div class="row p-b-30">
                                             <div class="col-auto text-right update-meta p-r-0">
-                                                <i class="feather icon-briefcase bg-c-red update-icon"></i>
+                                                
+                                                <i class="feather {{$message->publish == 0 ?'icon-briefcase bg-c-red' :'icon-check f-w-600 bg-c-green'}} update-icon"></i>
                                             </div>
                                             <div class="col p-l-5">
-                                                <a href="#!">
-                                                    <h6>You have 3 pending Task.</h6>
+                                                <a href="{{route('admin.info_message')}}">
+                                                    <h6>{{$message->subject}}</h6>
                                                 </a>
-                                                <p class="text-muted m-b-0">Hemilton</p>
+                                                <p class="text-muted m-b-0">{{$message->title}} - {{$message->email}}</p>
                                             </div>
                                         </div>
-                                        <div class="row p-b-30">
-                                            <div class="col-auto text-right update-meta p-r-0">
-                                                <i class="feather icon-check f-w-600 bg-c-green update-icon"></i>
-                                            </div>
-                                            <div class="col p-l-5">
-                                                <a href="#!">
-                                                    <h6>New Order Received.</h6>
-                                                </a>
-                                                <p class="text-muted m-b-0">Hemilton</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-auto text-right update-meta p-r-0">
-                                                <img src="../files/assets/images/avatar-4.jpg" alt="user image"
-                                                    class="img-radius img-40 align-top m-r-15 update-icon">
-                                            </div>
-                                            <div class="col p-l-5">
-                                                <a href="#!">
-                                                    <h6>Your Manager Posted.</h6>
-                                                </a>
-                                                <p class="text-muted m-b-0">Jonny michel</p>
-                                            </div>
-                                        </div>
+
+
+
+                                            
+                                        @endforeach
+                                        
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-6 col-md-12">
+                        {{-- <div class="col-xl-6 col-md-12">
                             <div class="card new-cust-card">
                                 <div class="card-header">
                                     <h5>New Customers</h5>
@@ -223,11 +243,11 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- lattest update, new client end -->
 
                         <!-- imprestion, goal, impect start -->
-                        <div class="col-xl-4 col-md-12">
+                        {{-- <div class="col-xl-4 col-md-12">
                             <div class="card comp-card">
                                 <div class="card-body">
                                     <div class="row align-items-center">
@@ -274,7 +294,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- imprestion, goal, impect end -->
 
                         <!-- income start -->

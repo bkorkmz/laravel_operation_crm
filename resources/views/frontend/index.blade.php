@@ -84,7 +84,7 @@
         <!-- End Counts Section -->
 
         <!-- ======= Tabs Section ======= -->
-        @include('frontend.pages.article')
+        @include('frontend.pages.article',['data' =>$article])
         <!-- End Tabs Section -->
 
         <!-- ======= Services Section ======= -->

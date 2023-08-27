@@ -69,6 +69,11 @@
                         name: 'job'
                     },
                     {
+                        title:"Durum",
+                        data: 'status',
+                        name: 'status'
+                    },
+                    {
                         title:"Kayıt Tarihi",
                         data: 'created_at',
                         name: 'created_at'

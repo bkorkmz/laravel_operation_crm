@@ -12,8 +12,8 @@
                             <div class="card-header">
                                 <h3>Makale Düzenle</h3>
                                 {{-- <a href="{{ route('post.trashed_index') }}" type="button" class="btn btn-warning btn-sm float-right rounded mr-1 " data-toggle="tooltip" data-placement="top" title="Çöp Kutusu"><i class="fa fa-trash"></i></a> --}}
-                                <button type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
-                                    onclick="return window.history.back()"><i class="fa fa-reply"></i>Geri Dön</button>
+                                <a type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
+                                   href="{{route($modul_name.'.index')}}"><i class="fa fa-reply"></i>Geri Dön</a>
 
                             </div>
                             <div class="card-block table-border-style">
@@ -27,25 +27,29 @@
                                             </ul>
                                         </div>
                                     @endif
-                                    <form action="{{ route($modul_name.'.update',['model'=>$model->id]) }}" method="post" enctype="multipart/form-data">
+                                    <form action="{{ route($modul_name . '.update', ['model' => $model->id]) }}"
+                                        method="post" enctype="multipart/form-data">
                                         @csrf
                                         {{-- @dd($post) --}}
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Makale başlığı <span class="text-danger"> *</span></label>
+                                            <label class="col-sm-2 col-form-label">Makale başlığı <span class="text-danger">
+                                                    *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control form-control-normal" 
-                                                    placeholder="" name="title" maxlength="50" value="{{$model->title}}">
+                                                <input type="text" class="form-control form-control-normal"
+                                                    placeholder="" name="title" maxlength="50"
+                                                    value="{{ $model->title }}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Makale özeti <span class="text-danger"> *</span></label>
+                                            <label class="col-sm-2 col-form-label">Makale özeti <span class="text-danger">
+                                                    *</span></label>
                                             <div class="col-sm-10">
-                                                <textarea type="text" class="form-control form-control-normal"
-                                                    placeholder="" name="short_detail" maxlength="250">{{$model->short_detail}}</textarea>
+                                                <textarea type="text" class="form-control form-control-normal" placeholder="" name="short_detail" maxlength="250">{{ $model->short_detail }}</textarea>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Makale içeriği <span class="text-danger"> *</span></label>
+                                            <label class="col-sm-2 col-form-label">Makale içeriği <span class="text-danger">
+                                                    *</span></label>
                                             <div class="col-sm-10">
                                                 <textarea id="ckeditor" name="detail" rows="5">{!! $model->detail !!}</textarea>
                                             </div>
@@ -55,7 +59,8 @@
                                             <label class="col-sm-2 col-form-label">Anahtar kelimeler</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control form-control-normal"
-                                                    placeholder="" name="keywords" maxlength="50" value="{{$model->keywords}}">
+                                                    placeholder="" name="keywords" maxlength="50"
+                                                    value="{{ $model->keywords }}">
                                             </div>
                                         </div>
 
@@ -64,35 +69,26 @@
                                             <div class="col-sm-3">
                                                 <select name="category_id" class="form-control fill">
                                                     @foreach ($post_category as $category)
-                                                        <option {{ $model->category_id == $category->id ? 'selected' :"" }} value="{{ $category->id }}">{{ $category->name }}</option>
+                                                        <option {{ $model->category_id == $category->id ? 'selected' : '' }}
+                                                            value="{{ $category->id }}">{{ $category->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 {{-- <a type="button" class="float-right badge badge-inverse-danger"
                                                     href="javascript:void(0)" data-toggle="modal"
                                                     data-target="#addCategoryModal">Kategori Ekle</a> --}}
                                             </div>
-                                            {{-- <div class="col-sm-3 float-center">
-                                                <label>Manşette Başlık</label>
-                                                <div class="form-check text-left">
-                                                    <input class="form-check-input" {{$model->mtitle == 0 ? 'checked' : ""}} type="radio" name="mtitle"
-                                                        id="showMtitle" value="0">
-                                                    <label class="form-check-label" for="showMtitle">Göster</label>
-                                                </div>
-                                                <div class="form-check text-left">
-                                                    <input class="form-check-input" type="radio" name="mtitle"{{$model->mtitle == 1 ? 'checked' : "" }} 
-                                                        id="hideMtitle" value="1">
-                                                    <label class="form-check-label" for="hideMtitle">Gösterme</label>
-                                                </div>
-                                            </div> --}}
-                                            <div class="col-sm-3">
-                                                <label>Durum</label>
+
+                                            <div class="col-sm-3 d-flex">
+                                                <label class="col">Durum</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="publish" {{$model->publish == 0 ?: 'checked'}} 
-                                                        id="showMtitle" value="0">
-                                                    <label class="form-check-label" for="showMtitle">Yayında</label>
+                                                    <input class="form-check-input" type="radio" name="publish"
+                                                        {{ $model->publish == 0 ?'checked': "" }} id="showMtitle"
+                                                        value="0">
+                                                    <label class="form-check-label m-r-10" for="showMtitle">Yayında</label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="publish"{{$model->publish == 1 ?: 'checked'}}
+                                                    <input class="form-check-input" type="radio"
+                                                        name="publish"{{ $model->publish == 1 ? 'checked': "" }}
                                                         id="hideMtitle" value="1">
                                                     <label class="form-check-label" for="hideMtitle">Taslak</label>
                                                 </div>
@@ -107,42 +103,59 @@
                                                 </select>
                                             </div> --}}
                                         </div>
+                                        <div class="form-group row my-4">
+                                            <label class="col-sm-2 col-form-label">Makale Görünümü</label>
+                                            <div class="col-5 d-flex ">
+                                                <select name="location" class="form-control fill">
+                                                    <option value="0" {{ $model->location == 0 ? 'selected' : "" }}>Normal Görünüm</option>
+                                                    <option value="1"{{ $model->location == 1 ? 'selected' : "" }}>Anasayfada Göster</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-3 d-flex">
+                                                <div>
+                                                    <span class="badge badge-warning ">
+                                                        Anasayfa Görünümü seçilen son dört makale Anasayfada görünür.<br>
+                                                        Normal Görünümde sadece blog sayfasında görünür.
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                        </div>
 
                                         @canany(['view_photogallery', 'view_videogallery'])
-                                        <div class="form-group row clearfix my-4">
-                                       <label class="col-sm-2 col-form-label">Fotograf Galeri / Video Galeri</label>
-                                       @canany('view_photogallery')
-                                           <div class="col-sm-5">
-                                               <select name="photogallery_id" class="form-control fill">
-                                                   <option value="0">Foto Galeri Seçilmedi</option>
-                                                   @if (!empty($photogalleries))
-                                                       @foreach ($photogalleries as $photogallery)
-                                                           <option value="{{ $photogallery->id }}">
-                                                               {{ $photogallery->title }}</option>
-                                                       @endforeach
-                                                   @endif
-                                               </select>
-                                           </div>
-                                       @endcanany
-                                       @canany('view_videogallery')
-                                           <div class="col-sm-5">
-                                               <select name="videogallery_id" class="form-control fill">
-                                                   <option value="0">Video Galeri Seçilmedi</option>
-                                                   @if (!empty($photogalleries))
-                                                       @foreach ($videogalleries as $videogallery)
-                                                           <option value="{{ $videogallery->id }}">
-                                                               {{ $videogallery->title }}
-                                                           </option>
-                                                       @endforeach
-                                                   @endif
-                                               </select>
+                                            <div class="form-group row clearfix my-4">
+                                                <label class="col-sm-2 col-form-label">Fotograf Galeri / Video Galeri</label>
+                                                @canany('view_photogallery')
+                                                    <div class="col-sm-5">
+                                                        <select name="photogallery_id" class="form-control fill">
+                                                            <option value="0">Foto Galeri Seçilmedi</option>
+                                                            @if (!empty($photogalleries))
+                                                                @foreach ($photogalleries as $photogallery)
+                                                                    <option value="{{ $photogallery->id }}">
+                                                                        {{ $photogallery->title }}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </div>
+                                                @endcanany
+                                                @canany('view_videogallery')
+                                                    <div class="col-sm-5">
+                                                        <select name="videogallery_id" class="form-control fill">
+                                                            <option value="0">Video Galeri Seçilmedi</option>
+                                                            @if (!empty($photogalleries))
+                                                                @foreach ($videogalleries as $videogallery)
+                                                                    <option value="{{ $videogallery->id }}">
+                                                                        {{ $videogallery->title }}
+                                                                    </option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
 
-                                           </div>
-                                       @endcanany
+                                                    </div>
+                                                @endcanany
 
-                                   </div>
-
-                                   @endcanany
+                                            </div>
+                                        @endcanany
 
                                         <hr>
                                         {{-- <div class="form-group has-warning row">
@@ -173,17 +186,16 @@
 
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Makale Fotoğrafı (min:630x470)</label>
-                                            <div class="col-sm-6"> 
+                                            <div class="col-sm-6">
                                                 <input type="file" class="form-control form-control-normal dropify"
-                                                data-show-remove="false"
-                                                data-default-file="{{ $model->image }}"
-                                                accept=".jpg,.jpeg,.png,.tiff,.gif,.svg,.webp,.bmp,.ico"
+                                                    data-show-remove="false" data-default-file="{{ $model->image }}"
+                                                    accept=".png,.jpg,.jpeg,.gif"
                                                     placeholder="" name="image">
-                                             </div>
-                                       
+                                            </div>
+
                                         </div>
 
-                                        
+
 
                                         {{-- <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Tarih</label>
@@ -246,16 +258,14 @@
 
 
     @section('css')
-    <style>
+        <style>
 
-    </style>
- 
+        </style>
     @endsection
 
     @section('js')
-
         {{-- <script type="text/javascript" src="{{ asset('admin/assets/bower_components/sweetalert/js/sweetalert.min.js') }}"> </script> --}}
-        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script> 
+        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/translations/tr.js"></script>
 
 
@@ -297,13 +307,13 @@
             });
 
             $('.dropify').dropify({
-            messages: {
-                'default': 'Resim yükle ya da sürükle',
-                'replace': 'Resim değiştir ya da sürükle',
-                'remove': 'Kaldır',
-                'error': 'Hata! Desteklenen dosya tipinden farklı bir dosya yüklediniz.'
-            }
-        });
+                messages: {
+                    'default': 'Resim yükle ya da sürükle',
+                    'replace': 'Resim değiştir ya da sürükle',
+                    'remove': 'Kaldır',
+                    'error': 'Hata! Desteklenen dosya tipinden farklı bir dosya yüklediniz.'
+                }
+            });
 
 
             // function addCategory() {
@@ -326,25 +336,23 @@
 
             ClassicEditor
 
-                .create(document.querySelector('#ckeditor'),{
+                .create(document.querySelector('#ckeditor'), {
                     language: 'tr'
                 })
-                // .then(editor => {
-                //     editor.ui.view.editable.extendTemplate({
-                //         attributes: {
-                //             style: {
-                //                 height: '400px', // Burada yüksekliği özelleştirebilirsiniz
-                //                 width: '200px', // Burada yüksekliği özelleştirebilirsiniz
-                //             }
-                //         }
-                //     });
-                // })
-               
-                // .catch(error => {
-                //     console.error(error);
-                // }); 
+            // .then(editor => {
+            //     editor.ui.view.editable.extendTemplate({
+            //         attributes: {
+            //             style: {
+            //                 height: '400px', // Burada yüksekliği özelleştirebilirsiniz
+            //                 width: '200px', // Burada yüksekliği özelleştirebilirsiniz
+            //             }
+            //         }
+            //     });
+            // })
 
-                
-                        </script>
+            // .catch(error => {
+            //     console.error(error);
+            // }); 
+        </script>
         {{-- <script type="text/javascript" src="{{ asset('admin/assets/js/jquery.marcopolo.min.js') }}"></script> --}}
     @endsection

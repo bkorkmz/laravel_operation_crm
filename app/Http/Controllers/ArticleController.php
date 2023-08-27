@@ -472,7 +472,7 @@ public function services_update(Request $request, string $id)
         'image_mini',
         '_token'
     );
-    $slug = slug_format(Str::limit($request->title, 60)) . '-' . $id;
+    $data_array['slug']  = slug_format(Str::limit($request->title, 60)) . '-' . $id;
 
     if (request()->hasFile('image')) {
         $this->validate(request(), array('image' => 'sometimes|mimes:png,jpg,jpeg,gif|max:4096'));

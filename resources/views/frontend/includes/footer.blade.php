@@ -20,10 +20,10 @@
         <div class="col-lg-2 col-md-6 footer-links">
           <h4>Hakkımızda</h4>
           <ul>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Anasayfa</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Hakkımızda</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Hizmetlerimiz</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Blog</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="/">Anasayfa</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#about">Hakkımızda</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#services">Hizmetlerimiz</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{{route('frontend.blog')}}">Blog</a></li>
           </ul>
         </div>
 
@@ -33,14 +33,14 @@
             <li><i class="bx bx-chevron-right"></i> <a href="#">Kreatif Ajans</a></li>
             <li><i class="bx bx-chevron-right"></i> <a href="#">Dijital Ajans</a></li>
             <li><i class="bx bx-chevron-right"></i> <a href="#">Marka Danışmanlığı</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">prodüksiyon</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Prodüksiyon</a></li>
           </ul>
         </div>
 
         <div class="col-lg-4 col-md-6 footer-newsletter">
           <h4>Bize Katılın</h4>
           <p>Tüm bildiklerimizi burada paylaşıyoruz</p>
-          <form action="" method="post">
+          <form action="" method="get">
             <input type="email" name="email"><input type="submit" value="Abone Ol">
           </form>
         </div>

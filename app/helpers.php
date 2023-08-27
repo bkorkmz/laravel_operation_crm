@@ -2,11 +2,11 @@
 
 
 use Illuminate\Config\Repository;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
-
-
+use Symfony\Component\HttpKernel\HttpCache\Store;
 
 if(!function_exists('slug_format')) {
     /**
@@ -76,6 +76,22 @@ if(!function_exists('permissionCheck')) {
         }
         else if(auth()->user()->hasAnyPermission($permission) || $permission == "")
         {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+}
+if(!function_exists('deleteOldPicture')) {
+ 
+
+    function deleteOldPicture($path)
+    {
+
+        if ($path != "") {
+            Storage::disk('public')->delete($path);
+    
             return true;
         }else{
             return false;

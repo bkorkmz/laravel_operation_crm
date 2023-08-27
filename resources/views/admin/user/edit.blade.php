@@ -35,7 +35,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">E Posta <span class="text-danger"> *</span></label>
                             <div class="col-sm-10">
-                                <input id="email" readonly type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" 
+                                <input id="email"  type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" 
                                 name="email" maxlength="80" autocomplete="off"  value="{{ $user->email }}"  >
         
                                 @if ($errors->has('email'))
@@ -98,14 +98,24 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Onay Durumu  <span class="text-danger"> *</span></label>
-                            <div class="col-sm-10">
-                                <select name="status" class="form-control fill">
-                                    <option value="0" @if($user->status==0) selected @endif >Onaysız</option>
-                                    <option value="1" @if($user->status==1) selected @endif >Onaylı</option>
-                                      
-                                </select>
+                        <div class="form-group row my-4">
+                            <label class="col-sm-2 col-form-label">Durum
+                               </label>
+                            <div class="col-sm-3 row align-self-center" >
+                                
+                                <div class="form-check m-2">
+                                    <input class="form-check-input" checked type="radio" name="status"
+                                        id="active" value="1"
+                                        {{ $user->status == 1 ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="active">Aktif</label>
+                                </div>
+                                <div class="form-check m-2">
+                                   
+                                    <input class="form-check-input"  type="radio" name="status"
+                                        id="passive" value="0"
+                                        {{$user->status == 0 ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="passive">Pasif </label>
+                                </div>
                             </div>
                         </div>
                         {{-- <div class="form-group row">

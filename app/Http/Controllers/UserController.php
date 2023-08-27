@@ -182,10 +182,18 @@ class UserController extends Controller
      * @param int $id
      * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User  $model)
     {
+
+        if ($model->email == $request->email) {
+            $email_valid = 'required|email';
+        } else {
+            $email_valid = 'required|email|unique:users,email';
+        }
+
         $validatedData = $request->validate([
             'name' => 'required',
+            'email' => $email_valid,
             'phone' => 'nullable|min:10|max:11',
             'password' => 'nullable|min:6|confirmed',
             'status' => 'required|boolean',
@@ -197,6 +205,9 @@ class UserController extends Controller
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], [
             'name.required' => 'Ad alanı zorunludur.',
+            'email.required' => 'E-posta alanı zorunludur.',
+            'email.email' => 'Geçersiz bir e-posta adresi girdiniz.',
+            'email.unique' => 'Bu e-posta adresi zaten kayıtlı.',
             'phone.min' => 'Telefon numarası en az 10 karakter olmalıdır.',
             'phone.max' => 'Telefon numarası en fazla 11 karakter olabilir.',
             'password.min' => 'Şifre en az 6 karakter olmalıdır.',
@@ -210,20 +221,23 @@ class UserController extends Controller
 
 
 
-        $data = $request->except('_token', 'password_confirmation', 'password', 'role', 'avatar');
 
+        $data = $request->except('_token', 'password_confirmation', 'password', 'role', 'avatar');
         if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
             $data['avatar'] = '/storage/' . $validatedData['avatar']->store('avatars', 'public');
         }
         if ($request->password) {
             $data['password'] = Hash::make($request->password);
         }
-        $user = User::find($id);
-        $user->update($data);
-        $user->syncRoles($request->role);
+
+        // dd($data);
+
+        // $user = User::find($id);
+        $model->update($data);
+        $model->syncRoles($request->role);
 
 
-        if (!$user) {
+        if (!$model) {
             toastr()->error('Kullanıcı Düzenleme Sırasında Hata Oluştu.', 'Başarısız');
         } else {
             toastr()->success('Kullanıcı Bilgileri Güncellendi.', 'Başarılı');
@@ -285,7 +299,7 @@ class UserController extends Controller
 
     public function teams_index_data()
     {
-        $data = JobTeams::select('id','name','job','created_at');
+        $data = JobTeams::select('id', 'name', 'job', 'status', 'created_at');
         // dd($data->get());
         return Datatables::of($data)
             ->addIndexColumn()
@@ -296,12 +310,22 @@ class UserController extends Controller
             //     return '<strong>' . $data['user']->email . '</strong>';
             // })
             ->editColumn('created_at', function ($data) {
-                return$data->created_at->format('d-m-Y H:i');
+                return $data->created_at->format('d-m-Y H:i');
             })
             ->editColumn('job', function ($data) {
 
                 return '<span class="badge badge-inverse-info p-2 w-50">' . $data->job . ' </span >';
             })
+            ->editColumn('status', function ($data) {
+
+                if ($data->status == 0) {
+                    return '<span class="badge badge-danger" > ' . __('Pasif') . ' </span >';
+                }
+                if ($data->status == 1) {
+                    return '<span class="badge badge-success">' . __('Aktif') . '</span>';
+                }
+            })
+
 
             ->addColumn('action', function ($data) {
 
@@ -396,7 +420,7 @@ class UserController extends Controller
             'avatar.max' => 'Profil resmi en fazla 2 MB boyutunda olabilir.',
         ]);
 
-        $data = $request->except('_token','avatar');
+        $data = $request->except('_token', 'avatar');
         if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
             $data['avatar'] = '/storage/' . $request->avatar->store('teams', 'public');
         }
