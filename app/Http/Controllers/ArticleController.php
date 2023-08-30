@@ -123,7 +123,7 @@ class ArticleController extends Controller
 
 
         if (request()->hasFile('image')) {
-            $this->validate(request(), array('image' => 'sometimes|mimes:png,jpg,jpeg,gif|max:4096'));
+            $this->validate(request(), array('image' => 'sometimes|mimes:png,jpg,jpeg,gif,webp|max:4096'));
             $image = request()->file('image');
             if ($image->isValid()) {
                 $post->image = '/storage/' . $request->image->store('articles', 'public');
@@ -203,9 +203,8 @@ class ArticleController extends Controller
             'image_mini',
             '_token'
         );
-        $slug = slug_format(Str::limit($request->title, 60)) . '-' . $id;
 
-
+ $data_array['slug'] = slug_format(Str::limit($request->title, 60)) . '-' . $id;
 
         // $now = strtotime(date('Y-m-d H:i:s'));
         // $newdate = strtotime(date('Y-m-d H:i:s', strtotime($request->date)));
@@ -417,7 +416,7 @@ public function services_store(Request $request)
 
 
     if (request()->hasFile('image')) {
-        $this->validate(request(), array('image' => 'sometimes|mimes:png,jpg,jpeg,gif|max:4096'));
+        $this->validate(request(), array('image' => 'sometimes|mimes:png,jpg,jpeg,gif,webp|max:4096'));
         $image = request()->file('image');
         if ($image->isValid()) {
             $post->image = '/storage/' . $request->image->store('articles', 'public');
@@ -475,7 +474,7 @@ public function services_update(Request $request, string $id)
     $data_array['slug']  = slug_format(Str::limit($request->title, 60)) . '-' . $id;
 
     if (request()->hasFile('image')) {
-        $this->validate(request(), array('image' => 'sometimes|mimes:png,jpg,jpeg,gif|max:4096'));
+        $this->validate(request(), array('image' => 'sometimes|mimes:png,jpg,jpeg,gif,webp|max:4096'));
         $image = request()->file('image');
         if ($image->isValid()) {
             $data_array['image'] = '/storage/' . $request->image->store('articles', 'public');

@@ -39,7 +39,7 @@ Route::domain('{subdomain}.laravel_operation_crm.test')->group(function () {
 
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
 Route::get('/blog', [FrontendController::class, 'blog'])->name('frontend.blog');
-Route::get('/blog/{slug?}', [FrontendController::class, 'blog_detail'])->name('frontend.blog_detail');
+Route::get('/blog/{model?}', [FrontendController::class, 'blog_detail'])->name('frontend.blog_detail');
 Route::post('/contact', [FrontendController::class,'contactsubmit'])->name('frontend.contactsubmit');
 
 
@@ -320,6 +320,12 @@ Route::prefix('backend')->middleware('auth')->group(function () {
     //     Route::get('/trashed_data', 'trashed_data')->name($module_name.'.trashed_data');
     //     Route::get('/restored/{model?}', 'restore')->name($module_name.'.restored');
     // });
+
+
+
+    Route::fallback(function(){
+        return view('admin.notfound');
+    });
 
 
 

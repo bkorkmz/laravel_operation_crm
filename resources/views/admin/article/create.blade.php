@@ -61,7 +61,7 @@
                                             <label class="col-sm-2 col-form-label">Anahtar kelimeler</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control form-control-normal"
-                                                    placeholder="" name="keywords" maxlength="50" value="{{old('keywords')}}">
+                                                    placeholder="Etiketleri , ile ayırarak yazınız" name="keywords" maxlength="50" value="{{old('keywords')}}">
                                             </div>
                                         </div>
 
@@ -90,19 +90,8 @@
                                                     <label class="form-check-label" for="hideMtitle">Gösterme</label>
                                                 </div>
                                             </div> --}}
-                                            <div class="col-sm-3">
-                                                <label>Durum</label>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" checked type="radio" name="publish"
-                                                        id="showpublish" value="0" {{old('publish') == 0 ? 'checked' :"" }}>
-                                                    <label class="form-check-label" for="showpublish">Yayında</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="publish"
-                                                        id="hidepublish" value="1" {{old('publish') == 1 ? 'checked' :"" }}>
-                                                    <label class="form-check-label" for="hidepublish">Taslak</label>
-                                                </div>
-                                            </div>
+                                            
+    
 
                                             {{-- <div class="col-sm-3">
                                                 <select name="source_id" class="form-control fill">
@@ -112,6 +101,26 @@
                                                     @endforeach -
                                                 </select>
                                             </div> --}}
+                                        </div>
+                                        <div class="form-group row my-4">
+                                            <label class="col-sm-2 col-form-label">Durum
+                                               </label>
+                                            <div class="col-sm-3 row align-self-center" >
+                                                
+                                                <div class="form-check m-2">
+                                                    <input class="form-check-input" checked type="radio" name="publish"
+                                                        id="active" value="1"
+                                                        {{ old('publish',0) == 0 ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="active">Yayında</label>
+                                                </div>
+                                                <div class="form-check m-2">
+                                                   
+                                                    <input class="form-check-input"  type="radio" name="publish"
+                                                        id="passive" value="0"
+                                                        {{ old('publish',0) == 1 ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="passive">Yaslak </label>
+                                                </div>
+                                            </div>
                                         </div>
 
 

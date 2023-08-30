@@ -22,28 +22,24 @@
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:500,700" rel="stylesheet">
-    <link href="{{ asset('vendor/dropify/dist/css/dropify.css') }}" rel="stylesheet" type="text/css" />,
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/> 
+    <link href="{{ asset('vendor/dropify/dist/css/dropify.css?v=1.0') }}" rel="stylesheet" type="text/css" />,
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css?v=1.0" rel="stylesheet"/> 
 
     {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"> --}}
+    
     <!-- Required Fremwork -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin/bower_components/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/bower_components/bootstrap/css/bootstrap.min.css?v=1.0') }}">
     <link rel="stylesheet" type="text/css"
         href="{{ asset('admin/bower_components/bootstrap-maxlength/js/bootstrap-maxlength.js') }}">
     <!-- waves.css -->
+        <!-- Style.css -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/css/style.css?v=1.0') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/css/widget.css?v=1.0') }}">
     <!-- feather icon -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/icon/feather/css/feather.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/icon/feather/css/feather.css?v=1.0') }}">
     <!-- font-awesome-n -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/css/font-awesome-n.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/css/font-awesome-n.min.css?v=1.0') }}">
     <!-- Chartlist chart css -->
-    <!-- Style.css -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/css/widget.css') }}">
-    {{-- <script type="text/javascript" src=".{{ asset('admin/bower_components/switchery/css/switchery.min.css') }}"></script> --}}
-
-
-
-
     @yield('css')
 
 </head>

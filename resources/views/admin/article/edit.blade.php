@@ -30,7 +30,6 @@
                                     <form action="{{ route($modul_name . '.update', ['model' => $model->id]) }}"
                                         method="post" enctype="multipart/form-data">
                                         @csrf
-                                        {{-- @dd($post) --}}
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Makale başlığı <span class="text-danger">
                                                     *</span></label>
@@ -59,7 +58,7 @@
                                             <label class="col-sm-2 col-form-label">Anahtar kelimeler</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control form-control-normal"
-                                                    placeholder="" name="keywords" maxlength="50"
+                                                    placeholder="Etiketleri , ile ayırarak yazınız" name="keywords" maxlength="50"
                                                     value="{{ $model->keywords }}">
                                             </div>
                                         </div>
@@ -78,22 +77,8 @@
                                                     data-target="#addCategoryModal">Kategori Ekle</a> --}}
                                             </div>
 
-                                            <div class="col-sm-3 d-flex">
-                                                <label class="col">Durum</label>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="publish"
-                                                        {{ $model->publish == 0 ?'checked': "" }} id="showMtitle"
-                                                        value="0">
-                                                    <label class="form-check-label m-r-10" for="showMtitle">Yayında</label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio"
-                                                        name="publish"{{ $model->publish == 1 ? 'checked': "" }}
-                                                        id="hideMtitle" value="1">
-                                                    <label class="form-check-label" for="hideMtitle">Taslak</label>
-                                                </div>
-                                            </div>
-
+                                          
+    
                                             {{-- <div class="col-sm-3">
                                                 <select name="source_id" class="form-control fill">
                                                     <option value="">Kaynak seçin</option>
@@ -102,6 +87,28 @@
                                                     @endforeach -
                                                 </select>
                                             </div> --}}
+                                        </div>
+                                        <div class="form-group row my-4">
+                                            <label class="col-sm-2 col-form-label">Durum
+                                               </label>
+                                            <div class="col-sm-3 row align-self-center" >
+                                    
+                                                <div class="form-check m-2">
+                                                   
+                                                    <input class="form-check-input"  {{ $model->publish  == '1' ? 'checked' : '' }} type="radio" name="publish"
+                                                        id="passive" value="0"{{$model->publish  =='0'? 'checked' : '' }}
+                                                   {{-- @dd($model->publish)      --}}
+                                                   >
+                                                    <label class="form-check-label" for="passive">Yayında </label>
+                                                </div>
+                                                            
+                                                <div class="form-check m-2">
+                                                    <input class="form-check-input"  {{ $model->publish  == '1' ? 'checked' : '' }}  type="radio" name="publish"
+                                                        id="active" value="1"
+                                                       >
+                                                    <label class="form-check-label" for="active">Taslak</label>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group row my-4">
                                             <label class="col-sm-2 col-form-label">Makale Görünümü</label>

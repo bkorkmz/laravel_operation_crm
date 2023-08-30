@@ -176,19 +176,25 @@ class FrontendController extends Controller
     {
         $all_article = Article::whereRelation('category', function ($query) {
             $query->where('model', 'article');
-        })->where(['publish' => 0])->orderby('id', 'desc')->paginate(5);
+        })->where(['publish' => 0])->orderby('id', 'asc')->paginate(5);
 
+        $sidebar_article = Article::whereRelation('category', function ($query) {
+            $query->where('model', 'article');
+        })->where(['publish' => 0])->orderby('created_at', 'desc')->limit(4)->get();
        
-        return view('frontend.pages.blog',compact('all_article'));
+        return view('frontend.pages.blog',compact('all_article','sidebar_article'));
     }
 
 
-    public function blog_detail(Request $request)
+    public function blog_detail(Request $request, $slug )
     {
+        $sidebar_article = Article::whereRelation('category', function ($query) {
+            $query->where('model', 'article');
+        })->where(['publish' => 0])->orderby('created_at', 'desc')->limit(4)->get();
 
+        $article = Article::where('slug',$slug)->first();
 
-
-        return view('frontend.pages.blog_detail');
+        return view('frontend.pages.blog_detail',compact('article','sidebar_article'));
     }
 
     public function news_letter(Request $request)
