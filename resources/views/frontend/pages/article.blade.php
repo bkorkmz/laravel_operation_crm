@@ -1,7 +1,19 @@
+<style>
+.read-more a {
+    display: inline-block;
+    background: var(--current-color);
+    color: #fff;
+    padding: 6px 20px;
+    transition: 0.3s;
+    font-size: 14px;
+    border-radius: 4px;
+}
+</style>
+
+
 @if (!blank($article))
     <section id="tabs" class="tabs">
         <div class="container" data-aos="fade-up">
-            {{-- @dd($article) --}}
 
             <ul class="nav nav-tabs row d-flex">
                 @php
@@ -9,7 +21,7 @@
                 @endphp
                 @foreach ($article as $data)
                     <li class="nav-item col-3">
-                        <a class="nav-link {{ $loop->iteration == 1 ? 'active show' : '' }} rounded-3"
+                        <a  class="nav-link {{ $loop->iteration == 1 ? 'active show' : '' }} rounded-3"
                             data-bs-toggle="tab" data-bs-target="#tab-{{ $loop->iteration }}">
                             <i class="{{ $icons[$loop->iteration] }}"></i>
                             <h4 class="d-none d-lg-block">{{ $data->title }}</h4>
@@ -58,9 +70,20 @@
                             <div class="col-lg-6 order-1 order-lg-2 text-center" data-aos="fade-up"
                                 data-aos-delay="200">
                                 <img src="{{ $data->image }}" alt="" class="img-fluid">
+                            
                             </div>
+                            <div class="read-more mt-5 order-3">
+                              <a class="position-absolute mt-4" href="{{route('frontend.blog_detail', $data->slug) }}">Daha fazla oku </a>
+                            </div>
+                            
+                            
+                            
                         </div>
+
+                   
                     </div>
+              
+
                 @endforeach
                 <div class="tab-pane" id="tab-2">
                     <div class="row">

@@ -5,6 +5,11 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
+    @if(config('settings.site_publish') == 1 )
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex">
+    <meta name="googlebot-news" content="nosnippet">
+    @endif
 
     <title>@yield('title', config('settings.site_title')) </title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

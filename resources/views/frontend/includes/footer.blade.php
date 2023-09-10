@@ -17,12 +17,33 @@
           </p>
         </div>
 
+        
+        @php
+        $currentPage = $_SERVER['REQUEST_URI']; // Mevcut sayfanın URL'sini al
+        if ($currentPage === '/') {
+
+            $about = "#about";
+            $services = "#services";
+            $portfolio = "#portfolio";
+            $contact = "#contact";
+
+
+        } else {
+               
+            $about = "/#about";
+            $services = "/#services";
+            $portfolio = "/#portfolio";
+            $contact = "/#contact";
+
+            }
+
+@endphp
         <div class="col-lg-2 col-md-6 footer-links">
           <h4>Hakkımızda</h4>
           <ul>
             <li><i class="bx bx-chevron-right"></i> <a href="/">Anasayfa</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#about">Hakkımızda</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#services">Hizmetlerimiz</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{{ $about}}">Hakkımızda</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{{$services}}">Hizmetlerimiz</a></li>
             <li><i class="bx bx-chevron-right"></i> <a href="{{route('frontend.blog')}}">Blog</a></li>
           </ul>
         </div>
@@ -30,17 +51,17 @@
         <div class="col-lg-3 col-md-6 footer-links">
           <h4>Hizmetlerimiz</h4>
           <ul>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Kreatif Ajans</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Dijital Ajans</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Marka Danışmanlığı</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Prodüksiyon</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{{$services}}">Kreatif Ajans</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{{$services}}">Dijital Ajans</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{{$services}}">Marka Danışmanlığı</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{{$services}}">Prodüksiyon</a></li>
           </ul>
         </div>
 
         <div class="col-lg-4 col-md-6 footer-newsletter">
           <h4>Bize Katılın</h4>
           <p>Tüm bildiklerimizi burada paylaşıyoruz</p>
-          <form action="" method="get"  role="form" >
+          <form action="" method="get">
             <input type="email" name="email"><input type="submit" value="Abone Ol">
           </form>
         </div>

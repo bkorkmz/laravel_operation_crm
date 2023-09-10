@@ -94,7 +94,7 @@ class ArticleController extends Controller
 
         $request->validate(
             [
-                'title' => 'required|max:50',
+                'title' => 'required|max:100',
                 'short_detail' => 'required|max:250',
                 'detail' => 'required',
             ],
@@ -112,28 +112,61 @@ class ArticleController extends Controller
 
 
         $data_array = $request->except(
-            'image',
+            'image','files',
             '_token'
 
         );
 
-        $post = $this->model_name::create($data_array);
 
-        $slug = slug_format(Str::limit($request->title, 60)) . '-' . $post->id;
 
 
         if (request()->hasFile('image')) {
             $this->validate(request(), array('image' => 'sometimes|mimes:png,jpg,jpeg,gif,webp|max:4096'));
             $image = request()->file('image');
             if ($image->isValid()) {
-                $post->image = '/storage/' . $request->image->store('articles', 'public');
+                $file_upload = fileUpload($request->image,'articles');
+                $data_array['image']=   $file_upload['path'];
+                // $data_array['image'] = '/storage/' . $request->image->store('articles', 'public');
             }
         }
+      
+        ////dom
+        
+         $description = $request->detail;
+      if (request()->hasFile('files')) {
+            $dom = new \DOMDocument();
+            $dom->loadHtml($description, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);    
+            $images = $dom->getElementsByTagName('img');
+        
+            foreach ($images as $k => $img) {
+                $data = $img->getAttribute('src');
+        
+                list($type, $data) = explode(';', $data);
+                list(, $data) = explode(',', $data);
+                $data = base64_decode($data);
+                $image_name = "upload/" . time() . $k . '.png'; 
+                $path = public_path("{$image_name}");
+        
+                if (!file_exists(public_path("upload"))) {
+                    mkdir(public_path("upload"), 0777, true);
+                }
+        
+                file_put_contents($path, $data);
+        
+                $img->removeAttribute('src');
+                $img->setAttribute('src', asset("{$image_name}")); 
+            }
+            $description = $dom->saveHTML();
+        }
+       
 
-        $post->slug =  $slug;
+         
+      
 
-        $post->save();
-
+        $data_array['detail']=$description;
+        $post = $this->model_name::create($data_array);
+        $slug = slug_format(Str::limit($request->title, 60)) . '-' . $post->id;
+        $post->update(['slug'=>$slug]);
 
         /*
     if($request->pushbildirim=='on'){
@@ -183,7 +216,7 @@ class ArticleController extends Controller
 
         $request->validate(
             [
-                'title' => 'required|max:50',
+                'title' => 'required|max:100',
                 'short_detail' => 'required|max:250',
                 'detail' => 'required',
             ],
@@ -197,14 +230,14 @@ class ArticleController extends Controller
         );
 
         $data_array = $request->except(
-            'image',
+            'image','files',
             'image_main',
             'image_top',
             'image_mini',
             '_token'
         );
 
- $data_array['slug'] = slug_format(Str::limit($request->title, 60)) . '-' . $id;
+        $data_array['slug'] = slug_format(Str::limit($request->title, 60)) . '-' . $id;
 
         // $now = strtotime(date('Y-m-d H:i:s'));
         // $newdate = strtotime(date('Y-m-d H:i:s', strtotime($request->date)));
@@ -217,17 +250,48 @@ class ArticleController extends Controller
             $this->validate(request(), array('image' => 'sometimes|mimes:png,jpg,jpeg,gif|max:4096'));
             $image = request()->file('image');
             if ($image->isValid()) {
-                $data_array['image'] = '/storage/' . $request->image->store('articles', 'public');
+                $file_upload = fileUpload($request->image,'articles');
+                $data_array['image']=   $file_upload['path'];
+                // $data_array['image'] = '/storage/' . $request->image->store('articles', 'public');
             }
         }
+      $description = $request->detail;
+      if (request()->hasFile('files')) {
+            $dom = new \DOMDocument();
+            $dom->loadHtml($description, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);    
+            $images = $dom->getElementsByTagName('img');
+        
+            foreach ($images as $k => $img) {
+                $data = $img->getAttribute('src');
+        
+                list($type, $data) = explode(';', $data);
+                list(, $data) = explode(',', $data);
+                $data = base64_decode($data);
+                $image_name = "upload/" . time() . $k . '.png'; 
+                $path = public_path("{$image_name}");
+        
+                if (!file_exists(public_path("upload"))) {
+                    mkdir(public_path("upload"), 0777, true);
+                }
+        
+                file_put_contents($path, $data);
+        
+                $img->removeAttribute('src');
+                $img->setAttribute('src', asset("{$image_name}")); 
+            }
+            $description = $dom->saveHTML();
+        }
+       
+
+         
+      
+
+        $data_array['detail']=$description;
 
 
         $post = $this->model_name::where('id', $id)->update($data_array);
 
-        // if(!empty(request('bot'))){
-        //     $post->image = request('image');
-        //     $post->bot = request('bot');
-        // }
+
         if ($post) {
             toastr()->success('Makale Düzenlendi  ', 'Başarılı ');
         } else {
@@ -405,27 +469,58 @@ public function services_store(Request $request)
 
 
     $data_array = $request->except(
-        'image',
+        'image','files',
         '_token'
 
     );
 
-    $post = Article::create($data_array);
-
-    $slug = slug_format(Str::limit($request->title, 60)) . '-' . $post->id;
 
 
     if (request()->hasFile('image')) {
         $this->validate(request(), array('image' => 'sometimes|mimes:png,jpg,jpeg,gif,webp|max:4096'));
         $image = request()->file('image');
         if ($image->isValid()) {
-            $post->image = '/storage/' . $request->image->store('articles', 'public');
+            $file_upload = fileUpload($request->image,'articles');
+            $data_array['image']=   $file_upload['path'];
+        //    $data_array['image'] = '/storage/' . $request->image->store('articles', 'public');
         }
     }
 
-    $post->slug =  $slug;
+          $description = $request->detail;
+      if (request()->hasFile('files')) {
+            $dom = new \DOMDocument();
+            $dom->loadHtml($description, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);    
+            $images = $dom->getElementsByTagName('img');
+        
+            foreach ($images as $k => $img) {
+                $data = $img->getAttribute('src');
+        
+                list($type, $data) = explode(';', $data);
+                list(, $data) = explode(',', $data);
+                $data = base64_decode($data);
+                $image_name = "upload/" . time() . $k . '.png'; 
+                $path = public_path("{$image_name}");
+        
+                if (!file_exists(public_path("upload"))) {
+                    mkdir(public_path("upload"), 0777, true);
+                }
+        
+                file_put_contents($path, $data);
+        
+                $img->removeAttribute('src');
+                $img->setAttribute('src', asset("{$image_name}")); 
+            }
+            $description = $dom->saveHTML();
+        }
+       
 
-    $post->save();
+         
+      
+
+        $data_array['detail']=$description;
+        $post = $this->model_name::create($data_array);
+        $slug = slug_format(Str::limit($request->title, 60)) . '-' . $post->id;
+        $post->update(['slug'=>$slug]);
 
     if ($post) {
         toastr()->success('Makale Düzenlendi  ', 'Başarılı ');
@@ -468,7 +563,7 @@ public function services_update(Request $request, string $id)
         'image',
         'image_main',
         'image_top',
-        'image_mini',
+        'image_mini','files',
         '_token'
     );
     $data_array['slug']  = slug_format(Str::limit($request->title, 60)) . '-' . $id;
@@ -477,13 +572,46 @@ public function services_update(Request $request, string $id)
         $this->validate(request(), array('image' => 'sometimes|mimes:png,jpg,jpeg,gif,webp|max:4096'));
         $image = request()->file('image');
         if ($image->isValid()) {
-            $data_array['image'] = '/storage/' . $request->image->store('articles', 'public');
+            $file_upload = fileUpload($request->image,'articles');
+            $data_array['image']=   $file_upload['path'];
+            // $data_array['image'] = '/storage/' . $request->image->store('articles', 'public');
         }
     }
+     $description = $request->detail;
+      if (request()->hasFile('files')) {
+            $dom = new \DOMDocument();
+            $dom->loadHtml($description, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);    
+            $images = $dom->getElementsByTagName('img');
+        
+            foreach ($images as $k => $img) {
+                $data = $img->getAttribute('src');
+        
+                list($type, $data) = explode(';', $data);
+                list(, $data) = explode(',', $data);
+                $data = base64_decode($data);
+                $image_name = "upload/" . time() . $k . '.png'; 
+                $path = public_path("{$image_name}");
+        
+                if (!file_exists(public_path("upload"))) {
+                    mkdir(public_path("upload"), 0777, true);
+                }
+        
+                file_put_contents($path, $data);
+        
+                $img->removeAttribute('src');
+                $img->setAttribute('src', asset("{$image_name}")); 
+            }
+            $description = $dom->saveHTML();
+        }
+       
+
+         
+      
+
+        $data_array['detail']=$description;
+        $post = $this->model_name::where('id', $id)->update($data_array);
 
 
-    $post = Article::where('id', $id)->update($data_array);
-    // }
     if ($post) {
         toastr()->success('Makale Düzenlendi  ', 'Başarılı ');
     } else {

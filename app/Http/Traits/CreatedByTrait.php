@@ -8,7 +8,7 @@ trait CreatedByTrait
 
     public function scopeCreatedBy($query)
     {
-        if (auth()->user()->hasRole('Super admin')) 
+        if (auth()->id() != 1) 
         {
             return $query->where('created_by',auth()->id() );
         }

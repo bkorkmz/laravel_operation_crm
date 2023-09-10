@@ -140,7 +140,15 @@ class UserController extends Controller
         $data = $request->except('_token');
         $data['password'] = Hash::make($validatedData['password']);
         if (request()->hasFile('avatar')) {
-            $data['avatar'] = '/storage/' . $validatedData['avatar']->store('avatars', 'public');
+
+            if ($model->avatar != "") {
+                deleteOldPicture($model->avatar);
+             }
+             $file_upload = fileUpload($request->avatar,'avatars');
+             $data['avatar'] =   $file_upload['path'];
+
+
+            // $data['avatar'] = '/storage/' . $validatedData['avatar']->store('avatars', 'public');
         }
         $user = User::create($data);
         $user->syncRoles($validatedData['role']);
@@ -224,7 +232,12 @@ class UserController extends Controller
 
         $data = $request->except('_token', 'password_confirmation', 'password', 'role', 'avatar');
         if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
-            $data['avatar'] = '/storage/' . $validatedData['avatar']->store('avatars', 'public');
+            if ($model->avatar != "") {
+                deleteOldPicture($model->avatar);
+             }
+             $file_upload = fileUpload($request->avatar,'avatars');
+             $data['avatar'] =   $file_upload['path'];
+            // $data['avatar'] = '/storage/' . $validatedData['avatar']->store('avatars', 'public');
         }
         if ($request->password) {
             $data['password'] = Hash::make($request->password);
@@ -381,7 +394,12 @@ class UserController extends Controller
 
         $data = $request->except('_token', 'avatar');
         if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
-            $data['avatar'] = '/storage/' . $request->avatar->store('teams', 'public');
+            if ($model->avatar != "") {
+                deleteOldPicture($model->avatar);
+             }
+             $file_upload = fileUpload($request->avatar,'teams');
+             $data['avatar'] =   $file_upload['path'];
+            // $data['avatar'] = '/storage/' . $request->avatar->store('teams', 'public');
         }
         JobTeams::create($data);
 
@@ -422,7 +440,12 @@ class UserController extends Controller
 
         $data = $request->except('_token', 'avatar');
         if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
-            $data['avatar'] = '/storage/' . $request->avatar->store('teams', 'public');
+            if ($model->avatar != "") {
+                deleteOldPicture($model->avatar);
+             }
+             $file_upload = fileUpload($request->avatar,'teams');
+             $data['avatar'] =   $file_upload['path'];
+            // $data['avatar'] = '/storage/' . $request->avatar->store('teams', 'public');
         }
 
         $model->update($data);

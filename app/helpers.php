@@ -83,19 +83,66 @@ if(!function_exists('permissionCheck')) {
     }
 
 }
+
+
+if(!function_exists('fileUpload')) {
+ 
+
+    function fileUpload($file, $directory, $disk = 'custom_disk')
+    {
+        try {
+
+            $path = '/storage/' .$file->store($directory, $disk);
+
+            $fullPath = public_path($path);
+
+            return [
+                'success' => true,
+                'path' => $path,
+                'full_path' => $fullPath,
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'Dosya yükleme hatası: ' . $e->getMessage(),
+            ];
+        }
+    }
+
+}
+
+
 if(!function_exists('deleteOldPicture')) {
  
 
     function deleteOldPicture($path)
     {
 
-        if ($path != "") {
-            Storage::disk('public')->delete($path);
-    
-            return true;
-        }else{
-            return false;
+        $publicPath = public_path($path);
+       
+
+        if (File::exists($publicPath)) {
+            try {
+                // Dosyayı sil
+                File::delete($publicPath);
+                return [
+                    'success' => true,
+                    'message' => 'Dosya başarıyla silindi.',
+                ];
+            } catch (\Exception $e) {
+                // Dosya silme sırasında bir hata oluşursa hata mesajını döndür
+                return [
+                    'success' => false,
+                    'message' => 'Dosya silme hatası: ' . $e->getMessage(),
+                ];
+            }
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Dosya bulunamadı.',
+            ];
         }
+
     }
 
 }

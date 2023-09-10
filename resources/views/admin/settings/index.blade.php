@@ -58,8 +58,8 @@
                                                                     <div class="col-sm-2">
                                                                         <select name="{{ $form_element->name }}"
                                                                             class="form-control fill">
-                                                                            <option value="1" {{ $form_element->value == '1' ? 'selected' : '' }}>FALSE</option>
-                                                                            <option value="0"{{ $form_element->value == '0' ? 'selected' : '' }}>TRUE </option>
+                                                                            <option value="1" {{ $form_element->value == '1' ? 'selected' : '' }}>TRUE</option>
+                                                                            <option value="0"{{ $form_element->value == '0' ? 'selected' : '' }}>FALSE </option>
                                                                         </select>
                                                                     </div>
                                                                 @elseif($form_element->type == 'image')

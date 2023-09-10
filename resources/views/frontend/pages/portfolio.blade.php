@@ -8,6 +8,7 @@
             <div class="col-lg-12 d-flex justify-content-center">
                 <ul id="portfolio-flters">
                     <li data-filter="*" class="filter-active">Tümü</li>
+                    {{-- @dd($portfolio->groupBy('category')) --}}
                     @foreach ($portfolio->groupBy('category') as $key => $category)
                         @php
                             $keyData = json_decode($key, true);

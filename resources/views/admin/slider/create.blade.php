@@ -1,6 +1,6 @@
 @extends('layouts.layout-admin')
 @section('title')
-    {{ __('Slider Kayıt Sayfası ') }}
+    {{ __('Çözüm Ortakları Kayıt ') }}
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
         <div class="page-wrapper">
             <div class="card">
                 <div class="card-header">
-                    <h3>Slider Ekle</h3>
+                    <h3>Çözüm Ortağı  Ekle</h3>
                     <button type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
                     onclick="return window.history.back()"><i class="fa fa-reply"></i>Geri Dön</button>
                 </div>

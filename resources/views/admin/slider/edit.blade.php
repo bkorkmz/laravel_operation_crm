@@ -1,6 +1,6 @@
 @extends('layouts.layout-admin')
 @section('title')
-    {{ __('Potfolyo Kayıt Sayfası ') }}
+    {{ __('Çözüm Ortakları Düzenleme ') }}
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
         <div class="page-wrapper">
             <div class="card">
                 <div class="card-header">
-                    <h3>Potfolyo Ekle</h3>
+                    <h3>Çözüm Ortağı Düzenle</h3>
                     <a type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
                    href="{{route($module_name.'store')}}"><i class="fa fa-reply"></i>Geri Dön</a>
                 </div>

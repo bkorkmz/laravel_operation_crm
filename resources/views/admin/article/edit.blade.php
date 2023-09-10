@@ -13,7 +13,7 @@
                                 <h3>Makale Düzenle</h3>
                                 {{-- <a href="{{ route('post.trashed_index') }}" type="button" class="btn btn-warning btn-sm float-right rounded mr-1 " data-toggle="tooltip" data-placement="top" title="Çöp Kutusu"><i class="fa fa-trash"></i></a> --}}
                                 <a type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
-                                   href="{{route($modul_name.'.index')}}"><i class="fa fa-reply"></i>Geri Dön</a>
+                                    href="{{ route($modul_name . '.index') }}"><i class="fa fa-reply"></i>Geri Dön</a>
 
                             </div>
                             <div class="card-block table-border-style">
@@ -35,7 +35,7 @@
                                                     *</span></label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control form-control-normal"
-                                                    placeholder="" name="title" maxlength="50"
+                                                    placeholder="" name="title" maxlength="100"
                                                     value="{{ $model->title }}">
                                             </div>
                                         </div>
@@ -50,7 +50,7 @@
                                             <label class="col-sm-2 col-form-label">Makale içeriği <span class="text-danger">
                                                     *</span></label>
                                             <div class="col-sm-10">
-                                                <textarea id="ckeditor" name="detail" rows="5">{!! $model->detail !!}</textarea>
+                                                <textarea id="editor1" name="detail" rows="5">{{ $model->detail }}</textarea>
                                             </div>
                                         </div>
 
@@ -58,8 +58,8 @@
                                             <label class="col-sm-2 col-form-label">Anahtar kelimeler</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control form-control-normal"
-                                                    placeholder="Etiketleri , ile ayırarak yazınız" name="keywords" maxlength="50"
-                                                    value="{{ $model->keywords }}">
+                                                    placeholder="Etiketleri , ile ayırarak yazınız" name="keywords"
+                                                    maxlength="50" value="{{ $model->keywords }}">
                                             </div>
                                         </div>
 
@@ -77,8 +77,8 @@
                                                     data-target="#addCategoryModal">Kategori Ekle</a> --}}
                                             </div>
 
-                                          
-    
+
+
                                             {{-- <div class="col-sm-3">
                                                 <select name="source_id" class="form-control fill">
                                                     <option value="">Kaynak seçin</option>
@@ -90,22 +90,23 @@
                                         </div>
                                         <div class="form-group row my-4">
                                             <label class="col-sm-2 col-form-label">Durum
-                                               </label>
-                                            <div class="col-sm-3 row align-self-center" >
-                                    
+                                            </label>
+                                            <div class="col-sm-3 row align-self-center">
+
                                                 <div class="form-check m-2">
-                                                   
-                                                    <input class="form-check-input"  {{ $model->publish  == '1' ? 'checked' : '' }} type="radio" name="publish"
-                                                        id="passive" value="0"{{$model->publish  =='0'? 'checked' : '' }}
-                                                   {{-- @dd($model->publish)      --}}
-                                                   >
+
+                                                    <input class="form-check-input"
+                                                        {{ $model->publish == '1' ? 'checked' : '' }} type="radio"
+                                                        name="publish" id="passive"
+                                                        value="0"{{ $model->publish == '0' ? 'checked' : '' }}
+                                                        {{-- @dd($model->publish)      --}}>
                                                     <label class="form-check-label" for="passive">Yayında </label>
                                                 </div>
-                                                            
+
                                                 <div class="form-check m-2">
-                                                    <input class="form-check-input"  {{ $model->publish  == '1' ? 'checked' : '' }}  type="radio" name="publish"
-                                                        id="active" value="1"
-                                                       >
+                                                    <input class="form-check-input"
+                                                        {{ $model->publish == '1' ? 'checked' : '' }} type="radio"
+                                                        name="publish" id="active" value="1">
                                                     <label class="form-check-label" for="active">Taslak</label>
                                                 </div>
                                             </div>
@@ -114,8 +115,10 @@
                                             <label class="col-sm-2 col-form-label">Makale Görünümü</label>
                                             <div class="col-5 d-flex ">
                                                 <select name="location" class="form-control fill">
-                                                    <option value="0" {{ $model->location == 0 ? 'selected' : "" }}>Normal Görünüm</option>
-                                                    <option value="1"{{ $model->location == 1 ? 'selected' : "" }}>Anasayfada Göster</option>
+                                                    <option value="0" {{ $model->location == 0 ? 'selected' : '' }}>
+                                                        Normal Görünüm</option>
+                                                    <option value="1"{{ $model->location == 1 ? 'selected' : '' }}>
+                                                        Anasayfada Göster</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-3 d-flex">
@@ -196,26 +199,15 @@
                                             <div class="col-sm-6">
                                                 <input type="file" class="form-control form-control-normal dropify"
                                                     data-show-remove="false" data-default-file="{{ $model->image }}"
-                                                    accept=".png,.jpg,.jpeg,.gif"
-                                                    placeholder="" name="image">
+                                                    accept=".png,.jpg,.jpeg,.gif" placeholder="" name="image" >
                                             </div>
 
                                         </div>
 
 
 
-                                        {{-- <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Tarih</label>
-                                            <div class="col-sm-10">
-                                                <input type="datetime-local" class="form-control form-control-normal"
-                                                    name="date">
-                                            </div>
-                                        </div> --}}
-
-                                        {{-- <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="pushbildirim" name="pushbildirim">
-                                            <label class="form-check-label" for="pushbildirim">Push Bildirim Gönder</label>
-                                        </div> --}}
+                 
+             
 
                                         <div class="text-right m-t-20">
                                             <button class="btn btn-primary">Kaydet</button>
@@ -232,134 +224,23 @@
 
 
 
-        <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Kategori Ekle</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <form class="form-group " id="category-form">
-
-                            <div class="form-group ">
-                                <label class="col-form-label">Kategori Adı</label>
-                                <div class="">
-                                    <input type="text" id="category-name" name="name"
-                                        class="form-control form-control-normal">
-                                </div>
-                            </div>
-                            <button class="btn btn-success float-right" type="submit">Kaydet</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
     @endsection
 
 
     @section('css')
-        <style>
+ 
 
-        </style>
     @endsection
 
     @section('js')
-        {{-- <script type="text/javascript" src="{{ asset('admin/assets/bower_components/sweetalert/js/sweetalert.min.js') }}"> </script> --}}
-        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
-        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/translations/tr.js"></script>
 
-
-
-
-        {{-- <script src="{{ asset('admin/assets/partials/ckeditor/ckeditor.js') }}"></script> --}}
         <script>
-            $(document).ready(function() {
 
-                $('#category-form').on('submit', function(e) {
-                    e.preventDefault();
+    
 
-                    var category_name = $('#category-name').val();
-                    console.log(category_name);
-                    if (category_name !== "") {
-                        $.ajax({
-                            url: "{{ route('category.store') }}",
-                            method: 'POST',
-                            data: {
-                                name: category_name,
-                                model: 'article',
-                                _token: "{{ csrf_token() }}"
-                            },
-                            success: function(response) {
-                                swal("Kategori başarıyla oluşturuldu!");
-                                $('#addCategoryModal').Modal().hide();
-                                window.history(0)
-
-                            },
-                            error: function(xhr, status, error) {
-                                swal("Bir hata oluştu!");
-                            }
-                        });
-                    }
-                    swal("Kategori Boş Olamaz!");
-
+            $('#editor1').summernote({
+                    lang: 'tr-TR' // default: 'en-US'
                 });
-
-            });
-
-            $('.dropify').dropify({
-                messages: {
-                    'default': 'Resim yükle ya da sürükle',
-                    'replace': 'Resim değiştir ya da sürükle',
-                    'remove': 'Kaldır',
-                    'error': 'Hata! Desteklenen dosya tipinden farklı bir dosya yüklediniz.'
-                }
-            });
-
-
-            // function addCategory() {
-
-            //     swal({
-            // 		title: "Ajax request example",
-            // 		text: "Submit to run ajax request",
-            // 		type: "info",
-            // 		showCancelButton: true,
-            // 		closeOnConfirm: false,
-            // 		showLoaderOnConfirm: true
-            // 	}, function () {
-            // 		setTimeout(function () {
-            // 			swal("Ajax request finished!");
-            // 		}, 2000);
-            // 	});
-
-            // }
-
-
-            ClassicEditor
-
-                .create(document.querySelector('#ckeditor'), {
-                    language: 'tr'
-                })
-            // .then(editor => {
-            //     editor.ui.view.editable.extendTemplate({
-            //         attributes: {
-            //             style: {
-            //                 height: '400px', // Burada yüksekliği özelleştirebilirsiniz
-            //                 width: '200px', // Burada yüksekliği özelleştirebilirsiniz
-            //             }
-            //         }
-            //     });
-            // })
-
-            // .catch(error => {
-            //     console.error(error);
-            // }); 
         </script>
         {{-- <script type="text/javascript" src="{{ asset('admin/assets/js/jquery.marcopolo.min.js') }}"></script> --}}
     @endsection

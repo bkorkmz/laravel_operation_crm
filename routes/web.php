@@ -5,8 +5,6 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProductsController;
-use App\Http\Controllers\QuestionBankController;
-use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Backend\SystemController;
@@ -19,6 +17,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\File;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,14 +65,28 @@ Route::post('/contact', [FrontendController::class,'contactsubmit'])->name('fron
 
 Route::get('lang/{locale}', [LanguageController::class, 'swap']);
 
+
 Route::get('/migrate-seed', function () {
 
     if(env('APP_DEBUG') == true){
          Artisan::call('migrate --seed');
-         Artisan::call('storage:link');
-
-
          $message = "OK";
+    }else {
+        $message = 'AUTORİZED_NO_RETURN_AFTER';
+    }
+    return response($message);
+});
+
+
+Route::get('/storage-link', function () {
+
+    if(env('APP_DEBUG') == true){
+        $storageLinkPath = public_path('storage');
+        if (File::isDirectory($storageLinkPath)) {
+            File::deleteDirectory($storageLinkPath);
+        }
+        Artisan::call('storage:link');
+        $message = "OK";
     }else {
         $message = 'AUTORİZED_NO_RETURN_AFTER';
     }
@@ -89,6 +103,9 @@ Route::prefix('backend')->middleware('auth')->group(function () {
     Route::get('/clear-cache', [AdminController::class, 'clearCache'])->name('clear-cache');
     Route::get('/info-message', [AdminController::class, 'info_message'])->name('admin.info_message');
     Route::get('/message_edit/{id?}', [AdminController::class, 'info_message_edit'])->name('admin.info_message.edit');
+    Route::post('ckeditor/upload', [AdminController::class,'ckEditorUpload'])->name('ckeditor.upload');
+    Route::get('/ckeditor/token', [AdminController::class, 'getToken'])->name('ckeditor.token');
+
    
 
     Route::controller(ProfileController::class)->prefix('profile')->middleware('auth')->group(function () {
@@ -279,55 +296,11 @@ Route::prefix('backend')->middleware('auth')->group(function () {
         Route::post('/edit/{model?}', 'update')->name($module_name . '.update')->middleware('permission:update_slider');
         Route::get('/delete/{model?}', 'delete')->name($module_name . '.destroy')->middleware('permission:delete_slider');
     });
+
     
     
-    
-    
-    Route::controller(QuestionBankController::class)->prefix('questionbank')->group(function () {
-        $module_name = 'questionbank';
-        Route::get('/', 'index')->name($module_name . '.index');
-        Route::get('/index_data', 'index_data')->name($module_name . '.index_data');
-        Route::get('/create', 'create')->name($module_name . '.create');
-        Route::post('/create', 'store')->name($module_name . '.store');
-        Route::get('/edit/{model?}', 'edit')->name($module_name . '.edit');
-        Route::post('/edit', 'update')->name($module_name . '.update');
-        Route::get('/delete/{model?}', 'destroy')->name($module_name . '.delete');
-        Route::get('/trashed/{model?}', 'trashed')->name($module_name . '.trashed');
-        Route::get('/trashed_index', 'trashed_index')->name($module_name . '.trashed_index');
-        Route::get('/trashed_data', 'trashed_data')->name($module_name . '.trashed_data');
-        Route::get('/restored/{model?}', 'restore')->name($module_name . '.restored');
-        
-    }); 
-  
-    Route::controller(QuestionBankController::class)->prefix('question')->group(function () {
-        $module_name = 'question';
-        Route::get('/questions/{model?}', 'questions')->name($module_name . '.index');
-        Route::get('/questions-data/{model?}', 'questions_data')->name($module_name . '.questions_data');
-        Route::get('/add-questions/{model?}', 'add_question')->name($module_name . '.questions_add');
-        Route::get('/show-questions/{model?}', 'show_question')->name($module_name . '.question_show');
-        Route::post('/add-questions/{model?}', 'question_store')->name($module_name . '.question_store');
-        Route::get('/edit-questions/{model?}', 'edit_question')->name($module_name . '.question_edit');
-        Route::post('/edit-questions/{model?}', 'question_update')->name($module_name . '.question_update');
-        Route::post('/delete-questions/{model?}', 'question_delete')->name($module_name . '.question_delete');
-        
-        
-        
-    }); 
-   /** 
-    Route::controller(QuestionController::class)->prefix('question')->group(function () {
-        $module_name = 'question';
-        Route::get('/{model?}', 'index')->name($module_name . '.index');
-        Route::get('/index_data/{model?}', 'index_data')->name($module_name . '.index_data');
-        Route::get('/create/{model?}', 'create')->name($module_name . '.create');
-        Route::post('/create/{model?}', 'store')->name($module_name . '.store');
-        Route::get('/edit/{model?}', 'edit')->name($module_name . '.edit');
-        Route::post('/edit/{model?}', 'update')->name($module_name . '.update');
-        Route::get('/delete/{model?}', 'destroy')->name($module_name . '.destroy');
-        Route::get('/trashed/{model?}', 'trashed')->name($module_name . '.trashed');
-        Route::get('/trashed_index', 'trashed_index')->name($module_name . '.trashed_index');
-        Route::get('/trashed_data', 'trashed_data')->name($module_name . '.trashed_data');
-        Route::get('/restored/{model?}', 'restore')->name($module_name . '.restored');
-    });
+
+
     
     
     
@@ -374,7 +347,7 @@ Route::prefix('backend')->middleware('auth')->group(function () {
     });
 
 
-*/
+
 
 });
 

@@ -32,7 +32,6 @@ class FrontendController extends Controller
         })->get();
 
         $services_category = Category::where('model', 'services')->where('show', 1)->get();
-        // $services_category = Category::where('model','services')->get();
 
         $teams = JobTeams::where('status', 1)->get();
 
@@ -45,7 +44,12 @@ class FrontendController extends Controller
 
         $portfolio = PortFolio::where(['status' => 1, 'type' => 'portfolio'])
             ->select('id', 'name', 'link', 'category_id', 'image')
-            ->with('category:id,name,slug')
+            // ->with('category:id,name,slug')
+            ->wherehas('category',function($q){
+                $q->where('show',1)
+                ->where('model','portfolio')
+                ->select('id','name','slug');
+            })
             ->get();
         // dd( $faq_sss);
 
@@ -53,7 +57,7 @@ class FrontendController extends Controller
             $query->where('model', 'article');
         })->where(['location' => 1, 'publish' => 0])->orderby('id', 'desc')->paginate(5);
 
-       
+
 
 
 
@@ -155,7 +159,9 @@ class FrontendController extends Controller
             ));
             $image = request()->file('resume_file');
             if ($image->isValid()) {
-                $contact->resume_file = '/storage/' . $request->resume_file->store('contact_file', 'public');
+                $file_upload = fileUpload($request->resume_file,'contact_file');
+                $contact->resume_file=   $file_upload['path'];
+                // $contact->resume_file = '/storage/' . $request->resume_file->store('contact_file', 'public');
             }
         }
         //        $contact->location = json_encode($locationData);
@@ -181,20 +187,20 @@ class FrontendController extends Controller
         $sidebar_article = Article::whereRelation('category', function ($query) {
             $query->where('model', 'article');
         })->where(['publish' => 0])->orderby('created_at', 'desc')->limit(4)->get();
-       
-        return view('frontend.pages.blog',compact('all_article','sidebar_article'));
+
+        return view('frontend.pages.blog', compact('all_article', 'sidebar_article'));
     }
 
 
-    public function blog_detail(Request $request, $slug )
+    public function blog_detail(Request $request, $slug)
     {
         $sidebar_article = Article::whereRelation('category', function ($query) {
             $query->where('model', 'article');
         })->where(['publish' => 0])->orderby('created_at', 'desc')->limit(4)->get();
 
-        $article = Article::where('slug',$slug)->first();
+        $article = Article::where('slug', $slug)->first();
 
-        return view('frontend.pages.blog_detail',compact('article','sidebar_article'));
+        return view('frontend.pages.blog_detail', compact('article', 'sidebar_article'));
     }
 
     public function news_letter(Request $request)

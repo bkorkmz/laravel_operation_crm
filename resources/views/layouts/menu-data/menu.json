@@ -146,28 +146,6 @@
       ]
     },
     {
-      "text": "Soru Bankası",
-      "icon": "fas fa-cubes",
-      "route": "",
-      "path": "/^(questionbank)/",
-      "badge": "false",
-      "permission": [
-        "view_menu_questionbank"
-      ],
-      "submenu": [
-        {
-          "text": "Soru Bankası Listesi",
-          "icon": "feather icon-users",
-          "route": "questionbank.index",
-          "path": "/^questionbank(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
-          "badge": "false",
-          "permission": [
-            "view_category"
-          ]
-        }
-      ]
-    },
-    {
       "text": "Kategoriler",
       "icon": "feather icon-layers",
       "route": "",
@@ -193,7 +171,7 @@
       "text": "Modüller ",
       "icon": "feather icon-image",
       "route": "",
-      "path": "/^(slider|portfolio|faq_sss)/",
+      "path": "/^(slider|portfolio|faq_sss|page)/",
       "badge": "false",
       "permission": [
         "view_menu_slider",
@@ -298,6 +276,7 @@
         }
       ]
     },
+ 
     {
       "text": "Ürünler",
       "icon": "feather icon-pie-chart",

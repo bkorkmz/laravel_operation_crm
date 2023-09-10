@@ -73,54 +73,29 @@
                                         <option value="{{ $cat->id }} {{$model->category_id == $cat->id ? 'selected': '' }}">{{ $cat->name }}</option>
                                     @endforeach
                                 </select>
-                                {{-- <a type="button" class="float-right badge badge-inverse-danger"
-                                    href="javascript:void(0)" data-toggle="modal"
-                                    data-target="#addCategoryModal">Kategori Ekle</a> --}}
+                              
                             </div>
-                            {{-- <div class="col-sm-3 float-center">
-                                <label>Manşette Başlık</label>
-                                <div class="form-check text-left">
-                                    <input class="form-check-input" checked type="radio" name="mtitle"
-                                        id="showMtitle" value="0"{{$model->mtitle == 0 ? 'checked' :"" }}>
-                                    <label class="form-check-label" for="showMtitle">Göster</label>
-                                </div>
-                                <div class="form-check text-left">
-                                    <input class="form-check-input" type="radio" name="mtitle"
-                                        id="hideMtitle" value="1"{{$model->mtitle == 1 ? 'checked' :"" }}>
-                                    <label class="form-check-label" for="hideMtitle">Gösterme</label>
-                                </div>
-                            </div> --}}
-                            {{-- <div class="col-sm-3">
-                                <label>Durum</label>
-                                <div class="form-check">
-                                    <input class="form-check-input" checked type="radio" name="publish"
-                                        id="showpublish" value="0" {{$model->publish == 0 ? 'checked' :"" }}>
-                                    <label class="form-check-label" for="showpublish">Yayında</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="publish"
-                                        id="hidepublish" value="1" {{$model->publish == 1 ? 'checked' :"" }}>
-                                    <label class="form-check-label" for="hidepublish">Taslak</label>
-                                </div>
-                            </div>
-                             --}}
-                            <div class="form-group row my-4">
+                           
+                             <div class="form-group row my-4 col-12">
                                 <label class="col-sm-2 col-form-label">Durum
-                                   </label>
-                                <div class="col-sm-3 row align-self-center" >
-                                    
+                                </label>
+                                <div class="col-sm-3 row align-self-center">
+
                                     <div class="form-check m-2">
-                                        <input class="form-check-input" checked type="radio" name="publish"
-                                            id="active" value="1"
-                                            {{$model->publish == 1 ? 'checked' :"" }}>
-                                        <label class="form-check-label" for="active">Aktif</label>
+
+                                        <input class="form-check-input"
+                                            {{ $model->publish == '1' ? 'checked' : '' }} type="radio"
+                                            name="publish" id="passive"
+                                            value="0"{{ $model->publish == '0' ? 'checked' : '' }}
+                                            {{-- @dd($model->publish)      --}}>
+                                        <label class="form-check-label" for="passive">Yayında </label>
                                     </div>
+
                                     <div class="form-check m-2">
-                                       
-                                        <input class="form-check-input"  type="radio" name="publish"
-                                            id="passive" value="0"
-                                            {{$model->publish == 0 ? 'checked' :"" }}>
-                                        <label class="form-check-label" for="passive">Pasif </label>
+                                        <input class="form-check-input"
+                                            {{ $model->publish == '1' ? 'checked' : '' }} type="radio"
+                                            name="publish" id="active" value="1">
+                                        <label class="form-check-label" for="active">Taslak</label>
                                     </div>
                                 </div>
                             </div>
@@ -172,7 +147,7 @@
 
                         @endcanany
                        
-                        <hr>
+                        {{-- <hr> --}}
                         {{-- <div class="form-group has-warning row">
                             <div class="col-sm-2">
                                 <label class="col-form-label" for="meta1">Meta anahtar kelimeler
@@ -255,45 +230,20 @@
 @endsection
 
 @section('js')
-{{-- <script type="text/javascript" src="{{ asset('admin/assets/bower_components/sweetalert/js/sweetalert.min.js') }}"> --}}
-<script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/translations/tr.js"></script>
-{{-- <script src="{{ asset('vendor/dropify/dist/js/dropify.js') }}"></script> --}}
 
 
-{{-- <script src="{{ asset('admin/assets/partials/ckeditor/ckeditor.js') }}"></script> --}}
 <script>
     $(document).ready(function() {
 
-        $('#category-form').on('submit', function(e) {
-            e.preventDefault();
+  $('#ckeditor').summernote({
+                lang: 'tr-TR' // default: 'en-US'
+            });
 
-            var category_name = $('#category-name').val();
-            if (category_name !== "") {
-                $.ajax({
-                    url: "{{ route('category.store') }}",
-                    method: 'POST',
-                    data: {
-                        name: category_name,
-                        model: 'article',
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function(response) {
-                        swal("Kategori başarıyla oluşturuldu!");
-                        $('#addCategoryModal').Modal().hide()
-
-                    },
-                    error: function(xhr, status, error) {
-                        swal("Bir hata oluştu!");
-                    }
-                });
-            }
-            swal("Kategori Boş Olamaz!");
-
-        });
 
     });
 
+   
+        
 
 
 
@@ -314,24 +264,24 @@
 
     // }
 
-    ClassicEditor
+    // ClassicEditor
 
-        .create(document.querySelector('#ckeditor'))
+    //     .create(document.querySelector('#ckeditor'))
     
-        .catch(error => {
-            console.error(error);
-        }); 
+    //     .catch(error => {
+    //         console.error(error);
+    //     }); 
 
         
 
-        $('.dropify').dropify({
-    messages: {
-        'default': 'Resim yükle ya da sürükle',
-        'replace': 'Resim değiştir ya da sürükle',
-        'remove': 'Kaldır',
-        'error': 'Hata! Desteklenen dosya tipinden farklı bir dosya yüklediniz.'
-    }
-});
+    //     $('.dropify').dropify({
+    // messages: {
+    //     'default': 'Resim yükle ya da sürükle',
+    //     'replace': 'Resim değiştir ya da sürükle',
+    //     'remove': 'Kaldır',
+    //     'error': 'Hata! Desteklenen dosya tipinden farklı bir dosya yüklediniz.'
+    // }
+// });
 
         
                 </script>

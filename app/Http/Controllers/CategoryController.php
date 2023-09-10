@@ -146,7 +146,10 @@ class CategoryController extends Controller
             $image = request()->file('image');
             if ($image->isValid()) {
 
-                $data_array['image'] =  '/storage/' . $request->image->store('category', 'public');
+                $file_upload = fileUpload($request->image,'category');
+                $data['image']=   $file_upload['path'];
+
+                // $data_array['image'] =  '/storage/' . $request->image->store('category', 'public');
             }
         }
 
@@ -216,7 +219,9 @@ class CategoryController extends Controller
             $image = request()->file('image');
             if ($image->isValid()) {
 
-                $data_array['image'] =  '/storage/' . $request->image->store('category', 'public');
+                $file_upload = fileUpload($request->image,'category');
+                $data_array['image']=   $file_upload['path'];
+                // $data_array['image'] =  '/storage/' . $request->image->store('category', 'public');
             }
         }
 
