@@ -1,6 +1,6 @@
 <header id="header" class="fixed-top d-flex align-items-center">
     <div class="container d-flex align-items-center">
-        <h1 class="logo me-auto"><a href="index.html">
+        <h1 class="logo me-auto"><a href="/">
                 <span>
                     <img src="{{ asset(config('settings.site_logo')) }}" alt="logo" class="logo">
                 </span>
@@ -10,10 +10,34 @@
 
         <nav id="navbar" class="navbar order-last order-lg-0">
             <ul>
-                <li><a class="nav-link scrollto active" href="#hero">Anasayfa</a></li>
-                <li><a class="nav-link scrollto" href="#about">Hakkımızda</a></li>
-                <li><a class="nav-link scrollto" href="#services">Hizmetlerimiz</a></li>
-                <li><a class="nav-link scrollto " href="#portfolio">Portfolyo</a></li>
+
+                @php
+                                    $currentPage = $_SERVER['REQUEST_URI']; // Mevcut sayfanın URL'sini al
+                                    if ($currentPage === '/') {
+
+                                        $about = "#about";
+                                        $services = "#services";
+                                        $portfolio = "#portfolio";
+                                        $contact = "#contact";
+
+
+                                    } else {
+                                           
+                                        $about = "/#about";
+                                        $services = "/#services";
+                                        $portfolio = "/#portfolio";
+                                        $contact = "/#contact";
+
+                                        }
+
+                @endphp
+
+
+
+                <li><a class="nav-link scrollto active" href="/">Anasayfa</a></li>
+                <li><a class="nav-link scrollto" href="{{$about}}">Hakkımızda</a></li>
+                <li><a class="nav-link scrollto" href="{{$services}}">Hizmetlerimiz</a></li>
+                <li><a class="nav-link scrollto " href="{{$portfolio}}">Portfolyo</a></li>
                 <!-- <li><a class="nav-link scrollto" href="#team">Team</a></li> -->
                 <li><a href="/blog">Blog</a></li>
                 {{-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
@@ -33,7 +57,7 @@
             <li><a href="#">Drop Down 4</a></li>
           </ul>
                 </li> --}}
-                <li><a class="nav-link scrollto" href="#contact">İletişim</a></li>
+                <li><a class="nav-link scrollto" href="{{ $contact }}">İletişim</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
@@ -56,7 +80,7 @@
                                             onclick="event.preventDefault();
                               document.getElementById('logout-form').submit();">Çıkış
                                             Yap</a></li>
-                                            <form id="logout-form" action="{{ route('logout') }}"  role="form"  method="POST" class="d-none">
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                               @csrf
                                           </form>
                                 </ul>

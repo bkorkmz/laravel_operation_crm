@@ -12,7 +12,7 @@
     <!-- Meta -->
     <meta charset="utf-8">
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0,minimal-ui">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{ config('settings.site_icon') ?? 'Laravel' }}" type="image/x-icon" />
@@ -40,6 +40,8 @@
     <!-- font-awesome-n -->
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/css/font-awesome-n.min.css?v=1.0') }}">
     <!-- Chartlist chart css -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+
     @yield('css')
 
 </head>
@@ -465,12 +467,9 @@
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     {{-- swich  --}}
     {{-- <script type="text/javascript" src=".{{asset('admin/bower_components/switchery/js\switchery.min.js')}}"></script> --}}
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
     <script>
-        $(function() {
-            $('[data-toggle="tooltip"]').tooltip()
-            $('[data-toggle="modal"]').tooltip()
-        })
 
         $('.dropify').dropify({
             messages: {
@@ -481,6 +480,7 @@
             }
         });
     </script>
+
 
     @yield('js')
 

@@ -210,7 +210,7 @@
 
 
 @endsection
-@section('js')
+@section('css')
 
 <style>
     body {

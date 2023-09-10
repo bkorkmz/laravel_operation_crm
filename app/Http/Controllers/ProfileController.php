@@ -72,15 +72,16 @@ class ProfileController extends Controller
         $data = $request->except('_token', 'avatar');
         if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
             if ($model->avatar != "") {
-                deleteOldPicture($model->avatar);
+               deleteOldPicture($model->avatar);
             }
-            $data['avatar'] = '/storage/' . $validatedData['avatar']->store('avatars', 'public');
+            $file_upload = fileUpload($request->avatar,'avatars');
+            $data['avatar'] =   $file_upload['path'];
+            // $data['avatar'] = '/storage/' . $request->avatar->store('avatars', 'public');
         }
-        // if ($request->password) {
-        //     $data['password'] = Hash::make($request->password);
-        // }
-        auth()->user()->update($data);
-        return response()->json(['message' => 'true', 'status' => 'success']);
+       
+        $model->update($data);
+
+        return response()->json(['message' => 'true', 'status' => 'success','file'=> $file_upload]);
 
 
 
@@ -110,12 +111,12 @@ class ProfileController extends Controller
         $data = $request->except('_token', 'password');
 
         if ($request->password) {
-            $data['password'] = Hash::make($request->password);
+            $data['password'] = Hash::make($validatedData['password']);
         }
         auth()->user()->update($data);
         return response()->json(['message' => 'true', 'status' => 'success']);
     }
-    public function deleteAccount(Request $request)
+    public function deleteAccount()
     {
 
         $model = auth()->user();
@@ -137,9 +138,6 @@ class ProfileController extends Controller
 
         Session::flush();
         Auth::logout();
-
-        // return redirect('login');
-
 
         return response()->json(['message' => 'true', 'status' => 'success']);
     }

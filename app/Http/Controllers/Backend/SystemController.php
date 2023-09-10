@@ -75,7 +75,9 @@ class SystemController extends Controller
                     'site_register_img.max' => 'Yüklenen dosya en fazla 4MB (4000 Kb ) olmalıdır'
                 ]
             );
-            $dataArray['site_register_img'] = '/storage/' . $request->site_register_img->store('settings', 'public');
+            $file_upload = fileUpload($request->site_register_img,'settings');
+            $dataArray['site_register_img']  =   $file_upload['path'];
+            // $dataArray['site_register_img'] = '/storage/' . $request->site_register_img->store('settings', 'public');
         }
         if ($request->hasFile('site_login_img')) {
             $request->validate(
@@ -89,7 +91,9 @@ class SystemController extends Controller
                     'site_login_img.max' => 'Yüklenen dosya en fazla 4MB (4000 Kb ) olmalıdır',
                 ]
             );
-            $dataArray['site_login_img'] = '/storage/' . $request->site_login_img->store('settings', 'public');
+            $file_upload = fileUpload($request->site_login_img,'settings');
+            $dataArray['site_login_img']  =   $file_upload['path'];
+            // $dataArray['site_login_img'] = '/storage/' . $request->site_login_img->store('settings', 'public');
         }
         if ($request->hasFile('site_icon')) {
             $request->validate(
@@ -103,7 +107,9 @@ class SystemController extends Controller
                     'site_icon.max' => 'Yüklenen dosya en fazla 4MB (4000 Kb ) olmalıdır',
                 ]
             );
-            $dataArray['site_icon'] = '/storage/' . $request->site_icon->store('settings', 'public');
+            $file_upload = fileUpload($request->site_icon,'settings');
+            $dataArray['site_icon']  =   $file_upload['path'];
+            // $dataArray['site_icon'] = '/storage/' . $request->site_icon->store('settings', 'public');
         }
         if ($request->hasFile('site_logo')) {
             $request->validate(
@@ -118,7 +124,9 @@ class SystemController extends Controller
 
                 ]
             );
-            $dataArray['site_logo'] = '/storage/' . $request->site_logo->store('settings', 'public');
+            $file_upload = fileUpload($request->site_logo,'settings');
+            $dataArray['site_logo']  =   $file_upload['path'];
+            // $dataArray['site_logo'] = '/storage/' . $request->site_logo->store('settings', 'public');
         }
         if ($request->hasFile('landing_slider_img')) {
             $request->validate(
@@ -133,7 +141,9 @@ class SystemController extends Controller
 
                 ]
             );
-            $dataArray['landing_slider_img'] = '/storage/' . $request->landing_slider_img->store('settings', 'public');
+            $file_upload = fileUpload($request->site_logo,'landing_slider_img');
+            $dataArray['landing_slider_img']  =   $file_upload['path'];
+            // $dataArray['landing_slider_img'] = '/storage/' . $request->landing_slider_img->store('settings', 'public');
         }
 
 
@@ -207,8 +217,9 @@ class SystemController extends Controller
                         'logo_1.max' => 'Yüklenen dosya en fazla 4MB (4000 Kb ) olmalıdır',
                     ]
                 );
-
-                $section_data['logo_1'] = '/storage/' . $request->logo_1->store('page', 'public');
+                $file_upload = fileUpload($request->logo_1,'page');
+                $section_data['logo_1']  =   $file_upload['path'];
+                // $section_data['logo_1'] = '/storage/' . $request->logo_1->store('page', 'public');
             }
             else{
                 $section_data['logo_1'] = json_decode($sectionPage->section_content)->logo_1;
@@ -225,7 +236,9 @@ class SystemController extends Controller
                         'logo_2.max' => 'Yüklenen dosya en fazla 4MB (4000 Kb ) olmalıdır',
                     ]
                 );
-                $section_data['logo_2'] = '/storage/' . $request->logo_2->store('page', 'public');
+                $file_upload = fileUpload($request->logo_2,'page');
+                $section_data['logo_2']  =   $file_upload['path'];
+                // $section_data['logo_2'] = '/storage/' . $request->logo_2->store('page', 'public');
             }else{
                 $section_data['logo_2'] = json_decode($sectionPage->section_content)->logo_2;
             }
@@ -241,7 +254,9 @@ class SystemController extends Controller
                         'logo_3.max' => 'Yüklenen dosya en fazla 4MB (4000 Kb ) olmalıdır',
                     ]
                 );
-                $section_data['logo_3'] = '/storage/' . $request->logo_3->store('page', 'public');
+                $file_upload = fileUpload($request->logo_3,'page');
+                $section_data['logo_3']  =   $file_upload['path'];
+                // $section_data['logo_3'] = '/storage/' . $request->logo_3->store('page', 'public');
             }else{
                 $section_data['logo_3'] = json_decode($sectionPage->section_content)->logo_3;
             }
@@ -257,7 +272,9 @@ class SystemController extends Controller
                         'logo_4.max' => 'Yüklenen dosya en fazla 4MB (4000 Kb ) olmalıdır',
                     ]
                 );
-                $section_data['logo_4'] = '/storage/' . $request->logo_4->store('page', 'public');
+                $file_upload = fileUpload($request->logo_4,'page');
+                $section_data['logo_4']  =   $file_upload['path'];
+                // $section_data['logo_4'] = '/storage/' . $request->logo_4->store('page', 'public');
             }else{
                 $section_data['logo_4'] = json_decode($sectionPage->section_content)->logo_4;
             }

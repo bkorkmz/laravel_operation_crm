@@ -33,14 +33,7 @@
                                 <input type="text" class="form-control form-control-normal" value="{{old('title')}}"
                                     placeholder="" name="title" maxlength="50" required>
                             </div>
-                        </div>
-                        {{--                         
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Seo başlık ( URL - Opsiyonel )</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control form-control-normal" placeholder="" name="slug" maxlength="50">
-                            </div>
-                        </div> --}}
+                        </div> 
 
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Hizmet Özeti <span class="text-danger"> *</span></label>
@@ -72,45 +65,32 @@
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
-                                {{-- <a type="button" class="float-right badge badge-inverse-danger"
-                                    href="javascript:void(0)" data-toggle="modal"
-                                    data-target="#addCategoryModal">Kategori Ekle</a> --}}
+            
                             </div>
-                            {{-- <div class="col-sm-3 float-center">
-                                <label>Manşette Başlık</label>
-                                <div class="form-check text-left">
-                                    <input class="form-check-input" checked type="radio" name="mtitle"
-                                        id="showMtitle" value="0"{{old('mtitle') == 0 ? 'checked' :"" }}>
-                                    <label class="form-check-label" for="showMtitle">Göster</label>
-                                </div>
-                                <div class="form-check text-left">
-                                    <input class="form-check-input" type="radio" name="mtitle"
-                                        id="hideMtitle" value="1"{{old('mtitle') == 1 ? 'checked' :"" }}>
-                                    <label class="form-check-label" for="hideMtitle">Gösterme</label>
-                                </div>
-                            </div> --}}
-                            <div class="col-sm-3">
-                                <label>Durum</label>
-                                <div class="form-check">
-                                    <input class="form-check-input" checked type="radio" name="publish"
-                                        id="showpublish" value="0" {{old('publish') == 0 ? 'checked' :"" }}>
-                                    <label class="form-check-label" for="showpublish">Yayında</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="publish"
-                                        id="hidepublish" value="1" {{old('publish') == 1 ? 'checked' :"" }}>
-                                    <label class="form-check-label" for="hidepublish">Taslak</label>
+                  
+                            <div class="form-group col-12  row my-4">
+                                <label class="col-sm-2 col-form-label">Durum
+                                </label>
+                                <div class="col-sm-3 row align-self-center">
+
+                                    <div class="form-check m-2">
+                                        <input class="form-check-input" checked type="radio" name="publish"
+                                            id="active" value="1"
+                                            {{ old('publish', 0) == 0 ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="active">Yayında</label>
+                                    </div>
+                                    <div class="form-check m-2">
+
+                                        <input class="form-check-input" type="radio" name="publish"
+                                            id="passive" value="0"
+                                            {{ old('publish', 0) == 1 ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="passive">Taslak </label>
+                                    </div>
                                 </div>
                             </div>
 
-                            {{-- <div class="col-sm-3">
-                                <select name="source_id" class="form-control fill">
-                                    <option value="">Kaynak seçin</option>
-                                        @foreach ($sources as $source)
-                                        <option value="{{ $source->id }}">{{ $source->title }}</option>
-                                    @endforeach -
-                                </select>
-                            </div> --}}
+
+                   
                         </div>
 
 
@@ -162,8 +142,8 @@
                                 <div class="col-form-label">Arama motorları için kelime bazlı önem
                                     taşır.</div>
                             </div>
-                        </div>
-                        <div class="form-group has-warning row">
+                        </div> --}}
+                        {{-- <div class="form-group has-warning row">
                             <div class="col-sm-2">
                                 <label class="col-form-label" for="meta2">Meta açıklama
                                     (Opsiyonel)</label>
@@ -174,8 +154,8 @@
                                 <div class="col-form-label">Arama motorları maksimum 200 karakteri
                                     geçmeyecek şekilde doldurulabilir.</div>
                             </div>
-                        </div>
-                        <hr> --}}
+                        </div> --}}
+                        {{-- <hr> --}}
 
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Hizmet Fotoğrafı (min:630x470)</label>
@@ -197,32 +177,6 @@
 
 
 
-<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Kategori Ekle</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <form class="form-group " id="category-form">
-
-                    <div class="form-group ">
-                        <label class="col-form-label">Kategori Adı</label>
-                        <div class="">
-                            <input type="text" id="category-name" name="name"
-                                class="form-control form-control-normal">
-                        </div>
-                    </div>
-                    <button class="btn btn-success float-right" type="submit">Kaydet</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
 
 
@@ -241,73 +195,19 @@
 <script>
     $(document).ready(function() {
 
-        $('#category-form').on('submit', function(e) {
-            e.preventDefault();
-
-            var category_name = $('#category-name').val();
-            if (category_name !== "") {
-                $.ajax({
-                    url: "{{ route('category.store') }}",
-                    method: 'POST',
-                    data: {
-                        name: category_name,
-                        model: 'services',
-                        _token: "{{ csrf_token() }}"
-                    },
-                    success: function(response) {
-                        console.log(response);
-                        swal("Kategori başarıyla oluşturuldu!");
-                        $('#addCategoryModal').Modal().hide()
-
-                    },
-                    error: function(xhr, status, error) {
-                        swal("Bir hata oluştu!");
-                    }
-                });
-            }
-            swal("Kategori Boş Olamaz!");
-
-        });
-
-    });
-
-
-
-
-    // function addCategory() {
-
-    //     swal({
-    // 		title: "Ajax request example",
-    // 		text: "Submit to run ajax request",
-    // 		type: "info",
-    // 		showCancelButton: true,
-    // 		closeOnConfirm: false,
-    // 		showLoaderOnConfirm: true
-    // 	}, function () {
-    // 		setTimeout(function () {
-    // 			swal("Ajax request finished!");
-    // 		}, 2000);
-    // 	});
-
-    // }
-
-    ClassicEditor
-
-        .create(document.querySelector('#ckeditor'))
-    
-        .catch(error => {
-            console.error(error);
-        }); 
+        $('#ckeditor').summernote({
+                lang: 'tr-TR' // default: 'en-US'
+            });
 
         
 
-        $('.dropify').dropify({
-    messages: {
-        'default': 'Resim yükle ya da sürükle',
-        'replace': 'Resim değiştir ya da sürükle',
-        'remove': 'Kaldır',
-        'error': 'Hata! Desteklenen dosya tipinden farklı bir dosya yüklediniz.'
-    }
+    //     $('.dropify').dropify({
+    // messages: {
+    //     'default': 'Resim yükle ya da sürükle',
+    //     'replace': 'Resim değiştir ya da sürükle',
+    //     'remove': 'Kaldır',
+    //     'error': 'Hata! Desteklenen dosya tipinden farklı bir dosya yüklediniz.'
+    // }
 });
 
         

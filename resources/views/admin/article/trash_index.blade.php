@@ -71,8 +71,8 @@
                         <div class="text-center">
        
 
-                            <a href="{{route('post.restored',)}}/${e}" class="" data-toggle="tooltip" data-placement="top" title="Geri al"><i class="feather icon-refresh-ccw f-w-600 f-16 m-r-15 text-c-blue"></i></a>
-                            <a href="{{route('post.trashed',)}}/${e}" onclick="return confirm(\'Silme İşlemi onaylıyormusunuz ?\')"  data-toggle="tooltip" data-placement="top" title="Sil"><i class="feather icon-trash-2 f-w-600 f-16 text-c-red"></i></a>
+                            <a href="{{route($modul_name.'.restored',)}}/${e}" class="" data-toggle="tooltip" data-placement="top" title="Geri al"><i class="feather icon-refresh-ccw f-w-600 f-16 m-r-15 text-c-blue"></i></a>
+                            <a href="{{route($modul_name.'.trashed',)}}/${e}" onclick="return confirm(\'Silme İşlemi onaylıyormusunuz ?\')"  data-toggle="tooltip" data-placement="top" title="Sil"><i class="feather icon-trash-2 f-w-600 f-16 text-c-red"></i></a>
                         </div>
                         `;
                     }

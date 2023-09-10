@@ -78,4 +78,70 @@ class AdminController  extends Controller
         }
         return response($msg);
     }
+
+
+
+    public function ckEditorUpload(Request $request)
+    {
+        if($request->hasFile('image')) {
+                $request->validate(
+                    [
+                        'image' => 'required|file|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:5000'
+                    ],
+                    [
+                        'image.required' => 'Resim alanı Zorunludur',
+                        'image.mimes' => 'Yüklenen dosya desteklenen dosya tiplerinden birisi olmalıdır (jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico)',
+                        'image.file' => 'Yüklenen dosya bir resim dosyası olmalıdır',
+                        'image.max' => 'Yüklenen dosya en fazla 4MB (4000 Kb ) olmalıdır',
+    
+                    ]
+                );
+                $file_upload = fileUpload($request->image,'Ck-images');
+                $url=   $file_upload['path'];
+                // $url = '/storage/' . $request->image->store('Ck-images', 'public');          
+              
+          
+                return response()->json([
+                    'uploaded' => true,
+                    'url' => $url,
+                ]);
+          
+          
+            // $CKEditorFuncNum = $request->input('CKEditorFuncNum');
+            // // $url = $data;
+            // $msg = 'Resim başarıyla yüklendi.';
+            // $response = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg')</script>";
+
+            // @header('Content-type: text/html; charset=utf-8');
+            // echo $response;
+        }
+    }
+
+
+    public function getToken(){
+
+        // $token = substr(bin2hex(random_bytes(4)), 0, 10); // Token'ı isteğinize göre oluşturun
+
+        $payload = [
+            "sub" => "1234567890", // Konu (subject)
+            "iat" => time(), // Oluşturulma tarihi (issued at)
+            "exp" => time() + 3600, // Son kullanma tarihi (expiration time), örneğin 1 saat sonra
+            "data" => [
+                "randomCode" => substr(bin2hex(random_bytes(3)), 0, 6) // Rastgele kodu ekleyin
+            ]
+        ];
+        
+        // Veriyi JSON formatına dönüştürün
+        $payloadJson = json_encode($payload);
+        
+        // Veriyi Base64 URL güvenli bir şekilde kodlayın
+        $encodedPayload = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($payloadJson));
+        
+        // Sonuç JWT verisi
+        $jwt = $encodedPayload;
+
+        return response()->json([
+            'token' => $jwt,
+        ]);
+    }
 }

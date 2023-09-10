@@ -23,10 +23,10 @@ Blog
         <div class="container">
   
           <ol>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="/">Anasayfa</a></li>
             <li>Blog</li>
           </ol>
-          <h2>Blog</h2>
+          <h2>Blog Yazıları</h2>
   
         </div>
       </section><!-- End Breadcrumbs -->
@@ -50,7 +50,7 @@ Blog
                 
               <article class="entry">
                 <div class="entry-img">
-                  <img src="{{$article->image}}" alt="{{ $article->title }}" class="img-fluid">
+                  <img src="{{$article->image}}" alt="{{ $article->title ? $article->title :""  }}" class="img-fluid">
                 </div>
   
                 <h1 class="entry-title">
@@ -93,7 +93,25 @@ Blog
   
               <div class="sidebar" >
   
-             
+                {{-- <h3 class="sidebar-title">Search</h3>
+                <div class="sidebar-item search-form">
+                  <form action="">
+                    <input type="text">
+                    <button type="submit"><i class="bi bi-search"></i></button>
+                  </form>
+                </div><!-- End sidebar search formn--> --}}
+  
+                {{-- <h3 class="sidebar-title">Categories</h3>
+                <div class="sidebar-item categories">
+                  <ul>
+                    <li><a href="#">General <span>(25)</span></a></li>
+                    <li><a href="#">Lifestyle <span>(12)</span></a></li>
+                    <li><a href="#">Travel <span>(5)</span></a></li>
+                    <li><a href="#">Design <span>(22)</span></a></li>
+                    <li><a href="#">Creative <span>(8)</span></a></li>
+                    <li><a href="#">Educaion <span>(14)</span></a></li>
+                  </ul>
+                </div><!-- End sidebar categories--> --}}
   
                 <h3 class="sidebar-title">Yeni Gelen  Yazılar</h3>
                 <div class="sidebar-item recent-posts">
@@ -102,7 +120,7 @@ Blog
                     
                   <div class="post-item clearfix">
                     <img src="{{$art->image}}" alt="{{ $art->title}}<">
-                    <h4><a href="blog-single.html">{{ $art->title}}</a></h4>
+                    <h4><a href="{{route('frontend.blog_detail', $art->slug) }}">{{ $art->title}}</a></h4>
                     <time datetime="{{date_format($art->created_at,('d.m.Y'))}}"> {{date_format($art->created_at,('d.m.Y'))}}</time>
                   </div>
                   @endforeach

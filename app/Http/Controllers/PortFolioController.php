@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 
 
 class PortFolioController extends Controller
+
 {
     
     public function __construct()
@@ -111,7 +112,12 @@ class PortFolioController extends Controller
         $data = $request->except('_token');
        
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $data['image'] = '/storage/' . $request->image->store('sliders', 'public');
+            $file_upload = fileUpload($request->image_mini,'sliders');
+            $data['image']=   $file_upload['path'];
+
+
+
+            // $data['image'] = '/storage/' . $request->image->store('sliders', 'public');
         }
         PortFolio::create($data);
 
@@ -152,8 +158,10 @@ class PortFolioController extends Controller
 
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $file_upload = fileUpload($request->image_mini,'sliders');
+            $data['image']=   $file_upload['path'];
 
-            $data['image'] = '/storage/' . $request->image->store('sliders', 'public');
+            // $data['image'] = '/storage/' . $request->image->store('sliders', 'public');
         }
         $model->update($data);
 
@@ -275,7 +283,9 @@ class PortFolioController extends Controller
         $data = $request->except('_token');
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $data['image'] = '/storage/' . $request->image->store('sliders', 'public');
+            $file_upload = fileUpload($request->image_mini,'sliders');
+            $data['image']=   $file_upload['path'];
+            // $data['image'] = '/storage/' . $request->image->store('sliders', 'public');
         }
         PortFolio::create($data);
 
@@ -310,7 +320,9 @@ class PortFolioController extends Controller
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
 
-            $data['image'] = '/storage/' . $request->image->store('sliders', 'public');
+            $file_upload = fileUpload($request->image_mini,'sliders');
+            $data['image']=   $file_upload['path'];
+            // $data['image'] = '/storage/' . $request->image->store('sliders', 'public');
         }
         $model->update($data);
 
