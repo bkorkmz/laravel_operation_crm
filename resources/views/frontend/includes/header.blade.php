@@ -56,7 +56,7 @@
                                             onclick="event.preventDefault();
                               document.getElementById('logout-form').submit();">Çıkış
                                             Yap</a></li>
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            <form id="logout-form" action="{{ route('logout') }}"  role="form"  method="POST" class="d-none">
                                               @csrf
                                           </form>
                                 </ul>

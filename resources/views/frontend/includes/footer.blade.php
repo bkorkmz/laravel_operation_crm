@@ -40,7 +40,7 @@
         <div class="col-lg-4 col-md-6 footer-newsletter">
           <h4>Bize Katılın</h4>
           <p>Tüm bildiklerimizi burada paylaşıyoruz</p>
-          <form action="" method="get">
+          <form action="" method="get"  role="form" >
             <input type="email" name="email"><input type="submit" value="Abone Ol">
           </form>
         </div>

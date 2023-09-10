@@ -6,7 +6,7 @@ use App\Models\Customer;
 use App\Http\Requests\StoreCutomersRequest;
 use App\Http\Requests\UpdateCutomersRequest;
 
-class CutomersController extends Controller
+class CustomersController extends Controller
 {
     /**
      * Display a listing of the resource.
