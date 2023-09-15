@@ -124,6 +124,25 @@ class PermissionsSeeders extends Seeder
         Permissions::firstOrCreate(['name' => 'update_services', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'delete_services', 'guard_name' => 'web']);
 
+        
+        //QuesionBank
+        Permissions::firstOrCreate(['name' => 'view_menu_questionbank', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'view_questionbank', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'create_questionbank', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'edit_questionbank', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'update_questionbank', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'trash_questionbank', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'return_trash_questionbank', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'delete_questionbank', 'guard_name' => 'web']);
+
+        //Question
+        Permissions::firstOrCreate(['name' => 'view_question', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'create_question', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'edit_question', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'show_question', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'update_question', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'delete_question', 'guard_name' => 'web']);
+
 
         //        $super_admin = Role::whereName('Super admin')->first();
         $all_permission = Permissions::all();

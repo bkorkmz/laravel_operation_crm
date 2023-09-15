@@ -11,8 +11,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3>Çözüm Ortağı Düzenle</h3>
-                    <a type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
-                   href="{{route($module_name.'store')}}"><i class="fa fa-reply"></i>Geri Dön</a>
+                    <a href="{{route('slider.index')}}" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "><i class="fa fa-reply"></i>Geri Dön</a>
                 </div>
                 <div class="card-block">
                     @if ($errors->any())

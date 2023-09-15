@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('question_has_question_bank', function (Blueprint $table) {
             $table->unsignedBigInteger('question_id');
             $table->unsignedBigInteger('question_bank_id');
+
+
             $table->primary(['question_id', 'question_bank_id']);
             
             $table->foreign('question_id')

@@ -242,7 +242,7 @@ class SystemController extends Controller
             }else{
                 $section_data['logo_2'] = json_decode($sectionPage->section_content)->logo_2;
             }
-            if ($request->hasFile('logo_1')) {
+            if ($request->hasFile('logo_3')) {
                 $request->validate(
                     [
                         'logo_3' => 'required|file|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:4000'
@@ -260,7 +260,7 @@ class SystemController extends Controller
             }else{
                 $section_data['logo_3'] = json_decode($sectionPage->section_content)->logo_3;
             }
-            if ($request->hasFile('logo_1')) {
+            if ($request->hasFile('logo_4')) {
                 $request->validate(
                     [
                         'logo_4' => 'required|file|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:4000'

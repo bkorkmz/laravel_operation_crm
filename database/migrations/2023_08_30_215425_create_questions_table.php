@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->integer('status')->default(1);
-            $table->string('question');
+            $table->string('question',500);
             $table->jsonb('answers');
             $table->bigInteger('user_id');
 

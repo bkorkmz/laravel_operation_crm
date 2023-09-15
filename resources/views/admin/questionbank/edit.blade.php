@@ -1,8 +1,9 @@
     @extends('layouts.layout-admin')
     @section('title')
-        {{ __('Kategori Düzenleme Sayfası  ') }}
+        {{ __('Soru bankası Düzenleme  ') }}
     @endsection
     @section('content')
+{{--        @dd($modul_name)--}}
         <div class="pcoded-inner-content">
             <div class="page-wrapper">
                 <div class="page-body">
@@ -10,7 +11,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3>Kategori Düzenleme Sayfası</h3>
+                                    <h3>Soru bankası Düzenleme</h3>
                                     <a type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
                                     href="{{route($modul_name.'.index')}}"><i class="fa fa-reply"></i>Geri Dön</a>
 
@@ -26,11 +27,11 @@
                                                 </ul>
                                             </div>
                                         @endif
-                                        <form action="{{ route($modul_name . '.update', ['model' => $model->id]) }}"
+                                        <form action="{{ route($modul_name . '.update',$model->id) }}"
                                             method="post" enctype="multipart/form-data">
                                             @csrf
                                             <div class="form-group row">
-                                                <label class="col-sm-2 col-form-label">Kategori başlığı <span
+                                                <label class="col-sm-2 col-form-label">Başlık <span
                                                         class="text-danger"> *</span></label>
                                                 <div class="col-sm-10">
                                                     <input type="text" class="form-control form-control-normal"
@@ -41,7 +42,7 @@
     
 
                                             <div class="form-group row">
-                                                <label class="col-sm-2 col-form-label">Kategori Açıklaması </label>
+                                                <label class="col-sm-2 col-form-label">Açıklama </label>
                                                 <div class="col-sm-10">
                                                     <textarea type="text" class="form-control form-control-normal"  placeholder="" name="description"
                                                         maxlength="250">{{ $model->description }}</textarea>
@@ -50,57 +51,26 @@
 
 
                                             <div class="form-group row my-4">
-                                                <label class="col-sm-2 col-form-label">Bağlı Olduğu Model <i
-                                                        class="feather icon-info  text-c-blue"></i></label>
-                                                <div class="col-sm-3">
-                                                    <select name="model" class="form-control fill">
-                                                        <option value="">Bir modül seçiniz </option>
-                                                        <option {{ $model->model == 'portfolio' ? 'selected' :"" }} value="portfolio">Portfolyo</option>
-                                                        <option {{ $model->model == 'services' ? 'selected' :"" }} value="services">Hizmet</option>
-                                                        <option {{ $model->model == 'article' ? 'selected' :"" }} value="article">Makale</option>
-                                                        <option {{ $model->model == 'post' ? 'selected' :"" }} value="post">Haber</option>
-                                                        <option {{ $model->model == 'product' ? 'selected' :"" }} value="product">Ürün</option>
-                                                        <option {{ $model->model == 'photo_gallery' ? 'selected' :"" }} value="photo_gallery">Foto Galeri</option>
-                                                        <option {{ $model->model == 'video_gallery' ? 'selected' :"" }} value="video_gallery">Video Galeri</option>
-                                                    </select>
-                                                 </div>
-                                            
-                                            </div>
-
-                                            <div class="form-group row my-4">
                                                 <label class="col-sm-2 col-form-label">Durum
                                                     +</label>
                                                 <div class="col-sm-3 row align-self-center">
 
                                                     <div class="form-check m-2">
                                                         <input class="form-check-input" checked type="radio"
-                                                            name="show" id="active" value="1"
-                                                            {{ $model->show == 1 ? 'checked' : '' }}>
+                                                            name="status" id="active" value="1"
+                                                            {{ $model->status == 1 ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="active">Aktif</label>
                                                     </div>
                                                     <div class="form-check m-2">
 
-                                                        <input class="form-check-input" type="radio" name="show"
+                                                        <input class="form-check-input" type="radio" name="status"
                                                             id="passive" value="0"
-                                                            {{  $model->show == 0 ? 'checked' : '' }}>
+                                                            {{  $model->status == 0 ? 'checked' : '' }}>
                                                         <label class="form-check-label" for="passive">Pasif </label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <hr>
-                                           
-
-                                            <div class="form-group row">
-                                                <label class="col-sm-2 col-form-label">Kategori Fotoğrafı</label>
-                                                <div class="col-sm-5">
-                                                    <input type="file" class="form-control form-control-normal dropify"
-                                                        placeholder="" name="image"
-                                                        data-show-remove="false"
-                                                        data-default-file="{{ $model->image  }}"
-                                                        accept=".jpg,.jpeg,.png,.tiff,.gif,.svg,.webp,.bmp,.ico">
-                                                </div>
-                                            </div>
-
                                             <div class="text-right m-t-20">
                                                 <button class="btn btn-primary">Kaydet</button>
                                             </div>

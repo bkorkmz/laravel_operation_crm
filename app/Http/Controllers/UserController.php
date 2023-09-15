@@ -394,9 +394,6 @@ class UserController extends Controller
 
         $data = $request->except('_token', 'avatar');
         if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
-            if ($model->avatar != "") {
-                deleteOldPicture($model->avatar);
-             }
              $file_upload = fileUpload($request->avatar,'teams');
              $data['avatar'] =   $file_upload['path'];
             // $data['avatar'] = '/storage/' . $request->avatar->store('teams', 'public');
@@ -455,11 +452,12 @@ class UserController extends Controller
     }
 
 
-    public function teams_delete(JobTeams $user)
+    public function teams_delete(JobTeams $model)
     {
 
-        $user->delete();
-        Log::info($user . ' ' . 'Forcedelete user_job' . ' | User:' . Auth::user()->name);
+        
+        $model->delete();
+        Log::info($model . ' ' . 'Forcedelete user_job' . ' | User:' . Auth::user()->name);
         //        session()->flash('message', 'Delete Successfully');
         toastr()->success('İşlem başarılı şekilde tamamlanmıştır.', 'Başarılı');
         return redirect()->back();

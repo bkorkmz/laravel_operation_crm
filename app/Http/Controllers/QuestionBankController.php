@@ -18,11 +18,11 @@ class QuestionBankController extends Controller
         $this->directory = "questionbank";
     }
     
-    public function index(QuestionBank $model)
+    public function index()
     {
         
         $modul_name = $this->module_name;
-        return view('admin.questionbank.index', compact('modul_name', 'model'));
+        return view('admin.questionbank.index', compact('modul_name'));
         
     }
     
@@ -97,9 +97,9 @@ class QuestionBankController extends Controller
         $model = $this->model_name::create($data_array);
         
         if($model) {
-            toastr()->success('Soru Grubu Ekleme İşlemi Başarılı', 'Başarılı ');
+            toastr()->success('SoruBankası Ekleme İşlemi Başarılı', 'Başarılı ');
         } else {
-            toastr()->error('Soru Grubu Ekleme İşlemi Sırasında Bir Hata Oluştu ', 'Başarısız !!! ');
+            toastr()->error('SoruBankası Ekleme İşlemi Sırasında Bir Hata Oluştu ', 'Başarısız !!! ');
         }
         
         return redirect()->back();
@@ -116,7 +116,7 @@ class QuestionBankController extends Controller
     
     public function update(Request $request, QuestionBank $model)
     {
-        
+//        dd($model);
         $request->validate(
             [
                 'name' => 'required|max:50',
@@ -139,10 +139,11 @@ class QuestionBankController extends Controller
         $model = $model->update($data_array);
         
         if($model) {
-            toastr()->success('Soru Grubu  Ekleme İşlemi Başarılı', 'Başarılı ');
+            toastr()->success('SoruBankası  Ekleme İşlemi Başarılı', 'Başarılı ');
         } else {
-            toastr()->error('Soru Grubu Ekleme İşlemi Sırasında Bir Hata Oluştu ', 'Başarısız !!! ');
+            toastr()->error('SoruBankası Ekleme İşlemi Sırasında Bir Hata Oluştu ', 'Başarısız !!! ');
         }
+        return redirect(route($this->module_name.'.index'));
         
     }
     
@@ -151,16 +152,26 @@ class QuestionBankController extends Controller
         $model = $model->delete();
         
         if($model) {
-            toastr()->success('Soru Grubu  Silme İşlemi Başarılı', 'Başarılı ');
+            toastr()->success('SoruBankası  Silme İşlemi Başarılı', 'Başarılı ');
         } else {
-            toastr()->error('Soru Grubu Silme İşlemi Sırasında Bir Hata Oluştu ', 'Başarısız !!! ');
+            toastr()->error('SoruBankası Silme İşlemi Sırasında Bir Hata Oluştu ', 'Başarısız !!! ');
         }
         
+        return redirect(route($this->module_name.'.index'));
         
     }
     
     public function trashed(QuestionBank $model)
     {
+        
+        $trash = $model->trashed();
+        if ($trash  ){
+                toastr()->success('SoruBankası  Silme İşlemi Başarılı', 'Başarılı ');
+            } else {
+                toastr()->error('SoruBankası Silme İşlemi Sırasında Bir Hata Oluştu ', 'Başarısız !!! ');
+            }
+        
+        return redirect()->back();
         
         
     }
@@ -168,60 +179,22 @@ class QuestionBankController extends Controller
     public function trashed_index()
     {
         $modul_name = $this->module_name;
-        return view('admin.questionbank.trashed_index', compact('modul_name'));
-        
-        
+        return view('admin.questionbank.trash_index', compact('modul_name'));
     }
     
     public function trashed_data()
     {
+        $model_data = $this->model_name::onlyTrashed()->select(
+                'id',
+                'name',
+                'description',
+                'deleted_at'
+            )->orderBy('deleted_at', 'desc');
         
-        
-    }
-    
-    public function restore(QuestionBank $model)
-    {
-        $model = $model->destroy();
-        
-        if($model) {
-            toastr()->success('Soru Grubu  Silme İşlemi Başarılı', 'Başarılı ');
-        } else {
-            toastr()->error('Soru Grubu Silme İşlemi Sırasında Bir Hata Oluştu ', 'Başarısız !!! ');
-        }
-        
-    }
-    
-    
-    public function questions(QuestionBank $model)
-    {
-        $modul_name = $this->module_name;
-        return view('admin.questionbank.questions', compact('model', 'modul_name'));
-        
-    }
-    
-    public function questions_data(Questionbank $model)
-    {
-        
-        
-        $questions = $model->questions;
-        
-        
-        return Datatables::of($questions)
+        return DataTables::of($model_data)
             ->addIndexColumn()
-            ->editColumn('question', function ($data) {
-                return $data->question;
-            })
-            ->editColumn('status', function ($data) {
-                
-                if($data->status == 1) {
-                    $span = '<span class="badge badge-inverse-primary">Aktif</span>';
-                } else {
-                    $span = '<span class="badge badge-inverse-danger">Pasif</span>';
-                }
-                return $span;
-            })
-            ->editColumn('created_at', function ($data) {
-                return $data->created_at->format('d.m.Y h:i');
+            ->editColumn('deleted_date', function ($data) {
+                return $data->deleted_at->format('d.m.Y h:i');
             })
             ->editColumn('action', function ($data) {
                 return $data->id;
@@ -230,46 +203,12 @@ class QuestionBankController extends Controller
             ->rawColumns(['action'])
             ->toJson(true);
         
-    }
-    
-    
-    public function add_question(Request $request,$qb)
-    {
-        $modul_name = $this->module_name;
-        
-        return view('admin.question.create',compact('qb','modul_name'));
-        
         
     }
     
-    public function show_question(Question $model)
-    {
-        
+
+
+
     
-        return view('admin.question.show',compact('model'));
-    }
-    
-    public function question_store(Request $request,$qb)
-    {
-        
-        
-    }
-    
-    public function edit_question()
-    {
-        
-        
-    }
-    
-    public function question_update(Request $request, Question  $model)
-    {
-        
-        
-    }
-    
-    public function question_delete()
-    {
-        
-        
-    }
+
 }

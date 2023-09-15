@@ -14,6 +14,8 @@ use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\PortFolioController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuestionBankController;
+use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +35,7 @@ use Illuminate\Support\Facades\File;
 
 Route::domain('{subdomain}.laravel_operation_crm.test')->group(function () {
     Route::get('/', function ($subdomain) {
+
         // Subdomain verisini kullanarak işlemler yapabilirsiniz
         return 'Subdomain: ' . $subdomain;
     });
@@ -77,23 +80,6 @@ Route::get('/migrate-seed', function () {
     return response($message);
 });
 
-
-Route::get('/storage-link', function () {
-
-    if(env('APP_DEBUG') == true){
-        $storageLinkPath = public_path('storage');
-        if (File::isDirectory($storageLinkPath)) {
-            File::deleteDirectory($storageLinkPath);
-        }
-        Artisan::call('storage:link');
-        $message = "OK";
-    }else {
-        $message = 'AUTORİZED_NO_RETURN_AFTER';
-    }
-   
-
-    return response($message);
-});
 
 
 Auth::routes(['register' => false]);
@@ -297,7 +283,45 @@ Route::prefix('backend')->middleware('auth')->group(function () {
         Route::get('/delete/{model?}', 'delete')->name($module_name . '.destroy')->middleware('permission:delete_slider');
     });
 
+        
     
+    
+    Route::controller(QuestionBankController::class)->prefix('questionbank')->group(function () {
+        $module_name = 'questionbank';
+        Route::get('/', 'index')->name($module_name . '.index')->middleware('permission:view_questionbank');
+        Route::get('/index_data', 'index_data')->name($module_name . '.index_data')->middleware('permission:view_questionbank');
+        Route::get('/create', 'create')->name($module_name . '.create')->middleware('permission:create_questionbank');
+        Route::post('/create', 'store')->name($module_name . '.store')->middleware('permission:create_questionbank');
+        Route::get('/edit/{model?}', 'edit')->name($module_name . '.edit')->middleware('permission:edit_questionbank');
+        Route::post('/edit/{model?}', 'update')->name($module_name . '.update')->middleware('permission:update_questionbank');
+        Route::get('/delete/{model?}', 'destroy')->name($module_name . '.delete')->middleware('permission:delete_questionbank');
+        Route::get('/trashed/{model?}', 'trashed')->name($module_name . '.trashed')->middleware('permission:trash_questionbank');
+        Route::get('/trash', 'trashed_index')->name($module_name . '.trashed_index')->middleware('permission:delete_slider');
+        Route::get('/trashed_data', 'trashed_data')->name($module_name . '.trashed_data')->middleware('permission:return_trash_questionbank');
+        Route::get('/restored/{model?}', 'restore')->name($module_name . '.restored')->middleware('permission:return_trash_questionbank');
+
+
+        
+    }); 
+  
+    Route::controller(QuestionController::class)->prefix('question')->group(function () {
+        $module_name = 'question';
+        Route::get('/questions/{model?}', 'index')->name($module_name . '.index')->middleware('permission:view_question');
+        Route::get('/questions-data/{model?}', 'index_data')->name($module_name . '.questions_data')->middleware('permission:view_question');
+        Route::get('/add-questions/{model?}', 'add_question')->name($module_name . '.questions_add')->middleware('permission:create_question');
+        Route::post('/add-questions/{model?}', 'question_store')->name($module_name . '.question_store')->middleware('permission:create_question');
+        Route::get('/show-questions/{model?}', 'show_question')->name($module_name . '.question_show')->middleware('permission:show_question');
+        Route::get('/edit-questions/{model?}', 'edit_question')->name($module_name . '.question_edit')->middleware('permission:edit_question');
+        Route::post('/edit-questions/{model?}', 'update_question')->name($module_name . '.question_update')->middleware('permission:update_question');
+        Route::get('/delete-questions/{model?}', 'destroy')->name($module_name . '.question_delete')->middleware('permission:delete_question');
+        
+        
+        
+
+
+
+
+    }); 
     
 
 

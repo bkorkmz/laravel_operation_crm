@@ -146,6 +146,28 @@
       ]
     },
     {
+      "text": "Soru Bankası",
+      "icon": "fas fa-cubes",
+      "route": "",
+      "path": "/^(questionbank|question)/",
+      "badge": "false",
+      "permission": [
+        "view_menu_questionbank"
+      ],
+      "submenu": [
+        {
+          "text": "Soru Bankası Listesi",
+          "icon": "feather icon-users",
+          "route": "questionbank.index",
+          "path": "/^(questionbank(\\/index|\\/create|\\/edit|\\/trashed_index|\\/question)|question)/",
+          "badge": "false",
+          "permission": [
+            "view_menu_questionbank"
+          ]
+        }
+      ]
+    },
+    {
       "text": "Kategoriler",
       "icon": "feather icon-layers",
       "route": "",

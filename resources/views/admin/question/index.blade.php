@@ -1,6 +1,6 @@
 @extends('layouts.layout-admin')
 @section('title')
-    {{ __('Soru Grubu Listesi') }}
+    {{ __($model->name) }}
 @endsection
 @section('content')
     <div class="pcoded-inner-content">
@@ -10,11 +10,11 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3>Soru Grubu Listesi</h3>
+                                <h3>Soru Grubu: {{$model->name}}</h3>
                                 {{-- <a href="{{ route($modul_name . '.trashed_index') }}" type="button"
                                     class="btn btn-warning btn-sm float-right rounded mr-1 " data-toggle="tooltip"
                                     data-placement="top" title="Çöp Kutusu"><i class="fa fa-trash"></i></a> --}}
-                                <a href="{{ route($modul_name . '.create') }}" type="button"
+                                <a href="{{ route($modul_name . '.questions_add',$model->id) }}" type="button"
                                     class="btn btn-primary btn-sm float-right rounded mr-1 "><i class="fa fa-plus"></i>Yeni
                                     ekle</a>
 
@@ -45,7 +45,7 @@
             $('#datatable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route($modul_name.'.index_data') }}',
+                ajax: '{{ route($modul_name.'.questions_data',$model->id) }}',
                 columns: [{
                         title: 'İD',
                         data: 'DT_RowIndex',
@@ -53,27 +53,21 @@
                         searchable: false,
                     },
                     {
-                        title: 'Başlık',
-                        data: 'name',
-                        name: 'name'
+                        title: 'Soru',
+                        data: 'question',
+                        name: 'question'
                     },
-                    {
-                        title: 'Açıklama',
-                        data: 'description',
-                        name: 'description',
-                        orderable: true,
-                        sortable: true
-                    },
-                    {
-                        title: 'Soru Sayısı',
-                        data: 'questions_count',
-                        name: 'questions_count',
-                        orderable: true,
-                        sortable: true,
-                        render: function(data){
-                            return   '<a href="{{ route('question.index') }}/'+data.id+'" class="btn btn-outline-primary">'+data.questions_count+' <i class="icon feather icon-eye f-w-600 f-16 m-l-15 mr-2 text-c-orenge"></i>Listele</a>';
-                        }
-                    },
+ 
+                    // {
+                    //     title: 'Soru Sayısı',
+                    //     data: 'questions_count',
+                    //     name: 'questions_count',
+                    //     orderable: true,
+                    //     sortable: true,
+                    //     render: function(data){
+                    //         return   data.questions_count + '<a href="{{ route('question.index') }}/'+data.id+'"><i class="icon feather icon-eye f-w-600 f-16 m-l-15 text-c-orenge"></i>Listele</a>';
+                    //     }
+                    // },
                     {
                         title: 'Durum',
                         data: 'status',
@@ -98,8 +92,10 @@
                         render: function(e) {
                             return `
                         <div class="text-center">
-                            <a href="{{ route($modul_name.'.edit') }}/${e}" class="" data-toggle="tooltip" data-placement="top" title="Düzenle"><i class="icon feather icon-edit f-w-600 f-16 m-r-15 text-c-green"></i></a>
-                            <a href="{{ route($modul_name.'.delete') }}/${e}" onclick="return confirm(\'Silme İşlemi onaylıyormusunuz ?\')"  data-toggle="tooltip" data-placement="top" title="Sil"><i class="feather icon-trash-2 f-w-600 f-16 text-c-red"></i></a>
+
+                            <a href="{{ route($modul_name.'.question_show') }}/${e}" class="" data-toggle="tooltip" data-placement="top" title="Görüntüle"><i class="icon feather icon-monitor f-w-600 f-16 m-r-15 text-c-purple"></i></a>
+                            <a href="{{ route($modul_name.'.question_edit') }}/${e}" class="" data-toggle="tooltip" data-placement="top" title="Düzenle"><i class="icon feather icon-edit f-w-600 f-16 m-r-15 text-c-green"></i></a>
+                            <a href="{{ route($modul_name.'.question_delete') }}/${e}" onclick="return confirm(\'Silme İşlemi onaylıyormusunuz ?\')"  data-toggle="tooltip" data-placement="top" title="Sil"><i class="feather icon-trash-2 f-w-600 f-16 text-c-red"></i></a>
                         </div>
                         `;
                         }

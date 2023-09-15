@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use App\Http\Traits\CreatedByTrait;
 use App\Http\Traits\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class QuestionBank extends Model
 {
-    use HasFactory,Uuid;
+    use HasFactory,Uuid,SoftDeletes;
     protected $table = 'question_banks';
     protected $guarded=[];
 
@@ -37,6 +37,6 @@ class QuestionBank extends Model
 
     public function questions()
     {
-        return $this->belongsToMany(Question::class,'question_has_question_bank','question_id','question_bank_id');
+        return $this->belongsToMany(Question::class, 'question_has_question_bank', 'question_bank_id', 'question_id');
     }
 }

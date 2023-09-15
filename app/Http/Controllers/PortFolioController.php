@@ -112,7 +112,7 @@ class PortFolioController extends Controller
         $data = $request->except('_token');
        
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $file_upload = fileUpload($request->image_mini,'sliders');
+            $file_upload = fileUpload($request->image,'sliders');
             $data['image']=   $file_upload['path'];
 
 
@@ -158,7 +158,7 @@ class PortFolioController extends Controller
 
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $file_upload = fileUpload($request->image_mini,'sliders');
+            $file_upload = fileUpload($request->image,'sliders');
             $data['image']=   $file_upload['path'];
 
             // $data['image'] = '/storage/' . $request->image->store('sliders', 'public');
@@ -283,7 +283,7 @@ class PortFolioController extends Controller
         $data = $request->except('_token');
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $file_upload = fileUpload($request->image_mini,'sliders');
+            $file_upload = fileUpload($request->image,'sliders');
             $data['image']=   $file_upload['path'];
             // $data['image'] = '/storage/' . $request->image->store('sliders', 'public');
         }
@@ -315,12 +315,12 @@ class PortFolioController extends Controller
             'status.required' => 'Durum alanı zorunludur',
         ]);
         // dd($request->all());
-        $data = $request->except('_token');
+        $data = $request->except('_token'); 
 
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
 
-            $file_upload = fileUpload($request->image_mini,'sliders');
+            $file_upload = fileUpload($request->image,'sliders');
             $data['image']=   $file_upload['path'];
             // $data['image'] = '/storage/' . $request->image->store('sliders', 'public');
         }

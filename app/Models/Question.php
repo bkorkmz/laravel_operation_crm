@@ -6,11 +6,12 @@ use App\Http\Traits\CreatedByTrait;
 use App\Http\Traits\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use mysql_xdevapi\Table;
 
 class Question extends Model
 {
-    use HasFactory, Uuid;
+    use HasFactory, Uuid,SoftDeletes;
     
     protected $table = 'questions';
     protected $guarded = [];
@@ -27,6 +28,12 @@ class Question extends Model
         });
     }
 
+
+
+    public function attendetQuestionBank()
+    {
+        $this->belongsTo(QuestionBank::class,'question_has_question_bank','question_bank_id','question_id');
+    }
 
     
 
