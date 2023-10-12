@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('page', function (Blueprint $table) {
-            $table->id();
+        Schema::create('pages', function (Blueprint $table) {
+            $table->uuid('id');
             $table->string('title');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->text('detail');
             $table->integer('page_type')->nullable();
             $table->integer('parentpage')->nullable();

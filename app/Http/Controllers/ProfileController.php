@@ -42,13 +42,9 @@ class ProfileController extends Controller
             'name' => 'required',
             'email' => $email_valid,
             'phone' => 'required|numeric|digits:10',
-            // 'status' => 'required|boolean',
-            // 'country' => 'nullable',
-            // 'city' => 'nullable',
-            // 'county' => 'nullable',
-            // 'about' => 'nullable',
+
             'gender' => 'nullable',
-            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'avatar' => 'images|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], [
             'name.required' => 'Ad alanı zorunludur.',
             'email.required' => 'E-posta alanı zorunludur.',
@@ -61,7 +57,7 @@ class ProfileController extends Controller
             // 'password.confirmed' => 'Şifreler eşleşmiyor.',
             // 'status.required' => 'Durum alanı zorunludur.',
             // 'status.boolean' => 'Durum alanı sadece doğru veya yanlış değeri alabilir.',
-            'avatar.image' => 'Profil resmi bir resim dosyası olmalıdır.',
+            'avatar.images' => 'Profil resmi bir resim dosyası olmalıdır.',
             'avatar.mimes' => 'Profil resmi yalnızca jpeg, png, jpg, gif veya svg formatında olabilir.',
             'avatar.max' => 'Profil resmi en fazla 2 MB boyutunda olabilir.',
         ]);
@@ -76,7 +72,8 @@ class ProfileController extends Controller
             }
             $file_upload = fileUpload($request->avatar,'avatars');
             $data['avatar'] =   $file_upload['path'];
-            // $data['avatar'] = '/storage/' . $request->avatar->store('avatars', 'public');
+        }else {
+            $file_upload =  $model->avatar;
         }
        
         $model->update($data);

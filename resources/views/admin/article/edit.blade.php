@@ -50,7 +50,7 @@
                                             <label class="col-sm-2 col-form-label">Makale içeriği <span class="text-danger">
                                                     *</span></label>
                                             <div class="col-sm-10">
-                                                <textarea id="editor1" name="detail" rows="5">{{ $model->detail }}</textarea>
+                                                <textarea id="ckeditor" name="detail" rows="5">{{ $model->detail }}</textarea>
                                             </div>
                                         </div>
 
@@ -227,20 +227,50 @@
     @endsection
 
 
-    @section('css')
- 
+        @section('css')
+            {{--            <link href="{{asset('admin/assets/pages/summernote/dist/summernote.css')}}" rel="stylesheet">--}}
+            <link href="{{asset('admin/assets/pages/summernote-0.8.18/summernote.css')}}" rel="stylesheet">
+        @endsection
 
-    @endsection
+        @section('js')
+            <script src="{{asset('admin/assets/pages/summernote-0.8.18/summernote.js')}}"></script>
+            <script src="{{asset('admin/assets/pages/summernote-0.8.18/lang/summernote-tr-TR.js')}}"></script>
+            <script src="{{asset('/admin/assets/pages/summernote-0.8.18/plugin/image2/summernote-image-title.js')}}"></script>
 
-    @section('js')
+            <script>
 
-        <script>
+                $(document).ready(function() {
+                    $('#ckeditor').summernote({
+                        lang: 'tr-TR',
+                        height: 300,
+                        imageTitle: {
+                            specificAltField: true,
+                        },
+                        popover: {
+                            image: [
+                                ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                                ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                                ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                                ['remove', ['removeMedia']],
+                                ['custom', ['imageTitle']],
+                            ],
+                        },
+                        toolbar: [
+                            ['style', ['style']],
+                            ['fontsize', ['fontsize']],
+                            ['height', ['height']],
+                            ['font', ['bold', 'underline','strikethrough', 'superscript', 'subscript', 'clear']],
+                            ['para', ['ul', 'ol', 'paragraph']],
+                            ['color', ['color']],
+                            ['para', ['ul', 'ol', 'paragraph']],
+                            ['table', ['table']],
+                            ['insert', ['link', 'picture', 'video']],
 
-    
+                            ['view', ['fullscreen', 'codeview', 'help']]
+                        ]
 
-            $('#editor1').summernote({
-                    lang: 'tr-TR' // default: 'en-US'
+                    });
                 });
-        </script>
-        {{-- <script type="text/javascript" src="{{ asset('admin/assets/js/jquery.marcopolo.min.js') }}"></script> --}}
-    @endsection
+
+            </script>
+@endsection

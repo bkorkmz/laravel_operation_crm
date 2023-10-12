@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-          $table->longText('settings')->nullable();
+        Schema::create('user_heart_beats', function (Blueprint $table) {
+            $table->char('id',36);
+            $table->string('user_id')->default('0');
+            $table->json('activity');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-         $table->dropColumn('settings');
-        });
+        Schema::dropIfExists('user_heart_beats');
     }
 };

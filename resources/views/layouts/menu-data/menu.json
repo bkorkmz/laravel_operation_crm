@@ -239,6 +239,16 @@
           "permission": [
             "view_slider"
           ]
+        },
+        {
+          "text": "Sayfalar",
+          "icon": "feather icon-users",
+          "route": "pages.index",
+          "path": "/^pages(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
+          "badge": "false",
+          "permission": [
+            "view_slider"
+          ]
         }
       ]
     },

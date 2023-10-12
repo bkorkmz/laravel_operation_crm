@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->nullable();
             $table->text('short_detail')->nullable();
-            $table->text('detail')->nullable();
+            $table->longText('detail')->nullable();
             $table->string('keywords')->nullable();
             $table->tinyInteger('publish')->default(0);
             $table->tinyInteger('location')->nullable()->default(0);

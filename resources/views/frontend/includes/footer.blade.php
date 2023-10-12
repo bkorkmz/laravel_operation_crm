@@ -110,7 +110,15 @@
 <script src="{{asset('/frontend/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
 <script src="{{asset('/frontend/vendor/swiper/swiper-bundle.min.js')}}"></script>
 <script src="{{asset('/frontend/vendor/php-email-form/validate.js')}}"></script>
+<script src="{{asset('/frontend/js/heartbeat.js')}}"></script>
 @yield('js')
 
 <!-- Template Main JS File -->
 <script src="{{asset('frontend/js/main.js')}}"></script>
+
+
+
+
+<!-- Facebook Pixel Code -->
+<script> !function(f,b,e,v,n,t,s) 
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod? n.callMethod.apply(n,arguments):n.queue.push(arguments)}; if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0'; n.queue=[];t=b.createElement(e);t.async=!0; t.src=v;s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s)}(window,document,'script', 'https://connect.facebook.net/en_US/fbevents.js'); fbq('init', '266308279248661');  fbq('track', 'PageView'); </script> <noscript> <img height="1" width="1"  src="https://www.facebook.com/tr?id=266308279248661&ev=PageView &noscript=1"/> </noscript>

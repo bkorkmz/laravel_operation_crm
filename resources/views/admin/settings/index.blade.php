@@ -71,6 +71,13 @@
                                                                             name="{{ $form_element->name }}"
                                                                             accept=".jpg,.jpeg,.png,.tiff,.gif,.svg,.webp,.bmp,.ico">
                                                                     </div>
+                                                                @elseif($form_element->type == 'textarea')
+                                                                    <div class="col-sm-10">
+                                                                        <textarea type="text"
+                                                                               class="form-control form-control-normal" cols="3" rows="5"
+                                                                               placeholder="" name="{{ $form_element->name }}">
+                                                                            {{ $form_element->value }}</textarea>
+                                                                    </div>
                                                                 @else
                                                                     <div class="col-sm-10">
                                                                         <input type="text"

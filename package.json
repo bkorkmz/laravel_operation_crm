@@ -13,6 +13,7 @@
         "vite": "^4.3.9"
     },
     "dependencies": {
-        "dropify": "^0.2.2"
+        "dropify": "^0.2.2",
+        "summernote": "^0.8.20"
     }
 }

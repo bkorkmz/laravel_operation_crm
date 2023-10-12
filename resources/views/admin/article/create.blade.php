@@ -240,51 +240,51 @@
 
 
     @section('css')
-        <style>
-
-        </style>
-    @endsection
+            <link href="{{asset('admin/assets/pages/summernote-0.8.18/summernote.css')}}" rel="stylesheet">
+        @endsection
 
     @section('js')
+            <script src="{{asset('admin/assets/pages/summernote-0.8.18/summernote.js')}}"></script>
+            <script src="{{asset('admin/assets/pages/summernote-0.8.18/lang/summernote-tr-TR.js')}}"></script>
+            <script src="{{asset('/admin/assets/pages/summernote-0.8.18/plugin/image2/summernote-image-title.js')}}"></script>
+        
         <script>
-            $('#ckeditor').summernote({
-                lang: 'tr-TR', // default: 'en-US'
-                  height: 300,
-                // callbacks: {
-                //     onImageUpload: function (image) {
 
-                //         uploadImage(image[0]);
-                //     }
-                // }
+
+            $(document).ready(function() {
+                $('#ckeditor').summernote({
+                    lang: 'tr-TR',
+                    height: 300,
+                    imageTitle: {
+                        specificAltField: true,
+                    },
+                
+                    popover: {
+                        image: [
+                            ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                            ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                            ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                            ['remove', ['removeMedia']],
+                            ['custom', ['imageTitle']],
+                        ],
+                    },
+                    toolbar: [
+                        ['style', ['style']],
+                        ['fontsize', ['fontsize']],
+                        ['fontname', ['fontname']],
+                        ['height', ['height']],
+                        ['font', ['bold', 'underline','strikethrough', 'superscript', 'subscript', 'clear']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture', 'video']],
+
+                        ['view', ['fullscreen', 'codeview', 'help']]
+                    ]
+
+                });
             });
-            
-            
-            
-            
-            function uploadImage(image) {
-            var data = new FormData();
-            data.append("image",image);
-            data.append("_token", "{{ csrf_token() }}");
-
-            $.ajax({
-                url: "{{route('ckeditor.upload')}}",
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: data,
-                type: "post",
-                success: function (url) {
-                    if (url.status == 1) {
-                        var image = $('<img>').attr('src','/backend/'+url.path);
-                        $('#summernote').summernote("insertNode", image[0]);
-                    }
-                },
-                error: function (data) {
-                    console.log(data);
-                }
-            });
-        }
-
 
         </script>
     @endsection

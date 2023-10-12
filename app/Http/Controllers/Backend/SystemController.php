@@ -66,12 +66,12 @@ class SystemController extends Controller
         if ($request->hasFile('site_register_img')) {
             $request->validate(
                 [
-                    'site_register_img' => 'required|file|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:5000'
+                    'site_register_img' => 'required|image|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:5000'
                 ],
                 [
                     'site_register_img.required' => 'Resim alanı Zorunludur',
                     'site_register_img.mimes' => 'Yüklenen dosya desteklenen dosya tiplerinden birisi olmalıdır (jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico)',
-                    'site_register_img.file' => 'Yüklenen dosya bir resim dosyası olmalıdır',
+                    'site_register_img.image' => 'Yüklenen dosya bir resim dosyası olmalıdır',
                     'site_register_img.max' => 'Yüklenen dosya en fazla 4MB (4000 Kb ) olmalıdır'
                 ]
             );
@@ -82,12 +82,12 @@ class SystemController extends Controller
         if ($request->hasFile('site_login_img')) {
             $request->validate(
                 [
-                    'site_login_img' =>  'required|file|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:5000'
+                    'site_login_img' =>  'required|image|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:5000'
                 ],
                 [
                     'site_login_img.required' => 'Resim alanı Zorunludur',
                     'site_login_img.mimes' => 'Yüklenen dosya desteklenen dosya tiplerinden birisi olmalıdır (jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico)',
-                    'site_login_img.file' => 'Yüklenen dosya bir resim dosyası olmalıdır',
+                    'site_login_img.image' => 'Yüklenen dosya bir resim dosyası olmalıdır',
                     'site_login_img.max' => 'Yüklenen dosya en fazla 4MB (4000 Kb ) olmalıdır',
                 ]
             );
@@ -98,12 +98,12 @@ class SystemController extends Controller
         if ($request->hasFile('site_icon')) {
             $request->validate(
                 [
-                    'site_icon' =>  'required|file|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:5000'
+                    'site_icon' =>  'required|image|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:5000'
                 ],
                 [
                     'site_icon.required' => 'Resim alanı Zorunludur',
                     'site_icon.mimes' => 'Yüklenen dosya desteklenen dosya tiplerinden birisi olmalıdır (jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico)',
-                    'site_icon.file' => 'Yüklenen dosya bir resim dosyası olmalıdır',
+                    'site_icon.image' => 'Yüklenen dosya bir resim dosyası olmalıdır',
                     'site_icon.max' => 'Yüklenen dosya en fazla 4MB (4000 Kb ) olmalıdır',
                 ]
             );
@@ -114,12 +114,12 @@ class SystemController extends Controller
         if ($request->hasFile('site_logo')) {
             $request->validate(
                 [
-                    'site_logo' =>  'required|file|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:5000'
+                    'site_logo' =>  'required|image|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:5000'
                 ],
                 [
                     'site_logo.required' => 'Resim alanı Zorunludur',
                     'site_logo.mimes' => 'Yüklenen dosya desteklenen dosya tiplerinden birisi olmalıdır (jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico)',
-                    'site_logo.file' => 'Yüklenen dosya bir resim dosyası olmalıdır',
+                    'site_logo.image' => 'Yüklenen dosya bir resim dosyası olmalıdır',
                     'site_logo.max' => 'Yüklenen dosya en fazla 4MB (4000 Kb ) olmalıdır',
 
                 ]
@@ -131,17 +131,17 @@ class SystemController extends Controller
         if ($request->hasFile('landing_slider_img')) {
             $request->validate(
                 [
-                    'landing_slider_img' => 'required|file|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:5000'
+                    'landing_slider_img' => 'required|image|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:5000'
                 ],
                 [
                     'landing_slider_img.required' => 'Resim alanı Zorunludur',
                     'landing_slider_img.mimes' => 'Yüklenen dosya desteklenen dosya tiplerinden birisi olmalıdır (jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico)',
-                    'landing_slider_img.file' => 'Yüklenen dosya bir resim dosyası olmalıdır',
+                    'landing_slider_img.image' => 'Yüklenen dosya bir resim dosyası olmalıdır',
                     'landing_slider_img.max' => 'Yüklenen dosya en fazla 4MB (4000 Kb ) olmalıdır',
 
                 ]
             );
-            $file_upload = fileUpload($request->site_logo,'landing_slider_img');
+            $file_upload = fileUpload($request->landing_slider_img,'settings');
             $dataArray['landing_slider_img']  =   $file_upload['path'];
             // $dataArray['landing_slider_img'] = '/storage/' . $request->landing_slider_img->store('settings', 'public');
         }

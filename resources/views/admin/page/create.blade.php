@@ -1,19 +1,15 @@
-@extends('layout-admin')
+@extends('layouts.layout-admin')
 @section('title')
     {{ __('Sayfa Ekle ') }}
 @endsection
 @section('content')
-<div class="pcoded-inner-content">
-    <div class="main-body">
-        <div class="page-wrapper">
-            
     <div class="card">
         <div class="card-header">
             <h3>Sayfa Ekle</h3>
         </div>
         <div class="card-block">
-
-            <form action="{{ route('page.store') }}" method="post" enctype="multipart/form-data">
+{{--@dd($modul_name)--}}
+            <form action="{{ route($modul_name.'.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Sayfa başlığı</label>
@@ -76,9 +72,6 @@
             </form>
         </div>
     </div>
-        </div>
-    </div>
-</div>
 @endsection
 
 
@@ -86,8 +79,30 @@
 @endsection
 
 @section('js')
-    <script src="//cdn.ckeditor.com/4.10.1/full/ckeditor.js"></script>
-    <script>
-        CKEDITOR.replace( 'ckeditor');
+{{--    <script src="//cdn.ckeditor.com/4.10.1/full/ckeditor.js"></script>--}}
+{{--<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>--}}
+
+<script>
+        // CKEDITOR.replace( 'ckeditor');
+
+        $('#ckeditor').summernote({
+            lang: 'tr-TR', // default: 'en-US'
+            height: 300,
+
+        },
+        popover: {
+            image: [
+
+                // This is a Custom Button in a new Toolbar Area
+                ['custom', ['examplePlugin']],
+                ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                ['remove', ['removeMedia']]
+            ]
+        });
+
+        $('#summernote').summernote({
+   
+        });
     </script>
 @endsection

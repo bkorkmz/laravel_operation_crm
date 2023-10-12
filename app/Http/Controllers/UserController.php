@@ -193,7 +193,7 @@ class UserController extends Controller
     public function update(Request $request, User  $model)
     {
 
-        if ($model->email == $request->email) {
+        if (trim($model->email)  == trim($request->email)) {
             $email_valid = 'required|email';
         } else {
             $email_valid = 'required|email|unique:users,email';

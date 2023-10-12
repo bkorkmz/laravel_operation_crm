@@ -182,35 +182,51 @@
 
 
 @section('css')
+    <link href="{{asset('admin/assets/pages/summernote-0.8.18/summernote.css')}}" rel="stylesheet">
 @endsection
 
 @section('js')
-{{-- <script type="text/javascript" src="{{ asset('admin/assets/bower_components/sweetalert/js/sweetalert.min.js') }}"> --}}
-<script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/translations/tr.js"></script>
-{{-- <script src="{{ asset('vendor/dropify/dist/js/dropify.js') }}"></script> --}}
+    <script src="{{asset('admin/assets/pages/summernote-0.8.18/summernote.js')}}"></script>
+    <script src="{{asset('admin/assets/pages/summernote-0.8.18/lang/summernote-tr-TR.js')}}"></script>
+    <script src="{{asset('/admin/assets/pages/summernote-0.8.18/plugin/image2/summernote-image-title.js')}}"></script>
 
+    <script>
 
-{{-- <script src="{{ asset('admin/assets/partials/ckeditor/ckeditor.js') }}"></script> --}}
-<script>
-    $(document).ready(function() {
+        $(document).ready(function() {
+            $('#ckeditor').summernote({
+                lang: 'tr-TR',
+                height: 300,
+                imageTitle: {
+                    specificAltField: true,
+                },
+                fontNames: ['Arial', 'Arial Black','Calibri', 'Comic Sans MS', 'Courier New', 'Merriweather'],
+                fontNamesIgnoreCheck: ['Calibri'],
+                popover: {
+                    image: [
+                        ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                        ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                        ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                        ['remove', ['removeMedia']],
+                        ['custom', ['imageTitle']],
+                    ],
+                },
+                toolbar: [
+                    ['style', ['style']],
+                    ['fontsize', ['fontsize']],
+                    ['fontname', ['fontname']],
+                    ['height', ['height']],
+                    ['font', ['bold', 'underline','strikethrough', 'superscript', 'subscript', 'clear']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
 
-        $('#ckeditor').summernote({
-                lang: 'tr-TR' // default: 'en-US'
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ]
+
             });
+        });
 
-        
-
-    //     $('.dropify').dropify({
-    // messages: {
-    //     'default': 'Resim yükle ya da sürükle',
-    //     'replace': 'Resim değiştir ya da sürükle',
-    //     'remove': 'Kaldır',
-    //     'error': 'Hata! Desteklenen dosya tipinden farklı bir dosya yüklediniz.'
-    // }
-});
-
-        
-                </script>
-{{-- <script type="text/javascript" src="{{ asset('admin/assets/js/jquery.marcopolo.min.js') }}"></script> --}}
+    </script>
 @endsection

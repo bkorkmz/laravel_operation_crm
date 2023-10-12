@@ -21,15 +21,7 @@
                         <div class="table-responsive">
                             <table id="datatable" class="dataTable table">
                                 <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Ürün Adı</th>
-                                        <th>Açıklama</th>
-                                        <th>Durum</th>
-                                        <th>Stok Durumu</th>
-                                        <th>Fiyat</th>
-                                        <th>İşlemler</th>
-                                    </tr>
+                      
                                 </thead>
                                 <tbody>
 
@@ -57,32 +49,39 @@
                 serverSide: true,
                 ajax: '{{ route('product.index_data') }}',
                 columns: [{
+                       title: 'ID',
                         data: 'DT_RowIndex',
                         orderable: false,
                         searchable: false,
                     },
-                    // { data: 'id', name: 'id' },
+                    // {
+                    //     title: 'Resim',
+                    //     data: 'photo',
+                    //     name: 'photo'
+                    // },  
                     {
+                        title: 'Ürün Adı',
                         data: 'name',
                         name: 'name'
                     },
+            
                     {
-                        data: 'description',
-                        name: 'description'
-                    },
-                    {
+                        title: 'Durum',
                         data: 'status',
                         name: 'status'
                     },
                     {
-                        data: 'quantity',
-                        name: 'quantity'
+                        title: 'Stok',
+                        data: 'stock',
+                        name: 'stock'
                     },
                     {
+                        title: 'Fiyat',
                         data: 'price',
                         name: 'price'
                     },
                     {
+                        title: 'İşlemler',
                         data: 'action',
                         name: 'action',
                         searchable: false,

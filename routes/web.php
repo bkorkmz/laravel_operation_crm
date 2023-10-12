@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
@@ -80,7 +81,7 @@ Route::get('/migrate-seed', function () {
     return response($message);
 });
 
-
+Route::get('/clear-cache', [AdminController::class, 'clearCache'])->name('clear-cache');
 
 Auth::routes(['register' => false]);
 Route::prefix('backend')->middleware('auth')->group(function () {
@@ -321,10 +322,24 @@ Route::prefix('backend')->middleware('auth')->group(function () {
 
 
 
-    }); 
+    });
     
-
-
+    
+    
+     Route::controller(PageController::class)->prefix('pages')->group(function(){
+         $module_name = 'pages';
+         Route::get('/', 'index')->name($module_name.'.index');
+         Route::get('/index_data', 'index_data')->name($module_name.'.index_data');
+         Route::get('/create', 'create')->name($module_name.'.create');
+         Route::post('/create', 'store')->name($module_name.'.store');
+         Route::get('/edit/{model?}', 'edit')->name($module_name.'.edit');
+         Route::post('/edit/{model?}', 'update')->name($module_name.'.update');
+         Route::get('/delete/{model?}', 'destroy')->name($module_name.'.destroy');
+         Route::get('/trashed/{model?}', 'trashed')->name($module_name.'.trashed');
+         Route::get('/trashed_index', 'trashed_index')->name($module_name.'.trashed_index');
+         Route::get('/trashed_data', 'trashed_data')->name($module_name.'.trashed_data');
+         Route::get('/restored/{model?}', 'restore')->name($module_name.'.restored');
+     });
     
     
     
