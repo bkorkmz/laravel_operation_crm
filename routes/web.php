@@ -34,20 +34,28 @@ use Illuminate\Support\Facades\File;
 |
 */
 
-Route::domain('{subdomain}.laravel_operation_crm.test')->group(function () {
-    Route::get('/', function ($subdomain) {
-
-        // Subdomain verisini kullanarak işlemler yapabilirsiniz
-        return 'Subdomain: ' . $subdomain;
-    });
-});
+//Route::domain('{subdomain}.laravel_operation_crm.test')->group(function () {
+//    Route::get('/', function ($subdomain) {
+//        return 'Subdomain: ' . $subdomain;
+//    });
+//});
 
 
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
 Route::get('/blog', [FrontendController::class, 'blog'])->name('frontend.blog');
 Route::get('/blog/{model?}', [FrontendController::class, 'blog_detail'])->name('frontend.blog_detail');
-Route::post('/contact', [FrontendController::class,'contactsubmit'])->name('frontend.contactsubmit');
+//Route::get('/post', [FrontendController::class, 'blog'])->name('frontend.post');
+Route::get('/post-detail/{model?}', [FrontendController::class, 'postDetail'])->name('frontend.post_detail');
 
+
+
+
+Route::post('/contact', [FrontendController::class,'contactsubmit'])->name('frontend.contactsubmit');
+Route::get('/page/{model?}', [FrontendController::class, 'page'])->name('frontend.page');
+
+
+
+Route::post('/newsletter', [FrontendController::class,'newsletter'])->name('frontend.newsletter');
 
 
 
@@ -203,6 +211,13 @@ Route::prefix('backend')->middleware('auth')->group(function () {
         Route::get('/trashed_index', 'trashed_index')->name($module_name . '.trashed_index');
         Route::get('/trashed_data', 'trashed_data')->name($module_name . '.trashed_data');
         Route::get('/restored/{model?}', 'restore')->name($module_name . '.restored');
+       
+       
+        Route::get('/ajans', 'ajanss')->name($module_name . '.ajanss');
+        Route::get('/ajans/{ajans?}', 'getAjans')->name($module_name . '.getAjans');
+        
+        
+        
     });
 
     Route::controller(ArticleController::class)->prefix('article')->group(function () {

@@ -161,7 +161,7 @@
 
 
                                         <div class="text-right m-t-20">
-                                            <button class="btn btn-primary">Kaydet</button>
+                                            <button class="btn btn-primary">Güncelle</button>
                                         </div>
                                     </form>
                                 </div>

@@ -44,7 +44,7 @@ class ProfileController extends Controller
             'phone' => 'required|numeric|digits:10',
 
             'gender' => 'nullable',
-            'avatar' => 'images|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], [
             'name.required' => 'Ad alanı zorunludur.',
             'email.required' => 'E-posta alanı zorunludur.',

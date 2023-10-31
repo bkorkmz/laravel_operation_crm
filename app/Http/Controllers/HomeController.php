@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UserHeartBeat;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -56,15 +57,15 @@ class HomeController extends Controller
             'page' =>$request->page,
             'latitude' =>$request->latitude,
             'longitude' =>$request->longitude,
-            'user'=>auth()->id() ?? $request->ip()
+            'user'=>$request->user_id ?? "Misafir Kullanıcı"
         ];
-        UserHeartBeat::create([
+        $dd = UserHeartBeat::create([
             'user_id'=>$data['user'] ,
             'activity'=>json_encode($data)
         ]);
         
         
-        return response()->json(['status'=>'ok']);
+        return response()->json([Auth::check()]);
     }
 
 

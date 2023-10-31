@@ -10,57 +10,82 @@ use App\Models\FaqSss;
 use App\Models\InfoMessage;
 use App\Models\JobTeams;
 use App\Models\ModelLandingPage;
+use App\Models\Newsletter;
 use App\Models\PortFolio;
 use Flasher\Laravel\Http\Response;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class FrontendController extends Controller
 {
+    public function __construct()
+    {
+        // Current Theme
+        $this->theme = config('app.aliases.CURRENT_THEME');
+        
+    }
+    
     public function index()
     {
-
-        // $module_pages[];
+        
         DB::table('module_landing_page_sections')->get()->groupBy('section_name')->toArray();
 
-        $article = Article::whereRelation('category', function ($query) {
-            $query->where('model', 'article');
-        })->where(['location' => 1, 'publish' => 0])->orderby('id', 'desc')->limit(4)->get();
-
-        $services = Article::whereRelation('category', function ($query) {
+        $article = Article::withwhereHas('category', function ($query) {
+            $query->where('model', 'article')->select('id','name','slug');
+        })
+            ->with('author:id,name')
+            ->where(['location' => 1, 'publish' => 0])
+            ->orderby('id', 'desc')
+            ->limit(10)->get();
+         
+        $services = Article::withwhereHas('category', function ($query) {
             $query->where('model', 'services');
-        })->get();
+        })
+            ->with('author:id,name,avatar')
+            ->get();
 
-        $services_category = Category::where('model', 'services')->where('show', 1)->get();
+        $services_category = Category::where('model', 'services')
+            ->where('show', 1)->get();
 
         $teams = JobTeams::where('status', 1)->get();
-
-        $portfolio = PortFolio::where('status', 1)->where('type', 'portfolio')->get();
-        $slider = PortFolio::where('status', 1)->where('type', 'slider')->get();
+        
+        $sliders = PortFolio::where('status', 1)
+            ->where('type', 'slider')->get();
 
         $about_page = ModelLandingPage::where('section_name', 'about')->first();
 
-        $faq_sss = FaqSss::where('status', 1)->orderby('order', 'asc')->get();
+        $faq_sss = FaqSss::where('status', 1)
+            ->orderby('order', 'asc')->get();
 
         $portfolio = PortFolio::where(['status' => 1, 'type' => 'portfolio'])
             ->select('id', 'name', 'link', 'category_id', 'image')
             // ->with('category:id,name,slug')
-            ->wherehas('category',function($q){
+            ->withwherehas('category',function($q){
                 $q->where('show',1)
                 ->where('model','portfolio')
                 ->select('id','name','slug');
-            })
-            ->get();
-        // dd( $faq_sss);
+            })->get();
 
         $all_article = Article::whereRelation('category', function ($query) {
             $query->where('model', 'article');
         })->where(['location' => 1, 'publish' => 0])->orderby('id', 'desc')->paginate(5);
+        
+        $referance =  PortFolio::where('type', 'portfolio')->where('status',1)->whereRelation('category',function ($q){
+            $q->where('slug','referanslar');
+        })->limit(20)->select('name','link','image')->get();
+        
+        $filePath = storage_path('app/evrimNews.json');
+        if (file_exists($filePath)) {
+         $jsonContent = file_get_contents($filePath);
+         $newsData = json_decode($jsonContent, true);
+         $newsList =  array_slice($newsData['haberlist'], 0, 6);
+        }
 
-
-
-
-
+        
 
         //     $module_pages['consultants'] = 'consultantsSection';
         //     $module_pages['courses'] = 'coursesSection';
@@ -74,40 +99,37 @@ class FrontendController extends Controller
         // dd($slider);
 
 
-        return view('frontend.index', compact(
+        return view( $this->theme.'.frontend.index', compact(
             "article",
             "services",
             "teams",
             "portfolio",
-            "slider",
+            "sliders",
             "services_category",
             'about_page',
             'faq_sss',
-            'all_article'
+            'all_article','referance','newsList'
         ));
     }
 
     public function newsletter(Request $request)
     {
-        $request->validate(
+        
+          $request->validate(
             [
-                'email' => 'required',
+                'email' => 'required|email:rfc,dns',
             ],
             [
-                'email.required' => 'E Posta adresi gereklidir.',
+                'email.required' => 'Eposta gereklidir.',
+                'email.email' => 'Lütfen geçerli bir e-posta adresi girin.',
             ]
         );
-
-
-        // $saved = newsletter::isSubscribed(request('email'));
-        // if($saved){
-        //      toastr()->error('Bu E Posta Hesabı Kayıtlı Görünüyor.');
-        // }else {
-        //     Newsletter::subscribe(request('email'));
-        //     toastr()->success('E Posta Hesabınız Kayıt Edilmiştir. Teşekkürler.');
-
-        // }
-        return back();
+        
+           Newsletter::updateOrCreate(['email'=>$request->email]);
+           $message = "OK";
+           
+           
+        return response()->json(['message' => $message]);
     }
 
     public function contactsubmit(Request $request)
@@ -180,15 +202,24 @@ class FrontendController extends Controller
 
     public function blog()
     {
+        
+        
         $all_article = Article::whereRelation('category', function ($query) {
             $query->where('model', 'article');
-        })->where(['publish' => 0])->orderby('id', 'asc')->paginate(5);
+        })->where(['publish' => 0])->orderby('id', 'asc')->get();
 
         $sidebar_article = Article::whereRelation('category', function ($query) {
             $query->where('model', 'article');
         })->where(['publish' => 0])->orderby('created_at', 'desc')->limit(4)->get();
-
-        return view('frontend.pages.blog', compact('all_article', 'sidebar_article'));
+        
+        
+        
+        
+        
+        
+        
+        $categories = Category::where(['model'=>'article','show'=>1])->select('id','name')->withCount('content')->get();
+        return view( $this->theme.'.frontend.pages.blog', compact('all_article', 'sidebar_article','categories'));
     }
 
 
@@ -199,19 +230,45 @@ class FrontendController extends Controller
         })->where(['publish' => 0])->orderby('created_at', 'desc')->limit(4)->get();
 
         $article = Article::where('slug', $slug)->first();
+        $categories = Category::where(['model'=>'article','show'=>1])->select('id','name')->withCount('content')->get();
 
-        return view('frontend.pages.blog_detail', compact('article', 'sidebar_article'));
+        return view( $this->theme.'.frontend.pages.blog_detail', compact('article', 'sidebar_article','categories'));
     }
-
-    public function news_letter(Request $request)
-    {
-
-        return view('frontend.pages.blog');
-    }
-
+    
     public function contact_submit(Request $request)
     {
 
-        return view('frontend.pages.blog');
+        return view( $this->theme.'.frontend.pages.blog');
     }
+    
+   
+    public function postDetail (int $post)
+    {
+       
+        $id = $post;
+        $filePath = storage_path('app/evrimNews.json');
+        $jsonContent = file_get_contents($filePath);
+        $newsData = json_decode($jsonContent, true);
+        $sidebar_group = collect($newsData['haberlist'])->where('Id','!=',$id)->take(5);
+        
+        
+        
+        
+        $url = 'http://haber.evrim.com/Rest/HaberDetay?id='.$id;
+        $response = Http::get($url);
+        
+       
+        
+        if ($response->successful()) {
+            $data = $response->json();
+        } else {
+            return redirect()->back();
+        }
+        
+        return view($this->theme.'.frontend.pages.post_detail',compact('data','sidebar_group'));
+    }
+    
+    
+    
+    
 }

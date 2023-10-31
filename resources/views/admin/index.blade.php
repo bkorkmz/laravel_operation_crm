@@ -3,12 +3,7 @@
     {{ __('Yönetim Paneli') }}
 @endsection
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/css/widget.css') }}">
-    <style>
-        .text-c-black {
-            color: #000000;
-        }
-    </style>
+    
 
     <!-- [ breadcrumb ] end -->
 
@@ -137,7 +132,7 @@
                         <!-- product profit end -->
 
                         <!-- lattest update, new client start -->
-                        <div class="col-xl-6 col-md-12">
+                        <div class="col-xl-4 col-md-12">
                             <div class="card latest-update-card">
                                 <div class="card-header">
                                     <h5>Son İletişim Mesajları</h5>
@@ -179,6 +174,41 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- testimonial and top selling start -->
+                        <div class="col-xl-8 col-md-12">
+                            <div class="card table-card">
+                                <div class="card-header">
+                                    <h5>Teklif Mesajları</h5>
+                                    <div class="card-header-right">
+                                        <ul class="list-unstyled card-option">
+                                            <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i></li>
+                                            <li><i class="feather icon-maximize full-card"></i></li>
+                                            <li><i class="feather icon-minus minimize-card"></i></li>
+                                            <li><i class="feather icon-refresh-cw reload-card"></i></li>
+                                            <li><i class="feather icon-trash close-card"></i></li>
+                                            <li><i class="feather icon-chevron-left open-card-option"></i></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-block p-b-0">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover m-b-0">
+                                            <thead>
+                                            <tr>
+                                                <th>Ad-Soyad</th>
+                                                <th>Email</th>
+                                                <th>Telefon</th>
+                                                <th>Durum</th>
+                                                <th>Eylem</th>
+                                            </tr>
+                                            </thead>
+                                      
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- testimonial and top selling end -->
                         {{-- <div class="col-xl-6 col-md-12">
                             <div class="card new-cust-card">
                                 <div class="card-header">
@@ -537,5 +567,21 @@
         </div>
     </div>
 
-    <script></script>
+
 @endsection
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/css/widget.css') }}">
+    <style>
+        .text-c-black {
+            color: #000000;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/bower_components/switchery/css/switchery.min.css') }}">
+@stop
+@section('js')
+    <script type="text/javascript" src="{{asset('admin/bower_components/popper.js/js/popper.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('admin/bower_components/switchery/js/switchery.min.js')}}"></script>
+
+    <script type="text/javascript" src="{{asset('admin/assets/pages/advance-elements/swithces.js')}}"></script>
+-
+@stop

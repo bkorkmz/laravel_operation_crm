@@ -47,7 +47,7 @@
                                 <label class="col-sm-2 col-form-label">Kategori <i
                                         class="feather icon-info  text-c-blue"></i></label>
                                 <div class="col-sm-3">
-                                    <select name="category_id" class="form-control fill">
+                                    <select name="category_id" class="form-control fill" required>
                                         <option value="">Kategori seçiniz</option>
                                         @foreach ($category as $cat)
                                             <option value="{{ $cat->id }}">{{ $cat->name }}</option>

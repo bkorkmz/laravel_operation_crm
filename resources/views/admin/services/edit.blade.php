@@ -60,7 +60,7 @@
                             <label class="col-sm-2 col-form-label">Anahtar Kelimeler</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control form-control-normal"
-                                    placeholder="" name="keywords" maxlength="50" value="{{$model->keywords}}">
+                                    placeholder="" name="keywords" maxlength="100" value="{{$model->keywords}}">
                             </div>
                         </div>
 
@@ -216,7 +216,7 @@
                                 class="form-control form-control-normal">
                         </div>
                     </div>
-                    <button class="btn btn-success float-right" type="submit">Kaydet</button>
+                    <button class="btn btn-success float-right" type="submit">Güncelle</button>
                 </form>
             </div>
         </div>

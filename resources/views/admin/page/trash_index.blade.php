@@ -3,7 +3,12 @@
     {{ __('Silinen  Sayfalar') }}
 @endsection
 @section('content')
-    <div class="card">
+    <div class="pcoded-inner-content">
+        <div class="page-wrapper">
+            <div class="page-body">
+                <div class="">
+                    <div class="col-12">
+                        <div class="card">
         <div class="card-header">
             <h3>Silinen Sayfalar</h3>
 {{--            <a href="{{ route('page.create') }}" type="button" class="btn btn-primary btn-sm float-right rounded mr-1 "><i class="fa fa-plus"></i>Yeni ekle</a>--}}
@@ -52,4 +57,10 @@
             </div>
         </div>
     </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 @endsection

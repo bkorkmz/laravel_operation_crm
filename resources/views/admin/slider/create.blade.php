@@ -1,6 +1,6 @@
 @extends('layouts.layout-admin')
 @section('title')
-    {{ __('Çözüm Ortakları Kayıt ') }}
+    {{ __('Slider Kayıt Sayfası ') }}
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
         <div class="page-wrapper">
             <div class="card">
                 <div class="card-header">
-                    <h3>Çözüm Ortağı  Ekle</h3>
+                    <h3>Slider  Ekle</h3>
                     <a href="{{route('slider.index')}}" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "><i class="fa fa-reply"></i>Geri Dön</a>
                 </div>
                 <div class="card-block">
@@ -27,10 +27,17 @@
                         @csrf
                         
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">İçerik Adı <span class="text-danger"> *</span></label>
+                            <label class="col-sm-2 col-form-label">Slogan Adı <span class="text-danger"> *</span></label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control form-control-normal" placeholder="İçerik adı giriniz"
-                                    name="name" value="{{ old('name') }}" required>
+                                    name="name" maxlength="50" value="{{ old('name') }}" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Slogan Mesajı  <span class="text-danger"> *</span></label>
+                            <div class="col-sm-10">
+                                <textarea type="text" class="form-control form-control-normal" placeholder="İçerik Mesajı giriniz"
+                                    name="value" maxlength="500" required> {{ old('value') ?? "" }} </textarea>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -75,7 +82,7 @@
                         
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">İçerik Resmi (min:116x40)</label>
+                            <label class="col-sm-2 col-form-label">İçerik Resmi (min:1920x800)</label>
                             <div class="col-sm-5">
                                 <input type="file" class="form-control form-control-normal dropify" placeholder=""
                                     name="image" accept=".png,.jpg,.jpeg,.gif,.webp,.bmp" >

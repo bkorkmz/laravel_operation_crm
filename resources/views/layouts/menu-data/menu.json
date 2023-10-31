@@ -142,6 +142,16 @@
             "view_videogallery",
             "view_all_videogallery"
           ]
+        },
+        {
+          "text": "Haber Ajansları",
+          "icon": "",
+          "route": "post.ajanss",
+          "path": "/^ajanss/",
+          "badge": "false",
+          "permission": [
+            "view_news_ajans_post"
+          ]
         }
       ]
     },
@@ -211,7 +221,7 @@
           ]
         },
         {
-          "text": "Çözüm Ortaklarımız",
+          "text": "Slider",
           "icon": "feather icon-users",
           "route": "slider.index",
           "path": "/^slider(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",

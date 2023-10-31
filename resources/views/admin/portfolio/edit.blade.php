@@ -1,6 +1,6 @@
 @extends('layouts.layout-admin')
 @section('title')
-    {{ __('Potfolyo Kayıt Sayfası ') }}
+    {{ __('Potfolyo Düzenmele Sayfası ') }}
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
         <div class="page-wrapper">
             <div class="card">
                 <div class="card-header">
-                    <h3>Potfolyo Ekle</h3>
+                    <h3>Potfolyo Düzenle</h3>
                     <a type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
                     href="{{route($module_name.'.index')}}"><i class="fa fa-reply"></i>Geri Dön</a>
                 </div>
@@ -45,7 +45,7 @@
                             <label class="col-sm-2 col-form-label">Kategori <i
                                     class="feather icon-info  text-c-blue"></i></label>
                             <div class="col-sm-3">
-                                <select name="category_id" class="form-control fill">
+                                <select name="category_id" class="form-control fill" required>
                                     <option value="">Kategori seçiniz</option>
                                     @foreach ($category as $cat)
                                         <option value="{{ $cat->id }}" {{$model->category_id ==  $cat->id ? 'selected' : ""}}>{{ $cat->name }}</option>
@@ -93,7 +93,7 @@
 
 
                         <div class="text-right m-t-20">
-                            <button class="btn btn-primary rounded">Kaydet</button>
+                            <button class="btn btn-primary rounded">Güncelle</button>
                         </div>
                     </form>
                 </div>
@@ -101,6 +101,8 @@
         </div>
     </div>
 </div>
+
+
 
 @endsection
 

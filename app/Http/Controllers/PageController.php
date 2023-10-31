@@ -6,6 +6,7 @@ use App\Models\Page;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -27,10 +28,42 @@ use Yajra\DataTables\DataTables;
      *
      * @return Application|Factory|\Illuminate\Foundation\Application|View
      */
-    public function index(): View|\Illuminate\Foundation\Application|Factory|Application
+    public function index(): View
     {
         $modul_name =$this->module_name; 
         return view('admin.page.index', compact('modul_name'));
+    }
+    public function index_data()
+    {
+        $model_data = Page::select('id','title','page_type');
+        return DataTables::of($model_data)
+            ->addIndexColumn()
+            ->editColumn('title', function ($data) {
+                return $data->title;
+            })
+            ->editColumn('type', function ($data) {
+                switch ($data->page_type){
+                    case 1;
+                        $text ="Kurumsal";
+                        break;
+                    case 2;
+                        $text ="Hizmet";
+                        break;
+                    case 3;    
+                        $text = "Referans";
+                        break;
+                    default;
+                        $text = "";
+                        break;
+                }
+                return $text;
+            })
+            ->editColumn('action', function ($data) {
+                return  $data->id;
+            })
+            ->escapeColumns([])
+            ->rawColumns(['action'])
+            ->toJson(true);
     }
     
     /**
@@ -38,7 +71,7 @@ use Yajra\DataTables\DataTables;
      *
      * @return Application|Factory|\Illuminate\Foundation\Application|View
      */
-    public function create(): View|\Illuminate\Foundation\Application|Factory|Application
+    public function create(): View
     {
         $modul_name =$this->module_name;
         $pages = Page::where('publish', 0)->get();
@@ -51,7 +84,7 @@ use Yajra\DataTables\DataTables;
      * @param Request $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
         $request->validate(
             [
@@ -65,47 +98,44 @@ use Yajra\DataTables\DataTables;
         );
         
         $model = new Page();
-        $model->title = strip_tags(request('title'));
-        $model->slug = request('title');
-        $model->detail = request('detail');
-        $model->publish = request('publish');
-        $model->page_type = request('page_type');
-        $model->parentpage = request('parentpage');
+        $model->title = strip_tags($request->title);
+        $model->slug = slug_format(Str::limit($request->title  , 60)).'-'.rand(111,999);;
+        $model->detail =  $request->detail;
+        $model->publish =  $request->publish;
+        $model->page_type =  $request->page_type;
+        $model->parentpage =  $request->parentpage;
         
         
         if(request()->hasFile('image')) {
-            $this->validate(request(), array('image' => 'sometimes|mimes:png,jpg,jpeg,gif|max:4096'));
+            $this->validate(request(), array('image' => 'image|mimes:png,jpg,jpeg,gif|max:4096'));
             $image = request()->file('image');
-            $filename = time() . '-image-' . $model->slug . '.' . $image->extension();
             if($image->isValid()) {
-                $endfolder = 'uploads';
-                $file_dir = "/uploads/" . $filename;
-                $image->move($endfolder, $filename);
-                $model->image = $file_dir;
+                $file_upload = fileUpload($request->image, 'pages');
+                $model->image = $file_upload['path'];
+
             }
         }
         
         if(request()->hasFile('pdf')) {
             $this->validate(request(), array('pdf' => 'file|mimes:pdf|max:4096'));
             $pdf = request()->file('pdf');
-            $filename = time() . "-" . $model->slug . '.' . $pdf->extension();
             if($pdf->isValid()) {
-                $endfolder = 'uploads';
-                $file_dir = "/uploads/" . $filename;
-                $pdf->move($endfolder, $filename);
-                $model->pdf = $file_dir;
+                $file_upload = fileUpload($request->pdf, 'pages');
+                $model->pdf = $file_upload['path'];
+                
             }
         }
         
         $model->save();
         
+//        dd($model->id);
    
         if($model) {
             toastr()->success('İşlem başarılı şekilde tamamlanmıştır', 'Başarılı ');
         } else {
             toastr()->error('İşlem sırasında bir hata meydana gelmiştir.', 'Başarısız !!! ');
         }
-        return redirect()->route('page.edit', ['id' => $model->id]);
+        return redirect()->route( $this->module_name.'.edit',  $model->id);
         
     }
     
@@ -126,8 +156,9 @@ use Yajra\DataTables\DataTables;
      * @param int $id
      * @return Application|Factory|View
      */
-    public function edit($id): View|Factory|Application
+    public function edit($id): view
     {
+//        dd($id);
         $modul_name =$this->module_name;
         $model = Page::find($id);
         $pages = Page::where('id', '!=', $id)->where('publish', 0)->get();
@@ -141,8 +172,9 @@ use Yajra\DataTables\DataTables;
      * @param int $id
      * @return RedirectResponse
      */
-    public function update(Request $request, $id): RedirectResponse
+    public function update(Request $request,Page $model): RedirectResponse
     {
+      
         $request->validate(
             [
                 'title' => 'required',
@@ -154,36 +186,33 @@ use Yajra\DataTables\DataTables;
             ]
         );
         
-        $model = Page::find($id);;
-        $model->title = strip_tags(request('title'));
-        $model->slug = Str::slug(request('title'));
-        $model->detail = request('detail');
-        $model->publish = request('publish');
-        $model->page_type = request('page_type');
-        $model->parentpage = request('parentpage');
+//        $model = Page::find($id);;
+        $model->title = strip_tags($request->title);
+        $model->slug = slug_format(Str::limit($request->title  , 60)).'-'.rand(111,999);;
+        $model->detail = $request->detail;
+        $model->publish = $request->publish;
+        $model->page_type = $request->page_type;
+        $model->parentpage = $request->parentpage;
         
         
         if(request()->hasFile('image')) {
-            $this->validate(request(), array('image' => 'sometimes|mimes:png,jpg,jpeg,gif|max:4096'));
-            $image = request()->file('image');
-            $filename = time() . '-image-' . $model->slug . '.' . $image->extension();
+            $this->validate(request(), array('image' => 'image|mimes:png,jpg,jpeg,gif|max:4096'));
+            $image =  $request->file('image');
             if($image->isValid()) {
-                $endfolder = 'uploads';
-                $file_dir = "/uploads/" . $filename;
-                $image->move($endfolder, $filename);
-                $model->image = $file_dir;
+                deleteOldPicture( $model->image);
+                $file_upload = fileUpload($request->image, 'pages');
+                $model->image = $file_upload['path'];
+                
             }
         }
-        
         if(request()->hasFile('pdf')) {
             $this->validate(request(), array('pdf' => 'file|mimes:pdf|max:4096'));
             $pdf = request()->file('pdf');
-            $filename = time() . "-" . $model->slug . '.' . $pdf->extension();
             if($pdf->isValid()) {
-                $endfolder = 'uploads';
-                $file_dir = "/uploads/" . $filename;
-                $pdf->move($endfolder, $filename);
-                $model->pdf = $file_dir;
+                deleteOldPicture( $model->pdf);
+                $file_upload = fileUpload($request->pdf, 'pages');
+                $model->pdf = $file_upload['path'];
+                
             }
         }
         
@@ -195,7 +224,7 @@ use Yajra\DataTables\DataTables;
         } else {
             toastr()->error('İşlem sırasında bir hata meydana gelmiştir.', 'Başarısız !!! ');
         }
-        return redirect()->route('page.edit', ['id' => $model->id]);
+        return redirect()->route('pages.edit',$model->id);
     }
     
     /**

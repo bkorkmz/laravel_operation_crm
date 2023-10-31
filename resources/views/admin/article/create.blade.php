@@ -61,7 +61,7 @@
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control form-control-normal"
                                                     placeholder="Etiketleri , ile ayırarak yazınız" name="keywords"
-                                                    maxlength="50" value="{{ old('keywords') }}">
+                                                    maxlength="100" value="{{ old('keywords') }}">
                                             </div>
                                         </div>
 

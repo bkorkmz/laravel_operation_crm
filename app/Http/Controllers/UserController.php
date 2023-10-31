@@ -327,7 +327,7 @@ class UserController extends Controller
             })
             ->editColumn('job', function ($data) {
 
-                return '<span class="badge badge-inverse-info p-2 w-50">' . $data->job . ' </span >';
+                return '<span class="badge badge-inverse-info p-2">' . $data->job . ' </span >';
             })
             ->editColumn('status', function ($data) {
 

@@ -74,7 +74,7 @@
                                                                 @elseif($form_element->type == 'textarea')
                                                                     <div class="col-sm-10">
                                                                         <textarea type="text"
-                                                                               class="form-control form-control-normal" cols="3" rows="5"
+                                                                               class="form-control form-control-normal"  rows="5"
                                                                                placeholder="" name="{{ $form_element->name }}">
                                                                             {{ $form_element->value }}</textarea>
                                                                     </div>

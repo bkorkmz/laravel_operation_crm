@@ -245,7 +245,7 @@
                 </div>
                 @endif
                 <div class="text-right m-t-20">
-                    <button class="btn btn-primary rounded">Kaydet</button>
+                    <button class="btn btn-primary rounded">Güncelle</button>
                 </div>
             </form>
         </div>

@@ -43,6 +43,8 @@ class PortFolioController extends Controller
             })
             ->editColumn('link', function ($data) {
                 return '<a data-toggle="tooltip"  title="' . $data->link . '"  target="_blank" href="' . $data->link . '" >' . Str::limit($data->link, "20", "...") . '</a>';
+            }) ->editColumn('link', function ($data) {
+                return '<a data-toggle="tooltip"  title="' . $data->link . '"  target="_blank" href="' . $data->link . '" >' . Str::limit($data->link, "20", "...") . '</a>';
             })
             ->editColumn('created_at', function ($data) {
                 return $data->created_at ? $data->created_at->format('d-m-Y') : "";
@@ -88,18 +90,20 @@ class PortFolioController extends Controller
         return view('admin.slider.edit', compact('slider','module_name'));
     }
 
-
-
+    
     public function store(Request $request)
     {
         $request->validate([
             "image" => "required|image|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:2048",
             "name" => "required|max:50",
+            "value" => "required|max:500",
             "link" => "nullable",
             'status' => 'required',
         ], [
-            'name.required' => 'İçerik adızorunludur',
-            'name.max' => 'İçerik adı en fazla 50 karakter olmalıdır adızorunludur',
+            'name.required' => 'Slogan adı zorunludur',
+            'name.max' => 'Slogan adı en fazla 50 karakter olmalıdır adızorunludur',
+            'value.required' => 'Slogan Mesajı zorunludur',
+            'value.max' => 'Slogan Mesajı en fazla 500 karakter olmalıdır adızorunludur',
             'image.required' => 'İçerik resmi alanı zorunludur',
             'image.image' => 'İçerik resmi bir resim dosyası olmalıdır.',
             'image.mimes' => 'İçerik resmi yalnızca jpg,jpeg,png,tiff,gif,svg,webp,ico veya bmp formatında olabilir.',
@@ -140,13 +144,16 @@ class PortFolioController extends Controller
 
         $request->validate([
             "name" => "required|max:50",
+            "value" => "required|max:500",
             "image" => "image|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:2048",
             "link" => "nullable",
             "type" => "required",
             'status' => 'required',
         ], [
-            'name.required' => 'İçerik adı zorunludur',
-            'name.max' => 'İçerik adı en fazla 50 karakter olmalıdır adızorunludur',
+            'name.required' => 'Slogan adı zorunludur',
+            'name.max' => 'Slogan adı en fazla 50 karakter olmalıdır adızorunludur',  
+            'value.required' => 'Slogan Mesajı zorunludur',
+            'value.max' => 'Slogan Mesajı en fazla 500 karakter olmalıdır adızorunludur',
             'image.required' => 'İçerik resmi alanı zorunludur',
             'image.mimes' => 'İçerik resmi yalnızca jpg,jpeg,png,tiff,gif,svg,webp,ico veya bmp formatında olabilir.',
             'image.max' => 'İçerik resmi en fazla 2 MB boyutunda olabilir.',
@@ -201,18 +208,24 @@ class PortFolioController extends Controller
     {
         $module_name = 'portfolio';
 
-        $data = PortFolio::where('type', 'portfolio');
+        $data = PortFolio::where('type', 'portfolio')->with('category:id,name')->latest();
         // dd($data->get());
         return DataTables::of($data)
             ->addIndexColumn()
-            ->editColumn('name', function ($data) {
-                return '<strong>' . $data->name . '</strong>';
-            })
             ->editColumn('image', function ($data) {
-                return '<img class="img-fluid slider__images" src="' . $data->image . '" alt="' . $data->name . '" width="80" height="80"></img>';
+                return ' <div class="main-friend-list" >
+                            <div class="media userlist-box waves-effect waves-light" data-id="1" data-status="online" data-username="Josephin Doe">
+                                    <img class="media-object img-100 " src="'.$data->image.'" alt="'.$data->name.'" width="" height="">
+                            </div>
+                        </div>';
             })
-            ->editColumn('link', function ($data) {
-                return '<a data-toggle="tooltip"  title="' . $data->link . '"  target="_blank" href="' . $data->link . '" >' . Str::limit($data->link, "20", "...") . '</a>';
+            ->editColumn('name', function ($data) {
+                return '  <span class="chat-header">'.$data->name.'</span>';
+            })
+           
+      
+             ->editColumn('category_name', function ($data) {
+                return '<span>'. $data["category"]->name.'</span>';
             })
             ->editColumn('created_at', function ($data) {
                 return $data->created_at ? $data->created_at->format('d-m-Y') : "";

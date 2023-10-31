@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Category;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
@@ -31,7 +32,11 @@ class ArticleController extends Controller
     }
     
     
-    public function index_data()
+    /**
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function index_data(): JsonResponse
     {
         $model_data = $this->model_name::whereRelation('category', function ($query) {
             $query->where('model', 'article');
@@ -86,12 +91,14 @@ class ArticleController extends Controller
             [
                 'title' => 'required|max:100',
                 'short_detail' => 'required|max:250',
+                'keywords' => 'nullable|max:100',
                 'detail' => 'required',
                 'image' => 'image|mimes:png,jpg,jpeg,gif,webp|max:4096'
             ],
             [
                 'title.required' => 'Başlık gereklidir.',
-                'title.max' => 'Başlık alanı en fazla 50 karakter olmalıdır.',
+                'title.max' => 'Başlık alanı en fazla 100 karakter olmalıdır.',
+                'keywords.max' => 'Etiket alanı en fazla 100 karakter olmalıdır.',
                 'short_detail.required' => 'Makale Özeti gereklidir.',
                 'short_detail.max' => 'Makale Özeti alanı en fazla 250 karakter olmalıdır.',
                 'detail.required' => 'Makale detayı gereklidir.',
@@ -205,11 +212,13 @@ class ArticleController extends Controller
                 'title' => 'required|max:100',
                 'short_detail' => 'required|max:250',
                 'detail' => 'required',
+                'keywords' => 'nullable|max:100',
                 'image' => 'image|mimes:png,jpg,jpeg,gif,webp|max:4096'
             ],
             [
                 'title.required' => 'Başlık gereklidir.',
                 'title.max' => 'Başlık alanı en fazla 50 karakter olmalıdır.',
+                'keywords.max' => 'Etiket alanı en fazla 100 karakter olmalıdır.',
                 'short_detail.required' => 'Makale Özeti gereklidir.',
                 'short_detail.max' => 'Makale Özeti alanı en fazla 250 karakter olmalıdır.',
                 'detail.required' => 'Makale detayı gereklidir.',
@@ -428,10 +437,13 @@ class ArticleController extends Controller
                 'title' => 'required|max:50',
                 'short_detail' => 'required|max:250',
                 'detail' => 'required',
-                'image' => 'image|mimes:png,jpg,jpeg,gif,webp|max:4096'
+                'image' => 'image|mimes:png,jpg,jpeg,gif,webp|max:4096',
+                'keywords' => 'nullable|max:100',
+            
             ],
             [
                 'title.required' => 'Başlık gereklidir.',
+                'keywords.max' => 'Etiket alanı en fazla 100 karakter olmalıdır.',
                 'title.max' => 'Başlık alanı en fazla 50 karakter olmalıdır.',
                 'short_detail.required' => 'Makale Özeti gereklidir.',
                 'short_detail.max' => 'Makale Özeti alanı en fazla 250 karakter olmalıdır.',
@@ -520,10 +532,12 @@ class ArticleController extends Controller
                 'title' => 'required|max:50',
                 'short_detail' => 'required|max:250',
                 'detail' => 'required',
-                'image' => 'image|mimes:png,jpg,jpeg,gif,webp|max:4096'
+                'image' => 'image|mimes:png,jpg,jpeg,gif,webp|max:4096',
+                'keywords.max' => 'Etiket alanı en fazla 100 karakter olmalıdır.',
             ],
             [
                 'title.required' => 'Başlık gereklidir.',
+                'keywords.max' => 'Etiket alanı en fazla 100 karakter olmalıdır.',
                 'title.max' => 'Başlık alanı en fazla 50 karakter olmalıdır.',
                 'short_detail.required' => 'Makale Özeti gereklidir.',
                 'short_detail.max' => 'Makale Özeti alanı en fazla 250 karakter olmalıdır.',

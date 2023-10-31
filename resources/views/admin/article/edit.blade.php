@@ -59,7 +59,7 @@
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control form-control-normal"
                                                     placeholder="Etiketleri , ile ayırarak yazınız" name="keywords"
-                                                    maxlength="50" value="{{ $model->keywords }}">
+                                                    maxlength="100" value="{{ $model->keywords }}">
                                             </div>
                                         </div>
 
@@ -210,7 +210,7 @@
              
 
                                         <div class="text-right m-t-20">
-                                            <button class="btn btn-primary">Kaydet</button>
+                                            <button class="btn btn-primary">Güncelle</button>
                                         </div>
                                     </form>
                                 </div>
