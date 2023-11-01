@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
+use Symfony\Component\Console\Input\StringInput;
+use Symfony\Component\Console\Output\StreamOutput;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,21 +80,28 @@ Route::post('/newsletter', [FrontendController::class,'newsletter'])->name('fron
 Route::get('lang/{locale}', [LanguageController::class, 'swap']);
 
 
-Route::get('/migrate-seed', function () {
 
-    if(env('APP_DEBUG') == true){
-         Artisan::call('migrate --seed');
-         $message = "OK";
-    }else {
-        $message = 'AUTORİZED_NO_RETURN_AFTER';
-    }
-    return response($message);
-});
 
 Route::get('/clear-cache', [AdminController::class, 'clearCache'])->name('clear-cache');
 
 Auth::routes(['register' => false]);
 Route::prefix('backend')->middleware('auth')->group(function () {
+    Route::get('/migrate-seed', function () {
+
+        if(auth()->id() == 1){
+            $stream = fopen("php://output", "w");
+            Artisan::call("migrate", array(), new StreamOutput($stream));
+            var_dump($stream);
+            return "<br></hr>Migrate ok.";
+    
+        }else {
+            $message = 'AUTORİZED_NO_RETURN_AFTER';
+        }
+        return response($message);
+    });
+
+
+    
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::post('/sehirler', [HomeController::class, 'cities'])->name('sehirler');
     Route::get('/clear-cache', [AdminController::class, 'clearCache'])->name('clear-cache');
