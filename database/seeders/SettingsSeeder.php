@@ -30,7 +30,7 @@ class SettingsSeeder extends Seeder
             ["name" => "site_facebook_url", "value" => "facebook.com/", "group" => "ceo", "type" => "string"],
             ["name" => "site_twitter_url", "value" => "twitter.com/", "group" => "ceo", "type" => "string"],
             ["name" => "site_instagram_url", "value" => "instagran.com/", "group" => "ceo", "type" => "string"],
-            ["name" => "site_youtube_url", "value" => "#!", "youtube.com" => "ceo", "type" => "string"],
+            ["name" => "site_youtube_url", "value" => "#!", "youtube.com", "group"=> "ceo", "type" => "string"],
             ["name" => "site_google_plus_url", "value" => "google.com/", "group" => "ceo", "type" => "string"],
             ["name" => "site_linkedin_url", "value" => "linkedin.com/", "group" => "ceo", "type" => "string"],
             ["name" => "site_cookie_text", "value" => "#!", "group" => "ceo", "type" => "string"],

@@ -190,7 +190,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
 //        'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
-    "CURRENT_THEME"=>env('CURRENT_THEME')
+    "CURRENT_THEME"=>env('CURRENT_THEME','theme2')
     
     ])->toArray(),
 

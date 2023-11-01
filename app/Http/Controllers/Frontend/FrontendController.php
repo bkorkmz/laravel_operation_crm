@@ -238,15 +238,20 @@ class FrontendController extends Controller
     public function postDetail (int $post)
     {
        
-        $id = $post;
+        $id = $post; 
+        $nonselect_id = [];
+        $nonselect_id[]= $id;
         $filePath = storage_path('app/evrimNews.json');
         $jsonContent = file_get_contents($filePath);
         $newsData = json_decode($jsonContent, true);
         $sidebar_group = collect($newsData['haberlist'])->where('Id','!=',$id)->take(5);
         
-        
-        
-        
+        foreach($sidebar_group->pluck('Id')->toarray() as $ids){
+            $nonselect_id[]= $ids;
+        }
+
+        $other_post = collect($newsData['haberlist'])->whereNotIn('Id', $nonselect_id)->take(5);
+
         $url = 'http://haber.evrim.com/Rest/HaberDetay?id='.$id;
         $response = Http::get($url);
         
@@ -258,7 +263,7 @@ class FrontendController extends Controller
             return redirect()->back();
         }
         
-        return view($this->theme.'.frontend.pages.post_detail',compact('data','sidebar_group'));
+        return view($this->theme.'.frontend.pages.post_detail',compact('data','sidebar_group','other_post'));
     }
     
     

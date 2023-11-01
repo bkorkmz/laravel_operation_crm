@@ -195,6 +195,7 @@
                                         <table class="table table-hover m-b-0">
                                             <thead>
                                             <tr>
+                                                <td>ID</td>
                                                 <th>Ad-Soyad</th>
                                                 <th>Email</th>
                                                 <th>Telefon</th>
@@ -202,6 +203,37 @@
                                                 <th>Eylem</th>
                                             </tr>
                                             </thead>
+                                            <tbody>
+                                                @foreach ($requestForm as $r_form )
+                                                
+                                                <tr>
+                                                    <td>{{$loop->iteration}}</td>
+                                                    <td>{{$r_form->title}}</td>
+                                                    <td>{{$r_form->email}}</td>
+                                                    <td>{{$r_form->phone}}</td>
+                                                    <td> 
+                                                        @if ($r_form->publish == 1)
+                                                        <label id="read_{{$r_form->id }}"
+                                                            class="badge badge-success">Okundu</label>
+                                                        @elseif($r_form->publish == 0)
+                                                            <label id="read_{{$r_form->id }}" class="badge badge-danger">Okunmadı</label>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <button type="button"
+                                                            class="btn btn-mini btn-info btn-round  waves-effect"
+                                                                onclick='readFunction({{ $r_form->id }})'> İletişime geç
+                                                         </button>
+                                                    
+
+
+
+                                                    </td>
+
+                                                </tr>
+                                                @endforeach
+                                                
+                                            </tbody>
                                       
                                         </table>
                                     </div>

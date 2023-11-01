@@ -34,7 +34,9 @@ class AdminController  extends Controller
 
 
         $user_count = JobTeams::where('status', 1)->get()->count();
-        $requesForm = InfoMessage::where('type','request_form')->orderBy('created_at', 'asc')->paginate(10); 
+        $requestForm = InfoMessage::where('type','request_form')
+        
+        ->orderBy('created_at', 'asc')->paginate(10); 
         $infoMessages = InfoMessage::where('type','info_form')->orderBy('created_at', 'asc');
         $infoMessages =  $infoMessages->limit(5)->get();        $mesaageCount =  $infoMessages->where('publish',0)->count();
         
@@ -55,7 +57,7 @@ class AdminController  extends Controller
             'total_services',
             'last_services',
             'user_count',
-            'infoMessages','mesaageCount','requesForm'
+            'infoMessages','mesaageCount','requestForm'
         ));
     }
 
@@ -68,7 +70,7 @@ class AdminController  extends Controller
     }
     public function info_message()
     {
-        $messages = InfoMessage::orderBy('created_at', 'asc')->paginate(10);
+        $messages = InfoMessage::where('type','info_form')->orderBy('created_at', 'asc')->paginate(10);
         return view('admin.message', compact('messages'));
     }
     public function info_message_edit($id)
