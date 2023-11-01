@@ -34,6 +34,7 @@
                                 <li class="mega__menu position-static"><a class="headerarea__has__dropdown" href="/#about-us">Hakkımızda<i class="icofont-rounded-down d-none"></i> </a></li>
                                 <li><a class="headerarea__has__dropdown" href="/#blog">Blog</a></li>
                                 <li><a class="headerarea__has__dropdown" href="/#news_content">Mevzuat<span class="mega__menu__label">Son dakika</span></a></li>
+                                <li><a class="headerarea__has__dropdown" href="/#contact">İletişim</a></li>
                             </ul>
                         </nav>
                     </div>

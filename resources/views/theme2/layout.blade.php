@@ -41,6 +41,48 @@
             line-height: 27px;
             font-weight: 700;
         }
+         .requestForm .error-message {
+             display: none;
+             color: #fff;
+             background: #ed3c0d;
+             text-align: left;
+             padding: 15px;
+             font-weight: 600;
+         }
+
+        .requestForm .error-message br+br {
+            margin-top: 25px;
+        }
+
+        .requestForm .sent-message {
+            display: none;
+            color: #fff;
+            background: #18d26e;
+            text-align: center;
+            padding: 15px;
+            font-weight: 600;
+        }
+
+        .requestForm .loading {
+            display: none;
+            background: #fff;
+            text-align: center;
+            padding: 15px;
+        }
+
+        .requestForm .loading:before {
+            content: "";
+            display: inline-block;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            margin: 0 10px -6px 0;
+            border: 3px solid #18d26e;
+            border-top-color: #eee;
+            animation: animate-loading 1s linear infinite;
+        }
+
+        .footerarea__right__wraper
     </style>
 
     <script>
@@ -114,8 +156,9 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body p-0">
-                        <form class="php-email-form become__instructor__form" action="{{route('frontend.contactsubmit')}}" method="POST" role="form" onsubmit="return false;">
+                        <form class="become__instructor__form requestForm" action="{{route('frontend.contactsubmit')}}" id="requestForm" method="POST" role="form" onsubmit="return false;">
                            @csrf
+                            <input type="hidden" name="form_type" id="form_type" value="request_form">
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="dashboard__form__wraper">
@@ -206,6 +249,57 @@
           document.getElementById("light--to-dark-button")?.classList.remove("dark--mode");
         } 
       </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#requestForm").on("submit", function (e) {
+                e.preventDefault();
+                let thisForm = this;
+                thisForm.querySelector('.loading').classList.remove('d-block');
+                let formData = new FormData( thisForm );
+                let action = thisForm.getAttribute('action');
+                fetch(action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                })
+                    .then(response => response.json()) // JSON formatındaki yanıtı işle
+                    .then(data => {
+                        thisForm.querySelector('.loading').classList.remove('d-block');
+
+                        if (data.message === 'OK') {
+                            thisForm.querySelector('.sent-message').classList.add('d-block');
+                            thisForm.reset();
+                            setTimeout(function() {
+                                thisForm.querySelector('.sent-message').classList.remove('d-block');
+                                thisForm.querySelector('.error-message').classList.remove('d-block');
+                                // $('#request_modal').modal('hidden');
+                                // $('body').removeClass('modal-open');
+                                // $('.modal-backdrop').remove();
+                                }, 4000);
+                            
+                        } else if (data.errors) {
+                            const errorMessages = Object.values(data.errors).flat(); // Tüm hata mesajlarını bir dizide topla
+                            displayError(thisForm, errorMessages.join('<br>')); // Hata mesajlarını <br> ile birleştirip göster
+                        } else {
+                            throw new Error(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        displayError(thisForm, error.message);
+                    });
+                function displayError(thisForm, error) {
+                    const loadingElement = thisForm.querySelector('.loading');
+                    const errorMessageElement = thisForm.querySelector('.error-message');
+
+                    loadingElement.classList.remove('d-block');
+                    errorMessageElement.innerHTML = error;
+                    errorMessageElement.classList.add('d-block');
+                }
+                
+            });
+        });
+    </script>
 
 
 </body>

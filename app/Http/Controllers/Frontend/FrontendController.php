@@ -139,16 +139,12 @@ class FrontendController extends Controller
         $validatedData =  $request->validate([
             'name' => 'required',
             'email' => 'required|email:rfc,dns',
-            'subject' => 'required',
-            'message' => 'required|max:255',
+            'message' => 'nullable|max:255',
             'resume_file' => 'sometimes|mimes:word,pdf,jpg,jpeg,webp|max:4096',
-
         ], [
             'name.required' => 'İsim alanı  gereklidir.',
             'email.required' => 'Eposta gereklidir.',
             'email.email' => 'Lütfen geçerli bir e-posta adresi girin.',
-            'subject.required' => 'Konu alanı  gereklidir.',
-            'message.required' => 'Mesaj alanı  gereklidir.',
             'message.max' => 'Mesaj alanı en fazla 255 karakter olmalıdır.',
             'resume_file.sometimes' => 'Yüklenen dosya sadece izin verilen dosya türünde olmalıdır',
             'resume_file.mimes' => 'Yüklenen dosya sadece izin verilen dosya türünde olmalıdır',
@@ -162,40 +158,37 @@ class FrontendController extends Controller
         $contact = new InfoMessage();
         $contact->title = strip_tags($validatedData['name']);
         $contact->email = strip_tags($validatedData['email']);
-        $contact->subject = strip_tags($validatedData['subject']);
-        $contact->content = strip_tags($validatedData['message']);
+        $contact->subject = $request->subject ? strip_tags($request->subject) : "-";
+        $contact->content = $request->message  ? strip_tags($request->message) : "-";
         $contact->publish = 0;
         $contact->ip = request()->ip();
+        $contact->type = $request->form_type ?? "info_message";
+        $contact->phone =  $request->phone ?? "0";
+        
 
 
         if (request()->hasFile('resume_file')) {
             $this->validate(request(), array(
-                [
-                    'resume_file' => 'sometimes|mimes:word,pdf,jpg,jpeg,webp|max:4096'
-                ], [
-                    'resume_file.sometimes' => 'Yüklenen dosya sadece izin verilen dosya türünde olmalıdır',
+                [ 'resume_file' => 'sometimes|mimes:word,pdf,jpg,jpeg,webp|max:4096'], 
+                [  'resume_file.sometimes' => 'Yüklenen dosya sadece izin verilen dosya türünde olmalıdır',
                     'resume_file.mimes' => 'Yüklenen dosya sadece izin verilen dosya türünde olmalıdır',
                     'resume_file.max' => 'Yüklenen dosya  4 MB tan büyük olmamalıdır.'
-
                 ]
             ));
             $image = request()->file('resume_file');
             if ($image->isValid()) {
                 $file_upload = fileUpload($request->resume_file,'contact_file');
                 $contact->resume_file=   $file_upload['path'];
-                // $contact->resume_file = '/storage/' . $request->resume_file->store('contact_file', 'public');
             }
         }
-        //        $contact->location = json_encode($locationData);
         $contact->save();
         if ($contact) {
             $message = "OK";
-            # code...
         } else {
             $message = "Bilgilerinizi kontrol ederek formu tekrar gönderiniz";
         }
 
-        return response()->json(['message' => $message]);
+        return response()->json(['message' => $message] , 200);
     }
 
 
@@ -203,21 +196,21 @@ class FrontendController extends Controller
     public function blog()
     {
         
-        
-        $all_article = Article::whereRelation('category', function ($query) {
-            $query->where('model', 'article');
-        })->where(['publish' => 0])->orderby('id', 'asc')->get();
+        if (request()->cat) {
+            $all_article = Article::whereRelation('category', function ($query) {
+                $query->where('model', 'article')
+                    ->where('id',request()->cat);
+            })->where(['publish' => 0])->orderby('created_at', 'desc')->paginate(8);
+        }else {
+            $all_article = Article::whereRelation('category', function ($query) {
+                $query->where('model', 'article');
+            })->where(['publish' => 0])->orderby('created_at', 'desc')->paginate(8);
+        }
 
         $sidebar_article = Article::whereRelation('category', function ($query) {
             $query->where('model', 'article');
         })->where(['publish' => 0])->orderby('created_at', 'desc')->limit(4)->get();
-        
-        
-        
-        
-        
-        
-        
+                
         $categories = Category::where(['model'=>'article','show'=>1])->select('id','name')->withCount('content')->get();
         return view( $this->theme.'.frontend.pages.blog', compact('all_article', 'sidebar_article','categories'));
     }

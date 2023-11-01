@@ -95,7 +95,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href=" https://t.me/share/url?url={{route('frontend.post_detail',$data['haber']['Id'])}}&text={{$data['haber']['Baslik']}}"><i class="icofont-whatsapp"></i></a>
+                                    <a href="whatsapp://send?t={{route('frontend.post_detail',$data['haber']['Id'])}}&text={{$data['haber']['Baslik']}}"><i class="icofont-whatsapp"></i></a>
                                 </li> 
                        
                                 

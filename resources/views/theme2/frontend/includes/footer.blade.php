@@ -98,12 +98,12 @@
                             <div class="footerarea__header text-white">Sosyal meday hesaplarımızdan bizi takip edebilirsiniz.</div>
 
                             <ul class="my-3">
-                                <li><a href="{{config('settings.site_facebook_url')}}"><i class="icofont-facebook"></i></a></li>
-                                <li><a href="{{config('settings.site_twitter_url')}}"><i class="icofont-twitter"></i></a></li>
-                                <li><a href="{{config('settings.site_instagram_url')}}"><i class="icofont-instagram"></i></a></li>
-                                <li><a href="{{config('settings.site_google_plus_url')}}"><i class="icofont-google-plus"></i></a></li>
-                                <li><a href="{{config('settings.site_linkedin_url')}}"><i class="icofont-linkedin"></i></a></li>
-                                <li><a href="{{config('settings.site_youtube_url')}}"><i class="icofont-youtube-play"></i></a></li>
+                                <li class="{{config('settings.site_facebook_url') ?"": "d-none"}}"><a href="{{config('settings.site_facebook_url')}}"><i class="icofont-facebook"></i></a></li>
+                                <li class="{{config('settings.site_twitter_url') ?"": "d-none"}}"><a href="{{config('settings.site_twitter_url')}}"><i class="icofont-twitter"></i></a></li>
+                                <li class="{{config('settings.site_instagram_url') ?"": "d-none"}}"><a href="{{config('settings.site_instagram_url')}}"><i class="icofont-instagram"></i></a></li>
+                                <li class="{{config('settings.site_google_plus_url') ?"": "d-none"}}"><a href="{{config('settings.site_google_plus_url')}}"><i class="icofont-google-plus"></i></a></li>
+                                <li class="{{config('settings.site_linkedin_url') ?"": "d-none"}}"><a href="{{config('settings.site_linkedin_url')}}"><i class="icofont-linkedin"></i></a></li>
+                                <li class="{{config('settings.site_youtube_url') ?"": "d-none"}}"><a href="{{config('settings.site_youtube_url')}}"><i class="icofont-youtube-play"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -158,7 +158,7 @@
                             <ul>
                                 @foreach($footer_news as $f_news)
                                 <li>
-                                    <a href="#">
+                                    <a href="{{route('frontend.post_detail',$f_news['Id'])}}">
                                         <div class="footerarea__right__img">
                                             <img src="{{$f_news['Resim']}}" alt="footerphoto">
                                         </div>
@@ -220,7 +220,14 @@
 <script src="{{asset('/frontend/theme1/js/heartbeat.js')}}"></script>
 <script src="{{asset('/frontend/theme1/vendor/php-email-form/validate.js')}}"></script>
 
+
+<script>
+    
+    
+</script>
 @yield('js')
+
+
 
 <!-- Template Main JS File -->
 <script src="{{asset('frontend/theme1/js/main.js')}}"></script>

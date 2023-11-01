@@ -113,7 +113,7 @@
                     </div>
                     <form action="{{route('frontend.contactsubmit')}}" method="post" role="form" class="php-email-form" enctype="multipart/form-data">
                         @csrf
-{{--                        <input class="register__input" type="text" placeholder="Adınız">--}}
+                        <input type="hidden" name="form_type" id="form_type" value="info_form">
                         <div class="row">
                             <div class="col-xl-6">
                                 <input class="register__input" name="name" id="name" type="text" placeholder="Adınız" required>

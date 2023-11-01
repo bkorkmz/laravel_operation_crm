@@ -74,7 +74,7 @@
                                 <ul>
                                     @foreach($categories as $category )
                                         <li>
-                                            <a href="#">
+                                            <a href="?cat={{$category->id}} ">
                                                 {{$category->name}}
                                                 <span>{{$category->content_count}}</span>
                                             </a>

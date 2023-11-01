@@ -34,23 +34,28 @@ class AdminController  extends Controller
 
 
         $user_count = JobTeams::where('status', 1)->get()->count();
-        $infoMessages = InfoMessage::orderBy('created_at', 'asc');
-        $infoMessages =  $infoMessages->limit(5)->get();
-        $mesaageCount =  $infoMessages->where('publish',0)->count();
-
-
-
-
-
-        // dd( $total_article, $last_article);
-
+        $requesForm = InfoMessage::where('type','request_form')->orderBy('created_at', 'asc')->paginate(10); 
+        $infoMessages = InfoMessage::where('type','info_form')->orderBy('created_at', 'asc');
+        $infoMessages =  $infoMessages->limit(5)->get();        $mesaageCount =  $infoMessages->where('publish',0)->count();
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         return view('admin.index', compact(
             'total_article',
             'last_article',
             'total_services',
             'last_services',
             'user_count',
-            'infoMessages','mesaageCount'
+            'infoMessages','mesaageCount','requesForm'
         ));
     }
 
@@ -58,8 +63,6 @@ class AdminController  extends Controller
     {
 
         Artisan::call('optimize:clear');
-
-
         toastr()->success('Sistem Önbelleği Temizlendi.', 'Başarılı');
         return redirect()->back();
     }
