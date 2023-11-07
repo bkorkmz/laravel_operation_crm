@@ -2,9 +2,33 @@
 
 
 @section('tltle')
+{{ $article->title}}
 @endsection
 
 @section('head')
+<meta property="og:locale" content="tr_TR"/>
+<meta property="og:site_name" content="Dijital Teknoloji"/>
+<meta property="og:title" content="Teknoloji Haberleri"/>
+<meta property="og:url" content="http://Dijitalteknoloji.Net"/>
+<meta property="og:type" content="website"/>
+<meta property="og:description" content="Dijitalteknoloji.net en son çıkan teknoloji haberleri"/>
+<meta property="og:image" content="https://www.dijitalteknoloji.net/favicion.png"/>
+<meta property="article:publisher" content="https://www.facebook.com/DijitalTeknoloji.Net"/>
+
+<meta itemprop="name" content="Dijital Teknoloji"/>
+<meta itemprop="headline" content="Teknoloji Haberleri"/>
+<meta itemprop="description" content="Dijitalteknoloji.net en son çıkan teknoloji haberleri"/>
+<meta itemprop="image" content="https://www.dijitalteknoloji.net/favicion.png"/>
+<meta itemprop="author" content="dijitalteknoloji"/>
+<link rel="publisher" href="https://plus.google.com/105148002447364112508"/>
+
+
+<meta name="twitter:title" content="Teknoloji Haberleri"/>
+<meta name="twitter:url" content="https://www.dijitalteknoloji.net"/>
+<meta name="twitter:description" content="dijitalteknoloji.net En son çıkan teknoloji haberleri"/>
+<meta name="twitter:image" content="https://www.dijitalteknoloji.net/favicion.png"/>
+<meta name="twitter:site" content="@dijitalteknoloji"/>
+
 @endsection
 
 @section('css')

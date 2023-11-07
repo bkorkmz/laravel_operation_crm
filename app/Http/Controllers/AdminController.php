@@ -35,8 +35,7 @@ class AdminController  extends Controller
 
         $user_count = JobTeams::where('status', 1)->get()->count();
         $requestForm = InfoMessage::where('type','request_form')
-        
-        ->orderBy('created_at', 'asc')->paginate(10); 
+        ->orderByRaw('publish ASC, created_at DESC')->paginate(10); 
         $infoMessages = InfoMessage::where('type','info_form')->orderBy('created_at', 'asc');
         $infoMessages =  $infoMessages->limit(5)->get();        $mesaageCount =  $infoMessages->where('publish',0)->count();
         

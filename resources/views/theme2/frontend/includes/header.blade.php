@@ -170,12 +170,12 @@
             {{--            </div>--}}
         </div>
         <div class="mobile-social-wrap">
-            <a href="{{config('settings.site_facebook_url')}}"><i class="icofont-facebook"></i></a>
-            <a href="{{config('settings.site_twitter_url')}}"><i class="icofont-twitter"></i></a>
-            <a href="{{config('settings.site_instagram_url')}}"><i class="icofont-instagram"></i></a>
-            <a href="{{config('settings.site_google_plus_url')}}"><i class="icofont-google-plus"></i></a>
-            <a href="{{config('settings.site_linkedin_url')}}"><i class="icofont-linkedin"></i></a>
-            <a href="{{config('settings.site_youtube_url')}}"><i class="icofont-youtube-play"></i></a>
+          <a  class="{{config('settings.site_facebook_url') ?"": "d-none"}}"   href="{{config('settings.site_facebook_url')}}"><i class="icofont-facebook"></i></a>
+          <a  class="{{config('settings.site_twitter_url') ?"": "d-none"}}"    href="{{config('settings.site_twitter_url')}}"><i class="icofont-twitter"></i></a>
+          <a  class="{{config('settings.site_instagram_url') ?"": "d-none"}}"  href="{{config('settings.site_instagram_url')}}"><i class="icofont-instagram"></i></a>
+          <a  class="{{config('settings.site_google_plus_url') ?"": "d-none"}}" href="{{config('settings.site_google_plus_url')}}"><i class="icofont-google-plus"></i></a>
+          <a  class="{{config('settings.site_linkedin_url') ?"": "d-none"}}"   href="{{config('settings.site_linkedin_url')}}"><i class="icofont-linkedin"></i></a>
+          <a  class="{{config('settings.site_youtube_url') ?"": "d-none"}}"    href="{{config('settings.site_youtube_url')}}"><i class="icofont-youtube-play"></i></a>
         </div>
     </div>
 </div>
