@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserHeartBeat;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -47,24 +51,23 @@ class HomeController extends Controller
     }
     
 
-    public function heartBeat (Request $request)
-    {
-   
+    public function heartBeat (Request $request): JsonResponse
+    {       
         $data = [
-            'ip' =>$request->ip(),
+            'ip' =>request()->ip(),
             'mobile'=>$request->ismobile,
             'page' =>$request->page,
             'latitude' =>$request->latitude,
             'longitude' =>$request->longitude,
-            'user'=>auth()->id() ?? $request->ip()
+            'user'=>  auth()->user() ? auth()->id() : "Misafir Kullanıcı"
         ];
-        UserHeartBeat::create([
+        $dd=  UserHeartBeat::create([
             'user_id'=>$data['user'] ,
             'activity'=>json_encode($data)
         ]);
         
         
-        return response()->json(['status'=>'ok']);
+        return response()->json([true,200]);
     }
 
 

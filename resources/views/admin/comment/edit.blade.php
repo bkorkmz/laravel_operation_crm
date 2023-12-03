@@ -3,7 +3,11 @@
     {{ __('Yorum Düzenle ') }}
 @endsection
 @section('content')
-    <div class="card">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="card">
         <div class="card-header">
             <h3>Yorumu Düzenle</h3>
         </div>
@@ -45,9 +49,13 @@
                 </div>
 
                 <div class="text-right m-t-20">
-                    <button class="btn btn-primary rounded">Kaydet</button>
+                    <button class="btn btn-primary rounded">Güncelle</button>
                 </div>
             </form>
+        </div>
+    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

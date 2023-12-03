@@ -54,6 +54,8 @@ class PermissionsSeeders extends Seeder
         Permissions::firstOrCreate(['name' => 'edit_post', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'delete_post', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'restore_post', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'view_news_ajans_post', 'guard_name' => 'web']);
+        
         //post Category
         Permissions::firstOrCreate(['name' => 'view_menu_category', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'view_category', 'guard_name' => 'web']);
@@ -159,7 +161,8 @@ class PermissionsSeeders extends Seeder
             'view_users',
             'view_menu_users',
             'view_trashed_users',
-            // 'view_menu_post',
+             'view_menu_post',
+            'view_news_ajans_post',
             // 'view_all_post',
             // 'view_post',
             // 'add_post',

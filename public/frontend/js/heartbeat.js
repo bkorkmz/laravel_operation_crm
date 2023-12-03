@@ -1,6 +1,5 @@
-    setInterval(sendHeartbeat, 6000);
+    
     function sendHeartbeat() {
-
         const isMobileDevice = /Mobi/.test(navigator.userAgent);
         let latitude, longitude;
 
@@ -13,25 +12,25 @@
         } else {
 
         }
-        // Kullanıcının bulunduğu sayfa URL'sini alın
         var currentPage = window.location.href;
-
-        // Sunucuya göndermek istediğiniz bilgileri hazırlayın
-        var data = {
-            page: currentPage,
-            ismobile:isMobileDevice,
-            latitude:latitude,
-            longitude:longitude,
-            
-            
-        };
-        
-        fetch("api/heartbeat", {
+        fetch('/heartbeat', {
             method: "post",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": $('input[name="_token"]').val() 
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify({
+                ismobile: isMobileDevice,
+                latitude: latitude,
+                longitude: longitude,
+                page: currentPage
+            })
+   
+           
         })
            
     }
+    
+    
+    
+    setInterval(sendHeartbeat, 10000);

@@ -2,6 +2,18 @@
 @section('title')
   @lang('Şifre Sıfırlama  Sayfası')
 @stop
+@section('css')
+
+    <style>
+        body {
+            background-image:url("{{config('settings.site_login_img')}}");
+            background-size:cover;
+        }
+        .container{
+            max-width: 40rem;
+        }
+    </style>
+@endsection
 @section('content')
 
 

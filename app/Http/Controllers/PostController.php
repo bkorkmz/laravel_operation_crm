@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
 
@@ -203,6 +205,7 @@ class PostController extends Controller
      */
     public function edit(Post  $model)
     {
+        $post = $model;
         $post_category = Category::where(['model' => 'post','show' => '1'])->get();
 
         return view('admin.'.$this->directory.'.edit', compact('post_category', 'post'));
@@ -318,7 +321,7 @@ class PostController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
@@ -331,7 +334,7 @@ class PostController extends Controller
         } else {
             toastr()->error('Başarısız', 'İşlem sırasında bir hata meydana gelmiştir.');
         }
-        return back();
+        return redirect()->back();
     }
 
     public function trashed_index()
@@ -379,12 +382,33 @@ class PostController extends Controller
 
     public function trashed($id)
     {
-        //        dd($id);
         $delete_data = $this->model_name::withTrashed()->findOrFail($id);
         $delete_data->forceDelete();
-        // Log::info($delete_data . ' ' . 'Forcedelete post' . ' | User:' . Auth::user()->name);
-        //        session()->flash('message', 'Delete Successfully');
+
         toastr()->success('İşlem başarılı şekilde tamamlanmıştır.', 'Başarılı');
         return redirect()->back();
     }
+    
+    public function ajanss()
+    {
+        $modul_name = $this->module_name;
+        return view('admin.'.$this->directory.'.ajans_index',compact('modul_name'));
+        
+    }
+    
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function getAjans(Request $request)
+    {
+        $response = Http::get('http://haber.evrim.com/Rest/Habers?page=1&size=20');
+        $newsData = $response->json();
+        $filePath = storage_path('app/evrimNews.json');
+        file_put_contents($filePath, json_encode($newsData));
+        
+        toastr()->success('İşlem başarılı şekilde tamamlanmıştır.', 'Başarılı');
+        return back();
+    } 
+    
 }

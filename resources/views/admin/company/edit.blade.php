@@ -3,11 +3,11 @@
     {{ __('Firma Düzenleme Sayfası ') }}
 @endsection
 @section('content')
-<div class="pcoded-inner-content">
-    <div class="main-body">
-        <div class="page-wrapper">
-            
-    <div class="card">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="card">
         <div class="card-header">
             <h3>Firma Düzenle</h3>
         </div>
@@ -121,7 +121,8 @@
                 </div>
             </form>
         </div>
-    </div>
+                    </div>
+                </div>
         </div>
     </div>
 </div>

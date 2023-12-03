@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('section_name');
             $table->tinyInteger('status')->default(0);
-            $table->jsonb('section_content');
+            $table->text('section_content')->nullable()->comment('page content json');
             $table->timestamps();
         });
     }

@@ -8,10 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
 {
-    use HasFactory,Uuid;
+    use Uuid;
     
     protected  $table ='pages';
     protected $guarded = [];
+    public $incrementing = false;
+    protected $primaryKey = 'id';
+    
+    protected $casts = [
+        'id' => 'string'
+    ];
+    
     
     
     

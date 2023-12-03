@@ -35,8 +35,20 @@
                                                     *</span></label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control form-control-normal"
-                                                    placeholder="" name="title" maxlength="100"
+                                                    placeholder="" name="title" maxlength="100" oninput="slug_copy(this)"
                                                     value="{{ $model->title }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Opsiyonel url  <span class="text-danger">
+                                                    *</span></label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group">
+                                                                <span class="input-group-prepend">
+                                                                    <label class="input-group-text">{{"https://".request()->host()."/blog/"}}</label>
+                                                                </span>
+                                                    <input id="slug_content" value="{{ $model->slug }}" type="text" class="form-control text-lowercase"  name="slug" maxlength="100">
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -59,7 +71,7 @@
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control form-control-normal"
                                                     placeholder="Etiketleri , ile ayırarak yazınız" name="keywords"
-                                                    maxlength="50" value="{{ $model->keywords }}">
+                                                    maxlength="100" value="{{ $model->keywords }}">
                                             </div>
                                         </div>
 
@@ -69,7 +81,7 @@
                                                 <select name="category_id" class="form-control fill">
                                                     @foreach ($post_category as $category)
                                                         <option {{ $model->category_id == $category->id ? 'selected' : '' }}
-                                                            value="{{ $category->id }}">{{ $category->name }}</option>
+                                                            value="{{ $category->id}}">{{ $category->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 {{-- <a type="button" class="float-right badge badge-inverse-danger"
@@ -210,7 +222,7 @@
              
 
                                         <div class="text-right m-t-20">
-                                            <button class="btn btn-primary">Kaydet</button>
+                                            <button class="btn btn-primary">Güncelle</button>
                                         </div>
                                     </form>
                                 </div>
@@ -272,5 +284,11 @@
                     });
                 });
 
+                function  slug_copy(inputElement){
+                    let slug = document.getElementById('slug_content');
+                    console.log(inputElement.value )
+                    slug.value = inputElement.value ;
+                }
+                
             </script>
 @endsection

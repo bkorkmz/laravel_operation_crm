@@ -4,11 +4,11 @@
 @endsection
 
 @section('content')
-<div class="pcoded-inner-content">
-    <div class="main-body">
-        <div class="page-wrapper">
-            
-    <div class="card">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="card">
         <div class="card-header">
             <h3>Silinen Kullanıcılar</h3>
             <a onclick="window.history.back();" type="button" class="btn btn-warning btn-sm float-right rounded mr-1 " data-toggle="tooltip" data-placement="top" title="Geri Dön"><i class="fa fa-reply"></i></a>
@@ -51,7 +51,8 @@
                 </table>
             </div>
         </div>
-    </div>
+                    </div>
+                </div>
         </div>
     </div>
 </div>

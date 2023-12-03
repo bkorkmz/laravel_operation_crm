@@ -101,30 +101,3 @@
         </div>
     </div>
 @endsection
-@section('js')
-    <script>
-        const readFunction = (id) => {
-            const url = "{{ route('admin.info_message.edit') }}/" + id;
-            // `/admin/info_message/${id}/edit`; // Bu URL'yi ilgili route yapısına uygun olarak güncellemelisiniz
-            fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data == true) {
-                        console.log(data);
-                        const labelElement = document.getElementById(`read_${id}`);
-                        labelElement.classList.remove('badge-danger');
-                        labelElement.classList.add('badge-success');
-                        labelElement.textContent = 'Okundu'; // İstediğiniz içeriği buraya ekleyebilirsiniz
-                    }
-                })
-                .catch(error => {
-                    console.error('Fetch hatası:', error);
-                });
-        };
-    </script>
-@endsection

@@ -3,7 +3,11 @@
     {{ __('Tüm Yorumlar ') }}
 @endsection
 @section('content')
-    <div class="card">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="card">
         <div class="card-header">
             <h3>Yorum Listesi</h3>
             <a href="{{ route('comment.trashed') }}" type="button" class="btn btn-warning btn-sm float-right rounded mr-1 " data-toggle="tooltip" data-placement="top" title="Çöp Kutusu"><i class="fa fa-trash"></i></a>
@@ -82,6 +86,10 @@
                     </tbody>
                 </table>
                 {{ $comments->links() }}
+            </div>
+        </div>
+    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -74,16 +74,24 @@
                                                                 @elseif($form_element->type == 'textarea')
                                                                     <div class="col-sm-10">
                                                                         <textarea type="text"
-                                                                               class="form-control form-control-normal" cols="3" rows="5"
+                                                                               class="form-control form-control-normal"  rows="5"
                                                                                placeholder="" name="{{ $form_element->name }}">
                                                                             {{ $form_element->value }}</textarea>
                                                                     </div>
                                                                 @else
                                                                     <div class="col-sm-10">
-                                                                        <input type="text"
-                                                                            class="form-control form-control-normal"
-                                                                            placeholder="" name="{{ $form_element->name }}"
-                                                                            value="{{ $form_element->value }}">
+                                                                        @if($form_element->name == "frontend_color" )
+                                                                            <input type="color"
+                                                                                   class="form-control-normal"
+                                                                                   placeholder="" name="{{ $form_element->name }}"
+                                                                                   value="{{ $form_element->value }}">
+                                                                        @else
+                                                                            <input type="text"
+                                                                                   class="form-control form-control-normal"
+                                                                                   placeholder="" name="{{ $form_element->name }}"
+                                                                                   value="{{ $form_element->value }}">
+                                                                        @endif
+                                                                       
                                                                     </div>
                                                                    
                                                                 @endif

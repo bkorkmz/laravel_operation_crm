@@ -3,12 +3,7 @@
     {{ __('Yönetim Paneli') }}
 @endsection
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/css/widget.css') }}">
-    <style>
-        .text-c-black {
-            color: #000000;
-        }
-    </style>
+    
 
     <!-- [ breadcrumb ] end -->
 
@@ -18,24 +13,26 @@
                 <div class="page-body">
                     <!-- [ page content ] start -->
                     <div class="row">
-
-                        <div class="col-xl-4 col-md-12">
-                            <div class="card comp-card">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col">
-                                            <h6 class="m-b-25">Aktif Takım Üyesi</h6>
-                                            <h3 class="f-w-700 text-c-green">{{$user_count}}</h3>
-                                            <p class="m-b-0">{{date('d.m.Y')}}</p>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-eye bg-c-blue"></i>
+{{--                        @if($user_count > 0)--}}
+                            <div class="col-xl-3 col-md-12">
+                                <div class="card comp-card">
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col">
+                                                <h6 class="m-b-25">Aktif Takım Üyesi</h6>
+                                                <h3 class="f-w-700 text-c-green">{{$user_count}}</h3>
+                                                <p class="m-b-0">{{date('d.m.Y')}}</p>
+                                            </div>
+                                            <div class="col-auto card_area_icon">
+                                                <i class="fas fa-eye bg-c-blue"></i>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-xl-4 col-md-6">
+{{--                        @endif--}}
+                        @if($total_services > 0 )
+                             <div class="col-xl-3 col-md-6">
                             <div class="card comp-card">
                                 <div class="card-body">
                                     <div class="row align-items-center">
@@ -44,100 +41,58 @@
                                             <h3 class="f-w-700 text-c-blue">{{$total_services}}</h3>
                                             <p class="m-b-0">{{date('d.m.Y')}}</p>
                                         </div>
-                                        <div class="col-auto">
+                                        <div class="col-auto card_area_icon">
                                             <i class="fas fa-bullseye bg-c-green"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-xl-4 col-md-6">
-                            <div class="card comp-card">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col">
-                                            <h6 class="m-b-25">Toplam Makale</h6>
-                                            <h3 class="f-w-700 text-c-yellow">{{$total_article}}</h3>
-                                            <p class="m-b-0">{{date('d.m.Y')}}</p>
-                                        </div>
-                                           
-                                        <div class="col-auto">
-                                            <i class="fas fa-hand-paper bg-c-yellow"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </div> 
+                        @endif
+{{--                        @if($total_article > 0)--}}
+                                <div class="col-xl-3 col-md-6">
+                                    <div class="card comp-card">
+                                        <div class="card-body">
+                                            <div class="row align-items-center">
+                                                <div class="col">
+                                                    <h6 class="m-b-25">Toplam Makale</h6>
+                                                    <h3 class="f-w-700 text-c-yellow">{{$total_article}}</h3>
+                                                    <p class="m-b-0">{{date('d.m.Y')}}</p>
+                                                </div>
 
-                        <!-- product profit start -->
-                        {{-- <div class="col-xl-3 col-md-6">
-                            <div class="card prod-p-card card-red">
-                                <div class="card-body">
-                                    <div class="row align-items-center m-b-30">
-                                        <div class="col">
-                                            <h6 class="m-b-5 text-white">Aktif Takım Üyesi</h6>
-                                            <h3 class="m-b-0 f-w-700 text-white">{{$user_count}}</h3>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-user text-c-red f-18"></i>
+                                                <div class="col-auto card_area_icon">
+                                                    <i class="fas fa-hand-paper bg-c-yellow"></i>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card prod-p-card card-blue">
-                                <div class="card-body">
-                                    <div class="row align-items-center m-b-30">
-                                        <div class="col">
-                                            <h6 class="m-b-5 text-white">Toplam Hizmet</h6>
-                                            <h3 class="m-b-0 f-w-700 text-white">{{$total_services}}</h3>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-database text-c-blue f-18"></i>
-                                        </div>
-                                    </div>
-                    
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card prod-p-card card-green">
-                                <div class="card-body">
-                                    <div class="row align-items-center m-b-30">
-                                        <div class="col">
-                                            <h6 class="m-b-5 text-white">Toplam Makale</h6>
-                                            <h3 class="m-b-0 f-w-700 text-white">{{$total_article}}</h3></h3>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign text-c-green f-18"></i>
+{{--                        @endif--}}
+{{--                            @if( $newsletterCount > 0)--}}
+                                <div class="col-xl-3 col-md-6">
+                                    <div class="card comp-card">
+                                        <div class="card-body">
+                                            <div class="row align-items-center">
+                                                <div class="col">
+                                                    <h6 class="m-b-25"><a class="badge badge-lg badge-primary" href="{{route('newsletter_download')}}">Mail Listesini indir </a> </h6>
+                                                    <h3 class="f-w-700 text-c-green">{{$newsletterCount}}</h3>
+                                                    <p class="m-b-0">Güncellenme : {{$newsletterCount > 0 ? $newsletter[0]->created_at->format('d.m.y. H:i') : date('d.m.Y H:i')}}</p>
+                                                </div>
+                                                <div class="col-auto card_area_icon">
+                                                    <i class="fas fa-paper-plane bg-c-lite-green"></i>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                     
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card prod-p-card card-yellow">
-                                <div class="card-body">
-                                    <div class="row align-items-center m-b-30">
-                                        <div class="col">
-                                            <h6 class="m-b-5 text-white">Product Sold</h6>
-                                            <h3 class="m-b-0 f-w-700 text-white">6,784</h3>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-tags text-c-yellow f-18"></i>
-                                        </div>
-                                    </div>
-                                    <p class="m-b-0 text-white"><span class="label label-warning m-r-10">+52%</span>From
-                                        Previous Month</p>
-                                </div>
-                            </div>
-                        </div> --}}
+{{--                            @endif--}}
+                    </div>
+                   
                         <!-- product profit end -->
 
                         <!-- lattest update, new client start -->
-                        <div class="col-xl-6 col-md-12">
+                    <div class="row">
+                        <div class="col-xl-4 col-md-12">
                             <div class="card latest-update-card">
                                 <div class="card-header">
                                     <h5>Son İletişim Mesajları</h5>
@@ -156,37 +111,31 @@
                                 <div class="card-block">
                                     <div class="latest-update-box">
                                         @foreach ($infoMessages as $message )
-
-                                        <div class="row p-b-30">
-                                            <div class="col-auto text-right update-meta p-r-0">
-                                                
-                                                <i class="feather {{$message->publish == 0 ?'icon-briefcase bg-c-red' :'icon-check f-w-600 bg-c-green'}} update-icon"></i>
+                                            <div class="row p-b-30">
+                                                <div class="col-auto text-right update-meta p-r-0">
+                                                    <i class="feather {{$message->publish == 0 ?'icon-briefcase bg-c-red' :'icon-check f-w-600 bg-c-green'}} update-icon"></i>
+                                                </div>
+                                                <div class="col p-l-5">
+                                                    <a href="{{route('admin.info_message')}}">
+                                                        <h6>{{$message->subject}}</h6>
+                                                    </a>
+                                                    <p class="text-muted m-b-0">{{$message->title}} - {{$message->email}}</p>
+                                                </div>
                                             </div>
-                                            <div class="col p-l-5">
-                                                <a href="{{route('admin.info_message')}}">
-                                                    <h6>{{$message->subject}}</h6>
-                                                </a>
-                                                <p class="text-muted m-b-0">{{$message->title}} - {{$message->email}}</p>
-                                            </div>
-                                        </div>
-
-
-
-                                            
                                         @endforeach
-                                        
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="col-xl-6 col-md-12">
-                            <div class="card new-cust-card">
+                        <!-- testimonial and top selling start -->
+                        <div class="col-xl-8 col-md-12">
+                            <div class="card table-card">
                                 <div class="card-header">
-                                    <h5>New Customers</h5>
+                                    <h5>Teklif Mesajları</h5>
                                     <div class="card-header-right">
                                         <ul class="list-unstyled card-option">
-                                            <li class="first-opt"><i
-                                                    class="feather icon-chevron-left open-card-option"></i></li>
+                                            <li class="first-opt"><i class="feather icon-chevron-left open-card-option"></i></li>
                                             <li><i class="feather icon-maximize full-card"></i></li>
                                             <li><i class="feather icon-minus minimize-card"></i></li>
                                             <li><i class="feather icon-refresh-cw reload-card"></i></li>
@@ -195,347 +144,81 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="card-block">
-                                    <div class="align-middle m-b-35">
-                                        <img src="../files/assets/images/avatar-2.jpg" alt="user image"
-                                            class="img-radius img-40 align-top m-r-15">
-                                        <div class="d-inline-block">
-                                            <a href="#!">
-                                                <h6>Alex Thompson</h6>
-                                            </a>
-                                            <p class="text-muted m-b-0">Cheers!</p>
-                                            <span class="status active"></span>
-                                        </div>
-                                    </div>
-                                    <div class="align-middle m-b-35">
-                                        <img src="../files/assets/images/avatar-3.jpg" alt="user image"
-                                            class="img-radius img-40 align-top m-r-15">
-                                        <div class="d-inline-block">
-                                            <a href="#!">
-                                                <h6>John Doue</h6>
-                                            </a>
-                                            <p class="text-muted m-b-0">stay hungry stay foolish!</p>
-                                            <span class="status active"></span>
-                                        </div>
-                                    </div>
-                                    <div class="align-middle m-b-35">
-                                        <img src="../files/assets/images/avatar-3.jpg" alt="user image"
-                                            class="img-radius img-40 align-top m-r-15">
-                                        <div class="d-inline-block">
-                                            <a href="#!">
-                                                <h6>Alex Thompson</h6>
-                                            </a>
-                                            <p class="text-muted m-b-0">Cheers!</p>
-                                            <span class="status deactive text-mute"><i class="far fa-clock m-r-10"></i>30
-                                                min ago</span>
-                                        </div>
-                                    </div>
-                                    <div class="align-middle m-b-0">
-                                        <img src="../files/assets/images/avatar-2.jpg" alt="user image"
-                                            class="img-radius img-40 align-top m-r-15">
-                                        <div class="d-inline-block">
-                                            <a href="#!">
-                                                <h6>Alex Thompson</h6>
-                                            </a>
-                                            <p class="text-muted m-b-0">Cheers!</p>
-                                            <span class="status active"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
-                        <!-- lattest update, new client end -->
+                                <div class="card-block p-b-0">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover m-b-0">
+                                            <thead>
+                                            <tr>
+                                                <td>ID</td>
+                                                <th>Ad-Soyad</th>
+                                                <th>Email</th>
+                                                <th>Telefon</th>
+                                                <th>Durum</th>
+                                                <th>Eylem</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach ($requestForm as $r_form )
 
-                        <!-- imprestion, goal, impect start -->
-                        {{-- <div class="col-xl-4 col-md-12">
-                            <div class="card comp-card">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col">
-                                            <h6 class="m-b-25">Impressions</h6>
-                                            <h3 class="f-w-700 text-c-blue">1,563</h3>
-                                            <p class="m-b-0">May 23 - June 01 (2017)</p>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-eye bg-c-blue"></i>
-                                        </div>
+                                                <tr>
+                                                    <td>{{$loop->iteration}}</td>
+                                                    <td>{{$r_form->title}}</td>
+                                                    <td>{{$r_form->email}}</td>
+                                                    <td>{{$r_form->phone}}</td>
+                                                    <td>
+                                                        @if ($r_form->publish == 1)
+                                                            <label id="read_{{$r_form->id }}"
+                                                                   class="badge badge-success">Okundu</label>
+                                                        @elseif($r_form->publish == 0)
+                                                            <label id="read_{{$r_form->id }}" class="badge badge-danger">Bekliyor</label>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <button type="button"
+                                                                class="btn btn-mini btn-info btn-round  waves-effect"
+                                                                onclick='readFunction({{ $r_form->id }})'> İletişim Kur
+                                                        </button>
+
+
+
+
+                                                    </td>
+
+                                                </tr>
+                                            @endforeach
+
+                                            </tbody>
+
+                                        </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-4 col-md-6">
-                            <div class="card comp-card">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col">
-                                            <h6 class="m-b-25">Goal</h6>
-                                            <h3 class="f-w-700 text-c-green">30,564</h3>
-                                            <p class="m-b-0">May 23 - June 01 (2017)</p>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-bullseye bg-c-green"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-md-6">
-                            <div class="card comp-card">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col">
-                                            <h6 class="m-b-25">Impact</h6>
-                                            <h3 class="f-w-700 text-c-yellow">42.6%</h3>
-                                            <p class="m-b-0">May 23 - June 01 (2017)</p>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-hand-paper bg-c-yellow"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
-                        <!-- imprestion, goal, impect end -->
-
-                        <!-- income start -->
-                        {{-- <div class="col-xl-4 col-md-6">
-                            <div class="card o-hidden">
-                                <div class="card-header">
-                                    <h5>Total Leads</h5>
-                                </div>
-                                <div class="card-block">
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <p class="text-muted m-b-5">Overall</p>
-                                            <h6>68.52%</h6>
-                                        </div>
-                                        <div class="col-4">
-                                            <p class="text-muted m-b-5">Monthly</p>
-                                            <h6>28.90%</h6>
-                                        </div>
-                                        <div class="col-4">
-                                            <p class="text-muted m-b-5">Day</p>
-                                            <h6>13.50%</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="sal-income" style="height:100px"></div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-md-6">
-                            <div class="card o-hidden">
-                                <div class="card-header">
-                                    <h5>Total Vendors</h5>
-                                </div>
-                                <div class="card-block">
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <p class="text-muted m-b-5">Overall</p>
-                                            <h6>68.52%</h6>
-                                        </div>
-                                        <div class="col-4">
-                                            <p class="text-muted m-b-5">Monthly</p>
-                                            <h6>28.90%</h6>
-                                        </div>
-                                        <div class="col-4">
-                                            <p class="text-muted m-b-5">Day</p>
-                                            <h6>13.50%</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="rent-income" style="height:100px"></div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-md-12">
-                            <div class="card o-hidden">
-                                <div class="card-header">
-                                    <h5>Invoice Generate</h5>
-                                </div>
-                                <div class="card-block">
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <p class="text-muted m-b-5">Overall</p>
-                                            <h6>68.52%</h6>
-                                        </div>
-                                        <div class="col-4">
-                                            <p class="text-muted m-b-5">Monthly</p>
-                                            <h6>28.90%</h6>
-                                        </div>
-                                        <div class="col-4">
-                                            <p class="text-muted m-b-5">Day</p>
-                                            <h6>13.50%</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="income-analysis" style="height:100px"></div>
-                            </div>
-                        </div> --}}
-                        <!-- income end -->
-
-                        <!-- Latest Activity, Feeds, Upcoming Deadlines start -->
-                        {{-- <div class="col-xl-8 col-md-12">
-                            <div class="card latest-update-card">
-                                <div class="card-header">
-                                    <h5>Latest Activity</h5>
-                                    <div class="card-header-right">
-                                        <ul class="list-unstyled card-option">
-                                            <li class="first-opt"><i
-                                                    class="feather icon-chevron-left open-card-option"></i></li>
-                                            <li><i class="feather icon-maximize full-card"></i></li>
-                                            <li><i class="feather icon-minus minimize-card"></i></li>
-                                            <li><i class="feather icon-refresh-cw reload-card"></i></li>
-                                            <li><i class="feather icon-trash close-card"></i></li>
-                                            <li><i class="feather icon-chevron-left open-card-option"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="card-block">
-                                    <div class="latest-update-box">
-                                        <div class="row p-t-20 p-b-30">
-                                            <div class="col-auto text-right update-meta">
-                                                <i class="feather icon-sunrise bg-c-blue update-icon"></i>
-                                            </div>
-                                            <div class="col">
-                                                <h6>John Deo</h6>
-                                                <p class="text-muted m-b-15">The trip was an amazing and a life changing
-                                                    experience!!</p>
-                                                <img src="../files/assets/images/mega-menu/01.jpg" alt=""
-                                                    class="img-fluid img-100 m-r-15 m-b-10">
-                                                <img src="../files/assets/images/mega-menu/03.jpg" alt=""
-                                                    class="img-fluid img-100 m-r-15 m-b-10">
-                                            </div>
-                                        </div>
-                                        <div class="row p-b-30">
-                                            <div class="col-auto text-right update-meta">
-                                                <i class="feather icon-file-text bg-c-blue update-icon"></i>
-                                            </div>
-                                            <div class="col">
-                                                <h6>Administrator</h6>
-                                                <p class="text-muted m-b-0">Free courses for all our customers at A1
-                                                    Conference Room - 9:00 am tomorrow!</p>
-                                            </div>
-                                        </div>
-                                        <div class="row p-b-30">
-                                            <div class="col-auto text-right update-meta">
-                                                <i class="feather icon-map-pin bg-c-blue update-icon"></i>
-                                            </div>
-                                            <div class="col">
-                                                <h6>Jeny William</h6>
-                                                <p class="text-muted m-b-15">Happy Hour! Free drinks at <span> <a
-                                                            href="#!" class="text-c-blue">Cafe-Bar all </a>
-                                                    </span>day long!</p>
-                                                <div id="markers-map" style="height:245px;width:100%"></div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <a href="#!" class=" b-b-primary text-primary">View all Activity</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
-                        {{-- <div class="col-xl-4 col-md-12">
-                            <div class="card chat-card">
-                                <div class="card-header">
-                                    <h5>Chat history</h5>
-                                    <div class="card-header-right">
-                                        <ul class="list-unstyled card-option">
-                                            <li class="first-opt"><i
-                                                    class="feather icon-chevron-left open-card-option"></i></li>
-                                            <li><i class="feather icon-maximize full-card"></i></li>
-                                            <li><i class="feather icon-minus minimize-card"></i></li>
-                                            <li><i class="feather icon-refresh-cw reload-card"></i></li>
-                                            <li><i class="feather icon-trash close-card"></i></li>
-                                            <li><i class="feather icon-chevron-left open-card-option"></i></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="card-block">
-                                    <div class="row m-b-20 received-chat">
-                                        <div class="col-auto p-r-0">
-                                            <img src="../files/assets/images/avatar-2.jpg" alt="user image"
-                                                class="img-radius img-40">
-                                        </div>
-                                        <div class="col">
-                                            <div class="msg">
-                                                <p class="m-b-0">Nice to meet you!</p>
-                                            </div>
-                                            <p class="text-muted m-b-0"><i class="fa fa-clock-o m-r-10"></i>10:20am</p>
-                                        </div>
-                                    </div>
-                                    <div class="row m-b-20 send-chat">
-                                        <div class="col">
-                                            <div class="msg">
-                                                <p class="m-b-0">Nice to meet you!</p>
-                                            </div>
-                                            <p class="text-muted m-b-0"><i class="fa fa-clock-o m-r-10"></i>10:20am</p>
-                                        </div>
-                                        <div class="col-auto p-l-0">
-                                            <img src="../files/assets/images/avatar-3.jpg" alt="user image"
-                                                class="img-radius img-40">
-                                        </div>
-                                    </div>
-                                    <div class="row m-b-20 received-chat">
-                                        <div class="col-auto p-r-0">
-                                            <img src="../files/assets/images/avatar-2.jpg" alt="user image"
-                                                class="img-radius img-40">
-                                        </div>
-                                        <div class="col">
-                                            <div class="msg">
-                                                <p class="m-b-0">Nice to meet you!</p>
-                                                <img src="../files/assets/images/mega-menu/01.jpg" alt="">
-                                                <img src="../files/assets/images/mega-menu/03.jpg" alt="">
-                                            </div>
-                                            <p class="text-muted m-b-0"><i class="fa fa-clock-o m-r-10"></i>10:20am</p>
-                                        </div>
-                                    </div>
-                                    <div class="row m-b-20 send-chat">
-                                        <div class="col">
-                                            <div class="msg">
-                                                <p class="m-b-0">Come now to meet you!</p>
-                                            </div>
-                                            <p class="text-muted m-b-0"><i class="fa fa-clock-o m-r-10"></i>10:20am</p>
-                                        </div>
-                                        <div class="col-auto p-l-0">
-                                            <img src="../files/assets/images/avatar-3.jpg" alt="user image"
-                                                class="img-radius img-40">
-                                        </div>
-                                    </div>
-                                    <div class="row m-b-20 received-chat">
-                                        <div class="col-auto p-r-0">
-                                            <img src="../files/assets/images/avatar-2.jpg" alt="user image"
-                                                class="img-radius img-40">
-                                        </div>
-                                        <div class="col">
-                                            <div class="msg">
-                                                <p class="m-b-0">Nice to meet you!</p>
-                                                <img src="../files/assets/images/mega-menu/03.jpg" alt="">
-                                            </div>
-                                            <p class="text-muted m-b-0"><i class="fa fa-clock-o m-r-10"></i>10:20am</p>
-                                        </div>
-                                    </div>
-                                    <div class="right-icon-control">
-                                        <div class="input-group input-group-button">
-                                            <input type="text" class="form-control" placeholder="Send message">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary waves-effect waves-light" type="button"><i
-                                                        class="feather icon-message-circle"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
-                        <!-- Latest Activity, Feeds, Upcoming Deadlines end -->
-
-                    </div>
-                    <!-- [ page content ] end -->
+                    </div>    
+      
                 </div>
                 
             </div>
         </div>
     </div>
 
-    <script></script>
 @endsection
+@section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/css/widget.css') }}">
+    <style>        
+         .card_area_icon {
+             top: 16px;
+             position: absolute;
+             right: 0;
+         }
+    </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/bower_components/switchery/css/switchery.min.css') }}">
+@stop
+@section('js')
+    <script type="text/javascript" src="{{asset('admin/bower_components/popper.js/js/popper.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('admin/bower_components/switchery/js/switchery.min.js')}}"></script>
+
+    <script type="text/javascript" src="{{asset('admin/assets/pages/advance-elements/swithces.js')}}"></script>
+
+
+@stop

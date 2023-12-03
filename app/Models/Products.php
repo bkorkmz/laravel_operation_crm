@@ -16,7 +16,7 @@ class Products extends Model
         'id',
         'name',
         'description',
-        'quantity','settings',
+        'stock','settings','slug',
         'price','status','created_by','photo'
     ];
     
@@ -26,20 +26,17 @@ class Products extends Model
         parent::boot();
         static::saving(function ($product) {
              $product->created_by = auth()->id();
-            if ($product->quantity == 0) {
-                $product->status = 2;
-            }
-            if (auth()->user()->status !== 1)
-            {
-                $product->status =0;
-            }
+//            if ($product->stock == 0) {
+                $product->status = 1; //0: onay bekleniyor 1:aktif 2:tükendi 3:yayından kaldırıldı
+//            }
+           
         });
-        static::deleting(function ($product) {
-            $user = Auth::user();
-            if ($user->status === 1  || $product->created_by  !== $user->id) {
-                throw new \Exception('Ürünü yalnızca oluşturan kullanıcı silebilir.');
-            }
-        });
+//        static::deleting(function ($product) {
+//            $user = Auth::user();
+//            if ($user->status === 1  || $product->created_by  !== $user->id) {
+//                throw new \Exception('Ürünü yalnızca oluşturan kullanıcı silebilir.');
+//            }
+//        });
     }
     
     

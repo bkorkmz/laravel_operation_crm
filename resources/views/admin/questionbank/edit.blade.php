@@ -106,7 +106,7 @@
                                             class="form-control form-control-normal">
                                     </div>
                                 </div>
-                                <button class="btn btn-success float-right" type="submit">Kaydet</button>
+                                <button class="btn btn-success float-right" type="submit">Güncelle</button>
                             </form>
                         </div>
                     </div>

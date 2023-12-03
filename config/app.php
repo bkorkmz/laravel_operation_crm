@@ -171,6 +171,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\SettingsServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+    
     
     
     
@@ -190,7 +192,9 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
 //        'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
-//     
+          "CURRENT_THEME"=>env('CURRENT_THEME','theme2'),
+          'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
     
     ])->toArray(),
 

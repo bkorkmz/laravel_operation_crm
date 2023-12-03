@@ -2,7 +2,18 @@
 @section('title')
     @lang('Kayıt Sayfası')
 @endsection
+@section('css')
 
+    <style>
+        body {
+            background-image:url("{{config('settings.site_login_img')}}");
+            background-size:cover;
+        }
+        .container{
+            max-width: 40rem;
+        }
+    </style>
+@endsection
 @section('content')
 
 
@@ -12,7 +23,8 @@
             <div class="card-body">
                 <div class="row">
                     <div class="text-start m-4">
-                        <button onclick="history.back()" class="btn btn-outline-secondary" title="Geri dön" data-bs-toggle="tooltip" data-bs-placement="top"> <i class="fas fa-reply "></i></button>
+                        <button onclick="history.back()" class="btn btn-outline-secondary" title="Geri dön" data-bs-toggle="tooltip" 
+                                data-bs-placement="top"> <i class="fas fa-reply "></i></button>
                     </div>
                     <div class="col-md-9 col-lg-6 col-xl-6">
                         <img src="{{config('settings.site_logo')}}" class="img-fluid mb-4 mt-3" alt="logo" width="180px">

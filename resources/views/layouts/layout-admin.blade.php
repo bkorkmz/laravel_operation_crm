@@ -120,51 +120,31 @@
                                     <ul class="show-notification notification-view dropdown-menu"
                                         data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                         <li>
-                                            <h6>Notifications</h6>
-                                            <label class="label label-danger">New</label>
-                                        </li>
-                                        <li>
                                             <div class="media">
-                                                {{--                                            <img class="img-radius" src="{{asset('assets/images/avatar-4.jpg')}}" alt="Generic placeholder image"> --}}
+{{--                                                <img class="img-radius" src="{{asset('assets/images/avatar-4.jpg')}}" alt="Generic placeholder image"> --}}
                                                 <div class="media-body">
-                                                    <h5 class="notification-user">John Doe</h5>
-                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer
-                                                        elit.</p>
-                                                    <span class="notification-time">30 minutes ago</span>
+                                                    <h5 class="notification-user"></h5>
+                                                    <p class="notification-msg">Bildirim kutusu boş</p>
+                                                    <span class="notification-time"></span>
                                                 </div>
                                             </div>
                                         </li>
-                                        <li>
-                                            <div class="media">
-                                                {{--                                            <img class="img-radius" src="{{asset('assets/images/avatar-3.jpg')}}" alt="Generic placeholder image"> --}}
-                                                <div class="media-body">
-                                                    <h5 class="notification-user">Joseph William</h5>
-                                                    <p class="notification-msg">Lorem ipsum dolor sit amet,
-                                                        consectetuer elit.</p>
-                                                    <span class="notification-time">30 minutes ago</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="media">
-                                                {{--                                            <img class="img-radius" src="{{asset('assets/images/avatar-4.jpg')}}" alt="Generic placeholder image"> --}}
-                                                <div class="media-body">
-                                                    <h5 class="notification-user">Sara Soudein</h5>
-                                                    <p class="notification-msg">Lorem ipsum dolor sit amet,
-                                                        consectetuer elit.</p>
-                                                    <span class="notification-time">30 minutes ago</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="media">
-                                                <div class="media-body">
-                                                    <span
-                                                        class="notification-view float-right badge-inverse-warning p-10"><a
-                                                            href="#">Tümünü Görüntüle</a></span>
-                                                </div>
-                                            </div>
-                                        </li>
+{{--                                        <li>--}}
+{{--                                            <h6>Notifications</h6>--}}
+{{--                                            <label class="label label-danger">New</label>--}}
+{{--                                        </li>--}}
+{{--                                        <li>--}}
+{{--                                            <div class="media">--}}
+{{--                                                --}}{{--                                            <img class="img-radius" src="{{asset('assets/images/avatar-4.jpg')}}" alt="Generic placeholder image"> --}}
+{{--                                                <div class="media-body">--}}
+{{--                                                    <h5 class="notification-user">John Doe</h5>--}}
+{{--                                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer--}}
+{{--                                                        elit.</p>--}}
+{{--                                                    <span class="notification-time">30 minutes ago</span>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </li>--}}
+                                      
                                     </ul>
                                 </div>
                             </li>
@@ -187,20 +167,22 @@
                                     </div>
                                     <ul class="show-notification profile-notification dropdown-menu"
                                         data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                        {{-- <li>
-                                        <a href="#!">
-                                            <i class="feather icon-settings"></i> Settings
-
-                                        </a>
-                                    </li> --}}
-                                    @can('view_my_profile_users')
-                                               <li>
-                                        <a href="{{route('profile.index')}}">
-                                            <i class="feather icon-user"></i> Profile
-
-                                        </a>
-                                    </li>
-                                    @endcan
+                                        @can('view_settings') 
+                                            <li>
+                                            <a href="{{route('settings.index')}}">
+                                                <i class="feather icon-settings"></i> Ayarlar
+    
+                                            </a>
+                                        </li>  
+                                        @endcan
+                                        @can('view_my_profile_users')
+                                         <li>
+                                            <a href="{{route('profile.index')}}">
+                                                <i class="feather icon-user"></i> Profilim
+    
+                                            </a>
+                                        </li>
+                                        @endcan
                                  
                                     {{-- <li>
                                         <a href="">
@@ -482,6 +464,31 @@
         });
     </script>
 
+<script>
+    const readFunction = (id) => {
+        const url = "{{ route('admin.info_message.edit') }}/" + id;
+        // `/admin/info_message/${id}/edit`; // Bu URL'yi ilgili route yapısına uygun olarak güncellemelisiniz
+        fetch(url, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data == true) {
+                    console.log(data);
+                    const labelElement = document.getElementById(`read_${id}`);
+                    labelElement.classList.remove('badge-danger');
+                    labelElement.classList.add('badge-success');
+                    labelElement.textContent = 'Okundu'; // İstediğiniz içeriği buraya ekleyebilirsiniz
+                }
+            })
+            .catch(error => {
+                console.error('Fetch hatası:', error);
+            });
+    };
+</script>
 
     @yield('js')
 

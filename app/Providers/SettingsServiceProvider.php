@@ -18,8 +18,10 @@ class SettingsServiceProvider extends ServiceProvider
     {
         if (Schema::hasTable('settings')) {
             $settings = DB::connection()->table('settings')->pluck('value', 'name')->toArray();
-            Config::set('settings', $settings);
+            $allCategories = DB::connection()->table('categories')->select('id','name','slug','model','show','image')->get()->toArray();
+            Config::set(['settings'=>$settings,'allCetegories'=>$allCategories]);
         }
+        
         
     }
 

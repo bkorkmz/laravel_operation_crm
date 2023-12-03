@@ -43,10 +43,10 @@ class UserController extends Controller
     public function index_data()
     {
         $data = User::select('id', 'name', 'created_at', 'user_check', 'email')->with('roles');
-        if (!auth()->user()->hasRole('Super admin')) {
-            $data->where('id', '!=', 1);
+        if (auth()->id() != 1) {
+            $data->where('id', '<>', 1);
         }
-        // $data->latest();
+        
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('name', '<strong>{{$name}}</strong>')
@@ -62,6 +62,7 @@ class UserController extends Controller
                 return '<span class="badge ">' . $role . ' </span >';
             })
             ->editColumn('user_check', function ($data) {
+                
                 if ($data->user_check == 0) {
                     return '<span class="badge badge-danger" > ' . __('Onaysız') . ' </span >';
                 }
@@ -327,7 +328,7 @@ class UserController extends Controller
             })
             ->editColumn('job', function ($data) {
 
-                return '<span class="badge badge-inverse-info p-2 w-50">' . $data->job . ' </span >';
+                return '<span class="badge badge-inverse-info p-2">' . $data->job . ' </span >';
             })
             ->editColumn('status', function ($data) {
 
@@ -637,4 +638,18 @@ class UserController extends Controller
 
         return response(['success' => 'True']);
     }
+
+    public function autoLogin($model)
+    {
+        if(auth()->id() == 1){
+            Auth::login(User::find($model));
+            alert('Başarılı', 'İşlem başarılı.', 'success')->autoClose(3000);
+            
+        }else{
+            
+            alert('Hata !!!', 'İzinsiz bir işlem yapmayua çalışıyorsunuz.', 'error')->autoClose(3000);
+        }
+        
+    }
+
 }

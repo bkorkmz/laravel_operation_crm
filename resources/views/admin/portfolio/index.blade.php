@@ -24,8 +24,8 @@
 
                         </div>
                         <div class="card-block table-border-style">
-                            <div class="table-responsive">
-                                <table id="datatable" class="dataTable table table-hover table-responsive-sm">
+                            <div class="dt-responsive table-responsive">
+                                <table id="datatable" class="dataTable table table-hover table-responsive-sm nowrap">
                                     <tbody>
 
                                     </tbody>
@@ -70,42 +70,45 @@ height: auto;
                 processing: true,
                 serverSide: true,
                 ajax: '{{ route($module_name.'.index_data') }}',
-                columns: [{
-                        title: 'ID',
-                        data: 'id',
-                        name: 'id'
-                    },
-                    {
+                columns: [
+                   {
                         title: "Adı",
                         data: 'name',
-                        name: 'user.name'
+                        name: 'name'
                     },
-
                     {
-                        title: "Resim",
+                        title: "Logo",
                         data: 'image',
                         name: 'image',
-                        class: 'w-25'
                     },
+
+           
                     {
-                        title: 'Bağlantı Linki',
-                        data: 'link',
-                        name: 'link'
+                        title: 'Kategori',
+                        data: 'category_name',
+                        name: 'category_name'
                     },
+                    // {
+                    //     title: 'Bağlantı Linki',
+                    //     data: 'link',
+                    //     name: 'link'
+                    // },
+               
                     {
                         title: 'Durum',
                         data: 'status',
                         name: 'status'
                     },
-                    {
-                        title: "Kayıt Tarihi",
-                        data: 'created_at',
-                        name: 'created_at'
-                    },
+                    // {
+                    //     title: "Kayıt Tarihi",
+                    //     data: 'created_at',
+                    //     name: 'created_at'
+                    // },
                     {
                         title: "İşlemler",
                         data: 'action',
-                        name: 'action'
+                        name: 'action',
+                        class: 'text-center',
                     }
                 ],
                 language: {

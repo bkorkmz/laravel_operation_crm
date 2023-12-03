@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('user_heart_beats', function (Blueprint $table) {
             $table->char('id',36);
             $table->string('user_id')->default('0');
-            $table->json('activity');
+            $table->text('activity')->nullable()->comment('heartbeat attributes');
+            
             $table->timestamps();
         });
     }

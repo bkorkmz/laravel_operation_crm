@@ -22,6 +22,15 @@
                         @endif
                         <form action="{{ route('product.update', [$products]) }}" method="post" enctype="multipart/form-data">
                             @csrf
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label badge badge-secondary" for="slug">Ürün Bağlantı Etiketi</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control form-control-normal" placeholder=""
+                                           name="slug" value="{{ $products->slug }}" required>
+                                </div>
+                            </div>
+                            
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Ürün Adı</label>
                                 <div class="col-sm-10">
@@ -38,29 +47,27 @@
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Miktar / Stok</label>
                                 <div class="col-sm-4">
-                                    <input type="number" class="form-control  fill" max="9999" min="0"
-                                        name="stock"value="{{ $products->quantity }}">
+
+                                    <input type="text" class="form-control autonumber fill" placeholder="Stok 500"
+                                           data-v-max="999999" data-v-min="0" name="stock" value="{{ $products->stock ?? ""}}" >
+                         
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Fiyat</label>
                                 <div class="col-sm-4">
                                     <input type="number" class="form-control  fill" name="price"
-                                        value="{{ $products->price }}">
+                                        value="{{ $products->price ?? ""}}">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Ürün Durumu</label>
                                 <div class="col-sm-4">
                                     <select class="form-control" name="status">
-                                        <option value="0" {{ $products->status === 0 ? 'selected' : '' }}>Onay Bekliyor
-                                        </option>
-                                        <option value="1" {{ $products->status === 1 ? 'selected' : '' }}>Aktif
-                                        </option>
-                                        <option value="2" {{ $products->status === 2 ? 'selected' : '' }}>Tükendi
-                                        </option>
-                                        <option value="3" {{ $products->status === 3 ? 'selected' : '' }}>Yayından
-                                            kaldırıldı</option>
+                                        <option value="0" {{ $products->status === 0 ? 'selected' : '' }}>Onay Bekliyor</option>
+                                        <option value="1" {{ $products->status === 1 ? 'selected' : '' }}>Aktif</option>
+                                        <option value="2" {{ $products->status === 2 ? 'selected' : '' }}>Tükendi</option>
+                                        <option value="3" {{ $products->status === 3 ? 'selected' : '' }}>Yayından kaldırıldı</option>
                                     </select>
                                 </div>
                             </div>
@@ -84,7 +91,7 @@
                                 </div>
                             </div>
                             <div class="text-right m-t-20">
-                                <button class="btn btn-primary rounded">Kaydet</button>
+                                <button class="btn btn-primary rounded">Güncelle</button>
                             </div>
                         </form>
                     </div>
@@ -100,13 +107,38 @@
 @endsection
 
 @section('js')
-    <script src="//cdn.ckeditor.com/4.10.1/full/ckeditor.js"></script>
+    <script type="text/javascript" src="{{ asset('admin/assets/pages/form-masking/autoNumeric.js') }}"></script>
+
+    <script src="{{asset('admin/assets/pages/summernote-0.8.18/summernote.js')}}"></script>
+    <script src="{{asset('admin/assets/pages/summernote-0.8.18/lang/summernote-tr-TR.js')}}"></script>
+{{--    <script src="{{asset('/admin/assets/pages/summernote-0.8.18/plugin/image2/summernote-image-title.js')}}"></script>--}}
+{{--    <script type="text/javascript" src="{{ asset('admin/assets/pages/form-masking/autoNumeric.js') }}"></script>--}}
+
+    {{--    <script src="{{asset('admin/assets/js/page-build/submit.js')}}"></script>--}}
+
     <script>
-        CKEDITOR.replace('detail', {
-            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
-            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
-            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
-            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+
+        $(document).ready(function() {
+            $('#detail').summernote({
+                lang: 'tr-TR',
+                height: 200,
+                imageTitle: {
+                    specificAltField: true,
+                },
+                popover: {
+                    image: [
+                        ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                        ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                        ['remove', ['removeMedia']],
+                        ['custom', ['imageTitle']],
+                    ],
+                },
+            });
         });
+
+    </script>
+
+    <script>
+        // $('.autonumber').autoNumeric('init');
     </script>
 @endsection

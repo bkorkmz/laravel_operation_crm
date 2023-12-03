@@ -33,9 +33,22 @@
                                             <label class="col-sm-2 col-form-label">Makale başlığı <span class="text-danger">
                                                     *</span></label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control form-control-normal"
+                                                
+                                                <input  type="text" class="form-control form-control-normal" oninput="slug_copy(this)"
                                                     value="{{ old('title') }}" placeholder="" name="title" maxlength="100"
                                                     required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Opsiyonel url  <span class="text-danger">
+                                                    *</span></label>
+                                            <div class="col-sm-10">
+                                                    <div class="input-group">
+                                                                <span class="input-group-prepend">
+                                                                    <label class="input-group-text">{{"https://".request()->host()."/blog/"}}</label>
+                                                                </span>
+                                                        <input id="slug_content" type="text" class="form-control text-lowercase"  name="slug" maxlength="100">
+                                                    </div>
                                             </div>
                                         </div>
                                 
@@ -61,7 +74,7 @@
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control form-control-normal"
                                                     placeholder="Etiketleri , ile ayırarak yazınız" name="keywords"
-                                                    maxlength="50" value="{{ old('keywords') }}">
+                                                    maxlength="100" value="{{ old('keywords') }}">
                                             </div>
                                         </div>
 
@@ -73,34 +86,8 @@
                                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                                     @endforeach
                                                 </select>
-                                                {{-- <a type="button" class="float-right badge badge-inverse-danger"
-                                                    href="javascript:void(0)" data-toggle="modal"
-                                                    data-target="#addCategoryModal">Kategori Ekle</a> --}}
+
                                             </div>
-                                            {{-- <div class="col-sm-3 float-center">
-                                                <label>Manşette Başlık</label>
-                                                <div class="form-check text-left">
-                                                    <input class="form-check-input" checked type="radio" name="mtitle"
-                                                        id="showMtitle" value="0"{{old('mtitle') == 0 ? 'checked' :"" }}>
-                                                    <label class="form-check-label" for="showMtitle">Göster</label>
-                                                </div>
-                                                <div class="form-check text-left">
-                                                    <input class="form-check-input" type="radio" name="mtitle"
-                                                        id="hideMtitle" value="1"{{old('mtitle') == 1 ? 'checked' :"" }}>
-                                                    <label class="form-check-label" for="hideMtitle">Gösterme</label>
-                                                </div>
-                                            </div> --}}
-
-
-
-                                            {{-- <div class="col-sm-3">
-                                                <select name="source_id" class="form-control fill">
-                                                    <option value="">Kaynak seçin</option>
-                                                        @foreach ($sources as $source)
-                                                        <option value="{{ $source->id }}">{{ $source->title }}</option>
-                                                    @endforeach -
-                                                </select>
-                                            </div> --}}
                                         </div>
                                         <div class="form-group row my-4">
                                             <label class="col-sm-2 col-form-label">Durum
@@ -285,6 +272,12 @@
 
                 });
             });
+            
+            function  slug_copy(inputElement){
+                let slug = document.getElementById('slug_content');
+                 console.log(inputElement.value )
+                 slug.value = inputElement.value ;
+            }
 
         </script>
     @endsection

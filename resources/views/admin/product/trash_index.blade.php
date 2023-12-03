@@ -9,65 +9,15 @@
             <div class="page-wrapper">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Silinen Kullanıcılar</h3>
-                        <a onclick="window.history.back();" type="button"
+                        <h3>Silinen Ürünler</h3>
+                        <a href="{{route('product.index')}}" type="button"
                             class="btn btn-warning btn-sm float-right rounded mr-1 " data-toggle="tooltip" data-placement="top"
                             title="Geri Dön"><i class="fa fa-reply"></i></a>
                     </div>
                     <div class="card-block table-border-style">
                         <div class="table-responsive">
                             <table id="datatable" class="dataTable table">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Ad Soyad</th>
-                                        <th>E-Posta</th>
-                                        <th>Rolü</th>
-                                        <th>Onay Durumu</th>
-                                        <th>Kayıt Tarihi</th>
-                                        <th>İşlemler</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($users as $user)
-                                        <tr>
-                                            <th scope="row">{{ $user->id }}</th>
-                                            <td>{{ $user->name }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            <td>
-                                                @if ($user->status == 2)
-                                                    Firma Yetkilisi
-                                                @elseif($user->status == 1)
-                                                    Admin
-                                                @elseif($user->status == 3)
-                                                    İçerik Editörü
-                                                @else
-                                                    Kullanıcı
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if ($user->user_check == 0)
-                                                    <b class="badge badge-danger rounded ">Onaysız </b>
-                                                @elseif($user->user_check == 1)
-                                                    <b class="badge badge-success rounded ">Onaylı</b>
-                                                @endif
-                                            </td>
-                                            <td>{{ date('d-m-Y', strtotime($user->created_at)) }}</td>
-                                            <td>
-                                                @if ($user->id != 1 || $user->status == 1)
-                                                    <a href="{{ route('user.restore', $user->id) }}" data-toggle="tooltip"
-                                                        data-placement="top" title="Geri Gönder"><i
-                                                            class="feather icon-refresh-ccw f-w-600 f-16 m-r-15 text-c-blue"></i></a>
-                                                    <a href="{{ route('user.trashed', $user->id) }}"
-                                                        onclick="return confirm('Silme İşlemi onaylıyormusunuz ?')"
-                                                        data-toggle="tooltip" data-placement="top" title="Sil"><i
-                                                            class="feather icon-trash-2 f-w-600 f-16 text-c-red"></i></a>
-                                                @endif
-
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
+                               <tbody></tbody>
                             </table>
                         </div>
                     </div>
@@ -77,13 +27,65 @@
     </div>
 @endsection
 @section('js')
-    <script>
-        $(document).ready(function() {
-            $('#datatable').DataTable({
-                "pagingType": "full_numbers"
+    <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    {{--    --}}
 
+    <script>
+        $(function() {
+            $('#datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('product.trashed_data') }}',
+                columns: [{
+                    title: 'ID',
+                    data: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false,
+                },
+                    // {
+                    //     title: 'Resim',
+                    //     data: 'photo',
+                    //     name: 'photo'
+                    // },  
+                    {
+                        title: 'Ürün Adı',
+                        data: 'name',
+                        name: 'name'
+                    },
+
+                    {
+                        title: 'Durum',
+                        data: 'status',
+                        name: 'status'
+                    },
+                    {
+                        title: 'Stok',
+                        data: 'stock',
+                        name: 'stock'
+                    },
+                    {
+                        title: 'Fiyat',
+                        data: 'price',
+                        name: 'price'
+                    },
+                    {
+                        title: 'İşlemler',
+                        data: 'action',
+                        name: 'action',
+                        searchable: false,
+                        orderable: false
+                    }
+                ],
+                language: {
+                    'url': "{{ asset('i18N/') }}/{{ app()->getLocale() == '' ? Config('app.fallback_locale') : app()->getLocale() }}{{ '.json' }}"
+                }
             });
 
+
         });
+        
+        
+        
     </script>
 @endsection

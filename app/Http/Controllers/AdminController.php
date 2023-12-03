@@ -2,13 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\NewsletterExport;
 use App\Models\Article;
 use App\Models\InfoMessage;
 use App\Models\JobTeams;
+use App\Models\Newsletter;
 use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Artisan;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class AdminController  extends Controller
 {
@@ -16,7 +26,9 @@ class AdminController  extends Controller
     {
         $this->middleware('auth');
     }
-    public function index()
+    
+
+    public function index(): Application|Factory|View|\Illuminate\Foundation\Application
     {
 
         $article = Article::whereRelation('category', function ($query) {
@@ -34,41 +46,45 @@ class AdminController  extends Controller
 
 
         $user_count = JobTeams::where('status', 1)->get()->count();
-        $infoMessages = InfoMessage::orderBy('created_at', 'asc');
-        $infoMessages =  $infoMessages->limit(5)->get();
+
+        $requestForm = InfoMessage::where('type','request_form')
+                   ->orderByRaw('publish ASC, created_at DESC')->paginate(10); 
+        $infoMessages = InfoMessage::where('type','info_form')->orderBy('created_at', 'asc');
+        $infoMessages =  $infoMessages->limit(5)->get();      
         $mesaageCount =  $infoMessages->where('publish',0)->count();
-
-
-
-
-
-        // dd( $total_article, $last_article);
-
+        
+        $newsletter = Newsletter::latest();
+        $newsletterCount =  $newsletter->count();
+        $newsletter = $newsletter->limit(1)->get();
+        
         return view('admin.index', compact(
             'total_article',
             'last_article',
             'total_services',
             'last_services',
             'user_count',
-            'infoMessages','mesaageCount'
+            'infoMessages','mesaageCount','requestForm','newsletter','newsletterCount'
         ));
     }
+    
 
-    public function clearCache()
+    public function clearCache(): RedirectResponse
     {
 
         Artisan::call('optimize:clear');
-
-
         toastr()->success('Sistem Önbelleği Temizlendi.', 'Başarılı');
         return redirect()->back();
     }
-    public function info_message()
+    
+
+    public function info_message(): Application|Factory|View|\Illuminate\Foundation\Application
     {
-        $messages = InfoMessage::orderBy('created_at', 'asc')->paginate(10);
+        $messages = InfoMessage::where('type','info_form')->orderBy('created_at', 'asc')->paginate(10);
         return view('admin.message', compact('messages'));
     }
-    public function info_message_edit($id)
+    
+
+    public function info_message_edit($id): Application|ResponseFactory|\Illuminate\Foundation\Application|Response
     {
         $messages = InfoMessage::where('id', $id)->update(['publish' => 1]);
         if ($messages) {
@@ -105,43 +121,18 @@ class AdminController  extends Controller
                     'uploaded' => true,
                     'url' => $url,
                 ]);
-          
-          
-            // $CKEditorFuncNum = $request->input('CKEditorFuncNum');
-            // // $url = $data;
-            // $msg = 'Resim başarıyla yüklendi.';
-            // $response = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg')</script>";
-
-            // @header('Content-type: text/html; charset=utf-8');
-            // echo $response;
         }
     }
-
-
-    public function getToken(){
-
-        // $token = substr(bin2hex(random_bytes(4)), 0, 10); // Token'ı isteğinize göre oluşturun
-
-        $payload = [
-            "sub" => "1234567890", // Konu (subject)
-            "iat" => time(), // Oluşturulma tarihi (issued at)
-            "exp" => time() + 3600, // Son kullanma tarihi (expiration time), örneğin 1 saat sonra
-            "data" => [
-                "randomCode" => substr(bin2hex(random_bytes(3)), 0, 6) // Rastgele kodu ekleyin
-            ]
-        ];
-        
-        // Veriyi JSON formatına dönüştürün
-        $payloadJson = json_encode($payload);
-        
-        // Veriyi Base64 URL güvenli bir şekilde kodlayın
-        $encodedPayload = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($payloadJson));
-        
-        // Sonuç JWT verisi
-        $jwt = $encodedPayload;
-
-        return response()->json([
-            'token' => $jwt,
-        ]);
+    
+    
+    /**
+     * @return BinaryFileResponse
+     */
+    public function  newsletterDownload()
+    {
+        return Excel::download(new  NewsletterExport(), 'Email-List-'.date('d.m.Y').'.xlsx',\Maatwebsite\Excel\Excel::XLSX);
     }
+
+
+
 }
