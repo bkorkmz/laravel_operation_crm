@@ -30,11 +30,22 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Hizmet Başlığı <span class="text-danger"> *</span></label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control form-control-normal" value="{{old('title')}}"
-                                    placeholder="" name="title" maxlength="50" required>
+                                <input type="text" class="form-control form-control-normal" value="{{old('title')}}" oninput="slug_copy(this)"
+                                       placeholder="" name="title" maxlength="50" required>
                             </div>
-                        </div> 
+                        </div>
 
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Opsiyonel url  <span class="text-danger"> *</span></label>
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                     <span class="input-group-prepend">
+                                         <label class="input-group-text">{{"https://".request()->host()."/blog/"}}</label>
+                                     </span>
+                                    <input id="slug_content" type="text" value="{{old('slug_content')}}" class="form-control text-lowercase"  name="slug" maxlength="100">
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Hizmet Özeti <span class="text-danger"> *</span></label>
                             <div class="col-sm-10">

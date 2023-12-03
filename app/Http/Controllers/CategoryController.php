@@ -33,7 +33,7 @@ class CategoryController extends Controller
 
     public function index_data()
     {
-        $article = $this->model_name::with('author')->orderBy('model');
+        $article = $this->model_name::with('author','sub_category')->orderBy('model');
 
         return DataTables::of($article)
             ->addIndexColumn()
@@ -79,9 +79,6 @@ class CategoryController extends Controller
                 } else {
                     $span = '<span class="badge badge-inverse-danger">Pasif</span>';
                 }
-
-
-
                 return $span;
             })
 
@@ -136,8 +133,7 @@ class CategoryController extends Controller
         }
 
         $data_array = $request->except(
-            '_token',
-            'image'
+            '_token','image'
         );
         $data_array['slug'] = slug_format(Str::limit($request->name, 60));
 
@@ -145,10 +141,8 @@ class CategoryController extends Controller
             $this->validate(request(), array('image_mini' => 'sometimes|mimes:png,jpg,jpeg,gif|max:4096'));
             $image = request()->file('image');
             if ($image->isValid()) {
-
                 $file_upload = fileUpload($request->image,'category');
-                $data['image']=   $file_upload['path'];
-
+                $data_array['image']=   $file_upload['path'];
                 // $data_array['image'] =  '/storage/' . $request->image->store('category', 'public');
             }
         }
@@ -312,6 +306,12 @@ class CategoryController extends Controller
         return redirect()->back();
     }
 
+        public function parenCategoryData(Request $request)
+        {
+            return    Category::where('model',$request->model)
+                ->where(['show'=>1,'parent_id'=>0])
+                ->select('id','name')->get()->toArray();
+        }
 
 
     

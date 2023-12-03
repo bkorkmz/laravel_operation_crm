@@ -21,34 +21,40 @@
                                             <a class="nav-link active text-left m-2" data-toggle="tab" href="#evrimNews" role="tab">Evrim Haberleri</a>
                                             <div class="slide"></div>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link text-left m-2" data-toggle="tab" href="#profile5" role="tab">Profile</a>
-                                            <div class="slide"></div>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link text-left m-2" data-toggle="tab" href="#messages5" role="tab">Messages</a>
-                                            <div class="slide"></div>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link text-left m-2" data-toggle="tab" href="#settings5" role="tab">Settings</a>
-                                            <div class="slide"></div>
-                                        </li>
+{{--                                        <li class="nav-item">--}}
+{{--                                            <a class="nav-link text-left m-2" data-toggle="tab" href="#profile5" role="tab">AA</a>--}}
+{{--                                            <div class="slide"></div>--}}
+{{--                                        </li>--}}
+{{--                                        <li class="nav-item">--}}
+{{--                                            <a class="nav-link text-left m-2" data-toggle="tab" href="#messages5" role="tab">DHA</a>--}}
+{{--                                            <div class="slide"></div>--}}
+{{--                                        </li>--}}
+{{--                                        <li class="nav-item">--}}
+{{--                                            <a class="nav-link text-left m-2" data-toggle="tab" href="#settings5" role="tab">CHA</a>--}}
+{{--                                            <div class="slide"></div>--}}
+{{--                                        </li>--}}
                                     </ul>
                                     <!-- Tab panes -->
                                     <div class="tab-content tabs-left-content card-block col-12">
+                                        <div class="container d-flex justify-content-between ">
+                                            <h3>Evrim Gümrük Haberleri </h3>
+                                            <a href="{{route('post.getAjans')}}" class="btn btn-info">Güncelle</a>
+                                        </div>
+                                       
+                                        <br>
                                         <div class="tab-pane active" id="evrimNews" role="tabpanel">
-                                            <table id="datatable" class="table" >
+                                            <table id="evrimNewsDatatable" class="table" >
                                                 
                                             </table>                                            
                                         </div>
                                         <div class="tab-pane" id="profile5" role="tabpanel">
-                                            <p class="m-0">2.Cras consequat in enim ut efficitur. Nulla posuere elit quis auctor interdum praesent sit amet nulla vel enim amet. Donec convallis tellus neque, et imperdiet felis amet.</p>
+                                            <p class="m-0">Anadolu Haber Ajansı Haberleri</p>
                                         </div>
                                         <div class="tab-pane" id="messages5" role="tabpanel">
-                                            <p class="m-0">3. This is Photoshop's version of Lorem IpThis is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean mas Cum sociis natoque penatibus et magnis dis.....</p>
+                                            <p class="m-0">Diyarbakır Haber Ajansı Haberleri</p>
                                         </div>
                                         <div class="tab-pane" id="settings5" role="tabpanel">
-                                            <p class="m-0">4.Cras consequat in enim ut efficitur. Nulla posuere elit quis auctor interdum praesent sit amet nulla vel enim amet. Donec convallis tellus neque, et imperdiet felis amet.</p>
+                                            <p class="m-0">Cihan Haber Ajansı Haberleri</p>
                                         </div>
                                     </div>
                                 </div>
@@ -66,6 +72,9 @@
 
     
 <style>
+    md-tabs.tabs-left .nav-item, .md-tabs.tabs-right .nav-item, .tabs-left .nav-item, .tabs-right .nav-item {
+       background-color: blanchedalmond;
+    }
     .tabs-left, .tabs-right {
         min-width: 197px;
 
@@ -78,10 +87,10 @@
 
     <script>
         $(function() {
-            $('#datatable').DataTable({
+            $('#evrimNewsDatatable').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{storage_path('app/')}}",
+                ajax: "{{storage_path('app/evrimNews.json')}}",
                 columns: [{
                         title: 'İD',
                         data: 'DT_RowIndex',

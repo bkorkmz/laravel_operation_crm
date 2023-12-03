@@ -65,7 +65,6 @@
                                             <button type="button" class="btn btn-danger btn-round"
                                                 onclick="account_delete()">Hesabı Sil</button>
                                         </div>
-                                       
                                         @endcan
 
                                     </div>
@@ -284,19 +283,12 @@
                 event.preventDefault();
 
                 let thisForm = this;
-
                 let action = thisForm.getAttribute('action');
-
-                let recaptcha = thisForm.getAttribute('data-recaptcha-site-key');
-
                 if (!action) {
                     displayError(thisForm, 'Form Action alanı boş olamaz');
                     return;
                 }
-                // thisForm.querySelector('.loading').classList.add('d-block');
                 thisForm.querySelector('.error-message').classList.remove('d-block');
-                // thisForm.querySelector('.sent-message').classList.remove('d-block');
-
                 let formData = new FormData(thisForm);
                 php_email_form_submit(thisForm, action, formData);
 
@@ -317,52 +309,46 @@
                         'X-Requested-With': 'XMLHttpRequest'
                     }
                 })
+                
                 .then(response => response.json()) // JSON formatındaki yanıtı işle
                 .then(data => {
-                    // thisForm.querySelector('.loading').classList.remove('d-block');
-
                     if (data.message === 'true') {
-                        //   thisForm.querySelector('.sent-message').classList.add('d-block');
                         toastr["success"]("{{ 'İşlem Başarılı' }}");
-
                         thisForm.reset();
-
                         if (form_id == "user_update") {
                             $('#UpdateModal').modal('hide');
                         }
                         if (form_id == "password_update") {
                             $('#PasswordUpdateModal').modal('hide');
                         }
-                        location.reload();
-
+                        setInterval(function() {
+                            location.reload();
+                        }, 2000);
+                        
                     } else if (data.errors) {
                         const errorMessages = Object.values(data.errors).flat();
+                        // console.log(data.errors)
                         //   displayError(thisForm, errorMessages.join('<br>')); // Hata mesajlarını <br> ile birleştirip göster
                         errorMessages.map(function(element, index, array) {
                             toastr["error"](element);
                         })
-
-
                     } else {
+                        // console.log(data.error)
                         toastr["error"](data.errors);
-
-                        // throw new Error(data.message);
                     }
                 })
                 .catch(error => {
-                    // displayError(thisForm, error.message);
+                    // console.log(error.message)
                     toastr["error"](error.message);
-
                 });
         }
 
         function displayError(thisForm, error) {
+            console.log(error)
             //   const loadingElement = thisForm.querySelector('.loading');
             const errorMessageElement = thisForm.querySelector('.error-message');
-
-            //   loadingElement.classList.remove('d-block');
-            errorMessageElement.innerHTML = error;
-            errorMessageElement.classList.add('d-block');
+                errorMessageElement.innerHTML = error;
+                errorMessageElement.classList.add('d-block');
         }
 
 
@@ -396,35 +382,25 @@
 
                             if (data.message === 'true') {
                                 toastr["success"]("{{ 'İşlem Başarılı' }}");
-                                location.reload();
+                                setInterval(function() {
+                                    location.reload();
+                                }, 2000);
 
                             } else if (data.errors) {
                                 const errorMessages = Object.values(data.errors).flat();
                                 errorMessages.map(function(element, index, array) {
                                     toastr["error"](element);
                                 })
-
-
                             } else {
                                 toastr["error"](data.errors);
-
                             }
                         })
                         .catch(error => {
                             toastr["error"](error.message);
 
                         });
-
-
-
-
-
                 }
             })
-
-
-
-
         }
     </script>
 @endsection

@@ -27,8 +27,7 @@ if(!function_exists('slug_format')) {
         $string = str_replace('\\', '-', $string);
         $string = str_replace(['ü', 'Ü', 'ş', 'Ş', 'ı', 'İ', 'ç', 'Ç', 'ö', 'Ö', 'ğ', 'Ğ'], ['u', 'U', 's', 'S', 'i', 'I', 'c', 'C', 'o', 'O', 'g', 'G'], $string);
         $string = strtolower($string);
-
-        $slug_string = $string;
+        
         return Str::slug($string, $sparator);
     }
 }

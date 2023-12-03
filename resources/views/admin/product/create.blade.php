@@ -39,14 +39,14 @@
                                 <label class="col-sm-2 col-form-label">Miktar / Stok</label>
                                 <div class="col-sm-6">
                                     <input type="text" class="form-control autonumber fill" placeholder="Stok 500"
-                                           data-v-max="999999" data-v-min="0" name="stock" value="{{old('stock')}}" required>
+                                           data-v-max="999999" data-v-min="0" name="stock" value="{{old('stock')}}" >
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Fiyat</label>
                                 <div class="col-sm-6">
                                     <input type="text" class="form-control autonumber fill" data-v-max="9999999"  data-v-min="0" placeholder="Fiyat 5.000" 
-                                          name="price"   step="0.01" value="{{old('price')}}" required >
+                                          name="price"   step="0.01" value="{{old('price')}}"  >
 {{--                                    <input   name="price" type="text" class="form-control autonumber fill" data-a-sep="." data-v-max="999999"   >--}}
                                 </div>
                             </div>
@@ -115,12 +115,12 @@
                     specificAltField: true,
                 },
                 popover: {
-                    image: [
-                        ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
-                        ['float', ['floatLeft', 'floatRight', 'floatNone']],
-                        ['remove', ['removeMedia']],
-                        ['custom', ['imageTitle']],
-                    ],
+                    // image: [
+                    //     ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                    //     ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                    //     ['remove', ['removeMedia']],
+                    //     ['custom', ['imageTitle']],
+                    // ],
                 },
             });
         });

@@ -1,5 +1,12 @@
 @extends('layouts.app')
-
+@section('css')
+    <style>
+        body {
+            background-image:url("{{config('settings.site_register_img')}}");
+            background-size:cover;
+        }
+    </style>
+@endsection
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -10,15 +17,11 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('password.update') }}">
                         @csrf
-
                         <input type="hidden" name="token" value="{{ $token }}">
-
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Adres') }}</label>
-
-                            <div class="col-md-6">
+                            <div class="col">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
-
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

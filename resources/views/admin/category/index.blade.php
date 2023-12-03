@@ -4,9 +4,9 @@
 @endsection
 @section('content')
     <div class="pcoded-inner-content">
-        <div class="page-wrapper">
-            <div class="page-body">
-                <div class="">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">

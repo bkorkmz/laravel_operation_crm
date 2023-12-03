@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->nullable();
             $table->text('description')->nullable();
-            $table->string('price',10)->default(0);
+            $table->string('price',10)->nullable();
             $table->string('stock',10)->default(0);
             $table->tinyInteger('status')->nullable();
             $table->integer('created_by')->nullable();
-            $table->jsonb('attributes')->nullable();
+            $table->text('attributes')->nullable()->comment('product other description and image');
             $table->string('photo')->nullable();
             $table->timestamps();
             $table->softDeletes();

@@ -10,8 +10,8 @@
     <div class="pcoded-inner-content">
         <div class="main-body">
             <div class="page-wrapper">
-                
-    <div class="card">
+                <div class="page-body">                
+                  <div class="card">
         <div class="card-header">
             <h3>Kullanıcı Listesi</h3>
             <a href="{{ route('user.trashed') }}" type="button" class="btn btn-warning btn-sm float-right rounded mr-1 " data-toggle="tooltip" data-placement="top" title="Çöp Kutusu"><i class="fa fa-trash"></i></a>
@@ -39,6 +39,7 @@
             </div>
         </div>
     </div>
+                </div>
             </div>
         </div>
     </div>

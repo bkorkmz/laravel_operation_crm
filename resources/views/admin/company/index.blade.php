@@ -7,8 +7,8 @@
     <div class="pcoded-inner-content">
         <div class="main-body">
             <div class="page-wrapper">
-                
-    <div class="card">
+                <div class="page-body">
+                    <div class="card">
         <div class="card-header">
             <h3>Firma  Listesi</h3>
 
@@ -33,7 +33,8 @@
                 </table>
             </div>
         </div>
-    </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

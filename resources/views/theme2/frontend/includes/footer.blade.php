@@ -47,7 +47,7 @@
 </style>
 
 @php
-    $filePath = storage_path('app/evrimNews.json');
+           $filePath = storage_path('app/evrimNews.json');
            if (file_exists($filePath)) {
             $jsonContent = file_get_contents($filePath);
             $newsData = json_decode($jsonContent, true);
@@ -91,10 +91,10 @@
                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 " data-aos="fade-up">
                     <div class="footerarea__inner footerarea__about__us">
 
-                        <div class="footerarea__logo">
-                            <a  href="/"><img src="/frontend/theme2/img/logo/logo_dark.png" alt="logo" width="220px" height=""></a>
+                        <div class="footerarea__logo text-center position-absolute" style="top: -33px;">
+                            <a  href="/"><img src="{{ asset(config('settings.site_logo')) }}" alt="logo" class="img-fluid" width="300" height="" ></a>
                         </div>
-                        <div class="footerarea__icon my-5">
+                        <div class="footerarea__icon" style="margin-top: 213px;">
                             <div class="footerarea__header text-white">Sosyal meday hesaplarımızdan bizi takip edebilirsiniz.</div>
 
                             <ul class="my-3">
@@ -119,6 +119,9 @@
                                 <li><a href="/#about-us">Hakkımızda</a></li>
                                 <li><a href="/#blog">Blog</a></li>
                                 <li><a href="/#news_content">Mevzuat Haberleri</a></li>
+                                 <li><a href="/#contact">İletişim</a></li>
+{{--                                <li><a  target="_blank" href="https://logi-san.com/gumruk-hizmetleri/">Logisan Lojistik</a></li>--}}
+
 
                             </ul>
                         </div>
@@ -210,21 +213,29 @@
 
 
 <!-- Vendor JS Files -->
-<script src="{{asset('/frontend/theme1/vendor/purecounter/purecounter_vanilla.js')}}"></script>
-<script src="{{asset('/frontend/theme1/vendor/aos/aos.js')}}"></script>
-<script src="{{asset('/frontend/theme1/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{asset('/frontend/theme1/vendor/glightbox/js/glightbox.min.js')}}"></script>
-<script src="{{asset('/frontend/theme1/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
-<script src="{{asset('/frontend/theme1/vendor/swiper/swiper-bundle.min.js')}}"></script>
-<script src="{{asset('/frontend/theme1/vendor/php-email-form/validate.js')}}"></script>
-<script src="{{asset('/frontend/theme1/js/heartbeat.js')}}"></script>
-<script src="{{asset('/frontend/theme1/vendor/php-email-form/validate.js')}}"></script>
+    <!-- JS here -->
+
+    <script src="{{asset('frontend/theme2/js/vendor/modernizr-3.5.0.min.js')}}"></script>
+    <script src="{{asset('frontend/theme2/js/vendor/jquery-3.6.0.min.js')}}"></script>
+    <script src="{{asset('frontend/theme2/js/popper.min.js')}}"></script>
+    <script src="{{asset('frontend/theme2/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('frontend/theme2/js/isotope.pkgd.min.js')}}"></script>
+    <script src="{{asset('frontend/theme2/js/slick.min.js')}}"></script>
+    <script src="{{asset('frontend/theme2/js/jquery.meanmenu.min.js')}}"></script>
+    <script src="{{asset('frontend/theme2/js/ajax-form.js')}}"></script>
+    <script src="{{asset('frontend/theme2/js/wow.min.js')}}"></script>
+    <script src="{{asset('frontend/theme2/js/jquery.scrollUp.min.js')}}"></script>
+    <script src="{{asset('frontend/theme2/js/imagesloaded.pkgd.min.js')}}"></script>
+    <script src="{{asset('frontend/theme2/js/jquery.magnific-popup.min.js')}}"></script>
+    <script src="{{asset('frontend/theme2/js/waypoints.min.js')}}"></script>
+    <script src="{{asset('frontend/theme2/js/jquery.counterup.min.js')}}"></script>
+    <script src="{{asset('frontend/theme2/js/plugins.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="{{asset('frontend/theme2/js/main.js')}}"></script>
+    <script src="{{asset('/frontend/js/php-email-form/validate.js')}}"></script>
+    <script src="{{asset('/frontend/js/heartbeat.js')}}"></script>
 
 
-<script>
-    
-    
-</script>
 @yield('js')
 
 

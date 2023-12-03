@@ -4,7 +4,11 @@
     {{ __('Tüm Sayfalar') }}
 @endsection
 @section('content')
-    <div class="card">
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="card">
         <div class="card-header">
                 <div class="row">
                     <div class="col-4">
@@ -23,6 +27,10 @@
                 <table id="datatable" class="table">
           
                 </table>
+            </div>
+        </div>
+    </div>
+                </div>
             </div>
         </div>
     </div>

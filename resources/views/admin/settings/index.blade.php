@@ -80,10 +80,18 @@
                                                                     </div>
                                                                 @else
                                                                     <div class="col-sm-10">
-                                                                        <input type="text"
-                                                                            class="form-control form-control-normal"
-                                                                            placeholder="" name="{{ $form_element->name }}"
-                                                                            value="{{ $form_element->value }}">
+                                                                        @if($form_element->name == "frontend_color" )
+                                                                            <input type="color"
+                                                                                   class="form-control-normal"
+                                                                                   placeholder="" name="{{ $form_element->name }}"
+                                                                                   value="{{ $form_element->value }}">
+                                                                        @else
+                                                                            <input type="text"
+                                                                                   class="form-control form-control-normal"
+                                                                                   placeholder="" name="{{ $form_element->name }}"
+                                                                                   value="{{ $form_element->value }}">
+                                                                        @endif
+                                                                       
                                                                     </div>
                                                                    
                                                                 @endif

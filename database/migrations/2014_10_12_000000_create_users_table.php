@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigInteger('phone')->nullable();
             $table->integer('status')->default(0);
             $table->string('gender')->nullable();
-            $table->string('email')->unique();
+            $table->string('email', 191)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->bigInteger('tc_no')->default(0);

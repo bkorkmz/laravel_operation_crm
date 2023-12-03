@@ -19,7 +19,7 @@
         <div class="container-fluid container">
             <div class="section__title">
                 <div class="section__title__heading text-center">
-                    <h2>Mezuat Haberleri</h2>
+                    <h2>Mevzuat Haberleri</h2>
                 </div>
             </div>
             <div class="row row__custom__class"  >

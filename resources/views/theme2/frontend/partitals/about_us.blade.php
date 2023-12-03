@@ -23,11 +23,13 @@
                                 type="button">Vizyonumuz
                         </button>
                     </li>
+                    @if(!blank($faq_sss))
                     <li class="nav-item" role="presentation">
                         <button class="single__tab__link" data-bs-toggle="tab" data-bs-target="#projects__four"
                                 type="button">Sorularla Biz
                         </button>
                     </li>
+                        @endif
                 </ul>
             </div>
 

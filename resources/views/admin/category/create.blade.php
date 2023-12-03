@@ -3,10 +3,14 @@
     {{ __('Kategori Ekleme Sayfası  ') }}
 @endsection
 @section('content')
+    <link rel="stylesheet" href="{{asset('admin/bower_components/select2/css/select2.min.css')}}" />
+
+    
+    
     <div class="pcoded-inner-content">
-        <div class="page-wrapper">
-            <div class="page-body">
-                <div class="">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
@@ -52,19 +56,29 @@
                                         <div class="form-group row my-4">
                                             <label class="col-sm-2 col-form-label">Bağlı Olduğu Model <i
                                                     class="feather icon-info  text-c-blue"></i></label>
-                                            <div class="col-sm-3">
-                                                <select name="model" class="form-control fill">
-                                                    <option value="">Bir modül seçiniz </option>
+                                            <div class="col-sm-5">
+                                                <select  id="category_model" name="model" class=" form-control fill" id="">
+                                                    <option  value="">Bir modül seçiniz </option>
                                                     <option value="portfolio">Portfolyo</option>
                                                     <option value="services">Hizmet</option>
                                                     <option value="article">Makale</option>
-                                                    {{-- <option value="post">Haber</option>
-                                                    <option value="product">Ürün</option>
-                                                    <option value="photo_gallery">Foto Galeri</option>
+                                                    <option value="product">Ürün</option>-
+                                                    {{--<option value="post">Haber</option>--}}
+                                                    {{-- <option value="photo_gallery">Foto Galeri</option>
                                                     <option value="video_gallery">Video Galeri</option> --}}
 
 
                                                 </select>
+
+                                              
+                                            </div> 
+                                            <div class="col-sm-5 ">
+                                                <div class="col-sm-5" id="country_select" hidden>
+                                                    <select id="parent_model" name="parent_id" class="form-control fill" >
+                                                        <option value="">--Üst kırılım seçiniz --</option>
+                                                    </select>
+
+                                                </div>
 
                                               
                                             </div>
@@ -156,16 +170,18 @@
 
 
     @section('css')
-        <style>
 
-        </style>
     @endsection
 
     @section('js')
         {{-- <script type="text/javascript" src="{{ asset('admin/assets/bower_components/sweetalert/js/sweetalert.min.js') }}"> --}}
-        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
-        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/translations/tr.js"></script>
-        {{-- <script src="{{ asset('vendor/dropify/dist/js/dropify.js') }}"></script> --}}
+{{--        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>--}}
+{{--        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/translations/tr.js"></script>--}}
+
+        <script src="{{asset('admin/bower_components/select2/js/select2.full.min.js')}}"></script>
+
+
+            {{-- <script src="{{ asset('vendor/dropify/dist/js/dropify.js') }}"></script> --}}
 
 
         {{-- <script src="{{ asset('admin/assets/partials/ckeditor/ckeditor.js') }}"></script> --}}
@@ -221,24 +237,68 @@
 
             // }
 
-            ClassicEditor
+            // ClassicEditor
+            //
+            //     .create(document.querySelector('#ckeditor'))
+            //
+            //     .catch(error => {
+            //         console.error(error);
+            //     });
 
-                .create(document.querySelector('#ckeditor'))
-
-                .catch(error => {
-                    console.error(error);
-                });
 
 
 
-            $('.dropify').dropify({
-                messages: {
-                    'default': 'Resim yükle ya da sürükle',
-                    'replace': 'Resim değiştir ya da sürükle',
-                    'remove': 'Kaldır',
-                    'error': 'Hata! Desteklenen dosya tipinden farklı bir dosya yüklediniz.'
-                }
-            });
         </script>
-        {{-- <script type="text/javascript" src="{{ asset('admin/assets/js/jquery.marcopolo.min.js') }}"></script> --}}
+
+
+        <script>
+
+                $('#category_model').on('change', function (e) {
+                    let parent_model =    $("#parent_model");
+                    $("#parent_model option").remove();
+                    let valueSelected = this.value;
+                    
+                    $.ajax({
+                        url:'{{ route("category.parent_data") }}',
+                        type:'POST',
+                        data:{
+                            "_token": "{{ csrf_token() }}",
+                            model:valueSelected
+                        },
+                        success: function(veri) {
+                            console.log(veri.length)
+                            if(veri.length == 0){
+                                $('#country_select').attr('hidden',true);
+                            }
+                            else{
+                                parent_model.append('<option value="0">--Üst Kırılım Seçiniz--</option>');
+                                $.each( veri, function(key, val) {
+                                    parent_model.append($('<option>', {value:val.id, text:val.name}));
+                                });
+                                $('#country_select').attr('hidden',false);
+
+                                parent_model.select2();
+                            }
+
+                          
+                        }
+                    })
+                    
+                    
+
+
+
+                });
+              
+
+
+
+
+            </script>
+    
+    
+        
+        
+        
+        
     @endsection

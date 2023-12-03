@@ -110,7 +110,7 @@
 <script src="{{asset('/frontend/theme1/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
 <script src="{{asset('/frontend/theme1/vendor/swiper/swiper-bundle.min.js')}}"></script>
 <script src="{{asset('/frontend/theme1/vendor/php-email-form/validate.js')}}"></script>
-<script src="{{asset('/frontend/theme1/js/heartbeat.js')}}"></script>
+<script src="{{asset('/frontend/js/heartbeat.js')}}"></script>
 @yield('js')
 
 <!-- Template Main JS File -->

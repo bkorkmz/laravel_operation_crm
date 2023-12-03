@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->integer('status')->default(1);
             $table->string('question',500);
-            $table->jsonb('answers');
+            $table->text('answers')->nullable()->comment('question attributes');
+            
             $table->bigInteger('user_id');
 
             $table->timestamps();

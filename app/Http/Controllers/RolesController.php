@@ -18,7 +18,7 @@ class RolesController extends Controller
     public function index_data()
     {
         $data = Role::orderBy('id','ASC');
-        if ( !auth()->user()->hasRole('Super admin')){
+        if ( auth()->id() != 1){
             $data->where('id', '!=', 1);
         }
         

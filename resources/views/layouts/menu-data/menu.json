@@ -117,7 +117,6 @@
           "path": "/^post(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
           "badge": "false",
           "permission": [
-            "view_menu_post",
             "view_all_post"
           ]
         },

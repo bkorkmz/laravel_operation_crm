@@ -38,5 +38,15 @@ class Category extends Model
     {
         return $this->hasMany(Article::class, 'category_id');
     }
+    
+    public function parent()
+    {
+      return $this->hasMany(Category::class,'parent_id', 'id')->select('id','name','parent_id');    
+    }
+    
+    public function sub_category()
+    {
+        return $this->hasMany(Category::class, 'id','parent_id')->with('parent')->select('id','name','parent_id');
+    }
 
 }

@@ -6,32 +6,32 @@
 
 
 @section('content')
-   
-<div class="pcoded-inner-content">
-    <div class="page-wrapper">
-        <div class="page-body">
-            <div class="">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>Silinen Kategoriler Listesi</h3>
-                            <button type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
-                                    onclick="return window.history.back()"><i class="fa fa-reply"></i>Geri Dön</button>
 
-                        </div>
-                        <div class="card-block table-border-style">
-                            <div class="table-responsive">
-                                <table id="datatable" class="dataTable table">
-                                    
-                                </table>
+    <div class="pcoded-inner-content">
+        <div class="main-body">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    <div class="col-12">
+                       <div class="card">
+                            <div class="card-header">
+                                <h3>Silinen Kategoriler Listesi</h3>
+                                <button type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
+                                        onclick="return window.history.back()"><i class="fa fa-reply"></i>Geri Dön</button>
+    
                             </div>
+                            <div class="card-block table-border-style">
+                                <div class="table-responsive">
+                                    <table id="datatable" class="dataTable table">
+                                        
+                                    </table>
+                                </div>
+                             </div>
                         </div>
-                    </div>
+                   </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 @endsection
 

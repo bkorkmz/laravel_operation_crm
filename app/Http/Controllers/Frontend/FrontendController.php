@@ -12,13 +12,11 @@ use App\Models\JobTeams;
 use App\Models\ModelLandingPage;
 use App\Models\Newsletter;
 use App\Models\PortFolio;
-use Flasher\Laravel\Http\Response;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
+use App\Models\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\View;
 
 class FrontendController extends Controller
 {
@@ -41,7 +39,7 @@ class FrontendController extends Controller
             ->where(['location' => 1, 'publish' => 0])
             ->orderby('id', 'desc')
             ->limit(10)->get();
-         
+//         
         $services = Article::withwhereHas('category', function ($query) {
             $query->where('model', 'services');
         })
@@ -63,7 +61,6 @@ class FrontendController extends Controller
 
         $portfolio = PortFolio::where(['status' => 1, 'type' => 'portfolio'])
             ->select('id', 'name', 'link', 'category_id', 'image')
-            // ->with('category:id,name,slug')
             ->withwherehas('category',function($q){
                 $q->where('show',1)
                 ->where('model','portfolio')
@@ -84,21 +81,12 @@ class FrontendController extends Controller
          $newsData = json_decode($jsonContent, true);
          $newsList =  array_slice($newsData['haberlist'], 0, 6);
         }
-
         
-
-        //     $module_pages['consultants'] = 'consultantsSection';
-        //     $module_pages['courses'] = 'coursesSection';
-        // }
-        // // call page sections
-        // foreach ($module_pages as $key => $value) {
-        //     $contents->put($key, $this->$value());
-        // }
-
-
-        // dd($slider);
-
-
+        
+        $products =  Products::where(['status' => 1])
+            ->select('id', 'name', 'slug', 'description', 'price','stock','photo')
+           ->get();
+        
         return view( $this->theme.'.frontend.index', compact(
             "article",
             "services",
@@ -108,7 +96,7 @@ class FrontendController extends Controller
             "services_category",
             'about_page',
             'faq_sss',
-            'all_article','referance','newsList'
+            'all_article','referance','newsList','products'
         ));
     }
 
@@ -221,11 +209,14 @@ class FrontendController extends Controller
         $sidebar_article = Article::whereRelation('category', function ($query) {
             $query->where('model', 'article');
         })->where(['publish' => 0])->orderby('created_at', 'desc')->limit(4)->get();
-
         $article = Article::where('slug', $slug)->first();
+        $ids[] = $article->id;
         $categories = Category::where(['model'=>'article','show'=>1])->select('id','name')->withCount('content')->get();
-
-        return view( $this->theme.'.frontend.pages.blog_detail', compact('article', 'sidebar_article','categories'));
+        foreach($sidebar_article->pluck('id')->toarray() as $id){
+            $ids[]= $id;
+        }
+        $other_article =  Article::whereNot('id',$ids)->first();
+        return view( $this->theme.'.frontend.pages.blog_detail', compact('article', 'sidebar_article','categories','other_article'));
     }
     
     public function contact_submit(Request $request)
@@ -265,6 +256,51 @@ class FrontendController extends Controller
         
         return view($this->theme.'.frontend.pages.post_detail',compact('data','sidebar_group','other_post'));
     }
+    
+    
+    public function siteMap()
+    {
+        $urls = [
+            request()->schemeAndHttpHost().'/blog',
+        ];
+        
+        $article = Article::where('publish',0)->select('slug')->get()->toarray();
+        
+            foreach($article as $art){
+                $urls[] = request()->schemeAndHttpHost().'/blog/'.$art['slug'];
+            }
+        
+        $sitemapContent = view('sitemap', compact('urls'))->render();
+        file_put_contents(public_path('sitemap.xml'), $sitemapContent);
+        return redirect(url(request()->schemeAndHttpHost().'/sitemap.xml'));
+        
+    }    
+    
+
+    public function products(){
+//        Products::where('status',1)->get()        
+         
+        return view($this->theme.'.frontend.pages.products');
+    }
+    public function productIndexData()
+    {
+        
+    }
+    
+        
+        public function productDetail($slug){
+        
+        $product = Products::where('slug',$slug)->first();
+        
+        if(!$product){
+            return back();
+        }
+        
+        return view($this->theme.'.frontend.pages.product_detail',compact('product'));
+        
+        
+    }
+    
     
     
     

@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
 
@@ -87,7 +88,7 @@ class ArticleController extends Controller
     {
 //        dd( $request->all());
         
-        $request->validate(
+        $validator = Validator::make($request->all(), 
             [
                 'title' => 'required|max:100',
                 'short_detail' => 'required|max:250',
@@ -115,6 +116,13 @@ class ArticleController extends Controller
         
         );
         
+        
+        $slug = slug_format($request->slug);
+        $validator->after(function ($validator) use ($slug) {
+            if ($this->model_name::where('slug', $slug)->exists()) {
+                $validator->errors()->add('slug', 'Bu url  zaten mevcut. Lütfen slug yapısını değiştiriniz. ');
+            }
+        });
         
         if(request()->hasFile('image')) {
             $this->validate(request(), array('image' => 'image|mimes:png,jpg,jpeg,gif,webp|max:4096'));
@@ -157,9 +165,10 @@ class ArticleController extends Controller
         
         
         $data_array['detail'] = $description;
+        $data_array['slug'] = $slug;
         $post = $this->model_name::create($data_array);
-        $slug = slug_format(Str::limit($request->title, 60)) . '-' . $post->id;
-        $post->update(['slug' => $slug]);
+        
+//        $post->update(['slug' => $slug]);
         
         /*
     if($request->pushbildirim=='on'){
@@ -207,7 +216,7 @@ class ArticleController extends Controller
     public function update(Request $request, string $id)
     {
         
-        $request->validate(
+        $validator = Validator::make($request->all(),
             [
                 'title' => 'required|max:100',
                 'short_detail' => 'required|max:250',
@@ -236,13 +245,23 @@ class ArticleController extends Controller
             '_token'
         );
         
-        $data_array['slug'] = slug_format(Str::limit($request->title, 60)) . '-' . $id;
         
-        // $now = strtotime(date('Y-m-d H:i:s'));
-        // $newdate = strtotime(date('Y-m-d H:i:s', strtotime($request->date)));
-        // if($newdate > $now){
-        //     $post->created_at = date('Y-m-d H:i:s', strtotime($request->date));
-        // }
+        
+        
+        
+        
+        $slug = slug_format(Str::limit($request->title, 60));
+        $has_article=$this->model_name::where('slug', $slug)->first();
+        $validator->after(function ($validator) use ($has_article,$id) {
+            if($has_article) {
+                if($has_article->id != $id) {
+                    $validator->errors()->add('title', 'Bu başlık zaten mevcut. Lütfen başlığı değiştiriniz. ');
+                }
+            }
+        });
+        
+        $data_array['slug'] = $slug;
+        
         
         
         if(request()->hasFile('image')) {
@@ -432,7 +451,7 @@ class ArticleController extends Controller
     public function services_store(Request $request)
     {
         
-        $request->validate(
+        $validator = Validator::make($request->all(),
             [
                 'title' => 'required|max:50',
                 'short_detail' => 'required|max:250',
@@ -527,7 +546,7 @@ class ArticleController extends Controller
     public function services_update(Request $request, string $id)
     {
         
-        $request->validate(
+        $validator = Validator::make($request->all(),
             [
                 'title' => 'required|max:50',
                 'short_detail' => 'required|max:250',
@@ -555,7 +574,20 @@ class ArticleController extends Controller
             'image_mini', 'files',
             '_token'
         );
-        $data_array['slug'] = slug_format(Str::limit($request->title, 60)) . '-' . $id;
+        
+        $slug = slug_format(Str::limit($request->title, 60));
+        $has_article=$this->model_name::where('slug', $slug)->first();
+        $validator->after(function ($validator) use ($has_article,$id) {
+            if($has_article) {
+                if($has_article->id != $id) {
+                    $validator->errors()->add('title', 'Bu başlık zaten mevcut. Lütfen başlığı değiştiriniz. ');
+                }
+            }
+        });
+        
+        
+        
+        $data_array['slug'] = $slug;
         
         if(request()->hasFile('image')) {
             $this->validate(request(), array('image' => 'sometimes|mimes:png,jpg,jpeg,gif,webp|max:4096'));

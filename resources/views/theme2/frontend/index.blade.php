@@ -15,11 +15,15 @@
 
     <!-- herobannerarea__section__start -->
     @include('theme2.frontend.partitals.slider')
+    
+    
+    
+    @include('theme2.frontend.partitals.product')
 
 
 
     <!-- aboutarea__2__section__start -->
-    @include('theme2.frontend.partitals.about_us')
+{{--    @include('theme2.frontend.partitals.about_us')--}}
     <!-- aboutarea__2__section__end -->
 
 
@@ -98,6 +102,7 @@
                 </div>
             </div>
         </div>
+        <div  id="contact"></div>
     </div>
     <!-- counter__section__end-->
 

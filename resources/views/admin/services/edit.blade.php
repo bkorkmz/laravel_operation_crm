@@ -30,8 +30,20 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Hizmet Başlığı <span class="text-danger"> *</span></label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control form-control-normal" value="{{$model->title}}"
+                                <input type="text" class="form-control form-control-normal" value="{{$model->title}}" oninput="slug_copy(this)"
                                     placeholder="" name="title" maxlength="50" required>
+                            </div>
+                        </div>
+                      
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Opsiyonel url  <span class="text-danger"> *</span></label>
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                     <span class="input-group-prepend">
+                                         <label class="input-group-text">{{"https://".request()->host()."/blog/"}}</label>
+                                     </span>
+                                    <input id="slug_content"  value="{{ $model->slug }}"  type="text" class="form-control text-lowercase"  name="slug" maxlength="100">
+                                </div>
                             </div>
                         </div>
                         {{--                         
@@ -70,7 +82,7 @@
                             <div class="col-sm-3">
                                 <select name="category_id" class="form-control fill">
                                     @foreach ($category as $cat)
-                                        <option value="{{ $cat->id }} {{$model->category_id == $cat->id ? 'selected': '' }}">{{ $cat->name }}</option>
+                                        <option {{$model->category_id == $cat->id ? 'selected': '' }} value="{{ $cat->id }} ">{{ $cat->name }}</option>
                                     @endforeach
                                 </select>
                               
@@ -180,7 +192,7 @@
                                 <input type="file" class="form-control form-control-normal dropify"
                                 data-show-remove="false" data-default-file="{{ $model->image }}"
                                 accept=".jpg,.jpeg,.png,.tiff,.gif,.svg,.webp,.bmp,.ico"
-                                placeholder="" name="image">
+                                placeholder="" name="image" required>
                              </div>
                         </div>
 

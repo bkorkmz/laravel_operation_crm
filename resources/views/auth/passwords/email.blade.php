@@ -7,8 +7,11 @@
 
 <style>
     body {
-    background-image:url("/{{config('settings.site_register_img')}}");
+    background-image:url("{{config('settings.site_register_img')}}");
     background-size:cover;   
+    }
+    .container{
+        max-width: 40rem;
     }
 </style>
 @endsection
@@ -22,11 +25,11 @@
 
             <div class="card-body">
     
-                <div class="col-6 m-auto ">
+                <div class="col m-auto ">
     
     
-                    <div class="text-center">
-                        <img src="/{{config('settings.site_logo')}}"
+                    <div class="text-center m-3">
+                        <img src="{{ config('settings.site_logo') }}"
                             class="img-fluid" alt="logo" width="250px">
                     </div>
     

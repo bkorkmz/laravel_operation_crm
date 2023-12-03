@@ -15,6 +15,7 @@ class SettingsSeeder extends Seeder
     {
         $data = [
             ["name" => "site_title", "value" => "Site başlık mesajı", "group" => "general", "type" => "string"],
+            ["name" => "site_name", "value" => "<span>Poyraz </span>Yazılım Hizmetleri", "group" => "general", "type" => "string"],
             ["name" => "site_keywords", "value" => "Site anahtar kelimeleri", "group" => "general", "type" => "string"],
             ["name" => "site_description", "value" => "Site Açıklaması ", "group" => "general", "type" => "string"],
             ["name" => "site_newsname", "value" => "news name", "group" => "general", "type" => "string"],
@@ -33,10 +34,10 @@ class SettingsSeeder extends Seeder
             ["name" => "site_youtube_url", "value" => "#!", "youtube.com", "group"=> "ceo", "type" => "string"],
             ["name" => "site_google_plus_url", "value" => "google.com/", "group" => "ceo", "type" => "string"],
             ["name" => "site_linkedin_url", "value" => "linkedin.com/", "group" => "ceo", "type" => "string"],
-            ["name" => "site_cookie_text", "value" => "#!", "group" => "ceo", "type" => "string"],
-            ["name" => "site_cookie_url", "value" => "#!", "group" => "ceo", "type" => "string"],
-            ["name" => "site_meta_tag", "value" => "#!", "group" => "ceo", "type" => "textarea"],
-            ["name" => "site_analytics", "value" => "#!", "group" => "ceo", "type" => "textarea"],
+            ["name" => "site_cookie_text", "value" => "", "group" => "ceo", "type" => "string"],
+            ["name" => "site_cookie_url", "value" => "", "group" => "ceo", "type" => "string"],
+            ["name" => "site_meta_tag", "value" => "", "group" => "ceo", "type" => "textarea"],
+            ["name" => "site_analytics", "value" => "", "group" => "ceo", "type" => "textarea"],
 
             ["name" => "site_logo", "value" => "images/logo.png", "group" => "image", "type" => "image"],
             ["name" => "site_icon", "value" => "images/logo.png", "group" => "image", "type" => "image"],

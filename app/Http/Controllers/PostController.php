@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Yajra\DataTables\DataTables;
@@ -395,13 +396,19 @@ class PostController extends Controller
         
     }
     
-    public function getAjans(Request $request): void
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function getAjans(Request $request)
     {
-        
-        $response = Http::get('http://haber.evrim.com/Rest/Habers?page=1&size=10');
+        $response = Http::get('http://haber.evrim.com/Rest/Habers?page=1&size=20');
         $newsData = $response->json();
         $filePath = storage_path('app/evrimNews.json');
         file_put_contents($filePath, json_encode($newsData));
-    }
+        
+        toastr()->success('İşlem başarılı şekilde tamamlanmıştır.', 'Başarılı');
+        return back();
+    } 
     
 }

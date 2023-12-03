@@ -22,6 +22,7 @@ return [
 
 
             "site_title"=>"Site Başlığı",
+            "site_name"=>"Site Adı",
             "site_keywords"=>"Site Anahtar Kelimeleri",
             "site_description"=>"Site Açıklması",
             "site_newsname"=>"Google News Adı",
