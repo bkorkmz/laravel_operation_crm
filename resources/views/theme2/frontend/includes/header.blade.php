@@ -18,7 +18,7 @@
         <div class="container desktop__menu__wrapper">
             <div class="d-flex">
                 <div class="col-xl-2 col-lg-2 col-md-6">
-                    <div class="headerarea__left">
+                    <div class="headerarea__left position-absolute">
                         <div class="headerarea__left__logo featurearea__img " style="max-width: 200px">
                             <a class="dark__mode" href="/"><img loading="lazy"  src="{{ asset(config('settings.site_logo')) }}" alt="logo" width="200px" height=""></a>
                             <a class="light__mode" href="/"><img src="{{ asset(config('settings.site_logo')) }}" alt="logo" width="200px" height=""></a>
