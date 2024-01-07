@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('question_banks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->string('slug',70);
             $table->integer('status')->default(1);
             $table->bigInteger('user_id');

@@ -7,6 +7,9 @@ use App\Models\Article;
 use App\Models\InfoMessage;
 use App\Models\JobTeams;
 use App\Models\Newsletter;
+use App\Models\Products;
+use App\Models\Test;
+use App\Models\TestDefinition;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -28,43 +31,75 @@ class AdminController  extends Controller
     }
     
 
-    public function index(): Application|Factory|View|\Illuminate\Foundation\Application
+    public function index()
     {
-
+        
+        $contents = collect();
+        
+        if(!auth()->user()->hasRole('user')){
+            $pages['admin'] ='admin_dashboard';   
+        }else {
+            $pages['user'] = 'user_dashboard';
+        }
+      
+        foreach ($pages as $key=>$page){
+            $contents->put($key, $this->$page());
+        }
+        return view('admin.index', compact('contents'));
+    }
+    
+    public function admin_dashboard(){
+        
         $article = Article::whereRelation('category', function ($query) {
             $query->where('model', 'article');
         });
         $total_article = $article->get()->count();
         $last_article = $article->latest()->limit(5)->get();
-
-
+        
         $services = Article::whereRelation('category', function ($query) {
             $query->where('model', 'services');
         });
-        $total_services = $services->get()->count();
+        $total_services = $services->count();
         $last_services = $services->latest()->limit(5)->get();
-
-
         $user_count = JobTeams::where('status', 1)->get()->count();
-
         $requestForm = InfoMessage::where('type','request_form')
-                   ->orderByRaw('publish ASC, created_at DESC')->paginate(10); 
+            ->orderByRaw('publish ASC, created_at DESC')->paginate(10);
         $infoMessages = InfoMessage::where('type','info_form')->orderBy('created_at', 'asc');
-        $infoMessages =  $infoMessages->limit(5)->get();      
-        $mesaageCount =  $infoMessages->where('publish',0)->count();
+        $infoMessages =  $infoMessages->limit(5)->get();
+        $mesageCount =  $infoMessages->where('publish',0)->count();
         
         $newsletter = Newsletter::latest();
         $newsletterCount =  $newsletter->count();
         $newsletter = $newsletter->limit(1)->get();
         
-        return view('admin.index', compact(
+        $testsCount = TestDefinition::count();
+        
+        return compact(
             'total_article',
             'last_article',
             'total_services',
             'last_services',
             'user_count',
-            'infoMessages','mesaageCount','requestForm','newsletter','newsletterCount'
-        ));
+            'infoMessages',
+            'mesageCount',
+            'requestForm',
+            'newsletter',
+            'newsletterCount',
+            'testsCount'
+        );
+        
+    }
+    
+    public function user_dashboard(){
+        $articleCount = Article::whereRelation('category', function ($query) {
+            $query->where('model', 'article');
+        })->where('user_id',auth()->id())->count();
+        
+        $products = Products::where('status',1)->latest()->limit(5)->get();
+        $testsCount = TestDefinition::where('user_email',auth()->user()->email)->count();
+        
+        
+        return compact('articleCount','products','testsCount');
     }
     
 
@@ -77,14 +112,14 @@ class AdminController  extends Controller
     }
     
 
-    public function info_message(): Application|Factory|View|\Illuminate\Foundation\Application
+    public function info_message()
     {
         $messages = InfoMessage::where('type','info_form')->orderBy('created_at', 'asc')->paginate(10);
         return view('admin.message', compact('messages'));
     }
     
 
-    public function info_message_edit($id): Application|ResponseFactory|\Illuminate\Foundation\Application|Response
+    public function info_message_edit($id)
     {
         $messages = InfoMessage::where('id', $id)->update(['publish' => 1]);
         if ($messages) {
@@ -130,7 +165,7 @@ class AdminController  extends Controller
      */
     public function  newsletterDownload()
     {
-        return Excel::download(new  NewsletterExport(), 'Email-List-'.date('d.m.Y').'.xlsx',\Maatwebsite\Excel\Excel::XLSX);
+        return Excel::download(new  \App\Exports\NewsletterExport, 'Email-List-'.date('d.m.Y').'.xlsx',\Maatwebsite\Excel\Excel::XLSX);
     }
 
 

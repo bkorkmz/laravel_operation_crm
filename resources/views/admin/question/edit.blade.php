@@ -42,7 +42,6 @@
                                             </div>
                                         </div>
 
-
                                         <div class="form-group row my-4">
                                             <label class="col-sm-2 col-form-label">Durum</label>
                                             <div class="col-sm-3 row align-self-center">
@@ -50,14 +49,14 @@
                                                 <div class="form-check m-2">
                                                     <input class="form-check-input" checked type="radio"
                                                            name="status" id="active" value="1"
-                                                            {{ $model->show == 1 ? 'checked' : '' }}>
+                                                            {{ $model->status == 1 ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="active">Aktif</label>
                                                 </div>
                                                 <div class="form-check m-2">
 
                                                     <input class="form-check-input" type="radio" name="status"
                                                            id="passive" value="0"
-                                                            {{  $model->show == 0 ? 'checked' : '' }}>
+                                                            {{  $model->status == 0 ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="passive">Pasif </label>
                                                 </div>
                                             </div>
@@ -72,7 +71,7 @@
                                                         <div class="form-material">
                                                             <div class="right-icon-control">
                                                                 <div class="form-group form-primary">
-                                                                    <input type="text" id="task-insert"
+                                                                    <input type="text" id="task-insert" maxlength="500"
                                                                            class="form-control">
                                                                     <span class="form-bar"></span>
                                                                     <label class="float-label">Yeni bir seçenek

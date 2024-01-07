@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>@yield('title', config('settings.site_title')) </title>
+    <title>@yield('title') {{config('settings.site_title')}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -85,6 +85,7 @@
         animation: animate-loading 1s linear infinite;
     }
 
+    .footerarea__right__wraper
 </style>
 
 <script>
@@ -121,12 +122,12 @@
 </style>
 <body class="body__wrapper">
 <!-- pre loader area start -->
-{{--<div id="back__preloader">--}}
-{{--    <div id="back__circle_loader"></div>--}}
-{{--       <div class="back__loader_logo">--}}
-{{--            <img src="{{ asset(config('settings.site_logo')) }}" alt="Preload">--}}
-{{--        </div>--}}
-{{--</div>--}}
+<div id="back__preloader">
+    <div id="back__circle_loader"></div>
+       <div class="back__loader_logo">
+            <img src="{{ asset(config('settings.site_logo')) }}" alt="Preload">
+        </div>
+</div>
 <!-- pre loader area end -->
 
 <!-- Dark/Light area start -->
@@ -153,9 +154,7 @@
     @yield('content')
 
  
-    
-    @include('theme2.frontend.includes.footer')
-    
+  
     <div class="modal fade" id="request_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
@@ -222,8 +221,10 @@
 
 
 
-</main>
+    @include('theme2.frontend.includes.footer')
 
+
+</main>
 
 
 
@@ -291,7 +292,7 @@
     });
 </script>
 
-
+{{--@yield('js')--}}
 </body>
 
 </html>

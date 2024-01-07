@@ -84,7 +84,7 @@
                                                             <div class="right-icon-control">
                                                                 {{--                                                                <form class="form-material"> --}}
                                                                 <div class="form-group form-primary">
-                                                                    <input type="text" id="task-insert"
+                                                                    <input type="text" id="task-insert" maxlength="500"
                                                                            class="form-control">
                                                                     <span class="form-bar"></span>
                                                                     <label class="float-label">Yeni bir seçenek

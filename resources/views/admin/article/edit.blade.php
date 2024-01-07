@@ -81,7 +81,7 @@
                                                 <select name="category_id" class="form-control fill">
                                                     @foreach ($post_category as $category)
                                                         <option {{ $model->category_id == $category->id ? 'selected' : '' }}
-                                                            value="{{ $category->id}}">{{ $category->name }}</option>
+                                                            value="{{ $category->id }}">{{ $category->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 {{-- <a type="button" class="float-right badge badge-inverse-danger"

@@ -95,7 +95,7 @@
                             <a  href="/"><img src="{{ asset(config('settings.site_logo')) }}" alt="logo" class="img-fluid" width="300" height="" ></a>
                         </div>
                         <div class="footerarea__icon" style="margin-top: 213px;">
-                            <div class="footerarea__header text-white">Sosyal meday hesaplarımızdan bizi takip edebilirsiniz.</div>
+                            <div class="footerarea__header text-white">Sosyal medya hesaplarımızdan bizi takip edebilirsiniz.</div>
 
                             <ul class="my-3">
                                 <li class="{{config('settings.site_facebook_url') ?"": "d-none"}}"><a href="{{config('settings.site_facebook_url')}}"><i class="icofont-facebook"></i></a></li>

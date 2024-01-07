@@ -1,7 +1,7 @@
 @extends('theme2.layout')
 
 
-@section('tltle')
+@section('title')
 {{$product->name}}
 @endsection
 

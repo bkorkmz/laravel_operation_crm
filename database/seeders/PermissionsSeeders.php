@@ -28,7 +28,9 @@ class PermissionsSeeders extends Seeder
         Permissions::firstOrCreate(['name' => 'edit_my_profile_users', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'update_my_profile_users', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'bloke_my_profile_users', 'guard_name' => 'web']);
-
+        Permissions::firstOrCreate(['name' => 'news_letter_list_download_users', 'guard_name' => 'web']);
+        
+        
         ///Roles Permissions
         Permissions::firstOrCreate(['name' => 'view_menu_roles', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'view_all_roles', 'guard_name' => 'web']);
@@ -104,6 +106,9 @@ class PermissionsSeeders extends Seeder
         Permissions::firstOrCreate(['name' => 'create_article', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'edit_article', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'update_article', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'view_trash_article', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'trash_article', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'restore_article', 'guard_name' => 'web']);
         //Tems
         Permissions::firstOrCreate(['name' => 'view_menu_teams', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'view_teams', 'guard_name' => 'web']);
@@ -144,6 +149,33 @@ class PermissionsSeeders extends Seeder
         Permissions::firstOrCreate(['name' => 'show_question', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'update_question', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'delete_question', 'guard_name' => 'web']);
+        
+        
+        //Tests 
+        Permissions::firstOrCreate(['name' => 'view_menu_tests', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'create_tests', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'edit_tests', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'update_tests', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'show_tests', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'delete_tests', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'view_all_tests', 'guard_name' => 'web']);
+        
+        Permissions::firstOrCreate(['name' => 'view_analysis_list_tests', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'view_my_tests', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'show_analysis_tests', 'guard_name' => 'web']);
+ 
+        
+        
+        
+        //pages
+        //Slider - Portfolio
+        Permissions::firstOrCreate(['name' => 'view_menu_pages', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'view_pages', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'create_pages', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'edit_pages', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'update_pages', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'delete_pages', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'restore_pages', 'guard_name' => 'web']);
 
 
         //        $super_admin = Role::whereName('Super admin')->first();
@@ -207,8 +239,6 @@ class PermissionsSeeders extends Seeder
             "update_services",
             "delete_services",
             "message_information_comment",
-
-
         ];
 
         $teacher = Role::whereName('admin')->first();

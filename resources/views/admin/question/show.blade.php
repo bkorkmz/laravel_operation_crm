@@ -19,7 +19,7 @@
                                 <div class="card ecommerce-card">
 
                                     <div class="card-body">
-                                            <h3 for="">Soru Metni</h3>
+                                            <h3 >Soru Metni</h3>
                                         
                                                 <p>{{ $model->question }}</p>
                                     </div>

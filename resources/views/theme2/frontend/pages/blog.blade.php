@@ -1,5 +1,5 @@
 @extends('theme2.layout')
-@section('tltle')
+@section('title')
     Blog
 @endsection
 

@@ -55,9 +55,7 @@
                                             </ul>
                                         </div>
                                         <div class="col-md-9">
-
                                             <div class="tab-content card-block">
-
                                                 @foreach ($permissions as $group => $groupPermissions)
                                                     <div class="tab-pane fade{{ $loop->first ? ' show active' : '' }}"
                                                         id="{{ $group }}" role="tabpanel"
@@ -73,7 +71,7 @@
                                                                                 value="{{ $permission }}"
                                                                                 @if ($rolePermissions->contains('name', $permission)) checked @endif
                                                                                 onclick="permissionUpdate('{{ $permission }}')">
-                                                                            <label for="{{ $permission }}"
+                                                                            <label for="{{ $permission }}" class="text-capitalize"
                                                                                 style="font-size: 14px;white-space: break-spaces;">@lang('roles.role.name.' . $permission)</label>
                                                                         </div>
                                                                     </div>

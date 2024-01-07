@@ -1,80 +1,128 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<?xml version='1.0' encoding='UTF-8'?>
+    <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
             <url>
             <loc>http://laravel_operation_crm.test/blog</loc>
-            <lastmod>2023-11-25T00:43:39+03:00</lastmod>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
             <changefreq>daily</changefreq>
             <priority>1.0</priority>
         </url>
             <url>
             <loc>http://laravel_operation_crm.test/blog/hizmet-ornek-6</loc>
-            <lastmod>2023-11-25T00:43:39+03:00</lastmod>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
             <changefreq>daily</changefreq>
             <priority>1.0</priority>
         </url>
             <url>
             <loc>http://laravel_operation_crm.test/blog/lorem-ipsum-generator-7</loc>
-            <lastmod>2023-11-25T00:43:39+03:00</lastmod>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
             <changefreq>daily</changefreq>
             <priority>1.0</priority>
         </url>
             <url>
             <loc>http://laravel_operation_crm.test/blog/instagram-hikaye-goruntulemeleri-ig-hikaye-iceriklerini-nas</loc>
-            <lastmod>2023-11-25T00:43:39+03:00</lastmod>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
             <changefreq>daily</changefreq>
             <priority>1.0</priority>
         </url>
             <url>
             <loc>http://laravel_operation_crm.test/blog/iceriginizde-deneyebileceginiz-4-yeni-instagram-ozelligi</loc>
-            <lastmod>2023-11-25T00:43:39+03:00</lastmod>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
             <changefreq>daily</changefreq>
             <priority>1.0</priority>
         </url>
             <url>
             <loc>http://laravel_operation_crm.test/blog/6-instagram-ortak-gonderi-fikri</loc>
-            <lastmod>2023-11-25T00:43:39+03:00</lastmod>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
             <changefreq>daily</changefreq>
             <priority>1.0</priority>
         </url>
             <url>
             <loc>http://laravel_operation_crm.test/blog/icerik-olusturucular-instagram-reels-hediyeleri-ile-nasil-pa</loc>
-            <lastmod>2023-11-25T00:43:39+03:00</lastmod>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
             <changefreq>daily</changefreq>
             <priority>1.0</priority>
         </url>
             <url>
             <loc>http://laravel_operation_crm.test/blog/tiktok-latin-mirasi-ayi-icin-fon-saglama-firsatlarini-baslat-18</loc>
-            <lastmod>2023-11-25T00:43:39+03:00</lastmod>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
             <changefreq>daily</changefreq>
             <priority>1.0</priority>
         </url>
             <url>
             <loc>http://laravel_operation_crm.test/blog/tatillerde-sosyal-medya-kampanyasi-nasil-olusturulur</loc>
-            <lastmod>2023-11-25T00:43:39+03:00</lastmod>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
             <changefreq>daily</changefreq>
             <priority>1.0</priority>
         </url>
             <url>
             <loc>http://laravel_operation_crm.test/blog/icerik-ureticiler-icin-instagram-abonelikleri</loc>
-            <lastmod>2023-11-25T00:43:39+03:00</lastmod>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
             <changefreq>daily</changefreq>
             <priority>1.0</priority>
         </url>
             <url>
             <loc>http://laravel_operation_crm.test/blog/10-viral-video-ve-onlardan-ogrenebileceklerimiz</loc>
-            <lastmod>2023-11-25T00:43:39+03:00</lastmod>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
             <changefreq>daily</changefreq>
             <priority>1.0</priority>
         </url>
             <url>
             <loc>http://laravel_operation_crm.test/blog/youtube-algoritmasi-nasil-calisir</loc>
-            <lastmod>2023-11-25T00:43:39+03:00</lastmod>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
             <changefreq>daily</changefreq>
             <priority>1.0</priority>
         </url>
             <url>
             <loc>http://laravel_operation_crm.test/blog/lorem-ipsum-is-simply-dummy-text-of-the-printing-and-typeset</loc>
-            <lastmod>2023-11-25T00:43:39+03:00</lastmod>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
+            <changefreq>daily</changefreq>
+            <priority>1.0</priority>
+        </url>
+            <url>
+            <loc>http://laravel_operation_crm.test/blog/ghjhjgh-234</loc>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
+            <changefreq>daily</changefreq>
+            <priority>1.0</priority>
+        </url>
+            <url>
+            <loc>http://laravel_operation_crm.test/blog/lorem-ipsun-dor-ffdgfdfgdfg</loc>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
+            <changefreq>daily</changefreq>
+            <priority>1.0</priority>
+        </url>
+            <url>
+            <loc>http://laravel_operation_crm.test/blog/tasimacilik</loc>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
+            <changefreq>daily</changefreq>
+            <priority>1.0</priority>
+        </url>
+            <url>
+            <loc>http://laravel_operation_crm.test/blog/express-kurye</loc>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
+            <changefreq>daily</changefreq>
+            <priority>1.0</priority>
+        </url>
+            <url>
+            <loc>http://laravel_operation_crm.test/blog/intermodal-tasimacilik-28</loc>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
+            <changefreq>daily</changefreq>
+            <priority>1.0</priority>
+        </url>
+            <url>
+            <loc>http://laravel_operation_crm.test/blog/karayolu-tasimaciligi-29</loc>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
+            <changefreq>daily</changefreq>
+            <priority>1.0</priority>
+        </url>
+            <url>
+            <loc>http://laravel_operation_crm.test/blog/denizyolu-tasimaciligi-30</loc>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
+            <changefreq>daily</changefreq>
+            <priority>1.0</priority>
+        </url>
+            <url>
+            <loc>http://laravel_operation_crm.test/blog/deneme-1</loc>
+            <lastmod>2024-01-01T15:44:51+03:00</lastmod>
             <changefreq>daily</changefreq>
             <priority>1.0</priority>
         </url>

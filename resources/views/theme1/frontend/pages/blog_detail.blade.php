@@ -1,7 +1,7 @@
 @extends('layouts.layout-frontend')
 
 
-@section('tltle')
+@section('title')
 @endsection
 
 @section('head')

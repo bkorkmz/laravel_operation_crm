@@ -15,6 +15,35 @@
       "path": "/^profile/",
       "badge": "false",
       "permission": "view_my_profile_users"
+    },    {
+      "text": "Testler",
+      "icon": "feather icon-zap",
+      "route": "",
+      "path": "/^test/",
+      "badge": "false",
+      "permission": "view_menu_tests",
+      "submenu": [
+        {
+          "text": "Testler Listesi",
+          "icon": "feather icon-users",
+          "route": "test.index",
+          "path": "/^test(\\/index|\\/create|\\/edit|\\/show|\\/)?$/",
+          "badge": "false",
+          "permission": [
+            "create_tests"
+          ]
+        },
+        {
+          "text": "Test Sonuçları",
+          "icon": "feather icon-users",
+          "route": "test.testDefinition",
+          "path": "/^test_definetion/",
+          "badge": "false",
+          "permission": [
+            "view_analysis_list_tests"
+          ]
+        }
+        ]
     },
     {
       "text": "Kullanıcı Ayarları",

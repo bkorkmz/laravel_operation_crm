@@ -1,20 +1,22 @@
 @extends('theme2.layout')
 
 
-@section('tltle')
+@section('title')
 {{$data['haber']['Baslik']}}
 @endsection
 
 @section('head')
+
     <meta property="og:locale" content="tr_TR"/>
     <meta property="og:site_name" content="{{ config('settings.site_title') }}"/>
-    <meta property="og:title" content="{{ $data['haber']['Baslik'] }}"/>
-    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="{{ config('settings.site_title') }}i"/>
     <meta property="og:url" content="{{ config('settings.site_url') }}"/>
-
-    <meta property="og:description" content="{{ $data['haber']['Baslik'] }}"/>
-    <meta property="og:image" content="{ $article->image }}"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:description" content="{{ config('settings.site_description') }}"/>
+    <meta property="og:image" content="{{config('settings.site_icon')}}"/>
     <meta property="article:publisher" content="{{config('settings.site_facebook_url') }}"/>
+
+
 
     <meta itemprop="name" content="{{ config('settings.site_title') }}"/>
     <meta itemprop="headline" content="{{ config('settings.site_title') }}"/>
@@ -24,12 +26,12 @@
     <link rel="publisher" href="{{ config('settings.site_google_plus_url') }}"/>
 
 
-    <meta name="twitter:title" content="{{ $data['haber']['Baslik'] }}"/>
+    <meta name="twitter:title" content="{{ config('settings.site_title') }}"/>
     <meta name="twitter:url" content="{{ config('settings.site_url') }}"/>
-    <meta name="twitter:description" content="{{ $data['haber']['Baslik'] }}"/>
-    <meta name="twitter:image" content="{{ $article->image }}"/>
-    <meta name="twitter:card" content="{{ $article->image }}"/>
+    <meta name="twitter:description" content="{{ config('settings.site_description') }}"/>
+    <meta name="twitter:image" content="{{config('settings.site_icon')}}"/>
     <meta name="twitter:site" content="{{config('settings.site_twitter_url')}}"/>
+
 
 @endsection
 
@@ -121,13 +123,8 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href=" https://t.me/share/url?url={{route('frontend.post_detail', $article->slug) }}&text={{$data['haber']['Baslik']}}">
-                                        <i class="icofont-telegram"></i></a>
-                                </li>
-                                <li>
-                                    <a href="whatsapp://send?t={{ $data['haber']['Baslik']}}&text={{route('frontend.post_detail', $article->slug) }}"
-                                       data-action="share/whatsapp/share" target="blank"><i class="icofont-whatsapp" ></i></a>
-                                </li>
+                                    <a href="whatsapp://send?t={{route('frontend.post_detail',$data['haber']['Id'])}}&text={{$data['haber']['Baslik']}}"><i class="icofont-whatsapp"></i></a>
+                                </li> 
                        
                                 
                             </ul>

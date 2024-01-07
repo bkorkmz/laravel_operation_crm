@@ -306,12 +306,17 @@ class CategoryController extends Controller
         return redirect()->back();
     }
 
-        public function parenCategoryData(Request $request)
-        {
-            return    Category::where('model',$request->model)
-                ->where(['show'=>1,'parent_id'=>0])
-                ->select('id','name')->get()->toArray();
-        }
+    public function parenCategoryData(Request $request)
+    {
+     
+        
+        $data = Category::where('model',$request->model)->where(['show'=>1,'parent_id'=>0])->select('id','name')->get()->toArray();
+//        dd($request->all());
+
+        return $data;
+    
+        
+    }
 
 
     

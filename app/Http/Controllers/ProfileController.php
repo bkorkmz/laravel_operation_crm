@@ -35,31 +35,21 @@ class ProfileController extends Controller
         if ($model->email == $request->email) {
             $email_valid = 'required|email';
         } else {
-            $email_valid = 'required|email|unique:users,email';
+            $email_valid = 'required|email:rfc,dns|unique:users,email';
         }
 
         $validatedData = $request->validate([
-            'name' => 'required',
+            'name' => 'required|string|max:50',
             'email' => $email_valid,
             'phone' => 'required|numeric|digits:10',
 
             'gender' => 'nullable',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ], [
-            'name.required' => 'Ad alanı zorunludur.',
-            'email.required' => 'E-posta alanı zorunludur.',
-            'email.email' => 'Geçersiz bir e-posta adresi girdiniz.',
-            'email.unique' => 'Bu e-posta adresi zaten kayıtlı.',
-            'phone.required' => 'Telefon numarası alanı zorunludur.',
-            'phone.numeric' => 'Telefon numarası sadece rakamlardan oluşmalıdır.',
-            'phone.digits' => 'Telefon numarası 10 haneli olmalıdır.',
-            // 'password.min' => 'Şifre en az 6 karakter olmalıdır.',
-            // 'password.confirmed' => 'Şifreler eşleşmiyor.',
-            // 'status.required' => 'Durum alanı zorunludur.',
-            // 'status.boolean' => 'Durum alanı sadece doğru veya yanlış değeri alabilir.',
-            'avatar.images' => 'Profil resmi bir resim dosyası olmalıdır.',
-            'avatar.mimes' => 'Profil resmi yalnızca jpeg, png, jpg, gif veya svg formatında olabilir.',
-            'avatar.max' => 'Profil resmi en fazla 2 MB boyutunda olabilir.',
+        ], [],[
+            'name'=>"Kullanıcı Adı",
+            'email'=>"E-posta ",
+            'phone'=>"Telefon",
+            'avatar'=>"Profil resmi",
         ]);
 
 

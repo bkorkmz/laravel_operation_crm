@@ -13,6 +13,10 @@ use App\Models\ModelLandingPage;
 use App\Models\Newsletter;
 use App\Models\PortFolio;
 use App\Models\Products;
+use App\Models\Test;
+use App\Models\TestDefinition;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -278,13 +282,8 @@ class FrontendController extends Controller
     
 
     public function products(){
-//        Products::where('status',1)->get()        
-         
+         Products::all();
         return view($this->theme.'.frontend.pages.products');
-    }
-    public function productIndexData()
-    {
-        
     }
     
         
@@ -302,7 +301,105 @@ class FrontendController extends Controller
     }
     
     
+    /**
+     * @return Application|Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
+     */
+    public function tests ()
+    {
+        
+        $tests = Test::where('status',1)->whereHas('questionBank')
+            ->with('questionBank')
+            ->orderBy('wage_status','desc')
+            ->paginate(10);
+//        $tests->appends(['search' => 'votes']);
+        return view($this->theme.'.frontend.test.index',compact('tests'));
+    }
     
+
+    public function test($slug, $id)
+    {
+        $test = Test::where('id',$id)->first();
+        $questions = $test->questionBank->questions;
+        $questionArray =[];
+        foreach($questions as $question){
+            $answers =json_decode($question->answers,true);
+            $sections =[];
+            foreach ($answers as $answer){
+                $answerData =array_values($answer)[0];
+                $sections[]= [
+                    'code'=>$answerData['code'],
+                    'title'=>$answerData['title'],
+                ];
+            }
+            $questionArray[]=[
+                'id'=>$question->id,
+                'question'=>$question->question,
+                'answers'=> $sections,
+            ];
+        }
+        
+        
+        return view($this->theme.'.frontend.test.exam_test',compact('test','questionArray'));
+        
+    }
+    public function test_definition(Request $request)
+    {
+        
+        
+      
+      $data_array = [
+          'user_id'=>auth()->id() ?? 0,
+          'user_email'=>auth()->user()->email ?? $request->email,
+          'test_id'=> $request->test_id,
+          'qbank_id'=> $request->qbank_id,
+          'question_answers'=>json_encode($request->question)
+          
+      ];
+      
+      
+     $createData = TestDefinition::create($data_array);
+      $answerDetail =   json_encode($this->testUserScore($createData->id));
+        if($createData ){
+            $createData->update(['answer_details'=>$answerDetail]);
+            
+            if(auth()->user()){
+                toastr()->success('Test sonuçlarını panelden görüntüleyebilirsiniz. ', 'Başarılı');
+            }else{
+                toastr()->success('Cevaplarınız kayıt edildi. Cevaplarını e-posta ile göndereceğiz. ', 'Başarılı');
+            }
+            return redirect()->route('frontend.tests');
+         }else {
+            
+            toastr()->error('Cevaplarınız kayıt edilemedi. Testi eksiksiz doldurarak tekrar deneyiniz. ', 'Başarısız');
+            return back();
+         }
+    }
+    
+    
+    
+    
+    public function testUserScore($testId)
+    {
+        $test = TestDefinition::where('id',$testId)->with('getQbank.questions')->first();
+        $trueAnswer = 0;
+        $falseAnswer = 0;
+        $empty = 0;
+        $questionAnswer = json_decode($test->question_answers,true);
+        
+        foreach($test['getQbank']['questions'] as $question){
+            $questionTrueAnswer = $question->questionAnswerTrue();
+            if($questionTrueAnswer['code']== '0') {
+                $empty++;
+            }else{
+                if($questionTrueAnswer['code'] == $questionAnswer[$question->id]){
+                    $trueAnswer++;
+                }else{
+                    $falseAnswer++;
+                }
+            }
+        }
+        return ['true'=> $trueAnswer, 'false'=>$falseAnswer,'empty'=> $empty];
+    }
     
     
 }

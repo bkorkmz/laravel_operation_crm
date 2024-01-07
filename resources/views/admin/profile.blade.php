@@ -52,13 +52,20 @@
                                                 data-target="#UpdateModal">Profili
                                                 Düzenle</button>
                                         </div>
-                                        
-                                       
                                         <div class="col m-2">
                                             <button type="button" class="btn btn-success btn-round" data-toggle="modal"
                                                 data-target="#PasswordUpdateModal">Şifre
                                                 Değiştir</button>
                                         </div>
+                                        @else
+                                            <div class="col m-2">
+                                                <button type="button" class="btn btn-success btn-round disabled" data-toggle="modal">Profili
+                                                    Düzenle</button>
+                                            </div>
+                                            <div class="col m-2">
+                                                <button type="button" class="btn btn-success btn-round disabled" >Şifre
+                                                    Değiştir</button>
+                                            </div>
                                         @endcan
                                         @can('bloke_my_profile_users')
                                         <div class="col m-2">
@@ -106,7 +113,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Kullanıcı Adı</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="name" id="name"
+                                            <input type="text" class="form-control" name="name" id="name" maxlength="50"
                                                 placeholder="Kullanıcı adı giriniz" value="{{ auth()->user()->name }} ">
                                             <span class="messages"></span>
                                         </div>
@@ -123,8 +130,10 @@
                                         <label class="col-sm-2 col-form-label">Telefon</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="phone" name="phone"
-                                                value="{{ auth()->user()->phone }} "
-                                                placeholder="İletişim için telefon numarası giriniz">
+                                                value="{{ auth()->user()->phone }}" maxlength="10"
+                                                   inputmode="numeric"
+                                                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                                   placeholder="İletişim için telefon numarası giriniz">
                                             <span class="messages"></span>
                                         </div>
                                     </div>

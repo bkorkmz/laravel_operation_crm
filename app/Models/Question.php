@@ -34,7 +34,24 @@ class Question extends Model
     {
         $this->belongsTo(QuestionBank::class,'question_has_question_bank','question_bank_id','question_id');
     }
-
     
-
+    
+    
+    public function questionAnswerTrue()
+    {
+        $questionAnswers =json_decode($this->answers,true);
+        $trueAnswers = [];
+        foreach($questionAnswers as $key=>$answer){
+            $answer_value = array_values($answer)[0];
+            if($answer_value['mark'] == 'true'){
+                $trueAnswers =$answer_value;
+            }
+        }
+        return $trueAnswers;
+    }
+    
+    
+    
+    
+    
 }

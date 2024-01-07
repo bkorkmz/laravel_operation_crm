@@ -14,10 +14,6 @@ class QuestionBank extends Model
     protected $guarded=[];
 
 
-
-
-
-
     
     protected static function boot(): void
     {
@@ -39,4 +35,9 @@ class QuestionBank extends Model
     {
         return $this->belongsToMany(Question::class, 'question_has_question_bank', 'question_bank_id', 'question_id');
     }
+    
+  
+    
+    
+    
 }

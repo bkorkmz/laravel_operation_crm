@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\Frontend\StudentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PageController;
@@ -50,6 +51,13 @@ Route::get('/post-detail/{model?}', [FrontendController::class, 'postDetail'])->
 Route::get('/products', [FrontendController::class, 'products'])->name('frontend.products');
 Route::get('/product/{slug?}', [FrontendController::class, 'productDetail'])->name('frontend.product_detail');
 
+Route::get('/tests', [FrontendController::class, 'tests'])->name('frontend.tests');
+Route::get('/test/{slug?}/{id?}', [FrontendController::class, 'test'])->name('frontend.test');
+Route::post('/test_definition', [FrontendController::class, 'test_definition'])->name('frontend.test_definition');
+
+
+
+
 Route::post('heartbeat',[HomeController::class,'heartBeat'])->name('heartbeat');
 Route::get('/site-map', [FrontendController::class,'siteMap'])->name('frontend.sitemap');
 Route::post('/contact', [FrontendController::class,'contactsubmit'])->name('frontend.contactsubmit');
@@ -63,18 +71,21 @@ Route::post('/newsletter', [FrontendController::class,'newsletter'])->name('fron
 
 
 
+
 Route::get('lang/{locale}', [LanguageController::class, 'swap']);
 
 
-Route::get('/clear-cache', [AdminController::class, 'clearCache'])->name('clear-cache');
 
 Route::get('/migrate/{parameter}', function ($parameter) {
-    dd($parameter);
     
-    
+    if(env('app_debug') == true){
         $stream = fopen("php://output", "w");
         Artisan::call($parameter, array(), new StreamOutput($stream));
         return "<br></hr>".$parameter."ok";
+    }else{
+        return "noting migrate :))  ";
+    }
+       
 });
 
 
@@ -89,7 +100,14 @@ Route::get('/jobs-run', function () {
 
 Auth::routes(['register' => false]);
 
-Route::prefix('student')->middleware('auth')->group(function () {
+//Route::prefix('student')->middleware(['auth',])->group(function () {
+//    Route::get('/',  function (){
+//        dd('merhaba');
+//    })->name('student.index');    
+//    Route::controller(StudentController::class)->group(function () {
+//        Route::get('/',  'index')->name('student.index');
+//        Route::get('/status',  'status')->name('student.status');
+//    });
 //    Route::controller(ProfileController::class)->prefix('profile')->group(function () {
 //        $module_name = 'profile';
 //        Route::get('/', 'index')->name($module_name . '.index')->middleware('permission:view_my_profile_users');
@@ -100,9 +118,7 @@ Route::prefix('student')->middleware('auth')->group(function () {
 //        // Route::post('/edit/{model?}', 'update')->name($module_name . '.update')->middleware('permission:update_slider');
 //        // Route::get('/delete/{model?}', 'delete')->name($module_name . '.destroy')->middleware('permission:delete_slider');
 //    });
-    
-    
-});
+//});
 
 
 
@@ -116,12 +132,12 @@ Route::prefix('backend')->middleware('auth')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::post('/sehirler', [HomeController::class, 'cities'])->name('sehirler');
     Route::get('/clear-cache', [AdminController::class, 'clearCache'])->name('clear-cache');
-    Route::get('/info-message', [AdminController::class, 'info_message'])->name('admin.info_message');
-    Route::get('/message_edit/{id?}', [AdminController::class, 'info_message_edit'])->name('admin.info_message.edit');
+    Route::get('/info-message', [AdminController::class, 'info_message'])->name('admin.info_message')->middleware('permission:message_information_comment');
+    Route::get('/message_edit/{id?}', [AdminController::class, 'info_message_edit'])->name('admin.info_message.edit')->middleware('permission:message_information_comment');
     Route::post('ckeditor/upload', [AdminController::class,'ckEditorUpload'])->name('ckeditor.upload');
     Route::get('/ckeditor/token', [AdminController::class, 'getToken'])->name('ckeditor.token');
    
-    Route::get('/newsletter-download', [AdminController::class,'newsletterDownload'])->name('newsletter_download');
+    Route::get('/newsletter-download', [AdminController::class,'newsletterDownload'])->name('newsletter_download')->middleware('permission:news_letter_list_download_users');
 
    
 
@@ -185,7 +201,7 @@ Route::prefix('backend')->middleware('auth')->group(function () {
 
     Route::controller(RolesController::class)->prefix('roles')->group(function () {
         $module_name = 'roles';
-        Route::get('/', 'index')->name($module_name . '.index');
+        Route::get('/', 'index')->name($module_name . '.index')->middleware('permission:view_roles');
         Route::get('/index_data', 'index_data')->name($module_name . '.index_data')->middleware('permission:view_roles');
         Route::get('/create', 'create')->name($module_name . '.create')->middleware('permission:add_roles');
         Route::post('/create', 'store')->name($module_name . '.store')->middleware('permission:add_roles');
@@ -203,7 +219,6 @@ Route::prefix('backend')->middleware('auth')->group(function () {
     Route::controller(SystemController::class)->prefix('settings')->group(function () {
         $module_name = 'settings';
         Route::get('/', 'index')->name($module_name . '.index')->middleware('permission:view_settings');
-        //        Route::get('/index_data', 'index_data')->name($module_name.'.index_data');
         Route::get('/create', 'create')->name($module_name . '.create')->middleware('permission:create_settings');
         Route::post('/create', 'store')->name($module_name . '.store')->middleware('permission:create_settings');
         Route::get('/edit/{model?}', 'edit')->name($module_name . '.edit')->middleware('permission:edit_settings');
@@ -224,21 +239,21 @@ Route::prefix('backend')->middleware('auth')->group(function () {
 
     Route::controller(PostController::class)->prefix('post')->group(function () {
         $module_name = 'post';
-        Route::get('/', 'index')->name($module_name . '.index');
-        Route::get('/index_data', 'index_data')->name($module_name . '.index_data');
-        Route::get('/create', 'create')->name($module_name . '.create');
-        Route::post('/create', 'store')->name($module_name . '.store');
-        Route::get('/edit/{model?}', 'edit')->name($module_name . '.edit');
-        Route::post('/edit/{model?}', 'update')->name($module_name . '.update');
-        Route::get('/delete/{model?}', 'destroy')->name($module_name . '.destroy');
-        Route::get('/trashed/{model?}', 'trashed')->name($module_name . '.trashed');
-        Route::get('/trashed_index', 'trashed_index')->name($module_name . '.trashed_index');
-        Route::get('/trashed_data', 'trashed_data')->name($module_name . '.trashed_data');
-        Route::get('/restored/{model?}', 'restore')->name($module_name . '.restored');
+        Route::get('/', 'index')->name($module_name . '.index')->middleware('permission:view_menu_post');
+        Route::get('/index_data', 'index_data')->name($module_name . '.index_data')->middleware('permission:view_menu_post');
+        Route::get('/create', 'create')->name($module_name . '.create')->middleware('permission:add_post');
+        Route::post('/create', 'store')->name($module_name . '.store')->middleware('permission:add_post');
+        Route::get('/edit/{model?}', 'edit')->name($module_name . '.edit')->middleware('permission:edit_post');
+        Route::post('/edit/{model?}', 'update')->name($module_name . '.update')->middleware('permission:edit_post');
+        Route::get('/delete/{model?}', 'destroy')->name($module_name . '.destroy')->middleware('permission:delete_post');
+        Route::get('/trashed/{model?}', 'trashed')->name($module_name . '.trashed')->middleware('permission:delete_post');
+        Route::get('/trashed_index', 'trashed_index')->name($module_name . '.trashed_index')->middleware('permission:delete_post');
+        Route::get('/trashed_data', 'trashed_data')->name($module_name . '.trashed_data')->middleware('permission:delete_post');
+        Route::get('/restored/{model?}', 'restore')->name($module_name . '.restored')->middleware('permission:restore_post');
        
        
-        Route::get('/ajans', 'ajanss')->name($module_name . '.ajanss');
-        Route::get('/ajans/{ajans?}', 'getAjans')->name($module_name . '.getAjans');
+        Route::get('/ajans', 'ajanss')->name($module_name . '.ajanss')->middleware('permission:view_news_ajans_post');
+        Route::get('/ajans/{ajans?}', 'getAjans')->name($module_name . '.getAjans')->middleware('permission:view_news_ajans_post');
         
         
         
@@ -246,17 +261,17 @@ Route::prefix('backend')->middleware('auth')->group(function () {
 
     Route::controller(ArticleController::class)->prefix('article')->group(function () {
         $module_name = 'article';
-        Route::get('/', 'index')->name($module_name . '.index');
-        Route::get('/index_data', 'index_data')->name($module_name . '.index_data');
-        Route::get('/create', 'create')->name($module_name . '.create');
-        Route::post('/create', 'store')->name($module_name . '.store');
-        Route::get('/edit/{model?}', 'edit')->name($module_name . '.edit');
-        Route::post('/edit/{model?}', 'update')->name($module_name . '.update');
-        Route::get('/delete/{model?}', 'destroy')->name($module_name . '.destroy');
-        Route::get('/trashed/{model?}', 'trashed')->name($module_name . '.trashed');
-        Route::get('/trashed_index', 'trashed_index')->name($module_name . '.trashed_index');
-        Route::get('/trashed_data', 'trashed_data')->name($module_name . '.trashed_data');
-        Route::get('/restored/{model?}', 'restore')->name($module_name . '.restored');
+        Route::get('/', 'index')->name($module_name . '.index')->middleware('permission:view_article');
+        Route::get('/index_data', 'index_data')->name($module_name . '.index_data')->middleware('permission:view_article');
+        Route::get('/create', 'create')->name($module_name . '.create')->middleware('permission:create_article');
+        Route::post('/create', 'store')->name($module_name . '.store')->middleware('permission:create_article');
+        Route::get('/edit/{model?}', 'edit')->name($module_name . '.edit')->middleware('permission:edit_article');
+        Route::post('/edit/{model?}', 'update')->name($module_name . '.update')->middleware('permission:update_article');
+        Route::get('/delete/{model?}', 'destroy')->name($module_name . '.destroy')->middleware('permission:trash_article');
+        Route::get('/trashed/{model?}', 'trashed')->name($module_name . '.trashed')->middleware('permission:trash_article');
+        Route::get('/trashed_index', 'trashed_index')->name($module_name . '.trashed_index')->middleware('permission:view_trash_article');
+        Route::get('/trashed_data', 'trashed_data')->name($module_name . '.trashed_data')->middleware('permission:trash_article');
+        Route::get('/restored/{model?}', 'restore')->name($module_name . '.restored')->middleware('permission:restore_article');
     });
 
 
@@ -274,17 +289,17 @@ Route::prefix('backend')->middleware('auth')->group(function () {
 
     Route::controller(CategoryController::class)->prefix('category')->group(function () {
         $module_name = 'category';
-        Route::get('/', 'index')->name($module_name . '.index');
-        Route::get('/index_data', 'index_data')->name($module_name . '.index_data');
-        Route::get('/create', 'create')->name($module_name . '.create');
-        Route::post('/create', 'store')->name($module_name . '.store');
-        Route::get('/edit/{model?}', 'edit')->name($module_name . '.edit');
-        Route::post('/edit/{model?}', 'update')->name($module_name . '.update');
-        Route::get('/delete/{model?}', 'destroy')->name($module_name . '.destroy');
-        Route::get('/trashed/{model?}', 'trashed')->name($module_name . '.trashed');
-        Route::get('/trashed_index', 'trashed_index')->name($module_name . '.trashed_index');
-        Route::get('/trashed_data', 'trashed_data')->name($module_name . '.trashed_data');
-        Route::get('/restored/{model?}', 'restore')->name($module_name . '.restored');
+        Route::get('/', 'index')->name($module_name . '.index')->middleware('permission:view_category');
+        Route::get('/index_data', 'index_data')->name($module_name . '.index_data')->middleware('permission:view_category');
+        Route::get('/create', 'create')->name($module_name . '.create')->middleware('permission:add_category');
+        Route::post('/create', 'store')->name($module_name . '.store')->middleware('permission:add_category');
+        Route::get('/edit/{model?}', 'edit')->name($module_name . '.edit')->middleware('permission:edit_category');
+        Route::post('/edit/{model?}', 'update')->name($module_name . '.update')->middleware('permission:edit_category');
+        Route::get('/delete/{model?}', 'destroy')->name($module_name . '.destroy')->middleware('permission:delete_category');
+        Route::get('/trashed/{model?}', 'trashed')->name($module_name . '.trashed')->middleware('permission:delete_category');
+        Route::get('/trashed_index', 'trashed_index')->name($module_name . '.trashed_index')->middleware('permission:delete_category');
+        Route::get('/trashed_data', 'trashed_data')->name($module_name . '.trashed_data')->middleware('permission:delete_category');
+        Route::get('/restored/{model?}', 'restore')->name($module_name . '.restored')->middleware('permission:restore_category');
         
         Route::post('/category-data','parenCategoryData')->name($module_name .'.parent_data');
         
@@ -370,17 +385,39 @@ Route::prefix('backend')->middleware('auth')->group(function () {
     //Sayfalar
     Route::controller(PageController::class)->prefix('pages')->group(function(){
          $module_name = 'pages';
-         Route::get('/', 'index')->name($module_name.'.index');
-         Route::get('/index_data', 'index_data')->name($module_name.'.index_data');
-         Route::get('/create', 'create')->name($module_name.'.create');
-         Route::post('/create', 'store')->name($module_name.'.store');
-         Route::get('/edit/{model?}', 'edit')->name($module_name.'.edit');
-         Route::post('/edit/{model?}', 'update')->name($module_name.'.update');
-         Route::get('/delete/{model?}', 'destroy')->name($module_name.'.destroy');
-         Route::get('/trashed/{model?}', 'trashed')->name($module_name.'.trashed');
-         Route::get('/trashed_index', 'trashed_index')->name($module_name.'.trashed_index');
-         Route::get('/trashed_data', 'trashed_data')->name($module_name.'.trashed_data');
-         Route::get('/restored/{model?}', 'restore')->name($module_name.'.restored');
+         Route::get('/', 'index')->name($module_name.'.index')->middleware('permission:view_pages');
+         Route::get('/index_data', 'index_data')->name($module_name.'.index_data')->middleware('permission:view_pages');
+         Route::get('/create', 'create')->name($module_name.'.create')->middleware('permission:create_pages');
+         Route::post('/create', 'store')->name($module_name.'.store')->middleware('permission:create_pages');
+         Route::get('/edit/{model?}', 'edit')->name($module_name.'.edit')->middleware('permission:edit_pages');
+         Route::post('/edit/{model?}', 'update')->name($module_name.'.update')->middleware('permission:update_pages');
+         Route::get('/delete/{model?}', 'destroy')->name($module_name.'.destroy')->middleware('permission:delete_pages');
+         Route::get('/trashed/{model?}', 'trashed')->name($module_name.'.trashed')->middleware('permission:delete_pages');
+         Route::get('/trashed_index', 'trashed_index')->name($module_name.'.trashed_index')->middleware('permission:delete_pages');
+         Route::get('/trashed_data', 'trashed_data')->name($module_name.'.trashed_data')->middleware('permission:delete_pages');
+         Route::get('/restored/{model?}', 'restore')->name($module_name.'.restored')->middleware('permission:restore_pages');
+     });
+    
+    
+      //Testler 
+    Route::controller(\App\Http\Controllers\TestController::class)->prefix('test')->group(function(){
+         $module_name = 'test';
+         
+         Route::get('/', 'index')->name($module_name.'.index')->middleware('permission:show_tests');
+         Route::get('/index_data', 'index_data')->name($module_name.'.index_data')->middleware('permission:show_tests');
+         Route::get('/create', 'create')->name($module_name.'.create')->middleware('permission:create_tests');
+         Route::post('/create', 'store')->name($module_name.'.store')->middleware('permission:create_tests');
+         Route::get('/edit/{model?}', 'edit')->name($module_name.'.edit')->middleware('permission:edit_tests');
+         Route::get('/show/{model?}', 'show')->name($module_name.'.show')->middleware('permission:show_tests');
+         Route::post('/edit/{model?}', 'update')->name($module_name.'.update')->middleware('permission:update_tests');
+         Route::get('/delete/{model?}', 'destroy')->name($module_name.'.destroy')->middleware('permission:delete_tests');
+         
+         
+         
+        Route::get('/test-definition', 'testDefinition')->name($module_name.'.testDefinition')->middleware('permission:view_analysis_list_tests');
+        Route::get('/test-definition-data', 'testDefinitionData')->name($module_name.'.testDefinitionData');
+        Route::get('/test-definition/{id?}', 'testDefinitionShow')->name($module_name.'.testDefinitionShow')->middleware('permission:show_analysis_tests');
+
      });
     
     
@@ -424,6 +461,7 @@ Route::prefix('backend')->middleware('auth')->group(function () {
 
 
     Route::fallback(function(){
+        
         return view('admin.notfound');
     });
 

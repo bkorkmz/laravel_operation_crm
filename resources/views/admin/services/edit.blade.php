@@ -42,7 +42,7 @@
                                      <span class="input-group-prepend">
                                          <label class="input-group-text">{{"https://".request()->host()."/blog/"}}</label>
                                      </span>
-                                    <input id="slug_content"  value="{{ $model->slug }}"  type="text" class="form-control text-lowercase"  name="slug" maxlength="100">
+                                    <input id="slug_content" type="text" class="form-control text-lowercase"  name="slug" maxlength="100">
                                 </div>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                             <div class="col-sm-3">
                                 <select name="category_id" class="form-control fill">
                                     @foreach ($category as $cat)
-                                        <option {{$model->category_id == $cat->id ? 'selected': '' }} value="{{ $cat->id }} ">{{ $cat->name }}</option>
+                                        <option value="{{ $cat->id }} {{$model->category_id == $cat->id ? 'selected': '' }}">{{ $cat->name }}</option>
                                     @endforeach
                                 </select>
                               
@@ -192,7 +192,7 @@
                                 <input type="file" class="form-control form-control-normal dropify"
                                 data-show-remove="false" data-default-file="{{ $model->image }}"
                                 accept=".jpg,.jpeg,.png,.tiff,.gif,.svg,.webp,.bmp,.ico"
-                                placeholder="" name="image" required>
+                                placeholder="" name="image">
                              </div>
                         </div>
 

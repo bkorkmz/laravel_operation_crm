@@ -63,6 +63,8 @@ return [
             "services"=>"Servisler",
             "questionbank"=>"Sorubankası",
             "question"=>"Sorular",
+            "tests"=>"Test Sonuçları",
+            "pages"=>"Sayfalar "
             
         ],
         "name"=>[  
@@ -85,6 +87,8 @@ return [
             "edit_my_profile_users" =>"Kullanıcı Kendi Profilini Düzenleye bilir",
             "update_my_profile_users" =>"Kullanıcı Kendi Profilinde Verileri Güncelleyebilir",
             "bloke_my_profile_users" =>"Kullanıcı Kendi Profilini Silebilir ",
+            "news_letter_list_download_users" =>"Toplu Email Gönderim Eposta Listesi",
+            
             "view_menu_roles" =>"Rolleri Menude Gör ",
             "view_all_roles" =>"Tüm Rolleri Gör",
             "add_roles" =>"Rol Ekle ",
@@ -160,22 +164,45 @@ return [
             "create_questionbank"=>"Sorubankası oluştur",
             "edit_questionbank"=>"Sorubankası düzenleme ",
             "update_questionbank"=>"Sorubankası Güncelleme ",
-            "trash_questionbank"=>"Siline soru bakaların ıgörüntüler ",
-            "return_trash_questionbank"=>"Silinan spru bakaslarını geri getirme",
-            "delete_questionbank"=>"Sorubankasını silöme",
+            "trash_questionbank"=>"Silinen soru bakalarını görüntüler ",
+            "return_trash_questionbank"=>"Silinen soru bakalarını geri getirme",
+            "delete_questionbank"=>"Sorubankasını silme",
              "view_question"  => "Soruları Görüntüle",
              "create_question"  => "Soru ekleme özelliği",
              "edit_question"  => "Soru düzenleme özelliği",
              "show_question"  => "Soruyu görüntülw",
              "update_question"  => "Soruyu güncelle",
              "delete_question"  => "Soru slilme işlemleri",
-            "message_information_comment"=>"message_information_comment",
+            "message_information_comment"=>"İletişim Mesajlarını Gösteresources\views\admin\roles\edit.blade.php)",
              "view_menu_services"  =>"Menude servisleri göster" ,
              "view_services"  =>"Hizmetleri göster" ,
              "create_services"  =>"Hizmet oluşturabile" ,
              "edit_services"  =>"Hizmetlerin düzenlenmesi" ,
              "update_services" =>"Hizmetlerin güncellenmesi" ,
              "delete_services"  =>"Hizmetlerin silinmesi" ,
+            
+            
+             "view_menu_tests"=>"Menude Testleri Göster",
+             "show_tests"=>"Testi Görüntüle",
+             "delete_tests"=>"Testi Sil",
+             "view_my_tests"=>"Sadece Kendi Test Sonuçlarını Gör",
+             "view_all_tests"=>"Tüm Test Sonuçlarını Gör",
+            
+             "view_analysis_list_tests"=>"Test Sonuçları Menüsünü  Göster",
+             "show_analysis_tests"=>"Test Sonucunu Görüntüle",
+             "create_tests"=>"Test Oluştur",
+             "edit_tests"=>"Testi Düzenle",
+             "update_tests"=>"Testi Güncelle",
+            
+             "view_menu_pages"=>"Sayfaları Menude Göster",
+             "view_pages"=>"Sayfalar  Listesini Göster",
+             "create_pages"=>"Sayfa Oluştur",
+             "edit_pages"=>"Sayfaları Düzenle",
+             "update_pages"=>"Sayfaları Güncelle",
+             "delete_pages"=>"Sayfaları Sil",
+             "restore_pages"=>"Silinen Sayfaları Geri Al",
+            
+            
             ]
 
     ],

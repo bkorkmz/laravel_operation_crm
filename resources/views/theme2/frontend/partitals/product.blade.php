@@ -4,30 +4,30 @@
 
 @section('head')
 
-{{--    <meta property="og:locale" content="tr_TR"/>--}}
-{{--    <meta property="og:site_name" content="{{ config('settings.site_title') }}"/>--}}
-{{--    <meta property="og:title" content="{{ config('settings.site_title') }}i"/>--}}
-{{--    <meta property="og:url" content="{{ config('settings.site_url') }}"/>--}}
-{{--    <meta property="og:type" content="website"/>--}}
-{{--    <meta property="og:description" content="{{ config('settings.site_description') }}"/>--}}
-{{--    <meta property="og:image" content="{{config('settings.site_icon')}}"/>--}}
-{{--    <meta property="article:publisher" content="{{config('settings.site_facebook_url') }}"/>--}}
+    <meta property="og:locale" content="tr_TR"/>
+    <meta property="og:site_name" content="{{ config('settings.site_title') }}"/>
+    <meta property="og:title" content="{{ config('settings.site_title') }}i"/>
+    <meta property="og:url" content="{{ config('settings.site_url') }}"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:description" content="{{ config('settings.site_description') }}"/>
+    <meta property="og:image" content="{{config('settings.site_icon')}}"/>
+    <meta property="article:publisher" content="{{config('settings.site_facebook_url') }}"/>
 
 
 
-{{--    <meta itemprop="name" content="{{ config('settings.site_title') }}"/>--}}
-{{--    <meta itemprop="headline" content="{{ config('settings.site_title') }}"/>--}}
-{{--    <meta itemprop="description" content="{{ config('settings.site_description') }}"/>--}}
-{{--    <meta itemprop="image" content="{{config('settings.site_icon')}}"/>--}}
-{{--    <meta itemprop="author" content="{{ config('settings.site_url') }}"/>--}}
-{{--    <link rel="publisher" href="{{ config('settings.site_google_plus_url') }}"/>--}}
+    <meta itemprop="name" content="{{ config('settings.site_title') }}"/>
+    <meta itemprop="headline" content="{{ config('settings.site_title') }}"/>
+    <meta itemprop="description" content="{{ config('settings.site_description') }}"/>
+    <meta itemprop="image" content="{{config('settings.site_icon')}}"/>
+    <meta itemprop="author" content="{{ config('settings.site_url') }}"/>
+    <link rel="publisher" href="{{ config('settings.site_google_plus_url') }}"/>
 
 
-{{--    <meta name="twitter:title" content="{{ config('settings.site_title') }}"/>--}}
-{{--    <meta name="twitter:url" content="{{ config('settings.site_url') }}"/>--}}
-{{--    <meta name="twitter:description" content="{{ config('settings.site_description') }}"/>--}}
-{{--    <meta name="twitter:image" content="{{config('settings.site_icon')}}"/>--}}
-{{--    <meta name="twitter:site" content="{{config('settings.site_twitter_url')}}"/>--}}
+    <meta name="twitter:title" content="{{ config('settings.site_title') }}"/>
+    <meta name="twitter:url" content="{{ config('settings.site_url') }}"/>
+    <meta name="twitter:description" content="{{ config('settings.site_description') }}"/>
+    <meta name="twitter:image" content="{{config('settings.site_icon')}}"/>
+    <meta name="twitter:site" content="{{config('settings.site_twitter_url')}}"/>
 
 @endsection
 
@@ -110,11 +110,12 @@
 {{--                                            href="{{route('frontend.product_detail',['slug'=>$product->slug])}}">İncele</a> --}}
 {{--                                          --}}
                                             
-{{--                                            <a class="btn btn-primary default__button p-2 float-end"  data-bs-toggle="modal"--}}
-{{--                                               data-bs-target="#exampleModal_{{$product->id}}"  >--}}
-                                            <a class="btn btn-primary default__button p-2 float-end " target="_blank"
-                                               href=" https://wa.me/{{trim(config('settings.site_phone'))}}?text={{$product->name}}">
-{{--                                                https://wa.me/1XXXXXXXXXX?text=I'm%20interested%20in%20your%20car%20for%20sale--}}
+                                            <!--<a class="btn btn-primary default__button p-2 float-end"  data-bs-toggle="modal"-->
+                                            <!--   data-bs-target="#exampleModal_{{$product->id}}"  >-->
+                                            <!--    Görüntüle-->
+                                            <!--</a>-->
+                                               <a class="btn btn-primary default__button p-2 float-end " target="_blank"
+                                               href="https://wa.me/{{trim(config('settings.site_phone'))}}?text={{$product->name}}">
                                                 Whatsapp İletişim
                                             </a>
                                     </div>

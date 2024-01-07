@@ -18,7 +18,7 @@
         <div class="container desktop__menu__wrapper">
             <div class="d-flex">
                 <div class="col-xl-2 col-lg-2 col-md-6">
-                    <div class="headerarea__left position-absolute">
+                    <div class="headerarea__left">
                         <div class="headerarea__left__logo featurearea__img " style="max-width: 200px">
                             <a class="dark__mode" href="/"><img loading="lazy"  src="{{ asset(config('settings.site_logo')) }}" alt="logo" width="200px" height=""></a>
                             <a class="light__mode" href="/"><img src="{{ asset(config('settings.site_logo')) }}" alt="logo" width="200px" height=""></a>
@@ -33,7 +33,9 @@
                                 <li class="mega__menu position-static"><a class="headerarea__has__dropdown" href="/">Anasayfa </a></li>
                                 <li class="mega__menu position-static"><a class="headerarea__has__dropdown" href="/#about-us">Hakkımızda<i class="icofont-rounded-down d-none"></i> </a></li>
                                 <li><a class="headerarea__has__dropdown" href="/#blog">Blog</a></li>
-                                <li><a class="headerarea__has__dropdown" href="/#news_content">Mevzuat<span class="mega__menu__label">Son dakika</span></a></li>
+                                <li><a class="headerarea__has__dropdown" href="/#news_content">Haberler</a></li>
+                                <li><a class="headerarea__has__dropdown " href="tests">Kendini Testet</a></li>
+                             
                                 <li><a class="headerarea__has__dropdown" href="/#contact">İletişim</a></li>
                                  <li class="d-none"><a target="_blank" class="headerarea__has__dropdown" href="https://logi-san.com/gumruk-hizmetleri/">Logisan Lojistik</a></li>
                             </ul>
@@ -64,17 +66,23 @@
                                     <div class="mb-0 header__right__dropdown__inner">
                                         <div class="single__header__right__dropdown">
                                             <div class="header__right__dropdown__content">
-                                                <a class="d-grid mega__menu__label" href="{{route('admin.index')}}">Yönetim Paneli</a>
+                                                @if(auth()->user()->hasRole('user'))
+                                                    <a class="d-grid " href="{{route('admin.index')}}">Kullanıcı Paneli</a>
+                                                @else
+                                                <a class="d-grid " href="{{route('admin.index')}}">Yönetim Paneli</a>
+
+                                                @endif
                                             </div>
                                         </div>
+                                        @if(auth()->user()->hasRole('user'))
                                         <div class=" single__header__right__dropdown">
                                             <div class="header__right__dropdown__content">
-                                                <a class="d-grid mega__menu__label" href="{{route('profile.index')}}">Profilim</a>
-                                            </div>
+                                                <a class="d-grid " href="{{route('profile.index')}}">Profilim</a></div>
                                         </div>
+                                        @endif
                                         <div class="mb-0 single__header__right__dropdown">
                                             <div class="header__right__dropdown__content">
-                                                <a class="d-grid mega__menu__label"  href="{{ route('logout') }}"
+                                                <a class="d-grid"  href="{{ route('logout') }}"
                                                        onclick="event.preventDefault();document.getElementById('logout-form').submit();">Çıkış Yap</a></li>
                                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                                     @csrf
