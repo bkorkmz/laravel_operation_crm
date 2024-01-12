@@ -163,7 +163,7 @@
                                 <li>
                                     <a href="{{route('frontend.post_detail',$f_news['Id'])}}">
                                         <div class="footerarea__right__img">
-                                            <img src="{{$f_news['Resim']}}" alt="footerphoto">
+                                            <img src="/images/default_product1.jpg" alt="footerphoto">
                                         </div>
                                         <div class="footerarea__right__content">
                                             <span><time>{{date("Y-m-d", strtotime($f_news['DegisiklikTarihiString']))}}</time></span>

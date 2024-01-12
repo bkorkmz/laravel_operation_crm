@@ -107,8 +107,16 @@
                                         </div>
                                     @endforeach
 
-                                    <div class="col-12 mt-4 text-end">
-                                        <button type="submit" id="send_form" class="btn btn-primary" >Testi Bitir </button>
+                                    <div class="col-12 mt-4 justify-content-end d-flex">
+                                        <div class="form__check">
+                                            <input hidden="" name="send_email" value="0">
+                                            <input id="forgot" type="checkbox" name="send_email" value="1">
+                                            <label for="forgot"> Sonuçları email ile gönder </label>
+                                        </div>
+                                        <div class="ms-3" >
+                                            <button type="submit" id="send_form" class="btn btn-primary" >Testi Bitir </button>
+
+                                        </div>
                                     </div>
                                 </form>
                             @else
@@ -220,8 +228,16 @@
                                                     </div>
                                                 @endforeach
 
-                                                <div class="col-12 mt-4 text-end">
-                                                    <button type="submit" id="send_form" class="btn btn-primary" >Testi Bitir </button>
+                                                <div class="col-12 mt-4 justify-content-end d-flex">
+                                                    <div class="form__check">
+                                                        <input hidden="" name="send_email" value="0">
+                                                        <input id="forgot" type="checkbox" name="send_email" value="">
+                                                        <label for="forgot"> Sonuçları email ile gönder </label>
+                                                    </div>
+                                                    <div class="ms-3" >
+                                                        <button type="submit" id="send_form" class="btn btn-primary" >Testi Bitir </button>
+
+                                                    </div>
                                                 </div>
                                             </form>
                                         @endif

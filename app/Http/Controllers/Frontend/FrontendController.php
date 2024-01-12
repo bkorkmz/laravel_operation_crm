@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\testScoreSendMail;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\ContactMessage;
@@ -15,11 +16,15 @@ use App\Models\PortFolio;
 use App\Models\Products;
 use App\Models\Test;
 use App\Models\TestDefinition;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
 
 class FrontendController extends Controller
@@ -83,9 +88,8 @@ class FrontendController extends Controller
         if (file_exists($filePath)) {
          $jsonContent = file_get_contents($filePath);
          $newsData = json_decode($jsonContent, true);
-         $newsList =  array_slice($newsData['haberlist'], 0, 6);
+         $newsList =  array_slice($newsData['haberlist'], 0, 12);
         }
-        
         
         $products =  Products::where(['status' => 1])
             ->select('id', 'name', 'slug', 'description', 'price','stock','photo')
@@ -342,11 +346,10 @@ class FrontendController extends Controller
         return view($this->theme.'.frontend.test.exam_test',compact('test','questionArray'));
         
     }
-    public function test_definition(Request $request)
+    public function test_definition(Request $request): RedirectResponse
     {
         
-        
-      
+      $send_email =$request->send_email;
       $data_array = [
           'user_id'=>auth()->id() ?? 0,
           'user_email'=>auth()->user()->email ?? $request->email,
@@ -365,7 +368,23 @@ class FrontendController extends Controller
             if(auth()->user()){
                 toastr()->success('Test sonuçlarını panelden görüntüleyebilirsiniz. ', 'Başarılı');
             }else{
-                toastr()->success('Cevaplarınız kayıt edildi. Cevaplarını e-posta ile göndereceğiz. ', 'Başarılı');
+                toastr()->success('Cevaplarınız kayıt edildi. ', 'Başarılı');
+            }
+            
+            if($send_email){
+                $score =   json_decode($createData->answer_details,true);
+                $data  = [
+                    "email"=>$createData->user_email,
+                    "test_name"=>$createData->getTestData->name,
+                    "true"=>$score['true'],
+                    "false"=>$score['false'],
+                    "create_date"=>Carbon::parse($createData->created_at)->format('d-m-Y H:i')
+                ];
+                
+                Mail::to( $createData->user_email)->send(new testScoreSendMail($data));
+                
+                toastr()->success('Cevaplarını e-posta ile göndereceğiz. ', 'Başarılı');
+                
             }
             return redirect()->route('frontend.tests');
          }else {
@@ -378,7 +397,7 @@ class FrontendController extends Controller
     
     
     
-    public function testUserScore($testId)
+    protected function testUserScore($testId): array
     {
         $test = TestDefinition::where('id',$testId)->with('getQbank.questions')->first();
         $trueAnswer = 0;
@@ -401,5 +420,9 @@ class FrontendController extends Controller
         return ['true'=> $trueAnswer, 'false'=>$falseAnswer,'empty'=> $empty];
     }
     
-    
 }
+
+
+
+
+

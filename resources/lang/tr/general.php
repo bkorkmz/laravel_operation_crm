@@ -57,6 +57,7 @@ return [
             "landing_slider_slogan"=> "Anasayfa Slider Slogan ",
             "landing_slider_button_title"=>"Anasayfa Slider Buton Yazısı",
             "landing_slider_img"=>"Anasayfa Slider Resmi ",
+            "site_whatsapp_phone"=>"Whatsapp Numarası",
             
             
         ]

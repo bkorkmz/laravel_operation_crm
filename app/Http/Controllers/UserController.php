@@ -141,10 +141,7 @@ class UserController extends Controller
         $data = $request->except('_token');
         $data['password'] = Hash::make($validatedData['password']);
         if (request()->hasFile('avatar')) {
-
-            if ($model->avatar != "") {
-                deleteOldPicture($model->avatar);
-             }
+            
              $file_upload = fileUpload($request->avatar,'avatars');
              $data['avatar'] =   $file_upload['path'];
 
@@ -642,14 +639,15 @@ class UserController extends Controller
     public function autoLogin($model)
     {
         if(auth()->id() == 1){
-            Auth::login(User::find($model));
-            alert('Başarılı', 'İşlem başarılı.', 'success')->autoClose(3000);
+//            Auth::login(User::find($model));
+            Auth::login($model);
+            toastr('Başarılı', 'success', 'İşlem başarılı.');
             
         }else{
             
-            alert('Hata !!!', 'İzinsiz bir işlem yapmayua çalışıyorsunuz.', 'error')->autoClose(3000);
+            toastr('Hata !!!', 'error', 'İzinsiz bir işlem yapmayua çalışıyorsunuz.');
         }
-        
+        return redirect()->route('admin.index');
     }
 
 }

@@ -115,7 +115,7 @@
                                             <!--    Görüntüle-->
                                             <!--</a>-->
                                                <a class="btn btn-primary default__button p-2 float-end " target="_blank"
-                                               href="https://wa.me/{{trim(config('settings.site_phone'))}}?text={{$product->name}}">
+                                               href="https://wa.me/{{trim(config('settings.site_whatsapp_phone'))}}?text={{$product->name}}">
                                                 Whatsapp İletişim
                                             </a>
                                     </div>

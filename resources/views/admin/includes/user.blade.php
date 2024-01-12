@@ -64,8 +64,8 @@
                                                                 <i class="feather icon-briefcase f-w-600 bg-c-orenge update-icon"></i>
                                                             </div>
                                                             <div class="col p-l-5">
-                                                                <a target="_blank" href="https://wa.me/{{trim(config('settings.site_phone'))}}?text={{$product->name}}"><h6>{{$product->name}}</h6></a>
-                                                                <p class="text-muted m-b-0">Stok: {{$product->stock}}  Fiyat: {{$product->price}}</p>
+                                                                <a target="_blank" href="https://wa.me/{{trim(config('settings.site_whatsapp_phone'))}}?text={{$product->name}}"><h6>{{$product->name}}</h6></a>
+                                                                <p class="text-muted m-b-0">Stok: {{$product->stock}} {{-- Fiyat: {{$product->price}}--}}</p>
                                                             </div>
                                                         </div>
                                                    @endforeach

@@ -25,17 +25,17 @@
             <div class="row row__custom__class"  >
                 @foreach($newsList as $news)
 
-                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 grid-item ">
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 grid-item ">
                         <div class="gridarea__wraper">
                             <div class="gridarea__img">
-                                <a href="{{route('frontend.post_detail',$news['Id'])}}"><img src="{{$news['Resim']}}" alt="grid"></a>
+                                <a href="{{route('frontend.post_detail',$news['Id'])}}"><img src="/images/default_product1.jpg" alt="grid"></a>
                                 <div class="gridarea__small__button gridarea__small__button__1">
                                     <div class="grid__badge">{{$news['Konu']}}</div>
                                 </div>
                             </div>
                             <div class="gridarea__content">
                                 <div class="gridarea__heading">
-                                    <h3><a href="{{route('frontend.post_detail',$news['Id'])}}">{{\Illuminate\Support\Str::limit($news['Baslik'],70,"...")}}</a></h3>
+                                    <h3 style="font-size: 18px"><a href="{{route('frontend.post_detail',$news['Id'])}}">{{\Illuminate\Support\Str::limit($news['Baslik'],70,"...")}}</a></h3>
                                 </div>
                                 <div class="gridarea__bottom">
                                     <div class="gridarea__bottom__left">

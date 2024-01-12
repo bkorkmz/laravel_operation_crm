@@ -87,7 +87,7 @@
                 <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
                     <div class="blog__details__content__wraper">
                         <div class="blog__details__img" data-aos="fade-up">
-                            <img src="{{$data['haber']['Resim']}}" alt="{{$data['haber']['Baslik']}}" class="img-fluid">
+                            <img src="/images/default_product1.jpg" alt="{{$data['haber']['Baslik']}}" class="img-fluid">
 
                         </div>
                         <div class="blog__details__content">
@@ -187,7 +187,7 @@
                                 <li>
                                     <div class="recent__img">
                                         <a href="{{route('frontend.post_detail',$s_article['Id'])}}">
-                                            <img src="{{$s_article['Resim']}}" alt="{{$s_article['Baslik']}}">
+                                            <img src="/images/default_product1.jpg" alt="{{$s_article['Baslik']}}">
                                             
                                         </a>
                                     </div>

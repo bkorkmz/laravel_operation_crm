@@ -199,7 +199,7 @@ class TestController extends Controller
     public function testDefinitionData()
     {
         $user = auth()->user();
-        if($user->hasAnyRole('super admin')){
+        if($user->hasAnyRole('super admin') || $user->hasAnyPermission('view_all_tests')){
             $modelData =  TestDefinition::latest()->with('getTestData');
         }else{
             $modelData =  TestDefinition::where('user_email',$user->email)->latest()->with('getTestData');

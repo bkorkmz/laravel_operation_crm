@@ -27,7 +27,7 @@ class NewsJobs extends Command
      */
     public function handle()
     {
-        $response = Http::get('http://haber.evrim.com/Rest/Category?page=2&size=20&category=mevzuat');
+        $response = Http::get('http://haber.evrim.com/Rest/Habers?page=1&size=20');
         $newsData = $response->json();
         $filePath = storage_path('app/evrimNews.json');
         file_put_contents($filePath, json_encode($newsData));

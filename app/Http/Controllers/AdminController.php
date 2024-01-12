@@ -165,7 +165,7 @@ class AdminController  extends Controller
      */
     public function  newsletterDownload()
     {
-        return Excel::download(new  \App\Exports\NewsletterExport, 'Email-List-'.date('d.m.Y').'.xlsx',\Maatwebsite\Excel\Excel::XLSX);
+        return Excel::download(new \App\Exports\NewsletterExport(), 'Email-List-'.date('d.m.Y').'.xlsx',\Maatwebsite\Excel\Excel::XLSX);
     }
 
 

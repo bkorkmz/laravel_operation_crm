@@ -7,7 +7,7 @@
 
 <style>
     body {
-    background-image:url("{{config('settings.site_register_img')}}");
+    background-image:url("{{config('settings.site_login_img')}}");
     background-size:cover;   
     }
     .container{

@@ -20,8 +20,11 @@
                 <div class="col-xl-2 col-lg-2 col-md-6">
                     <div class="headerarea__left">
                         <div class="headerarea__left__logo featurearea__img " style="max-width: 200px">
-                            <a class="dark__mode" href="/"><img loading="lazy"  src="{{ asset(config('settings.site_logo')) }}" alt="logo" width="200px" height=""></a>
-                            <a class="light__mode" href="/"><img src="{{ asset(config('settings.site_logo')) }}" alt="logo" width="200px" height=""></a>
+                            <a class="dark__mode" href="/"><img loading="lazy"
+                                                                src="{{ asset(config('settings.site_logo')) }}"
+                                                                alt="logo" width="200px" height=""></a>
+                            <a class="light__mode" href="/"><img src="{{ asset(config('settings.site_logo')) }}"
+                                                                 alt="logo" width="200px" height=""></a>
                         </div>
 
                     </div>
@@ -30,37 +33,38 @@
                     <div class="headerarea__main__menu">
                         <nav>
                             <ul>
-                                <li class="mega__menu position-static"><a class="headerarea__has__dropdown" href="/">Anasayfa </a></li>
-                                <li class="mega__menu position-static"><a class="headerarea__has__dropdown" href="/#about-us">Hakkımızda<i class="icofont-rounded-down d-none"></i> </a></li>
+                                <li class="mega__menu position-static"><a class="headerarea__has__dropdown" href="/">Anasayfa </a>
+                                </li>
+                                <li class="mega__menu position-static"><a class="headerarea__has__dropdown"
+                                       href="/#about-us">Hakkımızda<i class="icofont-rounded-down d-none"></i> </a></li>
                                 <li><a class="headerarea__has__dropdown" href="/#blog">Blog</a></li>
                                 <li><a class="headerarea__has__dropdown" href="/#news_content">Haberler</a></li>
-                                <li><a class="headerarea__has__dropdown " href="tests">Kendini Testet</a></li>
-                             
+                                <li><a class="headerarea__has__dropdown" href="/tests">Kendini Testet</a></li>
                                 <li><a class="headerarea__has__dropdown" href="/#contact">İletişim</a></li>
-                                 <li class="d-none"><a target="_blank" class="headerarea__has__dropdown" href="https://logi-san.com/gumruk-hizmetleri/">Logisan Lojistik</a></li>
                             </ul>
                         </nav>
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-6">
                     <div class="headerarea__right">
-{{--                        <div class="headerarea__button headerarea__login">--}}
-{{--                            <a type="button" class="btn btn default__button" href="https://logi-san.com/gumruk-hizmetleri/">--}}
-{{--                                Logisan Lojistik--}}
-{{--                            </a>--}}
-{{--                        </div>--}}
-
                         <div class="headerarea__login d-flex">
-                            <a  class="{{config('settings.site_facebook_url') ?"default__button text-white ": "d-none"}}"   href="{{config('settings.site_facebook_url')}}"><i class="icofont-facebook"></i></a>
-                            <a  class="{{config('settings.site_instagram_url') ?"default__button text-white ": "d-none"}}"  href="{{config('settings.site_instagram_url')}}"><i class="icofont-instagram"></i></a>
-                            <a  class="{{config('settings.site_linkedin_url') ?"default__button text-white ": "d-none"}}"   href="{{config('settings.site_linkedin_url')}}"><i class="icofont-linkedin"></i></a>
-{{--                            @auth() <a href="/backend"><i class="icofont-user-alt-5"></i></a> @endauth--}}
+                            <a class="{{config('settings.site_phone') ?"default__button text-white ": "d-none"}}"
+                               href="https://wa.me/{{trim(config('settings.site_whatsapp_phone'))}}?text=Bilgi%20almak%20istiyorum."><i class="icofont-whatsapp"></i></a> 
+                            <a class="d-none"
+{{--                            <a class="{{config('settings.site_facebook_url') ?"default__button text-white ": "d-none"}}"--}}
+                               href="{{config('settings.site_facebook_url')}}"><i class="icofont-facebook"></i></a>
+                            <a class="{{config('settings.site_instagram_url') ?"default__button text-white ": "d-none"}}"
+                               href="{{config('settings.site_instagram_url')}}"><i class="icofont-instagram"></i></a>
+                            <a class="{{config('settings.site_linkedin_url') ?"default__button text-white ": "d-none"}}"
+                               href="{{config('settings.site_linkedin_url')}}"><i class="icofont-linkedin"></i></a>
+                            {{--                            @auth() <a href="/backend"><i class="icofont-user-alt-5"></i></a> @endauth--}}
                         </div>
                         <div class="header__cart">
                             @auth()
                                 <button type="button" class="btn btn-primary dropdown-toggle"
-                                        type="button" id="dropdownMenuButton" data-mdb-toggle="dropdown" aria-expanded="false" >
-                                    <i class="icofont-user-alt-5"></i>    {{auth()->user()->name}}
+                                        type="button" id="dropdownMenuButton" data-mdb-toggle="dropdown"
+                                        aria-expanded="false">
+                                    <i class="icofont-user-alt-5"></i> {{auth()->user()->name}}
                                 </button>
                                 <div class="header__right__dropdown__wrapper">
                                     <div class="mb-0 header__right__dropdown__inner">
@@ -69,22 +73,24 @@
                                                 @if(auth()->user()->hasRole('user'))
                                                     <a class="d-grid " href="{{route('admin.index')}}">Kullanıcı Paneli</a>
                                                 @else
-                                                <a class="d-grid " href="{{route('admin.index')}}">Yönetim Paneli</a>
-
+                                                    <a class="d-grid " href="{{route('admin.index')}}">Yönetim Paneli</a>
                                                 @endif
                                             </div>
                                         </div>
                                         @if(auth()->user()->hasRole('user'))
-                                        <div class=" single__header__right__dropdown">
-                                            <div class="header__right__dropdown__content">
-                                                <a class="d-grid " href="{{route('profile.index')}}">Profilim</a></div>
-                                        </div>
+                                            <div class=" single__header__right__dropdown">
+                                                <div class="header__right__dropdown__content">
+                                                    <a class="d-grid " href="{{route('profile.index')}}">Profilim</a>
+                                                </div>
+                                            </div>
                                         @endif
                                         <div class="mb-0 single__header__right__dropdown">
                                             <div class="header__right__dropdown__content">
-                                                <a class="d-grid"  href="{{ route('logout') }}"
-                                                       onclick="event.preventDefault();document.getElementById('logout-form').submit();">Çıkış Yap</a></li>
-                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                <a class="d-grid" href="{{ route('logout') }}"
+                                                   onclick="event.preventDefault();document.getElementById('logout-form').submit();">Çıkış
+                                                    Yap</a></li>
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                      class="d-none">
                                                     @csrf
                                                 </form>
                                             </div>
@@ -92,13 +98,12 @@
                                     </div>
                                 </div>
                             @else
-                                <button type="button" class="btn btn-primary default__button" onclick="return window.location.href = '/login'">
-                                    <i class="icofont-user-alt-5"></i>    Giriş yap
-                                </button>                           
+                                <button type="button" class="btn btn-primary default__button"
+                                        onclick="return window.location.href = '/login'">
+                                    <i class="icofont-user-alt-5"></i> Giriş yap
+                                </button>
                             @endauth
                         </div>
-                        
-                        
                     </div>
                 </div>
 
@@ -111,27 +116,24 @@
             <div class="row align-items-center">
                 <div class="col-6">
                     <div class="mobile-logo" style="max-width: 109px">
-                        <a class="dark__mode logo__dark" href="/"><img loading="lazy"  src="{{ asset(config('settings.site_logo')) }}" alt="logo" width="" height=""></a>
-                        <a class="light__mode logo__dark" href="/"><img src="{{ asset(config('settings.site_logo')) }}" alt="logo" width="" height=""></a>                    </div>
+                        <a class="dark__mode logo__dark" href="/"><img loading="lazy" src="{{ asset(config('settings.site_logo')) }}"
+                                                                       alt="logo" width="" height=""></a>
+                        <a class="light__mode logo__dark" href="/"><img src="{{ asset(config('settings.site_logo')) }}"
+                                                                        alt="logo" width="" height=""></a></div>
                 </div>
                 <div class="col-6">
                     <div class="header-right-wrap">
-
                         <div class="headerarea__right">
-
-
                             <div class="headerarea__login d-flex">
-
-                                @auth() 
-{{--                                    <a href="/backend"><i class="icofont-user-alt-5"></i></a>--}}
-                                    <button type="button" class="btn btn-primary default__button  p-2 rounded" >
-                                       {{auth()->user()->name}}
+                                @auth()
+                                    <button type="button" class="btn btn-primary default__button  p-2 rounded">
+                                        {{auth()->user()->name}}
                                     </button>
-                               @else
-                            
-                                <a type="button" href="/login" class="btn btn-primary default__button  p-2 rounded" >
-                                    Giriş yap
-                                </a>
+                                @else
+
+                                    <a type="button" href="/login" class="btn btn-primary default__button  p-2 rounded">
+                                        Giriş yap
+                                    </a>
                                 @endauth
                             </div>
 
@@ -166,12 +168,13 @@
                 <nav>
                     <ul class="mobile-menu">
                         <li class="menu-item"><a href="/">Anasayfa</a></li>
-                        <li class="menu-item "><a href="#">Hizmetlerimiz</a></li>
-                        <li class="menu-item "><a href="/#blog">Blog</a></li>
-                        <li class="menu-item "><a href="/#news_content">Güncel Haberler</a>
+                        <li class="menu-item"><a href="#">Hizmetlerimiz</a></li>
+                        <li class="menu-item"><a href="/#blog">Blog</a></li>
+                        <li class="menu-item"><a href="/#news_content">Güncel Haberler</a>
+                        <li class="menu-item"><a href="/tests">Kendini Testet</a></li>
                         <li class="menu-item "><a class="" href="/#contact">İletişim</a></li>
-{{--                        <li class="menu-item"><a target="_blank" class="" href="https://logi-san.com/gumruk-hizmetleri/">Logisan Lojistik</a></li>--}}
-                        
+                        {{--                        <li class="menu-item"><a target="_blank" class="" href="https://logi-san.com/gumruk-hizmetleri/">Logisan Lojistik</a></li>--}}
+
                     </ul>
                 </nav>
 
@@ -215,12 +218,18 @@
         </div>
         <div class="mobile-social-wrap">
 
-          <a  class="{{config('settings.site_facebook_url') ?"": "d-none"}}"   href="{{config('settings.site_facebook_url')}}"><i class="icofont-facebook"></i></a>
-          <a  class="{{config('settings.site_twitter_url') ?"": "d-none"}}"    href="{{config('settings.site_twitter_url')}}"><i class="icofont-twitter"></i></a>
-          <a  class="{{config('settings.site_instagram_url') ?"": "d-none"}}"  href="{{config('settings.site_instagram_url')}}"><i class="icofont-instagram"></i></a>
-          <a  class="{{config('settings.site_google_plus_url') ?"": "d-none"}}" href="{{config('settings.site_google_plus_url')}}"><i class="icofont-google-plus"></i></a>
-          <a  class="{{config('settings.site_linkedin_url') ?"": "d-none"}}"   href="{{config('settings.site_linkedin_url')}}"><i class="icofont-linkedin"></i></a>
-          <a  class="{{config('settings.site_youtube_url') ?"": "d-none"}}"    href="{{config('settings.site_youtube_url')}}"><i class="icofont-youtube-play"></i></a>
+            <a class="{{config('settings.site_facebook_url') ?"": "d-none"}}"
+               href="{{config('settings.site_facebook_url')}}"><i class="icofont-facebook"></i></a>
+            <a class="{{config('settings.site_twitter_url') ?"": "d-none"}}"
+               href="{{config('settings.site_twitter_url')}}"><i class="icofont-twitter"></i></a>
+            <a class="{{config('settings.site_instagram_url') ?"": "d-none"}}"
+               href="{{config('settings.site_instagram_url')}}"><i class="icofont-instagram"></i></a>
+            <a class="{{config('settings.site_google_plus_url') ?"": "d-none"}}"
+               href="{{config('settings.site_google_plus_url')}}"><i class="icofont-google-plus"></i></a>
+            <a class="{{config('settings.site_linkedin_url') ?"": "d-none"}}"
+               href="{{config('settings.site_linkedin_url')}}"><i class="icofont-linkedin"></i></a>
+            <a class="{{config('settings.site_youtube_url') ?"": "d-none"}}"
+               href="{{config('settings.site_youtube_url')}}"><i class="icofont-youtube-play"></i></a>
         </div>
     </div>
 </div>

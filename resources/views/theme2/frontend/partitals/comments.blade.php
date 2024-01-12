@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="row row__custom__class testimonial__slider__active default__arrow" data-aos="fade-up">
-            <div class="col-xl-4 column__custom__class">
+            <div class="col-xl-3 column__custom__class" style="width: 387px;">
                 <div class="single__testimonial__wraper">
                     <div class="single__testimonial__inner">
                         <div class="testimonial__img">
@@ -49,11 +49,11 @@
 
                 </div>
             </div>
-            <div class="col-xl-4 column__custom__class">
+            <div class="col-xl-3 column__custom__class" style="width: 387px;">
                 <div class="single__testimonial__wraper">
                     <div class="single__testimonial__inner">
                         <div class="testimonial__img">
-                            <img src="{{config('settings.site_icon')}}" alt="testi">
+                            <img src="{{config('settings.site_icon')}}" alt="test">
                             <div class="testimonial__name">
                                 <h6>Sabri POLAT</h6>
                             </div>
@@ -80,11 +80,11 @@
 
                 </div>
             </div>
-            <div class="col-xl-4 column__custom__class">
+            <div class="col-xl-3 column__custom__class" style="width: 387px;">
                 <div class="single__testimonial__wraper">
                     <div class="single__testimonial__inner">
                         <div class="testimonial__img">
-                            <img src="{{(config('settings.site_icon'))}}" alt="testi">
+                            <img src="{{(config('settings.site_icon'))}}" alt="test">
                             <div class="testimonial__name">
                                 <h6>Mustafa </h6>
                             </div>
@@ -111,11 +111,11 @@
 
                 </div>
             </div>
-            <div class="col-xl-4 column__custom__class">
+            <div class="col-xl-3 column__custom__class">
                 <div class="single__testimonial__wraper">
                     <div class="single__testimonial__inner">
                         <div class="testimonial__img">
-                            <img src="{{config('settings.site_icon')}}" alt="testi">
+                            <img src="{{config('settings.site_icon')}}" alt="test">
                             <div class="testimonial__name">
                                 <h6>Jon Snow</h6>
                             </div>

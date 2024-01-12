@@ -24,7 +24,8 @@ class SettingsSeeder extends Seeder
             ["name" => "site_address", "value" => "Maslak Mahallesi, Aos 55. Sk. 42 Maslak </br> A Blog, No:2 İç Kapl:25 </br> Sarıyer/İstanbul", "group" => "general", "type" => "string"],
             ["name" => "site_copyright", "value" => "2023 &copy; <a href='poyrazyazilim.com'>  Poyraz yazılım</a> Tüm hakları saklıdır", "group" => "general", "type" => "string"],
             ["name" => "site_refresh", "value" => "", "group" => "general", "type" => "string"],
-
+            
+            ["name" => "site_whatsapp_phone", "value" => "905555555555", "group" => "ceo", "type" => "string"],
             ["name" => "site_url", "value" => "#!", "group" => "ceo", "type" => "string"],
             ["name" => "site_facebookapp_id", "value" => "#!00000", "group" => "ceo", "type" => "string"],
             ["name" => "site_googleplus_id", "value" => "#!00000", "group" => "ceo", "type" => "string"],
