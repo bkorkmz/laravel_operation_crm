@@ -84,8 +84,8 @@
         border-top-color: #eee;
         animation: animate-loading 1s linear infinite;
     }
-
-    .footerarea__right__wraper
+/* 
+    .footerarea__right__wraper */
 </style>
 
 <script>

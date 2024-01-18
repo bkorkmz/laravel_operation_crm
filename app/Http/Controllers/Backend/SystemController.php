@@ -14,7 +14,7 @@ class SystemController extends Controller
      */
     public function index()
     {
-        if (!auth()->user()->hasRole('Super admin')) {
+        if (!auth()->user()->hasRole('super admin')) {
             $settings = Settings::select('name', 'value', 'group','type')
                 ->where('group', '!=', 'secret')->get();
         } else {
