@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('faq_ssses', function (Blueprint $table) {
             $table->id();
-            $table->tinyText('question');
-            $table->tinyText('answer');
+            $table->text('question');
+            $table->text('answer');
             $table->tinyInteger('status');
             $table->bigInteger('user_id');
             $table->tinyInteger('order')->default(0);

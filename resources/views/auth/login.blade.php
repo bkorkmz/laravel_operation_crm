@@ -1,18 +1,20 @@
 @extends('layouts.app')
 @section('title')
     @lang('Giriş Sayfası')
-@stop
+@endsection
 @section('css')
-    <style>
-        body {
-            background-image: url({{config('settings.site_login_img')}});
-            background-size: cover;
-        }
-    </style>
+
+<style>
+    body {
+    background-image:url("{{config('settings.site_login_img')}}");
+    background-size:cover;   
+    image
+    }
+</style>
 @endsection
 
-@section('content')
 
+@section('content')
     <div class="container">
         <div class=" p-y-4 my-lg-5 p-3">
             <div class="card text-center">
@@ -34,11 +36,6 @@
                                     width="180px">
                             </div>
 
-
-
-
-
-
                             <form method="POST" action="{{ route('login') }}"
                                 class="form-control border-0 justify-contend-center">
                                 @csrf
@@ -54,9 +51,8 @@
                                             <input id="email" type="email"
                                                 class="form-control form-select-lg @error('email') is-invalid @enderror"
                                                 name="email" value="{{ old('email') }}"
-                                                placeholder="{{ __('Email Adresi Giriniz') }}" required
-                                                autocomplete="email" autofocus aria-label="email"
-                                                aria-describedby="basic-addon1">
+                                                placeholder="{{ __('Email Adresi Giriniz') }}" required autocomplete="email"
+                                                autofocus aria-label="email" aria-describedby="basic-addon1">
 
                                             @error('email')
                                                 <span class="invalid-feedback" role="alert">
@@ -97,8 +93,8 @@
                                     <div class="d-flex justify-content-around align-items-center mb-4">
                                         <!-- Checkbox -->
                                         <div class="form-check ">
-                                            <input class="form-check-input" type="checkbox" value=""
-                                                id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                                            <input class="form-check-input" type="checkbox" value="" id="remember"
+                                                name="remember" {{ old('remember') ? 'checked' : '' }}>
                                             <label class="form-check-label" for="remember"> {{ __('Beni Hatırla') }}
                                             </label>
                                         </div>
@@ -114,16 +110,7 @@
                                     </div>
 
 
-                                    {{-- <div class="col-md-6 ">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="remember" id="remember"
-                                            {{ old('remember') ? 'checked' : '' }}>
-    
-                                        <label class="form-check-label" for="remember">
-                                            {{ __('Remember Me') }}
-                                        </label>
-                                    </div>
-                                </div> --}}
+                        
                                 </div>
 
                                 <div class="row mb-0 justify-content-left ">
@@ -132,8 +119,8 @@
                                             {{ __('Giriş yap') }}
                                         </button>
                                     </div>
-                                    <span class="mt-2" style="font-weight: 600;"> Bir hesabınız yok mu ? <a
-                                            class="text-danger" href="/register"> Kayıt ol </a></span>
+                                    {{-- <span class="mt-2" style="font-weight: 600;"> Bir hesabınız yok mu ? <a --}}
+                                    {{-- class="text-danger" href="/register"> Kayıt ol </a></span>  --}}
                                 </div>
                             </form>
 
@@ -283,12 +270,8 @@
             </div>
         </div>
     </div>
-
-
-
 @endsection
 
 
 @section('js')
-
 @endsection

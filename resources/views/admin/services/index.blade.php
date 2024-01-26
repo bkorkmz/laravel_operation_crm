@@ -78,16 +78,10 @@ height: auto;
                         witdh: '5%',
 
                     },
-                    {
-                        title: 'Başlık',
+                                       {
+                        title: 'Başlık ',
                         data: 'title',
                         name: 'title',
-                        witdh: '5%',
-                    },
-                    {
-                        title: 'Özet ',
-                        data: 'short_detail',
-                        name: 'short_detail',
                         witdh: '10%',
                         render: function(e) {
                             return `

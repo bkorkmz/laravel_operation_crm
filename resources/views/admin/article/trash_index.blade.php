@@ -15,8 +15,8 @@
                     <div class="card">
                         <div class="card-header">
                             <h3>Silinen Makaleler Listesi</h3>
-                            <button type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
-                                    onclick="return window.history.back()"><i class="fa fa-reply"></i>Geri Dön</button>
+                            <a type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
+                            href="{{route($modul_name.'.index')}}"><i class="fa fa-reply"></i>Geri Dön</a>
 
                         </div>
                         <div class="card-block table-border-style">
@@ -71,8 +71,8 @@
                         <div class="text-center">
        
 
-                            <a href="{{route('post.restored',)}}/${e}" class="" data-toggle="tooltip" data-placement="top" title="Geri al"><i class="feather icon-refresh-ccw f-w-600 f-16 m-r-15 text-c-blue"></i></a>
-                            <a href="{{route('post.trashed',)}}/${e}" onclick="return confirm(\'Silme İşlemi onaylıyormusunuz ?\')"  data-toggle="tooltip" data-placement="top" title="Sil"><i class="feather icon-trash-2 f-w-600 f-16 text-c-red"></i></a>
+                            <a href="{{route($modul_name.'.restored',)}}/${e}" class="" data-toggle="tooltip" data-placement="top" title="Geri al"><i class="feather icon-refresh-ccw f-w-600 f-16 m-r-15 text-c-blue"></i></a>
+                            <a href="{{route($modul_name.'.trashed',)}}/${e}" onclick="return confirm(\'Silme İşlemi onaylıyormusunuz ?\')"  data-toggle="tooltip" data-placement="top" title="Sil"><i class="feather icon-trash-2 f-w-600 f-16 text-c-red"></i></a>
                         </div>
                         `;
                     }

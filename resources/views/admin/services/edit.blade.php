@@ -1,6 +1,6 @@
 @extends('layouts.layout-admin')
 @section('title')
-    {{ __('Hizmet Kayıt Sayfası ') }}
+    {{ __('Hizmeti Düzenle ') }}
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
         <div class="page-wrapper">
             <div class="card">
                 <div class="card-header">
-                    <h3>Hizmet Ekle</h3>
+                    <h3>Hizmeti Düzenle</h3>
                     <button type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
                     onclick="return window.history.back()"><i class="fa fa-reply"></i>Geri Dön</button>
                 </div>
@@ -24,13 +24,13 @@
                             </ul>
                         </div>
                     @endif
-
-                    <form action="{{ route($modul_name.'.store') }}" method="post" enctype="multipart/form-data">
+{{-- @dd($model->id) --}}
+                    <form action="{{ route($modul_name.'.update',$model->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Hizmet Başlığı <span class="text-danger"> *</span></label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control form-control-normal" value="{{old('title')}}"
+                                <input type="text" class="form-control form-control-normal" value="{{$model->title}}"
                                     placeholder="" name="title" maxlength="50" required>
                             </div>
                         </div>
@@ -43,16 +43,16 @@
                         </div> --}}
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Hizmet Özeti <span class="text-danger"> *</span></label>
+                            <label class="col-sm-2 col-form-label">Hizmet Özeti <span class="text-danger"> </span></label>
                             <div class="col-sm-10">
-                                    <textarea type="text" class="form-control form-control-normal" required
-                                        placeholder="" name="short_detail" maxlength="250">{{old('short_detail')}}</textarea>
+                                    <textarea type="text" class="form-control form-control-normal" 
+                                        placeholder="" name="short_detail" maxlength="250">{{$model->short_detail}}</textarea>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Hizmet Açıklaması <span class="text-danger"> *</span></label>
                             <div class="col-sm-10">
-                                <textarea id="ckeditor" class="form-control form-control-normal" name="detail" rows="5"  >{{old('detail')}}</textarea>
+                                <textarea id="ckeditor" class="form-control form-control-normal" name="detail" rows="5"  >{{$model->detail}}</textarea>
                             </div>
                         </div>
 
@@ -60,46 +60,43 @@
                             <label class="col-sm-2 col-form-label">Anahtar Kelimeler</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control form-control-normal"
-                                    placeholder="" name="keywords" maxlength="50" value="{{old('keywords')}}">
+                                    placeholder="" name="keywords" maxlength="50" value="{{$model->keywords}}">
                             </div>
                         </div>
 
+                        {{-- @dd($model) --}}
                         <div class="form-group row my-4">
                             <label class="col-sm-2 col-form-label">Kategori</label>
                             <div class="col-sm-3">
                                 <select name="category_id" class="form-control fill">
                                     @foreach ($category as $cat)
-                                        <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                        <option value="{{ $cat->id }} {{$model->category_id == $cat->id ? 'selected': '' }}">{{ $cat->name }}</option>
                                     @endforeach
                                 </select>
-                                {{-- <a type="button" class="float-right badge badge-inverse-danger"
-                                    href="javascript:void(0)" data-toggle="modal"
-                                    data-target="#addCategoryModal">Kategori Ekle</a> --}}
+                              
                             </div>
-                            <div class="col-sm-3 float-center">
-                                <label>Manşette Başlık</label>
-                                <div class="form-check text-left">
-                                    <input class="form-check-input" checked type="radio" name="mtitle"
-                                        id="showMtitle" value="0"{{old('mtitle') == 0 ? 'checked' :"" }}>
-                                    <label class="form-check-label" for="showMtitle">Göster</label>
-                                </div>
-                                <div class="form-check text-left">
-                                    <input class="form-check-input" type="radio" name="mtitle"
-                                        id="hideMtitle" value="1"{{old('mtitle') == 1 ? 'checked' :"" }}>
-                                    <label class="form-check-label" for="hideMtitle">Gösterme</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <label>Durum</label>
-                                <div class="form-check">
-                                    <input class="form-check-input" checked type="radio" name="publish"
-                                        id="showpublish" value="0" {{old('publish') == 0 ? 'checked' :"" }}>
-                                    <label class="form-check-label" for="showpublish">Yayında</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="publish"
-                                        id="hidepublish" value="1" {{old('publish') == 1 ? 'checked' :"" }}>
-                                    <label class="form-check-label" for="hidepublish">Taslak</label>
+                           
+                             <div class="form-group row my-4 col-12">
+                                <label class="col-sm-2 col-form-label">Durum
+                                </label>
+                                <div class="col-sm-3 row align-self-center">
+
+                                    <div class="form-check m-2">
+
+                                        <input class="form-check-input"
+                                            {{ $model->publish == '1' ? 'checked' : '' }} type="radio"
+                                            name="publish" id="passive"
+                                            value="0"{{ $model->publish == '0' ? 'checked' : '' }}
+                                            {{-- @dd($model->publish)      --}}>
+                                        <label class="form-check-label" for="passive">Yayında </label>
+                                    </div>
+
+                                    <div class="form-check m-2">
+                                        <input class="form-check-input"
+                                            {{ $model->publish == '1' ? 'checked' : '' }} type="radio"
+                                            name="publish" id="active" value="1">
+                                        <label class="form-check-label" for="active">Taslak</label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -150,8 +147,8 @@
 
                         @endcanany
                        
-                        <hr>
-                        <div class="form-group has-warning row">
+                        {{-- <hr> --}}
+                        {{-- <div class="form-group has-warning row">
                             <div class="col-sm-2">
                                 <label class="col-form-label" for="meta1">Meta anahtar kelimeler
                                     (Opsiyonel)</label>
@@ -175,13 +172,15 @@
                                     geçmeyecek şekilde doldurulabilir.</div>
                             </div>
                         </div>
-                        <hr>
+                        <hr> --}}
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Hizmet Fotoğrafı</label>
+                            <label class="col-sm-2 col-form-label">Hizmet Fotoğrafı (min:630x470)</label>
                             <div class="col-sm-5">
                                 <input type="file" class="form-control form-control-normal dropify"
-                                    placeholder="" name="image">
+                                data-show-remove="false" data-default-file="{{ $model->image }}"
+                                accept=".jpg,.jpeg,.png,.tiff,.gif,.svg,.webp,.bmp,.ico"
+                                placeholder="" name="image">
                              </div>
                         </div>
 
@@ -226,90 +225,50 @@
 @endsection
 
 
-
 @section('css')
+    <link href="{{asset('admin/assets/pages/summernote-0.8.18/summernote.css')}}" rel="stylesheet">
 @endsection
 
 @section('js')
-{{-- <script type="text/javascript" src="{{ asset('admin/assets/bower_components/sweetalert/js/sweetalert.min.js') }}"> --}}
-<script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/translations/tr.js"></script>
-{{-- <script src="{{ asset('vendor/dropify/dist/js/dropify.js') }}"></script> --}}
+    <script src="{{asset('admin/assets/pages/summernote-0.8.18/summernote.js')}}"></script>
+    <script src="{{asset('admin/assets/pages/summernote-0.8.18/lang/summernote-tr-TR.js')}}"></script>
+    <script src="{{asset('/admin/assets/pages/summernote-0.8.18/plugin/image2/summernote-image-title.js')}}"></script>
 
+  <script>
 
-{{-- <script src="{{ asset('admin/assets/partials/ckeditor/ckeditor.js') }}"></script> --}}
-<script>
-    $(document).ready(function() {
-
-        $('#category-form').on('submit', function(e) {
-            e.preventDefault();
-
-            var category_name = $('#category-name').val();
-            if (category_name !== "") {
-                $.ajax({
-                    url: "{{ route('category.store') }}",
-                    method: 'POST',
-                    data: {
-                        name: category_name,
-                        model: 'article',
-                        _token: "{{ csrf_token() }}"
+            $(document).ready(function() {
+                $('#ckeditor').summernote({
+                    lang: 'tr-TR',
+                    height: 300,
+                    imageTitle: {
+                        specificAltField: true,
                     },
-                    success: function(response) {
-                        swal("Kategori başarıyla oluşturuldu!");
-                        $('#addCategoryModal').Modal().hide()
-
+                    popover: {
+                        image: [
+                            ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                            ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                            ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                            ['remove', ['removeMedia']],
+                            ['custom', ['imageTitle']],
+                        ],
                     },
-                    error: function(xhr, status, error) {
-                        swal("Bir hata oluştu!");
-                    }
+                    toolbar: [
+                        ['style', ['style']],
+                        ['fontsize', ['fontsize']],
+                        ['height', ['height']],
+                        ['fontname', ['fontname']],
+                        ['font', ['bold', 'underline','strikethrough', 'superscript', 'subscript', 'clear']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture', 'video']],
+                         
+                        ['view', ['codeview', 'help']]
+                    ]
+                  
                 });
-            }
-            swal("Kategori Boş Olamaz!");
-
-        });
-
-    });
-
-
-
-
-    // function addCategory() {
-
-    //     swal({
-    // 		title: "Ajax request example",
-    // 		text: "Submit to run ajax request",
-    // 		type: "info",
-    // 		showCancelButton: true,
-    // 		closeOnConfirm: false,
-    // 		showLoaderOnConfirm: true
-    // 	}, function () {
-    // 		setTimeout(function () {
-    // 			swal("Ajax request finished!");
-    // 		}, 2000);
-    // 	});
-
-    // }
-
-    ClassicEditor
-
-        .create(document.querySelector('#ckeditor'))
-    
-        .catch(error => {
-            console.error(error);
-        }); 
-
-        
-
-        $('.dropify').dropify({
-    messages: {
-        'default': 'Resim yükle ya da sürükle',
-        'replace': 'Resim değiştir ya da sürükle',
-        'remove': 'Kaldır',
-        'error': 'Hata! Desteklenen dosya tipinden farklı bir dosya yüklediniz.'
-    }
-});
-
-        
-                </script>
-{{-- <script type="text/javascript" src="{{ asset('admin/assets/js/jquery.marcopolo.min.js') }}"></script> --}}
+            });
+            
+        </script>
 @endsection

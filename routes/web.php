@@ -13,9 +13,11 @@ use App\Http\Controllers\FaqSssController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\PortFolioController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\File;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Auth::routes(['register' => false]);
 Route::domain('{subdomain}.laravel_operation_crm.test')->group(function () {
     Route::get('/', function ($subdomain) {
         // Subdomain verisini kullanarak işlemler yapabilirsiniz
@@ -36,16 +38,100 @@ Route::domain('{subdomain}.laravel_operation_crm.test')->group(function () {
 });
 
 
-Route::get('/',  [FrontendController::class, 'index'])->name('frontend.index');
+Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
+Route::get('/blog', [FrontendController::class, 'blog'])->name('frontend.blog');
+Route::get('/blog/kategori/{kategoriadi?}/{id?}', [FrontendController::class, 'blog'])->name('frontend.blog_category');
+Route::get('/blog/{model?}', [FrontendController::class, 'blog_detail'])->name('frontend.blog_detail');
+Route::get('/get-article', [FrontendController::class, 'getMoreArticles'])->name('frontend.getMoreArticles');
+Route::post('/contact', [FrontendController::class,'contactsubmit'])->name('frontend.contactsubmit');
+Route::get('/site-map', [FrontendController::class,'siteMap'])->name('frontend.sitemap');
+Route::post('/newsletter', [FrontendController::class,'newsletter'])->name('frontend.newsletter');
+
+
+Route::get('/kvkk',function (){ return view('frontend.partitial.kvkk'); } )->name('frontend.kvkk');
+Route::get('/hakkimizda',function (){ return view('frontend.partitial.aboutUs'); } )->name('frontend.aboutUs');
+Route::get('/cerez-politikasi',function (){ return view('frontend.partitial.privacyPolicy'); } )->name('frontend.privacyPolicy');
+
+
+
+
+
+
+
+
+
+
+
+
+Route::fallback(function(){
+    return view('frontend.index');
+});
+
+
+
+
+
 
 
 Route::get('lang/{locale}', [LanguageController::class, 'swap']);
 
-Auth::routes();
+
+Route::get('/migrate-seed', function () {
+
+    if(env('APP_DEBUG') == true){
+         Artisan::call('migrate --seed');
+         $message = "OK";
+    }else {
+        $message = 'AUTORİZED_NO_RETURN_AFTER';
+    }
+    return response($message);
+});
+
+
+Route::get('/storage-link', function () {
+
+    if(env('APP_DEBUG') == true){
+        $storageLinkPath = public_path('storage');
+        if (File::isDirectory($storageLinkPath)) {
+            File::deleteDirectory($storageLinkPath);
+        }
+        Artisan::call('storage:link');
+        $message = "OK";
+    }else {
+        $message = 'AUTORİZED_NO_RETURN_AFTER';
+    }
+   
+
+    return response($message);
+});
+
+
+
 Route::prefix('backend')->middleware('auth')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::post('/sehirler', [HomeController::class, 'cities'])->name('sehirler');
     Route::get('/clear-cache', [AdminController::class, 'clearCache'])->name('clear-cache');
+    Route::get('/info-message', [AdminController::class, 'info_message'])->name('admin.info_message');
+    Route::get('/message_edit/{id?}', [AdminController::class, 'info_message_edit'])->name('admin.info_message.edit');
+    Route::post('ckeditor/upload', [AdminController::class,'ckEditorUpload'])->name('ckeditor.upload');
+    Route::get('/ckeditor/token', [AdminController::class, 'getToken'])->name('ckeditor.token');
+    Route::get('/newsletter-download', [AdminController::class,'newsletterDownload'])->name('newsletter_download');
+
+   
+
+    Route::controller(ProfileController::class)->prefix('profile')->middleware('auth')->group(function () {
+        $module_name = 'profile';
+        Route::get('/', 'index')->name($module_name . '.index')->middleware('permission:view_my_profile_users');
+        Route::post('/edit', 'update')->name($module_name . '.update')->middleware('permission:update_my_profile_users');
+        Route::post('/edit/password', 'passwordUpdate')->name($module_name . '.password.update')->middleware('permission:update_my_profile_users');
+        Route::get('/delete-account', 'deleteAccount')->name($module_name . '.delete_account')->middleware('permission:bloke_my_profile_users');
+        // Route::get('/edit/{model?}', 'edit')->name($module_name . '.edit')->middleware('permission:edit_slider');
+        // Route::post('/edit/{model?}', 'update')->name($module_name . '.update')->middleware('permission:update_slider');
+        // Route::get('/delete/{model?}', 'delete')->name($module_name . '.destroy')->middleware('permission:delete_slider');
+    });
+
+
+
 
 
     Route::controller(UserController::class)->prefix('user')->group(function () {
@@ -264,6 +350,12 @@ Route::prefix('backend')->middleware('auth')->group(function () {
     //     Route::get('/trashed_data', 'trashed_data')->name($module_name.'.trashed_data');
     //     Route::get('/restored/{model?}', 'restore')->name($module_name.'.restored');
     // });
+
+
+
+    Route::fallback(function(){
+        return view('admin.notfound');
+    });
 
 
 

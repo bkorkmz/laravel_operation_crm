@@ -139,14 +139,17 @@ class CategoryController extends Controller
             '_token',
             'image'
         );
-        $data_array['slug'] = slug_format(Str::limit($request->name, 60));
+        $data_array['slug'] = slug_format($request->name);
 
         if (request()->hasFile('image')) {
             $this->validate(request(), array('image_mini' => 'sometimes|mimes:png,jpg,jpeg,gif|max:4096'));
             $image = request()->file('image');
             if ($image->isValid()) {
 
-                $data_array['image'] =  '/storage/' . $request->image->store('category', 'public');
+                $file_upload = fileUpload($request->image,'category');
+                $data['image']=   $file_upload['path'];
+
+                // $data_array['image'] =  '/storage/' . $request->image->store('category', 'public');
             }
         }
 
@@ -191,8 +194,6 @@ class CategoryController extends Controller
                 'name' => 'required|max:50',
                 'model' => 'required|max:50',
                 'description' => 'nullable|max:250',
-
-
             ],
             [
                 'name.required' => 'Başlık gereklidir.',
@@ -207,16 +208,18 @@ class CategoryController extends Controller
             '_token',
             'image'
         );
-
-
-        $data_array['slug'] = slug_format(Str::limit($request->title, 60));
+        
+        
+        $data_array['slug'] = slug_format($request->name);
 
         if (request()->hasFile('image')) {
             $this->validate(request(), array('image_mini' => 'sometimes|mimes:png,jpg,jpeg,gif|max:4096'));
             $image = request()->file('image');
             if ($image->isValid()) {
 
-                $data_array['image'] =  '/storage/' . $request->image->store('category', 'public');
+                $file_upload = fileUpload($request->image,'category');
+                $data_array['image']=   $file_upload['path'];
+                // $data_array['image'] =  '/storage/' . $request->image->store('category', 'public');
             }
         }
 

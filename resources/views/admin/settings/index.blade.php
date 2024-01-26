@@ -58,8 +58,8 @@
                                                                     <div class="col-sm-2">
                                                                         <select name="{{ $form_element->name }}"
                                                                             class="form-control fill">
-                                                                            <option value="1" {{ $form_element->value == '1' ? 'selected' : '' }}>FALSE</option>
-                                                                            <option value="0"{{ $form_element->value == '0' ? 'selected' : '' }}>TRUE </option>
+                                                                            <option value="TRUE" {{ $form_element->value == 'TRUE' ? 'selected' : '' }}>TRUE</option>
+                                                                            <option value="FALSE"{{ $form_element->value == 'FALSE' ? 'selected' : '' }}>FALSE </option>
                                                                         </select>
                                                                     </div>
                                                                 @elseif($form_element->type == 'image')
@@ -70,6 +70,13 @@
                                                                             data-default-file="{{ $form_element->value }}"
                                                                             name="{{ $form_element->name }}"
                                                                             accept=".jpg,.jpeg,.png,.tiff,.gif,.svg,.webp,.bmp,.ico">
+                                                                    </div>
+                                                                @elseif($form_element->type == 'textarea')
+                                                                    <div class="col-sm-10">
+                                                                        <textarea type="text"
+                                                                               class="form-control form-control-normal" cols="3" rows="5"
+                                                                               placeholder="" name="{{ $form_element->name }}">
+                                                                            {{ $form_element->value }}</textarea>
                                                                     </div>
                                                                 @else
                                                                     <div class="col-sm-10">

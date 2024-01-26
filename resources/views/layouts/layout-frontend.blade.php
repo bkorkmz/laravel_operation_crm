@@ -4,25 +4,35 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+{{--    @if(config('settings.site_publish') == 1 )--}}
 
+{{--    @endif--}}
 
-    <title>@yield('title', config('settings.site_title')) </title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="Description" content="{{ config('settings.site_description') }}">
-    <meta name="Author" content="{{ config('settings.site_url') }}">
-    <meta name="keywords" content="{{ config('settings.site_meta_tag') }}" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>@yield('title')</title>
 
+    @yield('head')
+    @php
+       $path = explode('/',request()->path());
+    @endphp
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        @if($path[0] != 'blog')
+            <meta name="description" content="{{ config('settings.site_description') }}">
+            <meta name="title" content="{{ config('settings.site_title') }}">
+            <meta name="Author" content="{{ config('settings.site_url') }}">
+            <meta name="keywords" content="{{ config('settings.site_keywords') }}" />
+        @endif
+    
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+    
+        {!! config('settings.site_meta_tag') !!}
     <!-- Favicons -->
     <link href="{{ asset(config('settings.site_icon')) }}" rel="icon">
     <link href="{{ asset(config('settings.site_icon')) }}" rel="apple-touch-icon">
+    <link href="{{ asset(config('settings.site_icon')) }}" rel="shortcut icon" type="image/x-icon" >
+
 
     <!-- Google Fonts -->
     <link
@@ -52,6 +62,8 @@
         }
     </style>
 
+    {!! config('settings.site_analytics') !!}
+    
     @yield('css')
 
 
@@ -60,7 +72,8 @@
 <body>
     @include('frontend.includes.header')
 
-
+    
+    @yield('breadcrumbs')
 
 
     @yield('content')

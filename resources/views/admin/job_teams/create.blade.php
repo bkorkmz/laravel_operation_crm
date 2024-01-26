@@ -12,8 +12,8 @@
                 <div class="card">
                     <div class="card-header">
                         <h3>Takım Ekle</h3>
-                        <button type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
-                        onclick="return window.history.back()"><i class="fa fa-reply"></i>Geri Dön</button>
+                        <a type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
+                        href="{{route('user.teams.index')}}"><i class="fa fa-reply"></i>Geri Dön</a>
                     </div>
                     <div class="card-block">
                         @if ($errors->any())
@@ -90,22 +90,24 @@
                             </div>
    
 
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Durum</label>
-                                <div class="col-sm-10">
-                                    <div class="form-check form-check-inline">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" checked  name="status" id="status-1"  {{  old('status') ? ( old('status')== 1 ? 'checked': "") : "checked"}}
-                                                value="1" > @lang('Aktif')
-                                        </label>
+                            <div class="form-group row my-4">
+                                <label class="col-sm-2 col-form-label">Durum
+                                   </label>
+                                <div class="col-sm-3 row align-self-center" >
+                                    
+                                    <div class="form-check m-2">
+                                        <input class="form-check-input" checked type="radio" name="status"
+                                            id="active" value="1"
+                                            {{ old('status',1) == 1 ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="active">Aktif</label>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="radio" name="status" id="status-2"  {{ (old('status') ? old('status')  == 0 : "") ? "checked":"" }}
-                                                value="0" > @lang('Pasif')
-                                        </label>
+                                    <div class="form-check m-2">
+                                       
+                                        <input class="form-check-input"  type="radio" name="status"
+                                            id="passive" value="0"
+                                            {{ old('status',1) == 0 ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="passive">Pasif </label>
                                     </div>
-                                    <span class="messages"></span>
                                 </div>
                             </div>
                             <div class="text-right m-t-20">

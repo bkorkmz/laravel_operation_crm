@@ -122,7 +122,10 @@ class PostController extends Controller
             $this->validate(request(), array('image' => 'sometimes|mimes:png,jpg,jpeg,gif|max:4096'));
             $image = request()->file('image');
             if ($image->isValid()) {
-                $post->image = '/storage/' . $request->image->store('posts', 'public');
+                
+                $file_upload = fileUpload($request->image,'posts');
+                $post->image =   $file_upload['path'];
+                // $post->image = '/storage/' . $request->image->store('posts', 'public');
             }
         }
 
@@ -133,7 +136,10 @@ class PostController extends Controller
             $filename = 'top-' . $slug;
             if ($image->isValid()) {
                 if ($image->isValid()) {
-                    $post->image_top =  '/storage/' . $request->image->store('posts', 'public');
+                    
+                $file_upload = fileUpload($request->image_top,'posts');
+                $post->image_top=   $file_upload['path'];
+                    // $post->image_top =  '/storage/' . $request->image->store('posts', 'public');
                 }
             }
         }
@@ -143,8 +149,9 @@ class PostController extends Controller
             $image = request()->file('image_mini');
             $filename = 'mini-' . $slug;
             if ($image->isValid()) {
-
-                $post->image_mini =  '/storage/' . $request->image->store('posts', 'public');
+                $file_upload = fileUpload($request->image_mini,'posts');
+                $post->image_mini=   $file_upload['path'];
+                // $post->image_mini =  '/storage/' . $request->image->store('posts', 'public');
             }
         }
 
@@ -153,7 +160,9 @@ class PostController extends Controller
             $image = request()->file('image_main');
             $filename = 'main-' . $slug;
             if ($image->isValid()) {
-                $post->image_main = '/storage/' . $request->image->store('posts', 'public');
+                $file_upload = fileUpload($request->image_main,'posts');
+                $post->image_main=   $file_upload['path'];
+                // $post->image_main = '/storage/' . $request->image->store('posts', 'public');
             }
         }
         $post->slug =  $slug;
@@ -243,7 +252,11 @@ class PostController extends Controller
             $this->validate(request(), array('image' => 'sometimes|mimes:png,jpg,jpeg,gif|max:4096'));
             $image = request()->file('image');
             if ($image->isValid()) {
-                $data_array['image'] = '/storage/' . $request->image->store('posts', 'public');
+
+                $file_upload = fileUpload($request->image,'posts');
+             $data_array['image'] =   $file_upload['path'];
+
+                // $data_array['image'] = '/storage/' . $request->image->store('posts', 'public');
             }
         }
 
@@ -254,7 +267,10 @@ class PostController extends Controller
             $filename = 'top-' . $slug;
             if ($image->isValid()) {
                 if ($image->isValid()) {
-                    $data_array['image_top'] =  '/storage/' . $request->image->store('posts', 'public');
+                    
+                $file_upload = fileUpload($request->image_top,'posts');
+                $data_array['image_top'] =   $file_upload['path'];
+                    // $data_array['image_top'] =  '/storage/' . $request->image->store('posts', 'public');
                 }
             }
         }
@@ -265,7 +281,9 @@ class PostController extends Controller
             $filename = 'mini-' . $slug;
             if ($image->isValid()) {
 
-                $data_array['image_mini'] =  '/storage/' . $request->image->store('posts', 'public');
+                $file_upload = fileUpload($request->image_mini,'posts');
+             $data_array['image_mini'] =   $file_upload['path'];
+                // $data_array['image_mini'] =  '/storage/' . $request->image->store('posts', 'public');
             }
         }
 
@@ -274,7 +292,10 @@ class PostController extends Controller
             $image = request()->file('image_main');
             $filename = 'main-' . $slug;
             if ($image->isValid()) {
-                $data_array['image_main'] = '/storage/' . $request->image->store('posts', 'public');
+                
+                $file_upload = fileUpload($request->image_main,'posts');
+             $data_array['image_main'] =   $file_upload['path'];
+                // $data_array['image_main'] = '/storage/' . $request->image->store('posts', 'public');
             }
         }
         $post = $this->model_name::where('id', $id)->update($data_array);

@@ -12,7 +12,7 @@ return [
     | you want to customize your views to better match your application.
     |
     */
-
+    "showing" => "Showing :first to :last of :total results",
     'previous' => '&laquo; Previous',
     'next' => 'Next &raquo;',
 

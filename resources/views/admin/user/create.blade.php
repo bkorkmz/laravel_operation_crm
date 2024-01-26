@@ -99,15 +99,24 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Onay Durumu<span class="text-danger">
-                                        *</span></label>
-                                <div class="col-sm-10">
-                                    <select name="status" class="form-control fill" required>
-                                        <option value="1" {{ old('status') == 1 ? "selected":"" }}>Onaylı</option>
-                                        <option value="0" {{ old('status') == 0 ? "selected":"" }}>Onaysız</option>
-
-                                    </select>
+                            <div class="form-group row my-4">
+                                <label class="col-sm-2 col-form-label">Durum
+                                   </label>
+                                <div class="col-sm-3 row align-self-center" >
+                                    
+                                    <div class="form-check m-2">
+                                        <input class="form-check-input" checked type="radio" name="status"
+                                            id="active" value="1"
+                                            {{ old('status',1) == 1 ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="active">Aktif</label>
+                                    </div>
+                                    <div class="form-check m-2">
+                                       
+                                        <input class="form-check-input"  type="radio" name="status"
+                                            id="passive" value="0"
+                                            {{ old('status',1) == 0 ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="passive">Pasif </label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -131,12 +140,12 @@
                             </div>
 
                             
-
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Profil Fotoğrafı (min:300x300)</label>
                                 <div class="col-sm-5">
-                                    <input type="file" class="form-control form-control-normal dropify" placeholder=""
-                                        name="avatar" accept="">
+                                    <input type="file" class="form-control form-control-normal dropify" 
+                                    accept=".png,.jpg,.jpeg,.gif"
+                                    placeholder="" name="image">
                                 </div>
                             </div>
 

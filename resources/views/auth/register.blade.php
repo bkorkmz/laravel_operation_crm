@@ -1,17 +1,8 @@
 @extends('layouts.app')
 @section('title')
     @lang('Kayıt Sayfası')
-@stop
-@section('css')
-
-
-<style>
-    body {
-    background-image:url({{config('settings.site_register_img')}});
-    background-size:cover;   
-    }
-</style>
 @endsection
+
 @section('content')
 
 
@@ -219,8 +210,15 @@
 
 
 @endsection
+@section('css')
 
-
+<style>
+    body {
+    background-image:url("{{config('settings.site_register_img')}}");
+    background-size:cover;   
+    }
+</style>
+@endsection
 @section('js')
 
     <script>

@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'previous' => '&laquo; Previous',
-    'next' => 'Next &raquo;',
+    "showing" => "Toplam :total  sonuçtan :first ile  :last  arası gösteriliyor ",
+    'previous' => '&laquo; Geri',
+    'next' => 'İleri &raquo;',
 
 ];

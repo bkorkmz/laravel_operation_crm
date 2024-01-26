@@ -42,10 +42,10 @@ class FaqSssController extends Controller
             })
 
             ->editColumn('status', function ($data) {
-                if ($data->user_check == 0) {
+                if ($data->status == 0) {
                     return '<span class="badge badge-danger" > ' . __('Pasif') . ' </span >';
                 }
-                if ($data->user_check == 1) {
+                if ($data->status == 1) {
                     return '<span class="badge badge-success">' . __('Aktif') . '</span>';
                 }
             })
@@ -66,8 +66,8 @@ class FaqSssController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'question' => 'required|string|max:255',
-            'answer' => 'required|string|max:255',
+            'question' => 'required|string|max:500',
+            'answer' => 'required|string|max:1000',
             'order' => 'nullable|integer',
         ], [
             'question.required' => "Soru alanı zorunludur.",
@@ -99,8 +99,8 @@ class FaqSssController extends Controller
 
 
         $request->validate([
-            'question' => 'required|string|max:255',
-            'answer' => 'required|string|max:255',
+            'question' => 'required|string|max:500',
+            'answer' => 'required|string|max:1000',
             'order' => 'nullable|integer',
         ], [
             'question.required' => "Soru alanı zorunludur.",

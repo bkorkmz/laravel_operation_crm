@@ -60,6 +60,7 @@ return [
             "article" => "Makale Ayarları",
             "slider" => "Portfolyo Ayarları",
             "teams" => "Takım Ayarları",
+            "services" => "Hizmetler",
         ],
         "name"=>[  
             "view_dashboard_users" =>"Kullanıcı Anasayfayı Görür",
@@ -124,12 +125,16 @@ return [
             "edit_videogallery" =>"Video Galerileri Düzenle",
             "delete_videogallery" =>"Video Galerileri Sil ",
             "restore_videogallery" =>"Silinen Video Galerileri Geri Getir",
+            
+            
             "view_menu_comment" =>"Yorumları Menude Göster ",
             "view_comment" =>"Yorumları Görüntüle",
             "view_all_comment" =>"Tüm Yorumları Görüntüle",
             "read_comment" =>"Yorumları Oku ",
             "delete_comment" =>"Yorumları Sil",
             "publish_comment" =>"Yorumları Yayınla",
+            "message_information_comment"=>"İletişim Mesajlarını Göster",
+            
             "view_menu_settings" =>"Site Ayarlarını Menude Göster",
             "view_settings" =>"Site Ayarlarını Görüntüle ",
             "view_all_settings" =>"Tüm Site Ayarlarını Göster ",
@@ -149,9 +154,15 @@ return [
             "edit_slider"=>   "Portfolyo Düzenle",
             "update_slider"=>   "Portfolyo GÜncelle",
             "delete_slider"=>   "Portfolyo Sil",
-            
-    ],  
-    ],
+
+            "view_menu_services"=>"Hizmetleri Menüde Göster",
+            "edit_services"=>"Hizmetleri  Düzenleme yetkisi",
+            "view_services"=>"Hizmetleri Görme Yetkisi",
+            "update_services"=>"Hizmetleri  Düzenleme Yetkisi",
+            "create_services"=>"Hizmetleri Oluşturma Yetkisi",
+            "delete_services"=>"Hizmetleri Silme Yetkisi",
+],
+        ],
     "Super admin" => "Super Admin",
     "admin" => "Yönetici",
     "teacher" => "Öğretmen",

@@ -23,7 +23,7 @@ return [
             "site_address"=>"Adres",
             "site_copyright"=>"Footer Copyright",
             "site_refresh"=>"Sayfa Yenileme Süresi",
-            "site_publish"=>"Yayın Durumu",
+            "site_publish"=>"Bakım Modu",
             "site_url"=>"Site Url",
             "site_facebookapp_id"=>"Facebook Giriş İd",
             "site_googleplus_id"=>"Google Giriş İd",

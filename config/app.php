@@ -43,8 +43,8 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
-
+   // 'debug' => (bool) config('settings.APP_DEBUG'),
+   'debug' => (bool) env('APP_DEBUG', false),
     /*
     |--------------------------------------------------------------------------
     | Application URL
@@ -171,9 +171,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\SettingsServiceProvider::class,
-    
-    
-    
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
     ])->toArray(),
 
     /*
@@ -189,7 +188,9 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
-//        'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
+        // 'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
+           'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
 //     
     
     ])->toArray(),

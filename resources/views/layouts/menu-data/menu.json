@@ -9,6 +9,14 @@
       "permission": ""
     },
     {
+      "text": "Profilim",
+      "icon": "feather icon-user-check",
+      "route": "profile.index",
+      "path": "/^profile/",
+      "badge": "false",
+      "permission": "view_my_profile_users"
+    },
+    {
       "text": "Kullanıcı Ayarları",
       "icon": "feather icon-users",
       "route": "",
@@ -36,9 +44,7 @@
           "route": "roles.index",
           "path": "/^user\\/roles(\\/index|\\/create|\\/edit|\\/trashed_index|\\/)?$/",
           "badge": "false",
-          "permission": 
-            "view_menu_roles"
-          
+          "permission": "view_menu_roles"
         },
         {
           "text": "Takım Listesi",
@@ -147,7 +153,6 @@
       "badge": "false",
       "permission": [
         "view_menu_category"
-        
       ],
       "submenu": [
         {
@@ -160,14 +165,13 @@
             "view_category"
           ]
         }
-        
       ]
     },
     {
       "text": "Modüller ",
       "icon": "feather icon-image",
       "route": "",
-      "path": "/^(slider|portfolio|faq_sss)/",
+      "path": "/^(slider|portfolio|faq_sss|page)/",
       "badge": "false",
       "permission": [
         "view_menu_slider",
@@ -214,7 +218,6 @@
             "view_slider"
           ]
         }
-       
       ]
     },
     {
@@ -273,14 +276,7 @@
         }
       ]
     },
-    {
-      "text": "İletişim Talepleri",
-      "icon": "feather icon-message-circle",
-      "route": "",
-      "path": "/^comment_message/",
-      "badge": "false",
-      "permission": [
-        "message_information_comment"]},
+ 
     {
       "text": "Ürünler",
       "icon": "feather icon-pie-chart",
@@ -325,6 +321,16 @@
             "view_menu_settings"
           ]
         }
+      ]
+    },
+    {
+      "text": "İletişim Talepleri",
+      "icon": "feather icon-message-circle",
+      "route": "admin.info_message",
+      "path": "/^info-message/",
+      "badge": "frue",
+      "permission": [
+        "message_information_comment"
       ]
     }
   ]

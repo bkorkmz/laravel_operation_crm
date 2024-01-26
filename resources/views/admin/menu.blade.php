@@ -17,7 +17,7 @@
 
     @foreach ($menus['menu'] as $menuitem)
 
-        @if (permissionCheck($menuitem['permission']) || $menuitem['permission'] == "" )
+        @if (permissionCheck($menuitem['permission']) || $menuitem['permission'] == '')
             {{-- @canany($menuitem['permission']) --}}
             {{-- @dd($menuitem) --}}
 
@@ -30,8 +30,7 @@
                 
             @endphp
             {{-- @dd(isset($menuitem['submenu']),$currentpath) --}}
-            @if (preg_match($menuitem['path'], $currentpath)
-             )
+            @if (preg_match($menuitem['path'], $currentpath))
                 <li class="{{ $has_sub }}  active pcoded-trigger">
                 @else
                 <li class="{{ $has_sub }}">
@@ -41,7 +40,7 @@
                 <span class="pcoded-micon"><i class="{{ $menuitem['icon'] }} "></i></span>
                 <span class="pcoded-mtext">{{ $menuitem['text'] }} </span>
                 @if ($menuitem['badge'] == 'true')
-                    <span class="pcoded-badge label label-danger {{ $menuitem['badge'] }}"></span>
+                    <span class="pcoded-badge label label-danger {{ dd($mesaageCount) }}"></span>
                 @endif
             </a>
 
@@ -50,7 +49,7 @@
                 <ul class="pcoded-submenu">
                     @foreach ($menuitem['submenu'] as $submenu)
                         {{-- @can($menuitem['permission']) --}}
-                        @if (permissionCheck($submenu['permission']) || $menuitem['permission'] == "")
+                        @if (permissionCheck($submenu['permission']) || $menuitem['permission'] == '')
                             @if (preg_match($submenu['path'], $currentpath))
                                 <li class="active">
                                 @else
@@ -64,8 +63,8 @@
                                 @endif
                             </a>
                             </li>
-                        {{-- @endcan --}}
-                         @endif
+                            {{-- @endcan --}}
+                        @endif
                     @endforeach
                 </ul>
             @endif

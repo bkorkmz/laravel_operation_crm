@@ -128,7 +128,9 @@ class ProductsController extends Controller
         $product->status = $validatedData['status'];
         if($request->image)
         {
-            $product->photo = '/storage/'.$validatedData['image']->store('products', 'public');
+            $file_upload = fileUpload($validatedData['image'],'products');
+             $products->photo =   $file_upload['path'];
+            // $product->photo = '/storage/'.$validatedData['image']->store('products', 'public');
             
         }
         
@@ -193,7 +195,12 @@ class ProductsController extends Controller
 
         if($request->hasFile('image'))
         {
-            $products['photo'] = '/storage/'.$validatedData['image']->store('products', 'public');
+            // if ($model->image != "") {
+            //     deleteOldPicture($model->avatar);
+            //  }
+             $file_upload = fileUpload($validatedData['image'],'products');
+             $products['photo'] =   $file_upload['path'];
+            // $products['photo'] = '/storage/'.$validatedData['image']->store('products', 'public');
         }
         $products->update([
             'name'=>$validatedData['name'],

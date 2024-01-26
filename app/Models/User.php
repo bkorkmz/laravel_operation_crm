@@ -29,7 +29,9 @@ class User extends Authenticatable
         'status',
         'user_check',
         'avatar',
-        'tc_no'
+        'tc_no',
+        'gender',
+        'phone'
     
     ];
 
