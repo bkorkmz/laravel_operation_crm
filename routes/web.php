@@ -301,7 +301,7 @@ Route::prefix('backend')->middleware('auth')->group(function () {
         Route::get('/trashed_data', 'trashed_data')->name($module_name . '.trashed_data')->middleware('permission:delete_category');
         Route::get('/restored/{model?}', 'restore')->name($module_name . '.restored')->middleware('permission:restore_category');
         
-        Route::post('/category-data','parenCategoryData')->name($module_name .'.parent_data');
+        Route::get('/category-data/{model?}','parentCategoryData')->name($module_name .'.parent_data');
         
         
         

@@ -13,12 +13,16 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained();
+            $table->unsignedBigInteger('customer_id');
             $table->date('order_date');
             $table->decimal('total', 8, 2);
+            $table->enum('status', ['pending', 'completed', 'cancelled'])->default('pending');
             $table->timestamps();
             $table->softDeletes();
-            
+
+
+            $table->foreign('customer_id')->references('id')->on('customers');
+
         });
     }
 

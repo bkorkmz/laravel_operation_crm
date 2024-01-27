@@ -12,7 +12,7 @@
                             <div class="card-header">
                                 <h3>Makale Ekeleme Sayfası</h3>
                                 <a type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
-                                    href="{{ route($modul_name . '.index') }}"><i class="fa fa-reply"></i>Geri Dön</a>
+                                   href="{{ route($modul_name . '.index') }}"><i class="fa fa-reply"></i>Geri Dön</a>
 
                             </div>
                             <div class="card-block table-border-style">
@@ -27,45 +27,56 @@
                                         </div>
                                     @endif
                                     <form action="{{ route($modul_name . '.store') }}" method="post"
-                                        enctype="multipart/form-data">
+                                          enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Makale başlığı <span class="text-danger">
+                                            <label for="title" class="col-sm-2 col-form-label">Makale başlığı <span
+                                                        class="text-danger">
+                                                    *</span></label>
+                                            <div class="col-sm-10">
+                                                 <input type="text" class="form-control form-control-normal"
+                                                           onkeypress="slugCopy(this)" id="title"
+                                                           value="{{ old('title') }}" placeholder="" name="title"
+                                                           maxlength="100"
+                                                           required>
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="slug" class="col-sm-2 col-form-label">Opsiyonel url <span
+                                                        class="text-danger">
+                                                    *</span></label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-prepend">
+                                                        <label class="input-group-text">{{"https://".request()->host()."/blog/"}}</label>
+                                                    </span>
+                                                    <input id="slug_content" type="text" id="slug"
+                                                           class="form-control text-lowercase" name="slug"
+                                                           maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Makale özeti <span
+                                                        class="text-danger">
                                                     *</span></label>
                                             <div class="col-sm-10">
                                                 
-                                                <input  type="text" class="form-control form-control-normal" oninput="slug_copy(this)"
-                                                    value="{{ old('title') }}" placeholder="" name="title" maxlength="100"
-                                                    required>
+                                                <textarea type="text" class="form-control form-control-normal" required
+                                                          placeholder="" name="short_detail"
+                                                          maxlength="250">{{ old('short_detail') }}</textarea>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Opsiyonel url  <span class="text-danger">
+                                            <label class="col-sm-2 col-form-label">Makale içeriği <span
+                                                        class="text-danger">
                                                     *</span></label>
                                             <div class="col-sm-10">
-                                                    <div class="input-group">
-                                                                <span class="input-group-prepend">
-                                                                    <label class="input-group-text">{{"https://".request()->host()."/blog/"}}</label>
-                                                                </span>
-                                                        <input id="slug_content" type="text" class="form-control text-lowercase"  name="slug" maxlength="100">
-                                                    </div>
-                                            </div>
-                                        </div>
-                                
-
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Makale özeti <span class="text-danger">
-                                                    *</span></label>
-                                            <div class="col-sm-10">
-                                                <textarea type="text" class="form-control form-control-normal" required placeholder="" name="short_detail"
-                                                    maxlength="250">{{ old('short_detail') }}</textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Makale içeriği <span class="text-danger">
-                                                    *</span></label>
-                                            <div class="col-sm-10">
-                                                <textarea id="ckeditor" class="form-control form-control-normal" name="detail" rows="5">{{ old('detail') }}</textarea>
+                                                <textarea id="ckeditor" class="form-control form-control-normal"
+                                                          name="detail" rows="5">{{ old('detail') }}</textarea>
                                             </div>
                                         </div>
 
@@ -73,47 +84,24 @@
                                             <label class="col-sm-2 col-form-label">Anahtar kelimeler</label>
                                             <div class="col-sm-10">
                                                 <input type="text" class="form-control form-control-normal"
-                                                    placeholder="Etiketleri , ile ayırarak yazınız" name="keywords"
-                                                    maxlength="100" value="{{ old('keywords') }}">
+                                                       placeholder="Etiketleri , ile ayırarak yazınız" name="keywords"
+                                                       maxlength="100" value="{{ old('keywords') }}">
                                             </div>
                                         </div>
 
                                         <div class="form-group row my-4">
                                             <label class="col-sm-2 col-form-label">Kategori</label>
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-8">
                                                 <select name="category_id" class="form-control fill">
                                                     @foreach ($post_category as $category)
                                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                                     @endforeach
                                                 </select>
-                                                {{-- <a type="button" class="float-right badge badge-inverse-danger"
-                                                    href="javascript:void(0)" data-toggle="modal"
-                                                    data-target="#addCategoryModal">Kategori Ekle</a> --}}
+                                                <a type="button" class="float-right badge badge-inverse-danger"
+                                                   href="javascript:void(0)" data-toggle="modal"
+                                                   data-target="#addCategoryModal">Kategori Ekle</a>
                                             </div>
-                                            {{-- <div class="col-sm-3 float-center">
-                                                <label>Manşette Başlık</label>
-                                                <div class="form-check text-left">
-                                                    <input class="form-check-input" checked type="radio" name="mtitle"
-                                                        id="showMtitle" value="0"{{old('mtitle') == 0 ? 'checked' :"" }}>
-                                                    <label class="form-check-label" for="showMtitle">Göster</label>
-                                                </div>
-                                                <div class="form-check text-left">
-                                                    <input class="form-check-input" type="radio" name="mtitle"
-                                                        id="hideMtitle" value="1"{{old('mtitle') == 1 ? 'checked' :"" }}>
-                                                    <label class="form-check-label" for="hideMtitle">Gösterme</label>
-                                                </div>
-                                            </div> --}}
-
-
-
-                                            {{-- <div class="col-sm-3">
-                                                <select name="source_id" class="form-control fill">
-                                                    <option value="">Kaynak seçin</option>
-                                                        @foreach ($sources as $source)
-                                                        <option value="{{ $source->id }}">{{ $source->title }}</option>
-                                                    @endforeach -
-                                                </select>
-                                            </div> --}}
+                                         
                                         </div>
                                         <div class="form-group row my-4">
                                             <label class="col-sm-2 col-form-label">Durum
@@ -122,15 +110,15 @@
 
                                                 <div class="form-check m-2">
                                                     <input class="form-check-input" checked type="radio" name="publish"
-                                                        id="active" value="1"
-                                                        {{ old('publish', 0) == 0 ? 'checked' : '' }}>
+                                                           id="active" value="1"
+                                                            {{ old('publish', 0) == 0 ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="active">Yayında</label>
                                                 </div>
                                                 <div class="form-check m-2">
 
                                                     <input class="form-check-input" type="radio" name="publish"
-                                                        id="passive" value="0"
-                                                        {{ old('publish', 0) == 1 ? 'checked' : '' }}>
+                                                           id="passive" value="0"
+                                                            {{ old('publish', 0) == 1 ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="passive">Taslak </label>
                                                 </div>
                                             </div>
@@ -140,9 +128,11 @@
                                             <div class="col-5 d-flex ">
                                                 <select name="location" class="form-control fill">
                                                     <option value="0" {{ old('location') == 0 ? 'selected' : '' }}>
-                                                        Normal Görünüm</option>
+                                                        Normal Görünüm
+                                                    </option>
                                                     <option value="1"{{ old('location') == 1 ? 'selected' : '' }}>
-                                                        Anasayfada Göster</option>
+                                                        Anasayfada Göster
+                                                    </option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-3 d-flex">
@@ -159,7 +149,8 @@
 
                                         @canany(['view_photogallery', 'view_videogallery'])
                                             <div class="form-group row clearfix my-4">
-                                                <label class="col-sm-2 col-form-label">Fotograf Galeri / Video Galeri</label>
+                                                <label class="col-sm-2 col-form-label">Fotograf Galeri / Video
+                                                    Galeri</label>
                                                 @canany('view_photogallery')
                                                     <div class="col-sm-5">
                                                         <select name="photogallery_id" class="form-control fill">
@@ -192,17 +183,17 @@
                                             </div>
                                         @endcanany
 
-                    
 
                                         <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Makale Fotoğrafı (min:630x470)</label>
+                                            <label class="col-sm-2 col-form-label">Makale Fotoğrafı
+                                                (min:630x470)</label>
                                             <div class="col-sm-5">
                                                 <input type="file" class="form-control form-control-normal dropify"
-                                                    placeholder="" name="image"
-                                                    accept=".jpg,.jpeg,.png,.tiff,.gif,.svg,.webp,.bmp,.ico" required>
+                                                       placeholder="" name="image"
+                                                       accept=".jpg,.jpeg,.png,.tiff,.gif,.svg,.webp,.bmp,.ico"
+                                                       required>
                                             </div>
                                         </div>
-
 
 
                                         <div class="text-right m-t-20">
@@ -217,93 +208,71 @@
             </div>
         </div>
 
+        @include('admin.component.create_new_category',['model_name'=>'article'])
+
+        @endsection
 
 
-
-        <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Kategori Ekle</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <form class="form-group " id="category-form">
-
-                            <div class="form-group ">
-                                <label class="col-form-label">Kategori Adı</label>
-                                <div class="">
-                                    <input type="text" id="category-name" name="name"
-                                        class="form-control form-control-normal">
-                                </div>
-                            </div>
-                            <button class="btn btn-success float-right" type="submit">Kaydet</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-    @endsection
-
-
-    @section('css')
+        @section('css')
             <link href="{{asset('admin/assets/pages/summernote-0.8.18/summernote.css')}}" rel="stylesheet">
         @endsection
 
-    @section('js')
+        @section('js')
             <script src="{{asset('admin/assets/pages/summernote-0.8.18/summernote.js')}}"></script>
             <script src="{{asset('admin/assets/pages/summernote-0.8.18/lang/summernote-tr-TR.js')}}"></script>
             <script src="{{asset('/admin/assets/pages/summernote-0.8.18/plugin/image2/summernote-image-title.js')}}"></script>
-        
-        <script>
+
+            <script>
 
 
-            $(document).ready(function() {
-                $('#ckeditor').summernote({
-                    lang: 'tr-TR',
-                    height: 300,
-                    imageTitle: {
-                        specificAltField: true,
-                    },
-                
-                    popover: {
-                        image: [
-                            ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
-                            ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
-                            ['float', ['floatLeft', 'floatRight', 'floatNone']],
-                            ['remove', ['removeMedia']],
-                            ['custom', ['imageTitle']],
-                        ],
-                    },
-                    toolbar: [
-                        ['style', ['style']],
-                        ['fontsize', ['fontsize']],
-                        ['fontname', ['fontname']],
-                        ['height', ['height']],
-                        ['font', ['bold', 'underline','strikethrough', 'superscript', 'subscript', 'clear']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['table', ['table']],
-                        ['insert', ['link', 'picture', 'video']],
+                $(document).ready(function () {
+                    $('#ckeditor').summernote({
+                        lang: 'tr-TR',
+                        height: 300,
+                        imageTitle: {
+                            specificAltField: true,
+                        },
 
-                        ['view', ['fullscreen', 'codeview', 'help']]
-                    ]
+                        popover: {
+                            image: [
+                                ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                                ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                                ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                                ['remove', ['removeMedia']],
+                                ['custom', ['imageTitle']],
+                            ],
+                        },
+                        toolbar: [
+                            ['style', ['style']],
+                            ['fontsize', ['fontsize']],
+                            ['fontname', ['fontname']],
+                            ['height', ['height']],
+                            ['font', ['bold', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                            ['para', ['ul', 'ol', 'paragraph']],
+                            ['color', ['color']],
+                            ['para', ['ul', 'ol', 'paragraph']],
+                            ['table', ['table']],
+                            ['insert', ['link', 'picture', 'video']],
+
+                            ['view', ['fullscreen', 'codeview', 'help']]
+                        ]
+
+                    });
 
                 });
-            });
-            
-            function  slug_copy(inputElement){
-                let slug = document.getElementById('slug_content');
-                 console.log(inputElement.value )
-                 slug.value = inputElement.value ;
-            }
 
-        </script>
-    @endsection
+
+
+
+                function  slugCopy (inputElement){
+                    let slug = document.getElementById('slug_content');
+                    console.log(inputElement.value )
+                    slug.value = inputElement.value ;
+                }
+
+                 
+
+             
+              
+            </script>
+@endsection

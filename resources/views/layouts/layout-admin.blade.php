@@ -23,10 +23,10 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:500,700" rel="stylesheet">
     <link href="{{ asset('vendor/dropify/dist/css/dropify.css?v=1.0') }}" rel="stylesheet" type="text/css" />,
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css?v=1.0" rel="stylesheet"/> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css?v=1.0" rel="stylesheet"/>
 
     {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"> --}}
-    
+
     <!-- Required Fremwork -->
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/bower_components/bootstrap/css/bootstrap.min.css?v=1.0') }}">
     <link rel="stylesheet" type="text/css"
@@ -41,7 +41,36 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/css/font-awesome-n.min.css?v=1.0') }}">
     <!-- Chartlist chart css -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    
+
+
+{{--    <link rel="stylesheet" href="{{asset('admin/bower_components/select2/css/select2.min.css')}}" />--}}
+{{--    <!-- Multi Select css -->--}}
+{{--    <link rel="stylesheet" type="text/css" href="{{asset('admin/bower_components/bootstrap-multiselect/css/bootstrap-multiselect.css')}}" />--}}
+{{--    <link rel="stylesheet" type="text/css" href="{{asset('admin/bower_components/multiselect/css/multi-select.css')}}" />--}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+
+        .select2-container {
+            font-size: 15px;
+            border-radius: 2px;
+            border: 1px solid #ccc;
+        }
+        .select2-results__option--selectable:hover {
+            background-color: #abb3ec;
+            color: #fff;
+        }
+
+        .select2-results__option--selected{
+            background-color: #6e87f7;
+            color: #fff;
+        }
+        .select2-results__options {
+            max-height: 300px;
+            overflow-y: scroll;
+        }
+
+    </style>
+
 
     @yield('css')
 
@@ -144,7 +173,7 @@
 {{--                                                </div>--}}
 {{--                                            </div>--}}
 {{--                                        </li>--}}
-                                      
+
                                     </ul>
                                 </div>
                             </li>
@@ -167,23 +196,23 @@
                                     </div>
                                     <ul class="show-notification profile-notification dropdown-menu"
                                         data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                        @can('view_settings') 
+                                        @can('view_settings')
                                             <li>
                                             <a href="{{route('settings.index')}}">
                                                 <i class="feather icon-settings"></i> Ayarlar
-    
+
                                             </a>
-                                        </li>  
+                                        </li>
                                         @endcan
                                         @can('view_my_profile_users')
                                          <li>
                                             <a href="{{route('profile.index')}}">
                                                 <i class="feather icon-user"></i> Profilim
-    
+
                                             </a>
                                         </li>
                                         @endcan
-                                 
+
                                     {{-- <li>
                                         <a href="">
                                             <i class="feather icon-mail"></i> My Messages
@@ -433,6 +462,7 @@
     <script type="text/javascript" src="{{ asset('admin/assets/js/script.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('admin/bower_components/jquery-slimscroll/js/jquery.slimscroll.js') }}">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
 
@@ -450,7 +480,7 @@
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     {{-- swich  --}}
     {{-- <script type="text/javascript" src=".{{asset('admin/bower_components/switchery/js\switchery.min.js')}}"></script> --}}
-    
+
 
     <script>
 
@@ -491,6 +521,9 @@
 </script>
 
     @yield('js')
+
+
+    @yield('after-js')
 
 </body>
 

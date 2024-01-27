@@ -1,12 +1,12 @@
 <?php
 
 
-use Illuminate\Config\Repository;
+use App\Models\Article;
+use App\Models\Category;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
-use Symfony\Component\HttpKernel\HttpCache\Store;
+
 
 if(!function_exists('slug_format')) {
     /**
@@ -27,27 +27,11 @@ if(!function_exists('slug_format')) {
         $string = str_replace('\\', '-', $string);
         $string = str_replace(['ü', 'Ü', 'ş', 'Ş', 'ı', 'İ', 'ç', 'Ç', 'ö', 'Ö', 'ğ', 'Ğ'], ['u', 'U', 's', 'S', 'i', 'I', 'c', 'C', 'o', 'O', 'g', 'G'], $string);
         $string = strtolower($string);
-        
+
         return Str::slug($string, $sparator);
     }
 }
 
-
-if(!function_exists('system_settings')) {
-    /**
-     * Get / set the specified configuration value.
-     *
-     * If an array is passed as the key, we will assume you want to set an array of values.
-     *
-     * @param $string
-     * @return string
-     */
-    function system_settings($string)
-    {
-        $system = 'Merhaba Dünya';
-        return $system;
-    }
-}
 
 
 
@@ -57,14 +41,14 @@ if(!function_exists('menu')) {
 
         $MenuJson = file_get_contents(base_path('resources/views/layouts/menu-data/menu.json'));
         $MenuData = json_decode($MenuJson,true);
-       
+
         return $MenuData;
     }
 
 }
 
 if(!function_exists('permissionCheck')) {
- 
+
     function permissionCheck($permission)
     {
 
@@ -85,22 +69,28 @@ if(!function_exists('permissionCheck')) {
 
 
 if(!function_exists('fileUpload')) {
- 
 
-    function fileUpload($file, $directory, $disk = 'custom_disk')
+
+    function fileUpload($file, $directory, $fileName = "", $disk = 'custom_disk'): array
     {
         try {
+            if($fileName == "") {
+                $filePath = $file->store($directory, $disk);
+            } else {
+                $fileName = $fileName . '_' . time();
+                $extension = $file->getClientOriginalExtension();
+                $filePath = $file->storeAs($directory, $fileName . '.' . $extension, $disk);
+            }
 
-            $path = '/storage/' .$file->store($directory, $disk);
-
-            $fullPath = public_path($path);
+            $path = '/storage/' . $filePath;
+            $fullPath = Storage::path($filePath);
 
             return [
                 'success' => true,
                 'path' => $path,
                 'full_path' => $fullPath,
             ];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return [
                 'success' => false,
                 'message' => 'Dosya yükleme hatası: ' . $e->getMessage(),
@@ -112,13 +102,13 @@ if(!function_exists('fileUpload')) {
 
 
 if(!function_exists('deleteOldPicture')) {
- 
+
 
     function deleteOldPicture($path)
     {
 
         $publicPath = public_path($path);
-       
+
 
         if (File::exists($publicPath)) {
             try {
@@ -146,3 +136,73 @@ if(!function_exists('deleteOldPicture')) {
 
 }
 
+
+if(!function_exists('siteMap')) {
+
+    function siteMap(): RedirectResponse
+    {
+        $urls = [
+            [
+                'date' => date("Y-m-d\Th:m:s+00:00"),
+                'url' => request()->schemeAndHttpHost(),
+                'priority' => "1.00"
+            ],
+            [
+                'date' => date("Y-m-d\Th:m:s"),
+                'url' => request()->schemeAndHttpHost() . '/blog',
+                'priority' => priorityStatus('/blog')]
+        ];
+
+        $article = Article::where('publish', 0)
+            ->select('slug', 'updated_at')
+            ->get();
+        $categories = Category::where('model', 'article')
+            ->where('show', 1)
+            ->withwhereHas('get_article')
+            ->select('id', 'name', 'slug','updated_at')
+            ->orderBy('name', 'desc')
+            ->get();
+
+        foreach ($categories as $cat) {
+            $catSlug = !blank($cat->slug) ?$cat->slug : slug_format($cat->name);
+            $urls[] = [
+                'date' => date("Y-m-d\Th:m:s", $cat->updated_at->timestamp),
+                'url' => request()->schemeAndHttpHost() . '/kategori/' . $catSlug,
+                'priority' => priorityStatus('/kategori/' . $catSlug)
+            ];
+        }
+
+
+        foreach ($article as $art) {
+            $artSlug = !blank($art->slug) ?$art->slug : slug_format($art->name);
+
+            $urls[] = [
+                'date' =>date("Y-m-d\Th:m:s", $art->updated_at->timestamp),
+                'url' => request()->schemeAndHttpHost() . '/blog/' . $artSlug,
+                'priority' => priorityStatus('/blog/' . $artSlug)
+            ];
+        }
+        $sitemapContent = view('sitemap', compact('urls'))->render();
+        file_put_contents(public_path('sitemap.xml'), $sitemapContent);
+
+        return  back();
+    }
+
+}
+
+if(!function_exists('priorityStatus'))
+{
+    function priorityStatus($url): string
+    {
+        $urlLength = strlen($url);
+
+        // Belirli bir çarpanı kullanarak priority değerini hesapla
+        $priority = 1.00 - ($urlLength * 0.01);
+
+        // Priority değerini sınırla (0.00 - 1.00 arasında)
+        $priority = max(0.00, min(1.00, $priority));
+
+        return number_format($priority, 1); // 2 ondalık basamaklı olarak formatla
+
+    }
+}

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Category;
+use DOMDocument;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
@@ -86,7 +88,6 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-//        dd( $request->all());
         
         $validator = Validator::make($request->all(), 
             [
@@ -268,7 +269,8 @@ class ArticleController extends Controller
             $this->validate(request(), array('image' => 'image|mimes:png,jpg,jpeg,gif|max:4096'));
             $image = request()->file('image');
             if($image->isValid()) {
-                $file_upload = fileUpload($request->image, 'articles');
+                $file_upload = fileUpload($request->image, 'articles', $slug);
+                
                 $data_array['image'] = $file_upload['path'];
                 // $data_array['image'] = '/storage/' . $request->image->store('articles', 'public');
             }
@@ -448,23 +450,19 @@ class ArticleController extends Controller
         return view('admin.services.create', compact('modul_name', 'post_category'));
     }
     
-    public function services_store(Request $request)
-    {
+    public function services_store(Request $request){
         
         $validator = Validator::make($request->all(),
             [
                 'title' => 'required|max:50',
-                'short_detail' => 'required|max:250',
+                'short_detail' => 'nullable|max:250',
                 'detail' => 'required',
-                'image' => 'image|mimes:png,jpg,jpeg,gif,webp|max:4096',
-                'keywords' => 'nullable|max:100',
-            
+                'image' => 'image|mimes:png,jpg,jpeg,gif,webp|max:4096'
             ],
             [
                 'title.required' => 'Başlık gereklidir.',
-                'keywords.max' => 'Etiket alanı en fazla 100 karakter olmalıdır.',
                 'title.max' => 'Başlık alanı en fazla 50 karakter olmalıdır.',
-                'short_detail.required' => 'Makale Özeti gereklidir.',
+                // 'short_detail.required' => 'Makale Özeti gereklidir.',
                 'short_detail.max' => 'Makale Özeti alanı en fazla 250 karakter olmalıdır.',
                 'detail.required' => 'Makale detayı gereklidir.',
                 'image.images' => 'Yüklemek istediğiniz dosya sadece resim olmalıdır',
@@ -479,13 +477,27 @@ class ArticleController extends Controller
             '_token'
         
         );
+        $slug = slug_format($request->slug);
+        $validator->after(function ($validator) use ($slug) {
+            if ($this->model_name::where('slug', $slug)->exists()) {
+                $validator->errors()->add('slug', 'Bu url  zaten mevcut. Lütfen slug yapısını değiştiriniz. ');
+            }
+        });
+        
+        $data_array['slug'] = $slug;
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        
         
         
         if(request()->hasFile('image')) {
             $this->validate(request(), array('image' => 'sometimes|mimes:png,jpg,jpeg,gif,webp|max:4096'));
             $image = request()->file('image');
             if($image->isValid()) {
-                $file_upload = fileUpload($request->image, 'articles');
+                $file_upload = fileUpload($request->image, 'articles',$slug);
                 $data_array['image'] = $file_upload['path'];
                 //    $data_array['image'] = '/storage/' . $request->image->store('articles', 'public');
             }
@@ -521,11 +533,11 @@ class ArticleController extends Controller
         
         $data_array['detail'] = $description;
         $post = $this->model_name::create($data_array);
-        $slug = slug_format(Str::limit($request->title, 60)) . '-' . $post->id;
-        $post->update(['slug' => $slug]);
+        
         
         if($post) {
             toastr()->success('Makale Düzenlendi  ', 'Başarılı ');
+            
         } else {
             toastr()->error('Makale Düzenleme İşlemi Sırasında Bir Hata Oluştu ', 'Başarısız !!! ');
         }
@@ -549,16 +561,14 @@ class ArticleController extends Controller
         $validator = Validator::make($request->all(),
             [
                 'title' => 'required|max:50',
-                'short_detail' => 'required|max:250',
+                'short_detail' => 'nullable|max:250',
                 'detail' => 'required',
-                'image' => 'image|mimes:png,jpg,jpeg,gif,webp|max:4096',
-                'keywords.max' => 'Etiket alanı en fazla 100 karakter olmalıdır.',
+                'image' => 'image|mimes:png,jpg,jpeg,gif,webp|max:4096'
             ],
             [
                 'title.required' => 'Başlık gereklidir.',
-                'keywords.max' => 'Etiket alanı en fazla 100 karakter olmalıdır.',
                 'title.max' => 'Başlık alanı en fazla 50 karakter olmalıdır.',
-                'short_detail.required' => 'Makale Özeti gereklidir.',
+                'slug.required' => 'Makale opsiyonel  url zorunlu alandır.',
                 'short_detail.max' => 'Makale Özeti alanı en fazla 250 karakter olmalıdır.',
                 'detail.required' => 'Makale detayı gereklidir.',
                 'image.images' => 'Yüklemek istediğiniz dosya sadece resim olmalıdır',
@@ -575,11 +585,12 @@ class ArticleController extends Controller
             '_token'
         );
         
-        $slug = slug_format(Str::limit($request->title, 60));
+        
+        $slug = slug_format($request->slug);
         $has_article=$this->model_name::where('slug', $slug)->first();
         $validator->after(function ($validator) use ($has_article,$id) {
-            if($has_article) {
-                if($has_article->id != $id) {
+            if ($has_article) {
+                if ($has_article->id != $id) {
                     $validator->errors()->add('title', 'Bu başlık zaten mevcut. Lütfen başlığı değiştiriniz. ');
                 }
             }
@@ -587,13 +598,23 @@ class ArticleController extends Controller
         
         
         
+        
+        
         $data_array['slug'] = $slug;
+        
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        
+        
         
         if(request()->hasFile('image')) {
             $this->validate(request(), array('image' => 'sometimes|mimes:png,jpg,jpeg,gif,webp|max:4096'));
             $image = request()->file('image');
             if($image->isValid()) {
-                $file_upload = fileUpload($request->image, 'articles');
+                $file_upload = fileUpload($request->image, 'articles',$slug);
                 $data_array['image'] = $file_upload['path'];
                 // $data_array['image'] = '/storage/' . $request->image->store('articles', 'public');
             }
@@ -632,6 +653,7 @@ class ArticleController extends Controller
         
         if($post) {
             toastr()->success('Makale Düzenlendi  ', 'Başarılı ');
+            
         } else {
             toastr()->error('Makale Düzenleme İşlemi Sırasında Bir Hata Oluştu ', 'Başarısız !!! ');
         }
@@ -639,7 +661,12 @@ class ArticleController extends Controller
         return redirect()->back();
     }
     
-    public function services_destroy(string $id)
+    
+    /**
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function services_destroy($id): RedirectResponse
     {
         
         $post = Article::findOrFail($id);

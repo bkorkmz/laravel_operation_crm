@@ -89,7 +89,7 @@
                             <div class="swiper details__gallery__big">
                                 <div class="featurearea__big__img swiper-wrapper">
                                     <div class="featurearea__single__big__img swiper-slide">
-                                        <img src="{{$product->photo}}" alt="Product Big Img" >
+                                        <img src="{{$product->photo}}" alt="Product Img" >
                                     </div>
 {{--                                    <div class="featurearea__single__big__img swiper-slide">--}}
 {{--                                        <img src="../img/products/2.jpg" alt="Product Big Img">--}}

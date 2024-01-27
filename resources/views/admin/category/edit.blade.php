@@ -38,7 +38,7 @@
                                                         maxlength="50" required>
                                                 </div>
                                             </div>
-    
+
 
                                             <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label">Kategori Açıklaması </label>
@@ -64,7 +64,7 @@
                                                         <option {{ $model->model == 'video_gallery' ? 'selected' :"" }} value="video_gallery">Video Galeri</option>
                                                     </select>
                                                  </div>
-                                                
+
                                              <div class="col-sm-5 ">
                                                 <div class="col-sm-5" id="country_select" hidden>
                                                     <select id="parent_model" name="parent_id" class="form-control fill" >
@@ -73,7 +73,7 @@
 
                                                 </div>
 
-                                              
+
                                             </div>
                                             </div>
 
@@ -98,7 +98,7 @@
                                                 </div>
                                             </div>
                                             <hr>
-                                           
+
 
                                             <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label">Kategori Fotoğrafı</label>
@@ -162,7 +162,7 @@
             <style>
 
             </style>
-                <link rel="stylesheet" href="{{asset('admin/bower_components/select2/css/select2.min.css')}}" />
+{{--                <link rel="stylesheet" href="{{asset('admin/bower_components/select2/css/select2.min.css')}}" />--}}
 
         @endsection
 
@@ -179,10 +179,10 @@
             {{-- <script src="{{ asset('admin/assets/partials/ckeditor/ckeditor.js') }}"></script> --}}
             <script>
                 {{--$(document).ready(function() {--}}
-                
+
                 {{--    $('#category-form').on('submit', function(e) {--}}
                 {{--        e.preventDefault();--}}
-                
+
                 {{--        var category_name = $('#category-name').val();--}}
                 {{--        if (category_name !== "") {--}}
                 {{--            $.ajax({--}}
@@ -196,7 +196,7 @@
                 {{--                success: function(response) {--}}
                 {{--                    swal("Kategori başarıyla oluşturuldu!");--}}
                 {{--                    $('#addCategoryModal').Modal().hide()--}}
-                
+
                 {{--                },--}}
                 {{--                error: function(xhr, status, error) {--}}
                 {{--                    swal("Bir hata oluştu!");--}}
@@ -204,9 +204,9 @@
                 {{--            });--}}
                 {{--        }--}}
                 {{--        swal("Kategori Boş Olamaz!");--}}
-                
+
                 {{--    });--}}
-                
+
                 {{--});--}}
 
 
@@ -240,14 +240,14 @@
                 $('#category_model').on('change', function (e) {
                     let value =this.value;
                     parent_ajax(value);
-                    
+
                 });
                 $(document).ready(function(){
                     let value = '{{$model->model}}' ;
                     parent_ajax(value);
                 })
-                
-                
+
+
               function parent_ajax(valueSelected){
                     // let category_model =  $('#category_model')
                     let parent_model =    $("#parent_model");
@@ -283,12 +283,12 @@
 
                         }
                     })
-                    
+
                 }
-                
-                
-                
-                
+
+
+
+
 
                 $('.dropify').dropify({
                     messages: {

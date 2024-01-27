@@ -3,10 +3,10 @@
     {{ __('Kategori Ekleme Sayfası  ') }}
 @endsection
 @section('content')
-    <link rel="stylesheet" href="{{asset('admin/bower_components/select2/css/select2.min.css')}}" />
+{{--    <link rel="stylesheet" href="{{asset('admin/bower_components/select2/css/select2.min.css')}}" />--}}
 
-    
-    
+
+
     <div class="pcoded-inner-content">
         <div class="main-body">
             <div class="page-wrapper">
@@ -42,7 +42,7 @@
                                                     required>
                                             </div>
                                         </div>
-                             
+
 
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Kategori Açıklaması </label>
@@ -51,7 +51,7 @@
                                                     maxlength="250">{{ old('description') }}</textarea>
                                             </div>
                                         </div>
-                           
+
 
                                         <div class="form-group row my-4">
                                             <label class="col-sm-2 col-form-label">Bağlı Olduğu Model <i
@@ -70,8 +70,8 @@
 
                                                 </select>
 
-                                              
-                                            </div> 
+
+                                            </div>
                                             <div class="col-sm-5 ">
                                                 <div class="col-sm-5" id="country_select" hidden>
                                                     <select id="parent_model" name="parent_id" class="form-control fill" >
@@ -80,16 +80,16 @@
 
                                                 </div>
 
-                                              
+
                                             </div>
-                                            
+
                                         </div>
 
                                         <div class="form-group row my-4">
                                             <label class="col-sm-2 col-form-label">Durum
                                                </label>
                                             <div class="col-sm-3 row align-self-center" >
-                                                
+
                                                 <div class="form-check m-2">
                                                     <input class="form-check-input" checked type="radio" name="show"
                                                         id="active" value="1"
@@ -97,7 +97,7 @@
                                                     <label class="form-check-label" for="active">Aktif</label>
                                                 </div>
                                                 <div class="form-check m-2">
-                                                   
+
                                                     <input class="form-check-input"  type="radio" name="show"
                                                         id="passive" value="0"
                                                         {{ old('show',1) == 0 ? 'checked' : '' }}>
@@ -107,7 +107,7 @@
                                         </div>
 
                                         <hr>
-                                 
+
 
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Kategori Fotoğrafı</label>
@@ -120,7 +120,7 @@
                                         </div>
 
 
-                                      
+
 
                                         <div class="text-right m-t-20">
                                             <button class="btn btn-primary">Kaydet</button>
@@ -257,7 +257,7 @@
                     let parent_model =    $("#parent_model");
                     $("#parent_model option").remove();
                     let valueSelected = this.value;
-                    
+
                     $.ajax({
                         url:'{{ route("category.parent_data") }}',
                         type:'POST',
@@ -280,25 +280,25 @@
                                 parent_model.select2();
                             }
 
-                          
+
                         }
                     })
-                    
-                    
+
+
 
 
 
                 });
-              
+
 
 
 
 
             </script>
-    
-    
-        
-        
-        
-        
+
+
+
+
+
+
     @endsection
