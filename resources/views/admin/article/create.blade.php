@@ -354,5 +354,4 @@
                 slug.value = inputElement.value ;
             }
         </script>
-        </script>
     @endsection
