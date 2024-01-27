@@ -33,12 +33,12 @@
                                 <input type="text" class="form-control form-control-normal" value="{{old('title')}}"
                                     placeholder="" name="title" maxlength="50" required>
                             </div>
-                        </div> 
+                        </div>
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Hizmet Özeti <span class="text-danger"> *</span></label>
+                            <label class="col-sm-2 col-form-label">Hizmet Özeti <span class="text-danger"> </span></label>
                             <div class="col-sm-10">
-                                    <textarea type="text" class="form-control form-control-normal" required
+                                    <textarea type="text" class="form-control form-control-normal"
                                         placeholder="" name="short_detail" maxlength="250">{{old('short_detail')}}</textarea>
                             </div>
                         </div>
@@ -65,9 +65,9 @@
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
-            
+
                             </div>
-                  
+
                             <div class="form-group col-12  row my-4">
                                 <label class="col-sm-2 col-form-label">Durum
                                 </label>
@@ -90,7 +90,7 @@
                             </div>
 
 
-                   
+
                         </div>
 
 
@@ -129,9 +129,9 @@
                         </div>
 
                         @endcanany
-                       
+
                         <hr>
-                        {{-- <div class="form-group has-warning row">
+                        <div class="form-group has-warning row">
                             <div class="col-sm-2">
                                 <label class="col-form-label" for="meta1">Meta anahtar kelimeler
                                     (Opsiyonel)</label>
@@ -142,8 +142,8 @@
                                 <div class="col-form-label">Arama motorları için kelime bazlı önem
                                     taşır.</div>
                             </div>
-                        </div> --}}
-                        {{-- <div class="form-group has-warning row">
+                        </div>
+                        <div class="form-group has-warning row">
                             <div class="col-sm-2">
                                 <label class="col-form-label" for="meta2">Meta açıklama
                                     (Opsiyonel)</label>
@@ -154,8 +154,8 @@
                                 <div class="col-form-label">Arama motorları maksimum 200 karakteri
                                     geçmeyecek şekilde doldurulabilir.</div>
                             </div>
-                        </div> --}}
-                        {{-- <hr> --}}
+                        </div>
+                        <hr>
 
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Hizmet Fotoğrafı (min:630x470)</label>
@@ -177,56 +177,120 @@
 
 
 
+<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Kategori Ekle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-group " id="category-form">
+
+                    <div class="form-group ">
+                        <label class="col-form-label">Kategori Adı</label>
+                        <div class="">
+                            <input type="text" id="category-name" name="name"
+                                class="form-control form-control-normal">
+                        </div>
+                    </div>
+                    <button class="btn btn-success float-right" type="submit">Kaydet</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 
 
 @section('css')
-    <link href="{{asset('admin/assets/pages/summernote-0.8.18/summernote.css')}}" rel="stylesheet">
 @endsection
 
 @section('js')
-    <script src="{{asset('admin/assets/pages/summernote-0.8.18/summernote.js')}}"></script>
-    <script src="{{asset('admin/assets/pages/summernote-0.8.18/lang/summernote-tr-TR.js')}}"></script>
-    <script src="{{asset('/admin/assets/pages/summernote-0.8.18/plugin/image2/summernote-image-title.js')}}"></script>
+{{-- <script type="text/javascript" src="{{ asset('admin/assets/bower_components/sweetalert/js/sweetalert.min.js') }}"> --}}
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/translations/tr.js"></script>
+{{-- <script src="{{ asset('vendor/dropify/dist/js/dropify.js') }}"></script> --}}
 
-    <script>
 
-        $(document).ready(function() {
-            $('#ckeditor').summernote({
-                lang: 'tr-TR',
-                height: 300,
-                imageTitle: {
-                    specificAltField: true,
-                },
-                fontNames: ['Arial', 'Arial Black','Calibri', 'Comic Sans MS', 'Courier New', 'Merriweather'],
-                fontNamesIgnoreCheck: ['Calibri'],
-                popover: {
-                    image: [
-                        ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
-                        ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
-                        ['float', ['floatLeft', 'floatRight', 'floatNone']],
-                        ['remove', ['removeMedia']],
-                        ['custom', ['imageTitle']],
-                    ],
-                },
-                toolbar: [
-                    ['style', ['style']],
-                    ['fontsize', ['fontsize']],
-                    ['fontname', ['fontname']],
-                    ['height', ['height']],
-                    ['font', ['bold', 'underline','strikethrough', 'superscript', 'subscript', 'clear']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
+{{-- <script src="{{ asset('admin/assets/partials/ckeditor/ckeditor.js') }}"></script> --}}
+<script>
+    $(document).ready(function() {
 
-                    ['view', ['fullscreen', 'codeview', 'help']]
-                ]
+        $('#category-form').on('submit', function(e) {
+            e.preventDefault();
 
-            });
+            var category_name = $('#category-name').val();
+            if (category_name !== "") {
+                $.ajax({
+                    url: "{{ route('category.store') }}",
+                    method: 'POST',
+                    data: {
+                        name: category_name,
+                        model: 'services',
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        swal("Kategori başarıyla oluşturuldu!");
+                        $('#addCategoryModal').Modal().hide()
+
+                    },
+                    error: function(xhr, status, error) {
+                        swal("Bir hata oluştu!");
+                    }
+                });
+            }
+            swal("Kategori Boş Olamaz!");
+
         });
 
-    </script>
+    });
+
+
+
+
+    // function addCategory() {
+
+    //     swal({
+    // 		title: "Ajax request example",
+    // 		text: "Submit to run ajax request",
+    // 		type: "info",
+    // 		showCancelButton: true,
+    // 		closeOnConfirm: false,
+    // 		showLoaderOnConfirm: true
+    // 	}, function () {
+    // 		setTimeout(function () {
+    // 			swal("Ajax request finished!");
+    // 		}, 2000);
+    // 	});
+
+    // }
+
+    ClassicEditor
+
+        .create(document.querySelector('#ckeditor'))
+
+        .catch(error => {
+            console.error(error);
+        });
+
+
+
+        $('.dropify').dropify({
+    messages: {
+        'default': 'Resim yükle ya da sürükle',
+        'replace': 'Resim değiştir ya da sürükle',
+        'remove': 'Kaldır',
+        'error': 'Hata! Desteklenen dosya tipinden farklı bir dosya yüklediniz.'
+    }
+});
+
+
+                </script>
+{{-- <script type="text/javascript" src="{{ asset('admin/assets/js/jquery.marcopolo.min.js') }}"></script> --}}
 @endsection

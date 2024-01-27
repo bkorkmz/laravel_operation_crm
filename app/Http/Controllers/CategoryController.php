@@ -206,7 +206,7 @@ class CategoryController extends Controller
         );
 
 
-        $data_array['slug'] = slug_format(Str::limit($request->title, 60));
+        $data_array['slug'] = slug_format($request->name);
 
         if (request()->hasFile('image')) {
             $this->validate(request(), array('image_mini' => 'sometimes|mimes:png,jpg,jpeg,gif|max:4096'));
@@ -308,16 +308,16 @@ class CategoryController extends Controller
 
     public function parenCategoryData(Request $request)
     {
-     
-        
+
+
         $data = Category::where('model',$request->model)->where(['show'=>1,'parent_id'=>0])->select('id','name')->get()->toArray();
 //        dd($request->all());
 
         return $data;
-    
-        
+
+
     }
 
 
-    
+
 }

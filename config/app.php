@@ -43,8 +43,8 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
-
+   // 'debug' => (bool) config('settings.APP_DEBUG'),
+   'debug' => (bool) env('APP_DEBUG', false),
     /*
     |--------------------------------------------------------------------------
     | Application URL

@@ -33,7 +33,7 @@
                                             <label class="col-sm-2 col-form-label">Makale başlığı <span class="text-danger">
                                                     *</span></label>
                                             <div class="col-sm-10">
-                                                
+
                                                 <input  type="text" class="form-control form-control-normal" oninput="slug_copy(this)"
                                                     value="{{ old('title') }}" placeholder="" name="title" maxlength="100"
                                                     required>
@@ -47,12 +47,10 @@
                                                                 <span class="input-group-prepend">
                                                                     <label class="input-group-text">{{"https://".request()->host()."/blog/"}}</label>
                                                                 </span>
-                                                        <input id="slug_content" type="text" class="form-control text-lowercase"  name="slug" maxlength="100">
+                                                        <input id="slug_content" type="text" class="form-control text-lowercase"  name="slug" maxlength="100" required>
                                                     </div>
                                             </div>
                                         </div>
-                                
-
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Makale özeti <span class="text-danger">
                                                     *</span></label>
@@ -103,8 +101,19 @@
                                                     <label class="form-check-label" for="hideMtitle">Gösterme</label>
                                                 </div>
                                             </div> --}}
-
-
+                                            <div class="col-sm-3">
+                                                <label>Durum</label>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" checked type="radio" name="publish"
+                                                        id="showpublish" value="0" {{old('publish') == 0 ? 'checked' :"" }}>
+                                                    <label class="form-check-label" for="showpublish">Yayında</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="publish"
+                                                        id="hidepublish" value="1" {{old('publish') == 1 ? 'checked' :"" }}>
+                                                    <label class="form-check-label" for="hidepublish">Taslak</label>
+                                                </div>
+                                            </div>
 
                                             {{-- <div class="col-sm-3">
                                                 <select name="source_id" class="form-control fill">
@@ -143,6 +152,8 @@
                                                         Normal Görünüm</option>
                                                     <option value="1"{{ old('location') == 1 ? 'selected' : '' }}>
                                                         Anasayfada Göster</option>
+                                                    <option value="2"{{ old('location') == 2 ? 'selected' : '' }}>
+                                                        Çok Okunan ***</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-3 d-flex">
@@ -192,7 +203,7 @@
                                             </div>
                                         @endcanany
 
-                    
+
 
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Makale Fotoğrafı (min:630x470)</label>
@@ -260,8 +271,45 @@
             <script src="{{asset('admin/assets/pages/summernote-0.8.18/summernote.js')}}"></script>
             <script src="{{asset('admin/assets/pages/summernote-0.8.18/lang/summernote-tr-TR.js')}}"></script>
             <script src="{{asset('/admin/assets/pages/summernote-0.8.18/plugin/image2/summernote-image-title.js')}}"></script>
-        
+
+
         <script>
+
+
+            $(document).ready(function() {
+
+                $('#category-form').on('submit', function(e) {
+                    e.preventDefault();
+
+                    var category_name = $('#category-name').val();
+                    if (category_name !== "") {
+                        $.ajax({
+                            url: "{{ route('category.store') }}",
+                            method: 'POST',
+                            data: {
+                                name: category_name,
+                                model: 'article',
+                                _token: "{{ csrf_token() }}"
+                            },
+                            success: function(response) {
+                                swal("Kategori başarıyla oluşturuldu!");
+                                $('#addCategoryModal').Modal().hide()
+
+                            },
+                            error: function(xhr, status, error) {
+                                swal("Bir hata oluştu!");
+                            }
+                        });
+                    }
+                    swal("Kategori Boş Olamaz!");
+
+                });
+
+            });
+
+
+
+
 
 
             $(document).ready(function() {
@@ -271,7 +319,6 @@
                     imageTitle: {
                         specificAltField: true,
                     },
-                
                     popover: {
                         image: [
                             ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
@@ -284,8 +331,8 @@
                     toolbar: [
                         ['style', ['style']],
                         ['fontsize', ['fontsize']],
-                        ['fontname', ['fontname']],
                         ['height', ['height']],
+                        ['fontname', ['fontname']],
                         ['font', ['bold', 'underline','strikethrough', 'superscript', 'subscript', 'clear']],
                         ['para', ['ul', 'ol', 'paragraph']],
                         ['color', ['color']],
@@ -293,17 +340,19 @@
                         ['table', ['table']],
                         ['insert', ['link', 'picture', 'video']],
 
-                        ['view', ['fullscreen', 'codeview', 'help']]
+                        ['view', ['codeview', 'help']]
                     ]
 
                 });
             });
-            
+
+
+
             function  slug_copy(inputElement){
                 let slug = document.getElementById('slug_content');
-                 console.log(inputElement.value )
-                 slug.value = inputElement.value ;
+                console.log(inputElement.value )
+                slug.value = inputElement.value ;
             }
-
+        </script>
         </script>
     @endsection

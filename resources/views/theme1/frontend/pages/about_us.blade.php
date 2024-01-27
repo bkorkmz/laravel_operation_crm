@@ -57,7 +57,7 @@
 
                                 <h4>{{ $page->service_4_title }} </h4>
 
-                                <p>P{{ $page->service_4_description }}</p>
+                                <p>{{ $page->service_4_description }}</p>
                             </div>
                         </div>
                     </div><!-- End .content-->

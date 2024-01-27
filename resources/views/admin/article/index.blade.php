@@ -54,12 +54,13 @@
                         witdh: '5%',
 
                     },
-
-                    {
+                                        {
                         title: 'Başlık ',
                         data: 'title',
                         name: 'title',
                         witdh: '10%',
+                        orderable: false,
+                        sortable: false,
                         render: function(e) {
                             return `
                             <p style=" word-break: break-word;text-wrap:wrap;">${e}</p>`
@@ -68,7 +69,7 @@
 
                     {
                         title: 'Kategori',
-                        data: 'category',
+                        data: 'category.name',
                         name: 'category.name',
                         orderable: false,
                         sortable: false,
@@ -92,6 +93,8 @@
                         data: 'created_at',
                         name: 'created_at',
                         witdh: '10%',
+                        orderable: false,
+                        sortable: false,
                     },
                     {
                         title: 'İşlemler',

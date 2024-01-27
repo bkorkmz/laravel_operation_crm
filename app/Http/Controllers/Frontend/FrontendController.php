@@ -16,12 +16,12 @@ use App\Models\PortFolio;
 use App\Models\Products;
 use App\Models\Test;
 use App\Models\TestDefinition;
-use Carbon\Carbon;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
+use Carbon\Carbon;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
@@ -108,25 +108,7 @@ class FrontendController extends Controller
         ));
     }
 
-    public function newsletter(Request $request)
-    {
-        
-          $request->validate(
-            [
-                'email' => 'required|email:rfc,dns',
-            ],
-            [
-                'email.required' => 'Eposta gereklidir.',
-                'email.email' => 'Lütfen geçerli bir e-posta adresi girin.',
-            ]
-        );
-        
-           Newsletter::updateOrCreate(['email'=>$request->email]);
-           $message = "OK";
-           
-           
-        return response()->json(['message' => $message]);
-    }
+    
 
     public function contactsubmit(Request $request)
     {
@@ -137,10 +119,16 @@ class FrontendController extends Controller
             'email' => 'required|email:rfc,dns',
             'message' => 'nullable|max:255',
             'resume_file' => 'sometimes|mimes:word,pdf,jpg,jpeg,webp|max:4096',
+            'subject' => 'required',
+            'message' => 'required|max:255',
+            'resume_file' => 'sometimes|mimes:word,pdf,jpg,jpeg,webp|max:4096',
+
         ], [
             'name.required' => 'İsim alanı  gereklidir.',
             'email.required' => 'Eposta gereklidir.',
             'email.email' => 'Lütfen geçerli bir e-posta adresi girin.',
+            'subject.required' => 'Konu alanı  gereklidir.',
+            'message.required' => 'Mesaj alanı  gereklidir.',
             'message.max' => 'Mesaj alanı en fazla 255 karakter olmalıdır.',
             'resume_file.sometimes' => 'Yüklenen dosya sadece izin verilen dosya türünde olmalıdır',
             'resume_file.mimes' => 'Yüklenen dosya sadece izin verilen dosya türünde olmalıdır',
@@ -160,15 +148,14 @@ class FrontendController extends Controller
         $contact->ip = request()->ip();
         $contact->type = $request->form_type ?? "info_message";
         $contact->phone =  $request->phone ?? "0";
-        
-
 
         if (request()->hasFile('resume_file')) {
             $this->validate(request(), array(
-                [ 'resume_file' => 'sometimes|mimes:word,pdf,jpg,jpeg,webp|max:4096'], 
-                [  'resume_file.sometimes' => 'Yüklenen dosya sadece izin verilen dosya türünde olmalıdır',
-                    'resume_file.mimes' => 'Yüklenen dosya sadece izin verilen dosya türünde olmalıdır',
-                    'resume_file.max' => 'Yüklenen dosya  4 MB tan büyük olmamalıdır.'
+                [ 'resume_file' => 'sometimes|mimes:word,pdf,jpg,jpeg,webp|max:4096'],
+                [
+                  'resume_file.sometimes' => 'Yüklenen dosya sadece izin verilen dosya türünde olmalıdır',
+                  'resume_file.mimes' => 'Yüklenen dosya sadece izin verilen dosya türünde olmalıdır',
+                  'resume_file.max' => 'Yüklenen dosya  4 MB tan büyük olmamalıdır.'
                 ]
             ));
             $image = request()->file('resume_file');
@@ -185,53 +172,141 @@ class FrontendController extends Controller
         }
 
         return response()->json(['message' => $message] , 200);
+            
+        }
+
+    
+    public function blog($kategoriadi= null,$id = null)
+    {
+        $sidebar_article = Article::whereRelation('category', function ($query) {
+            $query->where('model', 'article');
+        })->where(['publish' => 0])->where(['location' => 2])
+            ->latest()->limit(5)->get();
+
+        $categories = Category::where('model', 'article')
+        ->where('show',1)
+        ->withwhereHas('get_article') 
+        ->select('id','name','slug')
+        ->withCount('get_article')
+        ->orderBy('name', 'desc')
+        ->get();
+        
+        $cat = $id;
+        $search = request()->arama;
+        $perPage = 8;
+        
+        if (!blank($cat)) {
+            $categoryId = $cat;
+            $article = Article::whereRelation('category', function ($query) use ($categoryId) {
+                $query->where('model', 'article')
+                    ->where('id', $categoryId);
+            })->where(['publish' => 0,'category_id'=>$categoryId])->orderBy('id', 'desc');
+            
+        } else  {
+            $article = Article::whereRelation('category', function ($query) {
+                $query->where('model', 'article');
+            })
+                ->where(['publish' => 0])
+                ->orderBy('id', 'desc');
+        }
+        
+        if (!blank($search)) {
+            
+            $article->where('title', 'like', '%' . $search . '%');
+        }
+        $all_article = $article->paginate($perPage);
+
+        return view('frontend.pages.blog', compact( 'sidebar_article','categories','all_article'));
     }
+    
 
-
-
-    public function blog()
+    public function getMoreArticles(): \Illuminate\Contracts\Foundation\Application|Factory|View|Application
     {
         
-        if (request()->cat) {
-            $all_article = Article::whereRelation('category', function ($query) {
+      
+        $page = request()->page;
+        $perPage = request()->perPage;
+        $cat = request()->cat;
+        $search = request()->search;
+        
+        if (!blank($cat)) {
+            $categoryId = $cat;
+            $all_article = Article::whereRelation('category', function ($query) use ($categoryId) {
                 $query->where('model', 'article')
-                    ->where('id',request()->cat);
-            })->where(['publish' => 0])->orderby('created_at', 'desc')->paginate(8);
+                    ->where('id', $categoryId);
+            })->where(['publish' => 0,'category_id'=>$categoryId])->orderBy('id', 'desc')
+                ->paginate($perPage, ['*'], 'page', $page);
+            
+        } else if (!blank($search)) {
+            $search_value= $search;
+            $all_article = Article::where(['publish' => 0])
+                ->where('title', 'like', '%' . $search_value . '%') 
+                ->orderBy('id', 'desc')
+                ->paginate($perPage, ['*'], 'page', $page);
         }else {
             $all_article = Article::whereRelation('category', function ($query) {
                 $query->where('model', 'article');
-            })->where(['publish' => 0])->orderby('created_at', 'desc')->paginate(8);
+            })
+                ->where(['publish' => 0])
+                ->orderBy('id', 'desc')
+                ->paginate($perPage, ['*'], 'page', $page);
         }
 
-        $sidebar_article = Article::whereRelation('category', function ($query) {
-            $query->where('model', 'article');
-        })->where(['publish' => 0])->orderby('created_at', 'desc')->limit(4)->get();
-                
-        $categories = Category::where(['model'=>'article','show'=>1])->select('id','name')->withCount('content')->get();
-        return view( $this->theme.'.frontend.pages.blog', compact('all_article', 'sidebar_article','categories'));
+        return view('frontend.includes.more_articles',compact('all_article'));
     }
 
-
+    
     public function blog_detail(Request $request, $slug)
-    {
-        $sidebar_article = Article::whereRelation('category', function ($query) {
-            $query->where('model', 'article');
-        })->where(['publish' => 0])->orderby('created_at', 'desc')->limit(4)->get();
+    {  
         $article = Article::where('slug', $slug)->first();
-        $ids[] = $article->id;
-        $categories = Category::where(['model'=>'article','show'=>1])->select('id','name')->withCount('content')->get();
-        foreach($sidebar_article->pluck('id')->toarray() as $id){
-            $ids[]= $id;
+        if($article){
+            $sidebar_article = Article::whereRelation('category', function ($query) use($article) {
+                $query->where('model', 'article')
+                    ->where('id',$article->category_id);
+            })->where(['publish' => 0])->where('id','<>', $article->id)->orderby('created_at', 'desc')->limit(4)->get();
+            
+            return view('frontend.pages.blog_detail', compact('article', 'sidebar_article'));
         }
-        $other_article =  Article::whereNot('id',$ids)->first();
-        return view( $this->theme.'.frontend.pages.blog_detail', compact('article', 'sidebar_article','categories','other_article'));
+     abort(404);
+    }
+
+    public function news_letter(Request $request)
+    {
+
+        return view('frontend.pages.blog');
     }
     
+    public function newsletter(Request $request)
+    {
+        
+        $request->validate(
+            [
+                'email' => 'required|email:rfc,dns',
+            ],
+            [
+                'email.required' => 'Eposta gereklidir.',
+                'email.email' => 'Lütfen geçerli bir e-posta adresi girin.',
+            ]
+        );
+        
+        Newsletter::updateOrCreate(['email'=>$request->email]);
+        $message = "OK";
+        
+        
+        return response()->json(['message' => $message]);
+    }
+
     public function contact_submit(Request $request)
     {
 
-        return view( $this->theme.'.frontend.pages.blog');
+        return view('frontend.pages.blog');
     }
+    
+    public function siteMap()
+    {
+        return siteMap();
+    }
+
     
    
     public function postDetail (int $post)
@@ -264,26 +339,6 @@ class FrontendController extends Controller
         
         return view($this->theme.'.frontend.pages.post_detail',compact('data','sidebar_group','other_post'));
     }
-    
-    
-    public function siteMap()
-    {
-        $urls = [
-            request()->schemeAndHttpHost().'/blog',
-        ];
-        
-        $article = Article::where('publish',0)->select('slug')->get()->toarray();
-        
-            foreach($article as $art){
-                $urls[] = request()->schemeAndHttpHost().'/blog/'.$art['slug'];
-            }
-        
-        $sitemapContent = view('sitemap', compact('urls'))->render();
-        file_put_contents(public_path('sitemap.xml'), $sitemapContent);
-        return redirect(url(request()->schemeAndHttpHost().'/sitemap.xml'));
-        
-    }    
-    
 
     public function products(){
          Products::all();
@@ -419,7 +474,6 @@ class FrontendController extends Controller
         }
         return ['true'=> $trueAnswer, 'false'=>$falseAnswer,'empty'=> $empty];
     }
-    
 }
 
 

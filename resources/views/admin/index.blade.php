@@ -3,13 +3,6 @@
     {{ __('Yönetim Paneli') }}
 @endsection
 @section('content')
-
-    @foreach ($contents as $key => $content)
-        @include('admin.includes.' . $key, ['contents' => $content])
-    @endforeach
-
-@endsection
-@section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/css/widget.css') }}">
     <style>
         .card_area_icon {
@@ -67,7 +60,7 @@
 
                             return `
                         <div class="text-center">
-                             ${text}                          
+                             ${text}
                         </div>
                         `;
                         }

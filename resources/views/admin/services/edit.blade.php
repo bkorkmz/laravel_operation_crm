@@ -30,23 +30,11 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Hizmet Başlığı <span class="text-danger"> *</span></label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control form-control-normal" value="{{$model->title}}" oninput="slug_copy(this)"
+                                <input type="text" class="form-control form-control-normal" value="{{old('title')}}"
                                     placeholder="" name="title" maxlength="50" required>
                             </div>
                         </div>
-                      
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Opsiyonel url  <span class="text-danger"> *</span></label>
-                            <div class="col-sm-10">
-                                <div class="input-group">
-                                     <span class="input-group-prepend">
-                                         <label class="input-group-text">{{"https://".request()->host()."/blog/"}}</label>
-                                     </span>
-                                    <input id="slug_content" type="text" class="form-control text-lowercase"  name="slug" maxlength="100">
-                                </div>
-                            </div>
-                        </div>
-                        {{--                         
+                        {{--
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Seo başlık ( URL - Opsiyonel )</label>
                             <div class="col-sm-10">
@@ -55,9 +43,9 @@
                         </div> --}}
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Hizmet Özeti <span class="text-danger"> *</span></label>
+                            <label class="col-sm-2 col-form-label">Hizmet Özeti <span class="text-danger"> </span></label>
                             <div class="col-sm-10">
-                                    <textarea type="text" class="form-control form-control-normal" required
+                                    <textarea type="text" class="form-control form-control-normal"
                                         placeholder="" name="short_detail" maxlength="250">{{$model->short_detail}}</textarea>
                             </div>
                         </div>
@@ -85,9 +73,9 @@
                                         <option value="{{ $cat->id }} {{$model->category_id == $cat->id ? 'selected': '' }}">{{ $cat->name }}</option>
                                     @endforeach
                                 </select>
-                              
+
                             </div>
-                           
+
                              <div class="form-group row my-4 col-12">
                                 <label class="col-sm-2 col-form-label">Durum
                                 </label>
@@ -158,7 +146,7 @@
                         </div>
 
                         @endcanany
-                       
+
                         {{-- <hr> --}}
                         {{-- <div class="form-group has-warning row">
                             <div class="col-sm-2">
@@ -237,8 +225,8 @@
 @endsection
 
 
+
 @section('css')
-    <link href="{{asset('admin/assets/pages/summernote-0.8.18/summernote.css')}}" rel="stylesheet">
 @endsection
 
 @section('js')

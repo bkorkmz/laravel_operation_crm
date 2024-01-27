@@ -10,6 +10,7 @@
 
     <![endif]-->
     <!-- Meta -->
+
     <meta charset="utf-8">
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -23,10 +24,10 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:500,700" rel="stylesheet">
     <link href="{{ asset('vendor/dropify/dist/css/dropify.css?v=1.0') }}" rel="stylesheet" type="text/css" />,
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css?v=1.0" rel="stylesheet"/> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css?v=1.0" rel="stylesheet"/>
 
     {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"> --}}
-    
+
     <!-- Required Fremwork -->
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/bower_components/bootstrap/css/bootstrap.min.css?v=1.0') }}">
     <link rel="stylesheet" type="text/css"
@@ -41,7 +42,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/css/font-awesome-n.min.css?v=1.0') }}">
     <!-- Chartlist chart css -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    
 
     @yield('css')
 
@@ -78,19 +78,19 @@
                     </div>
                     <div class="navbar-container container-fluid">
                         <ul class="nav-left">
-                            <li class="header-search">
-                                <div class="main-search morphsearch-search">
-                                    <div class="input-group">
-                                        <span class="input-group-prepend search-close">
-                                            <i class="feather icon-x input-group-text"></i>
-                                        </span>
-                                        <input type="text" class="form-control" placeholder="Enter Keyword">
-                                        <span class="input-group-append search-btn">
-                                            <i class="feather icon-search input-group-text"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
+                            <!--<li class="header-search">-->
+                            <!--    <div class="main-search morphsearch-search">-->
+                            <!--        <div class="input-group">-->
+                            <!--            <span class="input-group-prepend search-close">-->
+                            <!--                <i class="feather icon-x input-group-text"></i>-->
+                            <!--            </span>-->
+                            <!--            <input type="text" class="form-control" placeholder="Enter Keyword">-->
+                            <!--            <span class="input-group-append search-btn">-->
+                            <!--                <i class="feather icon-search input-group-text"></i>-->
+                            <!--            </span>-->
+                            <!--        </div>-->
+                            <!--    </div>-->
+                            <!--</li>-->
                             <li>
                                 <a href="#!" onclick="javascript:toggleFullScreen()"
                                     class="waves-effect waves-light">
@@ -98,7 +98,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('frontend.index') }}" class="waves-effect waves-light"
+                                <a href="{{ route('frontend.index') }}" target="_blank" class="waves-effect waves-light"
                                     data-toggle="tooltip" data-placement="top" title="Siteyi Görüntüle">
                                     <i class="feather icon-monitor"></i>
                                 </a>
@@ -144,7 +144,7 @@
 {{--                                                </div>--}}
 {{--                                            </div>--}}
 {{--                                        </li>--}}
-                                      
+
                                     </ul>
                                 </div>
                             </li>
@@ -167,23 +167,23 @@
                                     </div>
                                     <ul class="show-notification profile-notification dropdown-menu"
                                         data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                                        @can('view_settings') 
+                                        @can('view_settings')
                                             <li>
                                             <a href="{{route('settings.index')}}">
                                                 <i class="feather icon-settings"></i> Ayarlar
-    
+
                                             </a>
-                                        </li>  
+                                        </li>
                                         @endcan
                                         @can('view_my_profile_users')
                                          <li>
                                             <a href="{{route('profile.index')}}">
                                                 <i class="feather icon-user"></i> Profilim
-    
+
                                             </a>
                                         </li>
                                         @endcan
-                                 
+
                                     {{-- <li>
                                         <a href="">
                                             <i class="feather icon-mail"></i> My Messages
@@ -450,7 +450,7 @@
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     {{-- swich  --}}
     {{-- <script type="text/javascript" src=".{{asset('admin/bower_components/switchery/js\switchery.min.js')}}"></script> --}}
-    
+
 
     <script>
 

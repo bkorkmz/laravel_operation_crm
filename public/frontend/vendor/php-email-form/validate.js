@@ -96,6 +96,9 @@
             if (data.message === 'OK') {
               thisForm.querySelector('.sent-message').classList.add('d-block');
               thisForm.reset();
+              setTimeout(function() {
+                  thisForm.querySelector('.sent-message').classList.remove('d-block');
+              }, 3000);
           } else if (data.errors) {
               const errorMessages = Object.values(data.errors).flat(); // Tüm hata mesajlarını bir dizide topla
               displayError(thisForm, errorMessages.join('<br>')); // Hata mesajlarını <br> ile birleştirip göster

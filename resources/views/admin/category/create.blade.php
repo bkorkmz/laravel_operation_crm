@@ -3,14 +3,10 @@
     {{ __('Kategori Ekleme Sayfası  ') }}
 @endsection
 @section('content')
-    <link rel="stylesheet" href="{{asset('admin/bower_components/select2/css/select2.min.css')}}" />
-
-    
-    
     <div class="pcoded-inner-content">
-        <div class="main-body">
-            <div class="page-wrapper">
-                <div class="page-body">
+        <div class="page-wrapper">
+            <div class="page-body">
+                <div class="">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
@@ -42,7 +38,7 @@
                                                     required>
                                             </div>
                                         </div>
-                             
+
 
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Kategori Açıklaması </label>
@@ -51,7 +47,7 @@
                                                     maxlength="250">{{ old('description') }}</textarea>
                                             </div>
                                         </div>
-                           
+
 
                                         <div class="form-group row my-4">
                                             <label class="col-sm-2 col-form-label">Bağlı Olduğu Model <i
@@ -62,16 +58,15 @@
                                                     <option value="portfolio">Portfolyo</option>
                                                     <option value="services">Hizmet</option>
                                                     <option value="article">Makale</option>
-                                                    <option value="product">Ürün</option>-
-                                                    {{--<option value="post">Haber</option>--}}
-                                                    {{-- <option value="photo_gallery">Foto Galeri</option>
-                                                    <option value="video_gallery">Video Galeri</option> --}}
-
+                                                    <option value="post">Haber</option>
+                                                    <option value="product">Ürün</option>
+                                                    <option value="photo_gallery">Foto Galeri</option>
+                                                    <option value="video_gallery">Video Galeri</option>
 
                                                 </select>
 
-                                              
-                                            </div> 
+
+                                            </div>
                                             <div class="col-sm-5 ">
                                                 <div class="col-sm-5" id="country_select" hidden>
                                                     <select id="parent_model" name="parent_id" class="form-control fill" >
@@ -80,16 +75,16 @@
 
                                                 </div>
 
-                                              
+
                                             </div>
-                                            
+
                                         </div>
 
                                         <div class="form-group row my-4">
                                             <label class="col-sm-2 col-form-label">Durum
                                                </label>
                                             <div class="col-sm-3 row align-self-center" >
-                                                
+
                                                 <div class="form-check m-2">
                                                     <input class="form-check-input" checked type="radio" name="show"
                                                         id="active" value="1"
@@ -97,7 +92,7 @@
                                                     <label class="form-check-label" for="active">Aktif</label>
                                                 </div>
                                                 <div class="form-check m-2">
-                                                   
+
                                                     <input class="form-check-input"  type="radio" name="show"
                                                         id="passive" value="0"
                                                         {{ old('show',1) == 0 ? 'checked' : '' }}>
@@ -107,7 +102,7 @@
                                         </div>
 
                                         <hr>
-                                 
+
 
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Kategori Fotoğrafı</label>
@@ -120,7 +115,7 @@
                                         </div>
 
 
-                                      
+
 
                                         <div class="text-right m-t-20">
                                             <button class="btn btn-primary">Kaydet</button>
@@ -170,18 +165,16 @@
 
 
     @section('css')
+        <style>
 
+        </style>
     @endsection
 
     @section('js')
         {{-- <script type="text/javascript" src="{{ asset('admin/assets/bower_components/sweetalert/js/sweetalert.min.js') }}"> --}}
-{{--        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>--}}
-{{--        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/translations/tr.js"></script>--}}
-
-        <script src="{{asset('admin/bower_components/select2/js/select2.full.min.js')}}"></script>
-
-
-            {{-- <script src="{{ asset('vendor/dropify/dist/js/dropify.js') }}"></script> --}}
+        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
+        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/translations/tr.js"></script>
+        {{-- <script src="{{ asset('vendor/dropify/dist/js/dropify.js') }}"></script> --}}
 
 
         {{-- <script src="{{ asset('admin/assets/partials/ckeditor/ckeditor.js') }}"></script> --}}
@@ -257,7 +250,7 @@
                     let parent_model =    $("#parent_model");
                     $("#parent_model option").remove();
                     let valueSelected = this.value;
-                    
+
                     $.ajax({
                         url:'{{ route("category.parent_data") }}',
                         type:'POST',
@@ -280,25 +273,25 @@
                                 parent_model.select2();
                             }
 
-                          
+
                         }
                     })
-                    
-                    
+
+
 
 
 
                 });
-              
+
 
 
 
 
             </script>
-    
-    
-        
-        
-        
-        
+
+
+
+
+
+
     @endsection

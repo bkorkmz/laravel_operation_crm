@@ -2,26 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\NewsletterExport;
 use App\Models\Article;
 use App\Models\InfoMessage;
 use App\Models\JobTeams;
 use App\Models\Newsletter;
-use App\Models\Products;
-use App\Models\Test;
 use App\Models\TestDefinition;
+use App\Models\Products;
 use App\Models\User;
+use Illuminate\Support\Facades\Artisan;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Artisan;
-use Maatwebsite\Excel\Facades\Excel;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Illuminate\Support\Facades\Request;
 
 class AdminController  extends Controller
 {
@@ -33,31 +29,15 @@ class AdminController  extends Controller
 
     public function index()
     {
-        
-        $contents = collect();
-        
-        if(!auth()->user()->hasRole('user')){
-            $pages['admin'] ='admin_dashboard';   
-        }else {
-            $pages['user'] = 'user_dashboard';
-        }
-      
-        foreach ($pages as $key=>$page){
-            $contents->put($key, $this->$page());
-        }
-        return view('admin.index', compact('contents'));
-    }
-    
-    public function admin_dashboard(){
-        
         $article = Article::whereRelation('category', function ($query) {
             $query->where('model', 'article');
         });
         $total_article = $article->get()->count();
         $last_article = $article->latest()->limit(5)->get();
-        
+
+
         $services = Article::whereRelation('category', function ($query) {
-            $query->where('model', 'services');
+                   $query->where('model', 'services');
         });
         $total_services = $services->count();
         $last_services = $services->latest()->limit(5)->get();
@@ -67,6 +47,18 @@ class AdminController  extends Controller
         $infoMessages = InfoMessage::where('type','info_form')->orderBy('created_at', 'asc');
         $infoMessages =  $infoMessages->limit(5)->get();
         $mesageCount =  $infoMessages->where('publish',0)->count();
+
+
+        $user_count = JobTeams::where('status', 1)->count();
+        // $requestForm = InfoMessage::where('type','request_form')->orderBy('publish', 'asc')->latest('created_at')->paginate(10);
+        
+        $infoMessages = InfoMessage::latest();
+        $mesaageCount =  $infoMessages->count();
+        $infoMessages =  $infoMessages->limit(5)->get();
+        
+        
+        
+        
         
         $newsletter = Newsletter::latest();
         $newsletterCount =  $newsletter->count();
@@ -74,20 +66,14 @@ class AdminController  extends Controller
         
         $testsCount = TestDefinition::count();
         
-        return compact(
+        return view('admin.index', compact(
             'total_article',
             'last_article',
             'total_services',
             'last_services',
             'user_count',
-            'infoMessages',
-            'mesageCount',
-            'requestForm',
-            'newsletter',
-            'newsletterCount',
-            'testsCount'
-        );
-        
+            'infoMessages','mesaageCount','newsletter','newsletterCount'
+        ));
     }
     
     public function user_dashboard(){
@@ -105,20 +91,18 @@ class AdminController  extends Controller
 
     public function clearCache(): RedirectResponse
     {
-
         Artisan::call('optimize:clear');
+        Artisan::call('route:cache');
+        Artisan::call('config:cache');
+        
         toastr()->success('Sistem Önbelleği Temizlendi.', 'Başarılı');
         return redirect()->back();
     }
-    
-
-    public function info_message()
+    public function info_message(): Application|Factory|View|\Illuminate\Foundation\Application
     {
         $messages = InfoMessage::where('type','info_form')->orderBy('created_at', 'asc')->paginate(10);
         return view('admin.message', compact('messages'));
     }
-    
-
     public function info_message_edit($id)
     {
         $messages = InfoMessage::where('id', $id)->update(['publish' => 1]);
@@ -129,9 +113,12 @@ class AdminController  extends Controller
         }
         return response($msg);
     }
-
-
-
+    
+    
+    /**
+     * @param Request $request
+     * @return JsonResponse|void
+     */
     public function ckEditorUpload(Request $request)
     {
         if($request->hasFile('image')) {
@@ -156,18 +143,14 @@ class AdminController  extends Controller
                     'uploaded' => true,
                     'url' => $url,
                 ]);
+          
         }
     }
-    
-    
-    /**
-     * @return BinaryFileResponse
-     */
+
+
     public function  newsletterDownload()
     {
-        return Excel::download(new \App\Exports\NewsletterExport(), 'Email-List-'.date('d.m.Y').'.xlsx',\Maatwebsite\Excel\Excel::XLSX);
+        return Excel::download(new \App\Exports\NewsLetterExport, 'Email-List-'.date('d.m.Y').'.xlsx',\Maatwebsite\Excel\Excel::XLSX);
     }
-
-
 
 }

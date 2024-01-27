@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Article;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class SitemapJob extends Command
@@ -26,12 +27,6 @@ class SitemapJob extends Command
      */
     public function handle()
     {
-        $urls = [request()->schemeAndHttpHost().'/blog'];
-        $article = Article::where('publish',0)->select('slug')->get()->toarray();
-        foreach($article as $art){
-            $urls[] = request()->schemeAndHttpHost().'/blog/'.$art['slug'];
-        }
-        $sitemapContent = view('sitemap', compact('urls'))->render();
-        file_put_contents(public_path('sitemap.xml'), $sitemapContent);
+        siteMap();
     }
 }

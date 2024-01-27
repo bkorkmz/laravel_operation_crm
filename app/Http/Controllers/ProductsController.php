@@ -138,6 +138,8 @@ class ProductsController extends Controller
         {
             $file_upload = fileUpload($validatedData['image'],'products');
             $product->photo =   $file_upload['path'];
+            // $product->photo = '/storage/'.$validatedData['image']->store('products', 'public');
+            
         }
         
         if (request()->hasFile('files')) {
@@ -258,6 +260,7 @@ class ProductsController extends Controller
             $data['slug']  = slug_format(Str::limit($validatedData['name'],30));
         }else{
             $data['slug']  = slug_format($request->slug);
+      
         }
         
         $product->update($data);

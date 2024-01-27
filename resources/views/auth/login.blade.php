@@ -7,7 +7,7 @@
 <style>
     body {
     background-image:url("{{config('settings.site_login_img')}}");
-    background-size:cover;   
+    background-size:cover;
     }
     .container{
         max-width: 40rem;
@@ -53,7 +53,7 @@
                                                       <strong>{{ $message }}</strong>
                                                    </span>
                                                @enderror
-                                        </div>  
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row mb-3 justify-content-center">
@@ -223,7 +223,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="remember" id="remember"
                                             {{ old('remember') ? 'checked' : '' }}>
-    
+
                                         <label class="form-check-label" for="remember">
                                             {{ __('Remember Me') }}
                                         </label>
