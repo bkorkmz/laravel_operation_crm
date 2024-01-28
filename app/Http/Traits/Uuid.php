@@ -10,7 +10,6 @@ trait Uuid
     protected static function boot()
     {
         parent::boot();
-        parent::boot();
         static::saving(function ($model) {
             $model->incrementing = false;
             $model->keyType = 'string';
