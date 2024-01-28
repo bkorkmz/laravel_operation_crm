@@ -8,31 +8,6 @@
 
 @section('head')
 
-{{--    <meta property="og:locale" content="tr_TR"/>--}}
-{{--    <meta property="og:site_name" content="{{ config('settings.site_title') }}"/>--}}
-{{--    <meta property="og:title" content="{{ config('settings.site_title') }}i"/>--}}
-{{--    <meta property="og:url" content="{{ config('settings.site_url') }}"/>--}}
-{{--    <meta property="og:type" content="website"/>--}}
-{{--    <meta property="og:description" content="{{ config('settings.site_description') }}"/>--}}
-{{--    <meta property="og:image" content="{{config('settings.site_icon')}}"/>--}}
-{{--    <meta property="article:publisher" content="{{config('settings.site_facebook_url') }}"/>--}}
-
-
-
-{{--    <meta itemprop="name" content="{{ config('settings.site_title') }}"/>--}}
-{{--    <meta itemprop="headline" content="{{ config('settings.site_title') }}"/>--}}
-{{--    <meta itemprop="description" content="{{ config('settings.site_description') }}"/>--}}
-{{--    <meta itemprop="image" content="{{config('settings.site_icon')}}"/>--}}
-{{--    <meta itemprop="author" content="{{ config('settings.site_url') }}"/>--}}
-{{--    <link rel="publisher" href="{{ config('settings.site_google_plus_url') }}"/>--}}
-
-
-{{--    <meta name="twitter:title" content="{{ config('settings.site_title') }}"/>--}}
-{{--    <meta name="twitter:url" content="{{ config('settings.site_url') }}"/>--}}
-{{--    <meta name="twitter:description" content="{{ config('settings.site_description') }}"/>--}}
-{{--    <meta name="twitter:image" content="{{config('settings.site_icon')}}"/>--}}
-{{--    <meta name="twitter:site" content="{{config('settings.site_twitter_url')}}"/>--}}
-
 
 @endsection
 
@@ -93,7 +68,7 @@
 
                         <ul class="nav" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button data-bs-toggle="tab" data-bs-target="#grid__view" type="button">
+                                <button data-bs-toggle="tab" data-bs-target="#prod_grid__view" type="button">
                                     <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5.5 12.5">
                                         <defs></defs><defs></defs><g data-name="Layer 2"><g data-name="Layer 1"><g data-name="shop page"><g id="Group-10"><path d="M.75 0a.76.76 0 01.75.75v11a.76.76 0 01-.75.75.76.76 0 01-.75-.75v-11A.76.76 0 01.75 0z" class="cls-1"></path><path d="M4.75 0a.76.76 0 01.75.75v11a.76.76 0 01-.75.75.76.76 0 01-.75-.75v-11A.76.76 0 014.75 0z" class="cls-1" data-name="Rectangle"></path></g></g></g></g>
                                     </svg>
@@ -358,7 +333,7 @@
             <div class="col-xl-9 col-lg-12 col-md-12">
 
                 <div class="tab-content" id="myTabContent" data-aos="fade-up">
-                    <div class="tab-pane fade" id="grid__view">
+                    <div class="tab-pane fade" id="prod_grid__view">
 
                         <div class="row">
 

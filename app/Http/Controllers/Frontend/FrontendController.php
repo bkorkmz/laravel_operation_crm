@@ -33,12 +33,12 @@ class FrontendController extends Controller
     {
         // Current Theme
         $this->theme = config('app.aliases.CURRENT_THEME');
-        
+
     }
-    
+
     public function index()
     {
-        
+
         DB::table('module_landing_page_sections')->get()->groupBy('section_name')->toArray();
 
         $article = Article::withwhereHas('category', function ($query) {
@@ -48,7 +48,7 @@ class FrontendController extends Controller
             ->where(['location' => 1, 'publish' => 0])
             ->orderby('id', 'desc')
             ->limit(10)->get();
-//         
+//
         $services = Article::withwhereHas('category', function ($query) {
             $query->where('model', 'services');
         })
@@ -59,8 +59,8 @@ class FrontendController extends Controller
             ->where('show', 1)->get();
 
         $teams = JobTeams::where('status', 1)->get();
-        
-        $sliders = PortFolio::where('status', 1)
+
+        $slider = PortFolio::where('status', 1)
             ->where('type', 'slider')->get();
 
         $about_page = ModelLandingPage::where('section_name', 'about')->first();
@@ -79,28 +79,29 @@ class FrontendController extends Controller
         $all_article = Article::whereRelation('category', function ($query) {
             $query->where('model', 'article');
         })->where(['location' => 1, 'publish' => 0])->orderby('id', 'desc')->paginate(5);
-        
+
         $referance =  PortFolio::where('type', 'portfolio')->where('status',1)->whereRelation('category',function ($q){
             $q->where('slug','referanslar');
         })->limit(20)->select('name','link','image')->get();
-        
+
         $filePath = storage_path('app/evrimNews.json');
+        $newsList = "";
         if (file_exists($filePath)) {
          $jsonContent = file_get_contents($filePath);
          $newsData = json_decode($jsonContent, true);
          $newsList =  array_slice($newsData['haberlist'], 0, 12);
         }
-        
+
         $products =  Products::where(['status' => 1])
             ->select('id', 'name', 'slug', 'description', 'price','stock','photo')
            ->get();
-        
+
         return view( $this->theme.'.frontend.index', compact(
             "article",
             "services",
             "teams",
             "portfolio",
-            "sliders",
+            "slider",
             "services_category",
             'about_page',
             'faq_sss',
@@ -108,7 +109,7 @@ class FrontendController extends Controller
         ));
     }
 
-    
+
 
     public function contactsubmit(Request $request)
     {
@@ -172,10 +173,10 @@ class FrontendController extends Controller
         }
 
         return response()->json(['message' => $message] , 200);
-            
+
         }
 
-    
+
     public function blog($kategoriadi= null,$id = null)
     {
         $sidebar_article = Article::whereRelation('category', function ($query) {
@@ -185,23 +186,23 @@ class FrontendController extends Controller
 
         $categories = Category::where('model', 'article')
         ->where('show',1)
-        ->withwhereHas('get_article') 
+        ->withwhereHas('get_article')
         ->select('id','name','slug')
         ->withCount('get_article')
         ->orderBy('name', 'desc')
         ->get();
-        
+
         $cat = $id;
         $search = request()->arama;
         $perPage = 8;
-        
+
         if (!blank($cat)) {
             $categoryId = $cat;
             $article = Article::whereRelation('category', function ($query) use ($categoryId) {
                 $query->where('model', 'article')
                     ->where('id', $categoryId);
             })->where(['publish' => 0,'category_id'=>$categoryId])->orderBy('id', 'desc');
-            
+
         } else  {
             $article = Article::whereRelation('category', function ($query) {
                 $query->where('model', 'article');
@@ -209,26 +210,26 @@ class FrontendController extends Controller
                 ->where(['publish' => 0])
                 ->orderBy('id', 'desc');
         }
-        
+
         if (!blank($search)) {
-            
+
             $article->where('title', 'like', '%' . $search . '%');
         }
         $all_article = $article->paginate($perPage);
 
-        return view('frontend.pages.blog', compact( 'sidebar_article','categories','all_article'));
+        return view( $this->theme.'.frontend.pages.blog', compact( 'sidebar_article','categories','all_article'));
     }
-    
+
 
     public function getMoreArticles(): \Illuminate\Contracts\Foundation\Application|Factory|View|Application
     {
-        
-      
+
+
         $page = request()->page;
         $perPage = request()->perPage;
         $cat = request()->cat;
         $search = request()->search;
-        
+
         if (!blank($cat)) {
             $categoryId = $cat;
             $all_article = Article::whereRelation('category', function ($query) use ($categoryId) {
@@ -236,11 +237,11 @@ class FrontendController extends Controller
                     ->where('id', $categoryId);
             })->where(['publish' => 0,'category_id'=>$categoryId])->orderBy('id', 'desc')
                 ->paginate($perPage, ['*'], 'page', $page);
-            
+
         } else if (!blank($search)) {
             $search_value= $search;
             $all_article = Article::where(['publish' => 0])
-                ->where('title', 'like', '%' . $search_value . '%') 
+                ->where('title', 'like', '%' . $search_value . '%')
                 ->orderBy('id', 'desc')
                 ->paginate($perPage, ['*'], 'page', $page);
         }else {
@@ -255,17 +256,17 @@ class FrontendController extends Controller
         return view('frontend.includes.more_articles',compact('all_article'));
     }
 
-    
+
     public function blog_detail(Request $request, $slug)
-    {  
+    {
         $article = Article::where('slug', $slug)->first();
         if($article){
             $sidebar_article = Article::whereRelation('category', function ($query) use($article) {
                 $query->where('model', 'article')
                     ->where('id',$article->category_id);
             })->where(['publish' => 0])->where('id','<>', $article->id)->orderby('created_at', 'desc')->limit(4)->get();
-            
-            return view('frontend.pages.blog_detail', compact('article', 'sidebar_article'));
+
+            return view( $this->theme.'.frontend.pages.blog_detail', compact('article', 'sidebar_article'));
         }
      abort(404);
     }
@@ -273,12 +274,12 @@ class FrontendController extends Controller
     public function news_letter(Request $request)
     {
 
-        return view('frontend.pages.blog');
+        return view( $this->theme.'.frontend.pages.blog');
     }
-    
+
     public function newsletter(Request $request)
     {
-        
+
         $request->validate(
             [
                 'email' => 'required|email:rfc,dns',
@@ -288,38 +289,38 @@ class FrontendController extends Controller
                 'email.email' => 'Lütfen geçerli bir e-posta adresi girin.',
             ]
         );
-        
+
         Newsletter::updateOrCreate(['email'=>$request->email]);
         $message = "OK";
-        
-        
+
+
         return response()->json(['message' => $message]);
     }
 
     public function contact_submit(Request $request)
     {
 
-        return view('frontend.pages.blog');
+        return view( $this->theme.'.frontend.pages.blog');
     }
-    
+
     public function siteMap()
     {
         return siteMap();
     }
 
-    
-   
+
+
     public function postDetail (int $post)
     {
-       
-        $id = $post; 
+
+        $id = $post;
         $nonselect_id = [];
         $nonselect_id[]= $id;
         $filePath = storage_path('app/evrimNews.json');
         $jsonContent = file_get_contents($filePath);
         $newsData = json_decode($jsonContent, true);
         $sidebar_group = collect($newsData['haberlist'])->where('Id','!=',$id)->take(5);
-        
+
         foreach($sidebar_group->pluck('Id')->toarray() as $ids){
             $nonselect_id[]= $ids;
         }
@@ -328,15 +329,15 @@ class FrontendController extends Controller
 
         $url = 'http://haber.evrim.com/Rest/HaberDetay?id='.$id;
         $response = Http::get($url);
-        
-       
-        
+
+
+
         if ($response->successful()) {
             $data = $response->json();
         } else {
             return redirect()->back();
         }
-        
+
         return view($this->theme.'.frontend.pages.post_detail',compact('data','sidebar_group','other_post'));
     }
 
@@ -344,28 +345,28 @@ class FrontendController extends Controller
          Products::all();
         return view($this->theme.'.frontend.pages.products');
     }
-    
-        
+
+
         public function productDetail($slug){
-        
+
         $product = Products::where('slug',$slug)->first();
-        
+
         if(!$product){
             return back();
         }
-        
+
         return view($this->theme.'.frontend.pages.product_detail',compact('product'));
-        
-        
+
+
     }
-    
-    
+
+
     /**
      * @return Application|Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
      */
     public function tests ()
     {
-        
+
         $tests = Test::where('status',1)->whereHas('questionBank')
             ->with('questionBank')
             ->orderBy('wage_status','desc')
@@ -373,7 +374,7 @@ class FrontendController extends Controller
 //        $tests->appends(['search' => 'votes']);
         return view($this->theme.'.frontend.test.index',compact('tests'));
     }
-    
+
 
     public function test($slug, $id)
     {
@@ -396,14 +397,14 @@ class FrontendController extends Controller
                 'answers'=> $sections,
             ];
         }
-        
-        
+
+
         return view($this->theme.'.frontend.test.exam_test',compact('test','questionArray'));
-        
+
     }
     public function test_definition(Request $request): RedirectResponse
     {
-        
+
       $send_email =$request->send_email;
       $data_array = [
           'user_id'=>auth()->id() ?? 0,
@@ -411,21 +412,21 @@ class FrontendController extends Controller
           'test_id'=> $request->test_id,
           'qbank_id'=> $request->qbank_id,
           'question_answers'=>json_encode($request->question)
-          
+
       ];
-      
-      
+
+
      $createData = TestDefinition::create($data_array);
       $answerDetail =   json_encode($this->testUserScore($createData->id));
         if($createData ){
             $createData->update(['answer_details'=>$answerDetail]);
-            
+
             if(auth()->user()){
                 toastr()->success('Test sonuçlarını panelden görüntüleyebilirsiniz. ', 'Başarılı');
             }else{
                 toastr()->success('Cevaplarınız kayıt edildi. ', 'Başarılı');
             }
-            
+
             if($send_email){
                 $score =   json_decode($createData->answer_details,true);
                 $data  = [
@@ -435,23 +436,23 @@ class FrontendController extends Controller
                     "false"=>$score['false'],
                     "create_date"=>Carbon::parse($createData->created_at)->format('d-m-Y H:i')
                 ];
-                
+
                 Mail::to( $createData->user_email)->send(new testScoreSendMail($data));
-                
+
                 toastr()->success('Cevaplarını e-posta ile göndereceğiz. ', 'Başarılı');
-                
+
             }
             return redirect()->route('frontend.tests');
          }else {
-            
+
             toastr()->error('Cevaplarınız kayıt edilemedi. Testi eksiksiz doldurarak tekrar deneyiniz. ', 'Başarısız');
             return back();
          }
     }
-    
-    
-    
-    
+
+
+
+
     protected function testUserScore($testId): array
     {
         $test = TestDefinition::where('id',$testId)->with('getQbank.questions')->first();
@@ -459,7 +460,7 @@ class FrontendController extends Controller
         $falseAnswer = 0;
         $empty = 0;
         $questionAnswer = json_decode($test->question_answers,true);
-        
+
         foreach($test['getQbank']['questions'] as $question){
             $questionTrueAnswer = $question->questionAnswerTrue();
             if($questionTrueAnswer['code']== '0') {

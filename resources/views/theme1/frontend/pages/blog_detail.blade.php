@@ -1,4 +1,4 @@
-@extends('layouts.layout-frontend')
+@extends('theme1.layout')
 
 
 @section('title')

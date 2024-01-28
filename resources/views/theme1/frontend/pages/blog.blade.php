@@ -1,4 +1,4 @@
-@extends('layouts.layout-frontend')
+@extends('theme1.layout')
 
 
 @section('title')
@@ -80,7 +80,7 @@ Blog
 
               <div class="blog-pagination">
                 <ul class="justify-content-center">
-                    <li>{{$all_article->links('pagination.bootstrap-5')}}</li>
+                    <li>{{$all_article->links('vendor.pagination.bootstrap-5')}}</li>
                 </ul>
               </div>
 

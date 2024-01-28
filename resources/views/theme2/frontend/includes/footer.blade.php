@@ -48,6 +48,7 @@
 
 @php
            $filePath = storage_path('app/evrimNews.json');
+            $footer_news = "";
            if (file_exists($filePath)) {
             $jsonContent = file_get_contents($filePath);
             $newsData = json_decode($jsonContent, true);
@@ -142,8 +143,8 @@
                                             <a href="#">{{$category->name}}</a>
                                         </li>
                                     @endif
-                                    
-                                    
+
+
                                 @endforeach
                             </ul>
                         </div>
@@ -159,21 +160,23 @@
                         </div>
                         <div class="footerarea__right__list">
                             <ul>
-                                @foreach($footer_news as $f_news)
-                                <li>
-                                    <a href="{{route('frontend.post_detail',$f_news['Id'])}}">
-                                        <div class="footerarea__right__img">
-                                            <img src="/images/default_product1.jpg" alt="footerphoto">
-                                        </div>
-                                        <div class="footerarea__right__content">
-                                            <span><time>{{date("Y-m-d", strtotime($f_news['DegisiklikTarihiString']))}}</time></span>
-                                            <h6>{{\Illuminate\Support\Str::limit($f_news['Baslik'],40,"...")}}</h6>
-                                        </div>
-                                    </a>
-                                </li>
-                                @endforeach
+                                @if ($footer_news)
+                                    @foreach($footer_news as $f_news)
+                                        <li>
+                                            <a href="{{route('frontend.post_detail',$f_news['Id'])}}">
+                                                <div class="footerarea__right__img">
+                                                    <img src="/images/default_product1.jpg" alt="footerphoto">
+                                                </div>
+                                                <div class="footerarea__right__content">
+                                                    <span><time>{{date("Y-m-d", strtotime($f_news['DegisiklikTarihiString']))}}</time></span>
+                                                    <h6>{{\Illuminate\Support\Str::limit($f_news['Baslik'],40,"...")}}</h6>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                @endif
 
-                               
+
                             </ul>
                         </div>
                     </div>
@@ -247,5 +250,5 @@
 
 
 <!-- Facebook Pixel Code -->
-<script> !function(f,b,e,v,n,t,s) 
+<script> !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod? n.callMethod.apply(n,arguments):n.queue.push(arguments)}; if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0'; n.queue=[];t=b.createElement(e);t.async=!0; t.src=v;s=b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t,s)}(window,document,'script', 'https://connect.facebook.net/en_US/fbevents.js'); fbq('init', '266308279248661');  fbq('track', 'PageView'); </script> <noscript> <img height="1" width="1"  src="https://www.facebook.com/tr?id=266308279248661&ev=PageView &noscript=1"/> </noscript>

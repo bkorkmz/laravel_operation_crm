@@ -4,30 +4,7 @@
 
 @section('head')
 
-    <meta property="og:locale" content="tr_TR"/>
-    <meta property="og:site_name" content="{{ config('settings.site_title') }}"/>
-    <meta property="og:title" content="{{ config('settings.site_title') }}i"/>
-    <meta property="og:url" content="{{ config('settings.site_url') }}"/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:description" content="{{ config('settings.site_description') }}"/>
-    <meta property="og:image" content="{{config('settings.site_icon')}}"/>
-    <meta property="article:publisher" content="{{config('settings.site_facebook_url') }}"/>
 
-
-
-    <meta itemprop="name" content="{{ config('settings.site_title') }}"/>
-    <meta itemprop="headline" content="{{ config('settings.site_title') }}"/>
-    <meta itemprop="description" content="{{ config('settings.site_description') }}"/>
-    <meta itemprop="image" content="{{config('settings.site_icon')}}"/>
-    <meta itemprop="author" content="{{ config('settings.site_url') }}"/>
-    <link rel="publisher" href="{{ config('settings.site_google_plus_url') }}"/>
-
-
-    <meta name="twitter:title" content="{{ config('settings.site_title') }}"/>
-    <meta name="twitter:url" content="{{ config('settings.site_url') }}"/>
-    <meta name="twitter:description" content="{{ config('settings.site_description') }}"/>
-    <meta name="twitter:image" content="{{config('settings.site_icon')}}"/>
-    <meta name="twitter:site" content="{{config('settings.site_twitter_url')}}"/>
 
 @endsection
 
@@ -78,26 +55,11 @@
                                     <div class="gridarea__small__button gridarea__small__button__1">
 {{--                                        <div class="grid__badge">Eğitim Kitaplarımız</div>--}}
                                     </div>
-{{--                                    <div class="product__grid__action">--}}
-{{--                                        <ul>--}}
 
-{{--                                            <li>--}}
-{{--                                                  <span data-bs-toggle="modal"--}}
-{{--                                                        data-bs-target="#exampleModal_{{$product->id}}">--}}
-{{--                                                        <a  href="#" data-bs-toggle="tooltip" class="grid__cart"--}}
-{{--                                                            data-bs-placement="top" title="" tabindex="0" >--}}
-{{--                                                            Görüntüle--}}
-{{--                                                        </a>--}}
-{{--                                                  </span>--}}
-{{--                                            </li>--}}
-{{--                                        </ul>--}}
-{{--                                    </div>--}}
                                 </div>
                                 <div class="gridarea__content">
                                     <div class="gridarea__heading">
-                                        <h3><a  
-{{--                                                    href="{{route('frontend.product_detail',['slug'=>$product->slug])}}" --}}
-                                               data-bs-toggle="tooltip" data-bs-placement="top" tabindex="0" class="small"
+                                        <h3><a data-bs-toggle="tooltip" data-bs-placement="top" tabindex="0" class="small"
                                                data-bs-original-title="{{$product->name}}">{{\Illuminate\Support\Str::limit($product->name,70,"...")}}</a></h3>
                                     </div>
                                     <div class="align-items-center d-flex gridarea__price justify-content-between m-0">
@@ -106,14 +68,7 @@
                                         @else
                                             {{$product->price ." ".$current_many}}
                                         @endif
-{{--                                         <a class="btn btn-primary default__button p-2 float-end" --}}
-{{--                                            href="{{route('frontend.product_detail',['slug'=>$product->slug])}}">İncele</a> --}}
-{{--                                          --}}
-                                            
-                                            <!--<a class="btn btn-primary default__button p-2 float-end"  data-bs-toggle="modal"-->
-                                            <!--   data-bs-target="#exampleModal_{{$product->id}}"  >-->
-                                            <!--    Görüntüle-->
-                                            <!--</a>-->
+
                                                <a class="btn btn-primary default__button p-2 float-end " target="_blank"
                                                href="https://wa.me/{{trim(config('settings.site_whatsapp_phone'))}}?text={{$product->name}}">
                                                 Whatsapp İletişim

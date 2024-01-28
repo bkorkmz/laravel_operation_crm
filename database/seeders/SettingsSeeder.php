@@ -24,7 +24,7 @@ class SettingsSeeder extends Seeder
             ["name" => "site_address", "value" => "Maslak Mahallesi, Aos 55. Sk. 42 Maslak </br> A Blog, No:2 İç Kapl:25 </br> Sarıyer/İstanbul", "group" => "general", "type" => "string"],
             ["name" => "site_copyright", "value" => "2023 &copy; <a href='poyrazyazilim.com'>  Poyraz yazılım</a> Tüm hakları saklıdır", "group" => "general", "type" => "string"],
             ["name" => "site_refresh", "value" => "", "group" => "general", "type" => "string"],
-            
+
             ["name" => "site_whatsapp_phone", "value" => "905555555555", "group" => "ceo", "type" => "string"],
             ["name" => "site_copyright", "value" => "Poyraz Yazılım", "group" => "general", "type" => "string"],
             ["name" => "site_refresh", "value" => "", "group" => "general", "type" => "string"],
@@ -40,8 +40,8 @@ class SettingsSeeder extends Seeder
             ["name" => "site_linkedin_url", "value" => "#!", "group" => "ceo", "type" => "string"],
             ["name" => "site_cookie_text", "value" => "#!", "group" => "ceo", "type" => "string"],
             ["name" => "site_cookie_url", "value" => "#!", "group" => "ceo", "type" => "string"],
-            ["name" => "site_meta_tag", "value" => "#!", "group" => "ceo", "type" => "string"],
-            ["name" => "site_analytics", "value" => "#!", "group" => "ceo", "type" => "string"],
+            ["name" => "site_meta_tag", "value" => "", "group" => "ceo", "type" => "textarea"],
+            ["name" => "site_analytics", "value" => "", "group" => "ceo", "type" => "textarea"],
 
             ["name" => "site_logo", "value" => "images/logo.png", "group" => "image", "type" => "image"],
             ["name" => "site_icon", "value" => "images/logo.png", "group" => "image", "type" => "image"],
@@ -54,7 +54,7 @@ class SettingsSeeder extends Seeder
             ["name" => "landing_slider_button_title", "value" => "Hadi Başla", "group" => "frontend", "type" => "string"],
 
 
-            // Only super admin 
+            // Only super admin
             ["name" => "site_publish", "value" => "1", "group" => "secret", "type" => "select"],
             ["name" => "frontend_color", "value" => "#1f5cf5", "group" => "secret", "type" => "string"],
             ["name" => "CAPTCHA_SECRET", "value" => "", "group" => "secret", "type" => "string"],

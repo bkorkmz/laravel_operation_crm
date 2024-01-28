@@ -37,12 +37,12 @@ use Symfony\Component\Console\Output\StreamOutput;
 |
 */
 
-Route::domain('{subdomain}.laravel_operation_crm.test')->group(function () {
-    Route::get('/', function ($subdomain) {
-        // Subdomain verisini kullanarak işlemler yapabilirsiniz
-        return 'Subdomain: ' . $subdomain;
-    });
-});
+//Route::domain('{subdomain}.laravel_operation_crm.test')->group(function () {
+//    Route::get('/', function ($subdomain) {
+//        // Subdomain verisini kullanarak işlemler yapabilirsiniz
+//        return 'Subdomain: ' . $subdomain;
+//    });
+//});
 
 
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
@@ -60,11 +60,17 @@ Route::post('/test_definition', [FrontendController::class, 'test_definition'])-
 
 
 
+
 Route::post('heartbeat',[HomeController::class,'heartBeat'])->name('heartbeat');
 Route::get('/site-map', [FrontendController::class,'siteMap'])->name('frontend.sitemap');
 Route::post('/contact', [FrontendController::class,'contactsubmit'])->name('frontend.contactsubmit');
 Route::get('/page/{model?}', [FrontendController::class, 'page'])->name('frontend.page');
 Route::post('/newsletter', [FrontendController::class,'newsletter'])->name('frontend.newsletter');
+
+
+Route::get('/kvkk',function (){ return view('theme1.frontend.pages.kvkk'); } )->name('frontend.kvkk');
+Route::get('/hakkimizda',function (){ return view('theme1.frontend.pages.aboutUs'); } )->name('frontend.aboutUs');
+Route::get('/cerez-politikasi',function (){ return view('theme1.frontend.pages.privacyPolicy'); } )->name('frontend.privacyPolicy');
 
 
 
@@ -76,10 +82,7 @@ Route::post('/newsletter', [FrontendController::class,'newsletter'])->name('fron
 
 Route::get('lang/{locale}', [LanguageController::class, 'swap']);
 
-
-
 Route::get('/migrate/{parameter}', function ($parameter) {
-
     if(env('app_debug') == true){
         $stream = fopen("php://output", "w");
         Artisan::call($parameter, array(), new StreamOutput($stream));

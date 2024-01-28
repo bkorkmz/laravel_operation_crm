@@ -65,13 +65,10 @@
                             <ul>
                                 <li><a href="/">Anasayfa</a></li>
                                 <li><a href="/#news_content">Haberler</a></li>
-                                <li>{{$data['haber']['Baslik']}}<</li>
+                                <li>{{$data['haber']['Baslik']}}</li>
                             </ul>
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
         </div>
