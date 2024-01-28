@@ -1,9 +1,11 @@
 <?php
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+
+
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 
 
@@ -14,18 +16,20 @@ if(!function_exists('slug_format')) {
      * If an array is passed as the key, we will assume you want to set an array of values.
      *
      * @param $string
-     * @param string $separator
+     * @param string $sparator
      * @return string
      */
-    function slug_format($string, string $separator = '-'): string
+    function slug_format($string, string $sparator = '-'): string
+
     {
+        $base_string = $string;
         $string = preg_replace('/\s+/u', '-', trim($string));
         $string = str_replace('/', '-', $string);
         $string = str_replace('\\', '-', $string);
         $string = str_replace(['ü', 'Ü', 'ş', 'Ş', 'ı', 'İ', 'ç', 'Ç', 'ö', 'Ö', 'ğ', 'Ğ'], ['u', 'U', 's', 'S', 'i', 'I', 'c', 'C', 'o', 'O', 'g', 'G'], $string);
         $string = strtolower($string);
 
-        return Str::slug($string, $separator);
+        return Str::slug($string, $sparator);
     }
 }
 
@@ -50,9 +54,11 @@ if(!function_exists('permissionCheck')) {
         $isSuperAdmin = auth()->check() && auth()->user()->hasRole('Super admin');
         if($isSuperAdmin) {
             return true;
-        } else if(auth()->user()->hasAnyPermission($permission) || $permission == "") {
+        }
+        else if(auth()->user()->hasAnyPermission($permission) || $permission == "")
+        {
             return true;
-        } else {
+        }else{
             return false;
         }
     }
@@ -85,7 +91,6 @@ if(!function_exists('fileUpload')) {
                 'path' => $path,
                 'full_path' => $fullPath,
             ];
-        } catch (\Exception $e) {
         } catch (Exception $e) {
             return [
                 'success' => false,

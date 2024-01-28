@@ -111,49 +111,56 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $request->validate(
             [
                 'name' => 'required|max:50',
                 'model' => 'required|max:50',
                 'description' => 'nullable|max:250',
 
-            ],
+            ],[],
             [
-                'name.required' => 'Başlık gereklidir.',
-                'name.max' => 'Başlık alanı en fazla 50 karakter olömalıdır.',
-                'model.required' => 'Model gereklidir.',
-                'model.max' => 'Model alanı en fazla 50 karakter olömalıdır.',
-                'description.max' => 'Açıklama alanı en fazla 550 karakter olömalıdır.',
+                'name' => 'Başlık .',
+                'model' => 'Model .',
+                'description' => 'Açıklama ',
             ]
         );
-        if ($request->parent_id) {
-            $data_array['parent_id'] = $request->parent_id;
-        }
-
         $data_array = $request->except(
             '_token','image'
         );
-        $data_array['slug'] = slug_format(Str::limit($request->name, 60));
+        $data_array['parent_id'] = $request->parent_id ? $request->parent_id : 0;
+
+        $data_array['slug'] = slug_format($request->name);
 
         if (request()->hasFile('image')) {
             $this->validate(request(), array('image_mini' => 'sometimes|mimes:png,jpg,jpeg,gif|max:4096'));
             $image = request()->file('image');
             if ($image->isValid()) {
-                $file_upload = fileUpload($request->image,'category');
+                $file_upload = fileUpload($request->image,'category',$data_array['slug']);
                 $data_array['image']=   $file_upload['path'];
-                // $data_array['image'] =  '/storage/' . $request->image->store('category', 'public');
             }
         }
 
+
         $category =  Category::create($data_array);
 
+        if(request()->ajax()){
+            return response([
+                'status' =>'success',
+                'message'=>'Kategori Eklendi',
+                'category'=>[
+                    'id'=>$category->id,
+                    'name'=>$category->name,
+                    'slug'=>$category->slug]
+            ]);
+        }
         if ($category) {
             toastr()->success('Kategori  Eklendi ', 'Başarılı ');
         } else {
             toastr()->error('Kategori  Ekleme İşlemi Sırasında Bir Hata Oluştu ', 'Başarısız !!! ');
         }
+
+
+
 
         return redirect()->back();
     }
@@ -297,27 +304,45 @@ class CategoryController extends Controller
 
     public function trashed($id)
     {
-        //        dd($id);
         $delete_data = $this->model_name::withTrashed()->findOrFail($id);
         $delete_data->forceDelete();
-        // Log::info($delete_data . ' ' . 'Forcedelete post' . ' | User:' . Auth::user()->name);
-        //        session()->flash('message', 'Delete Successfully');
         toastr()->success('İşlem başarılı şekilde tamamlanmıştır.', 'Başarılı');
         return redirect()->back();
     }
 
-    public function parenCategoryData(Request $request)
+    public function parentCategoryData(Request $request)
     {
 
 
-        $data = Category::where('model',$request->model)->where(['show'=>1,'parent_id'=>0])->select('id','name')->get()->toArray();
-//        dd($request->all());
+        $data = Category::where('model',$request->model)->where('show', 1)->parentNull()
+            ->with(['parent' => function ($query) {
+                $query->where('show', 1);
+            }])
+            ->get()
+            ->map(function ($category) {
+                return [
+                    'id' => $category->id,
+                    'name' => $category->name,
+                    'parent' => $category['parent'] ,
+                ];
+            });
 
-        return $data;
-
+        return $this->appendCategories($data,0);
 
     }
 
+    public function appendCategories($categories, $level): array
+    {
+        foreach ($categories as $item) {
+            $dataArray []=[
+                'id'=>$item['id'],
+                'name'=> str_repeat('--', $level).$item['name'],
+                'parent'=> ($item['parent'] && count($item['parent']) > 0) ? $this->appendCategories($item['parent'], $level + 1) : "" ,
+            ];
 
+        }
+
+        return $dataArray;
+    }
 
 }

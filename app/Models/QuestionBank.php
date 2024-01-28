@@ -14,17 +14,17 @@ class QuestionBank extends Model
     protected $guarded=[];
 
 
-    
+
     protected static function boot(): void
     {
         parent::boot();
         static::saving(function ($model) {
              $model->user_id = auth()->id();
-            
+
         });
     }
 
-    
+
 
     public function author()
     {
@@ -35,9 +35,5 @@ class QuestionBank extends Model
     {
         return $this->belongsToMany(Question::class, 'question_has_question_bank', 'question_bank_id', 'question_id');
     }
-    
-  
-    
-    
-    
+
 }

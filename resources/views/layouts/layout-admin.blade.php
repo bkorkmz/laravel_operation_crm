@@ -43,6 +43,36 @@
     <!-- Chartlist chart css -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
+
+{{--    <link rel="stylesheet" href="{{asset('admin/bower_components/select2/css/select2.min.css')}}" />--}}
+{{--    <!-- Multi Select css -->--}}
+{{--    <link rel="stylesheet" type="text/css" href="{{asset('admin/bower_components/bootstrap-multiselect/css/bootstrap-multiselect.css')}}" />--}}
+{{--    <link rel="stylesheet" type="text/css" href="{{asset('admin/bower_components/multiselect/css/multi-select.css')}}" />--}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+
+        .select2-container {
+            font-size: 15px;
+            border-radius: 2px;
+            border: 1px solid #ccc;
+        }
+        .select2-results__option--selectable:hover {
+            background-color: #abb3ec;
+            color: #fff;
+        }
+
+        .select2-results__option--selected{
+            background-color: #6e87f7;
+            color: #fff;
+        }
+        .select2-results__options {
+            max-height: 300px;
+            overflow-y: scroll;
+        }
+
+    </style>
+
+
     @yield('css')
 
 </head>
@@ -98,7 +128,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('frontend.index') }}" target="_blank" class="waves-effect waves-light"
+                                <a href="{{ route('frontend.index') }}" class="waves-effect waves-light"
                                     data-toggle="tooltip" data-placement="top" title="Siteyi Görüntüle">
                                     <i class="feather icon-monitor"></i>
                                 </a>
@@ -433,6 +463,7 @@
     <script type="text/javascript" src="{{ asset('admin/assets/js/script.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('admin/bower_components/jquery-slimscroll/js/jquery.slimscroll.js') }}">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
 
@@ -491,6 +522,9 @@
 </script>
 
     @yield('js')
+
+
+    @yield('after-js')
 
 </body>
 

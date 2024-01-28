@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Customer extends Model
 {
+    use HasFactory;
     use SoftDeletes;
-    
+
     protected $fillable = [
         'name',
         'email',
@@ -20,17 +21,17 @@ class Customer extends Model
         'state',
         'zip_code'
     ];
-    
+
     /**
      * @return HasMany
-     * Ürünler-
+     * Ürünler
      */
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
-    
-    
+
+
     /**
      * @return HasMany|null
      * Son sipariş verilen ürünler
@@ -43,27 +44,27 @@ class Customer extends Model
             ->orderByDesc('total_orders')
             ->first();
     }
-    
+
     /**
      * @param $count
      * @return mixed
      * Son kayıt olan müşteriler
      */
-    
-    public static function latestCustomers($count = 10)
+
+    public static function latestCustomers($count = 10): mixed
     {
         return self::orderByDesc('created_at')
             ->take($count)
             ->get();
     }
-    
+
     /**
      * @param $year
      * @return mixed
      * İlk yılı dolan müşteriler
-     * 
+     *
      */
-    public static function customersFirstYear($year = null)
+    public static function customersFirstYear($year = null): mixed
     {
         if(is_null($year)) {
             $year = date('Y') - 1; // geçen yılın tarihi
@@ -71,19 +72,19 @@ class Customer extends Model
         return self::whereYear('created_at', $year)
             ->get();
     }
-    
-    
+
+
     /**
      * @param $count
      * @return mixed
      * En çok sipariş veren müşteriler
      */
-    public static function mostOrderingCustomers($count = 10)
+    public static function mostOrderingCustomers($count = 10): mixed
     {
         return self::withCount('orders')
             ->orderByDesc('orders_count')
             ->take($count)
             ->get();
     }
-    
+
 }

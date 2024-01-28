@@ -19,17 +19,17 @@ class Products extends Model
         'stock','settings','slug',
         'price','status','created_by','photo'
     ];
-    
-    
+
+
     protected static function boot(): void
     {
         parent::boot();
         static::saving(function ($product) {
              $product->created_by = auth()->id();
-//            if ($product->stock == 0) {
                 $product->status = 1; //0: onay bekleniyor 1:aktif 2:tükendi 3:yayından kaldırıldı
-//            }
-           
+        });
+        static::created(function (){
+//            siteMap();
         });
 //        static::deleting(function ($product) {
 //            $user = Auth::user();
@@ -38,8 +38,8 @@ class Products extends Model
 //            }
 //        });
     }
-    
-    
+
+
     public function orders()
     {
         return $this->belongsToMany(Order::class);

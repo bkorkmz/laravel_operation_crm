@@ -18,4 +18,4 @@
         <priority>{{$url['priority']}}</priority>
     </url>
     @endforeach
-</urlset>
+    </urlset>
