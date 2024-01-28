@@ -141,12 +141,14 @@ class UserController extends Controller
         $data = $request->except('_token');
         $data['password'] = Hash::make($validatedData['password']);
         if (request()->hasFile('avatar')) {
-            
+            if ($model->avatar != "") {
+                deleteOldPicture($model->avatar);
+             }
+
              $file_upload = fileUpload($request->avatar,'avatars');
              $data['avatar'] =   $file_upload['path'];
 
 
-            // $data['avatar'] = '/storage/' . $validatedData['avatar']->store('avatars', 'public');
         }
         $user = User::create($data);
         $user->syncRoles($validatedData['role']);

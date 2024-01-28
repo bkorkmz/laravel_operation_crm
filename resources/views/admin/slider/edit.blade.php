@@ -1,6 +1,6 @@
 @extends('layouts.layout-admin')
 @section('title')
-    {{ __('Slider Düzenleme ') }}
+    {{ __('Çözüm Ortakları Düzenleme ') }}
 @endsection
 
 @section('content')
@@ -10,8 +10,9 @@
         <div class="page-wrapper">
             <div class="card">
                 <div class="card-header">
-                    <h3>Slider  Düzenle</h3>
-                    <a href="{{route('slider.index')}}" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "><i class="fa fa-reply"></i>Geri Dön</a>
+                    <h3>Çözüm Ortağı Düzenle</h3>
+                                        <a href="{{route('slider.index')}}" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "><i class="fa fa-reply"></i>Geri Dön</a>
+
                 </div>
                 <div class="card-block">
                     @if ($errors->any())
@@ -59,7 +60,7 @@
                             <label class="col-sm-2 col-form-label">Durum
                                </label>
                             <div class="col-sm-3 row align-self-center" >
-                                
+
                                 <div class="form-check m-2">
                                     <input class="form-check-input" checked type="radio" name="status"
                                         id="active" value="1"
@@ -67,7 +68,7 @@
                                     <label class="form-check-label" for="active">Aktif</label>
                                 </div>
                                 <div class="form-check m-2">
-                                   
+
                                     <input class="form-check-input"  type="radio" name="status"
                                         id="passive" value="0"
                                         {{$slider->status == 0 ? "cheched" : "" }}>
@@ -108,5 +109,5 @@
 
 @section('js')
 
-    
+
 @endsection

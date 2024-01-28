@@ -34,12 +34,12 @@
                                                         class="text-danger">
                                                     *</span></label>
                                             <div class="col-sm-10">
-                                                 <input type="text" class="form-control form-control-normal"
-                                                           onkeypress="slugCopy(this)" id="title"
+
+                                                <input  type="text" class="form-control form-control-normal" onkeypress="slugCopy(this)" id="title"
                                                            value="{{ old('title') }}" placeholder="" name="title"
                                                            maxlength="100"
                                                            required>
-                                               
+
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -53,7 +53,7 @@
                                                     </span>
                                                     <input id="slug_content" type="text" id="slug"
                                                            class="form-control text-lowercase" name="slug"
-                                                           maxlength="100">
+                                                           maxlength="100" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -64,7 +64,7 @@
                                                         class="text-danger">
                                                     *</span></label>
                                             <div class="col-sm-10">
-                                                
+
                                                 <textarea type="text" class="form-control form-control-normal" required
                                                           placeholder="" name="short_detail"
                                                           maxlength="250">{{ old('short_detail') }}</textarea>
@@ -91,7 +91,7 @@
 
                                         <div class="form-group row my-4">
                                             <label class="col-sm-2 col-form-label">Kategori</label>
-                                            <div class="col-sm-8">
+                                            <div class="col-sm-3">
                                                 <select name="category_id" class="form-control fill">
                                                     @foreach ($post_category as $category)
                                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -101,7 +101,7 @@
                                                    href="javascript:void(0)" data-toggle="modal"
                                                    data-target="#addCategoryModal">Kategori Ekle</a>
                                             </div>
-                                         
+
                                         </div>
                                         <div class="form-group row my-4">
                                             <label class="col-sm-2 col-form-label">Durum
@@ -132,7 +132,8 @@
                                                     </option>
                                                     <option value="1"{{ old('location') == 1 ? 'selected' : '' }}>
                                                         Anasayfada Göster
-                                                    </option>
+                                                    <option value="2"{{ old('location') == 2 ? 'selected' : '' }}>
+                                                        Çok Okunan ***</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-3 d-flex">
@@ -196,6 +197,7 @@
                                         </div>
 
 
+
                                         <div class="text-right m-t-20">
                                             <button class="btn btn-primary">Kaydet</button>
                                         </div>
@@ -217,36 +219,72 @@
             <link href="{{asset('admin/assets/pages/summernote-0.8.18/summernote.css')}}" rel="stylesheet">
         @endsection
 
-        @section('js')
+    @section('js')
             <script src="{{asset('admin/assets/pages/summernote-0.8.18/summernote.js')}}"></script>
             <script src="{{asset('admin/assets/pages/summernote-0.8.18/lang/summernote-tr-TR.js')}}"></script>
             <script src="{{asset('/admin/assets/pages/summernote-0.8.18/plugin/image2/summernote-image-title.js')}}"></script>
 
-            <script>
+
+        <script>
 
 
-                $(document).ready(function () {
-                    $('#ckeditor').summernote({
-                        lang: 'tr-TR',
-                        height: 300,
-                        imageTitle: {
-                            specificAltField: true,
-                        },
+                $(document).ready(function() {
 
-                        popover: {
-                            image: [
-                                ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
-                                ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
-                                ['float', ['floatLeft', 'floatRight', 'floatNone']],
-                                ['remove', ['removeMedia']],
-                                ['custom', ['imageTitle']],
-                            ],
-                        },
-                        toolbar: [
-                            ['style', ['style']],
-                            ['fontsize', ['fontsize']],
-                            ['fontname', ['fontname']],
-                            ['height', ['height']],
+                $('#category-form').on('submit', function(e) {
+                    e.preventDefault();
+
+                    var category_name = $('#category-name').val();
+                    if (category_name !== "") {
+                        $.ajax({
+                            url: "{{ route('category.store') }}",
+                            method: 'POST',
+                            data: {
+                                name: category_name,
+                                model: 'article',
+                                _token: "{{ csrf_token() }}"
+                            },
+                            success: function(response) {
+                                swal("Kategori başarıyla oluşturuldu!");
+                                $('#addCategoryModal').Modal().hide()
+
+                            },
+                            error: function(xhr, status, error) {
+                                swal("Bir hata oluştu!");
+                            }
+                        });
+                    }
+                    swal("Kategori Boş Olamaz!");
+
+                });
+
+            });
+
+
+
+
+
+
+            $(document).ready(function() {
+                $('#ckeditor').summernote({
+                    lang: 'tr-TR',
+                    height: 300,
+                    imageTitle: {
+                        specificAltField: true,
+                    },
+                    popover: {
+                        image: [
+                            ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                            ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                            ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                            ['remove', ['removeMedia']],
+                            ['custom', ['imageTitle']],
+                        ],
+                    },
+                    toolbar: [
+                        ['style', ['style']],
+                        ['fontsize', ['fontsize']],
+                        ['height', ['height']],
+                        ['fontname', ['fontname']],
                             ['font', ['bold', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
                             ['para', ['ul', 'ol', 'paragraph']],
                             ['color', ['color']],
@@ -255,7 +293,7 @@
                             ['insert', ['link', 'picture', 'video']],
 
                             ['view', ['fullscreen', 'codeview', 'help']]
-                        ]
+                    ]
 
                     });
 
@@ -270,9 +308,21 @@
                     slug.value = inputElement.value ;
                 }
 
-                 
 
-             
-              
+
+
+
             </script>
 @endsection
+                });
+            });
+
+
+
+            function  slug_copy(inputElement){
+                let slug = document.getElementById('slug_content');
+                console.log(inputElement.value )
+                slug.value = inputElement.value ;
+            }
+        </script>
+    @endsection

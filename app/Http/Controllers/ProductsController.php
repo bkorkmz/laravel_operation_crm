@@ -22,7 +22,7 @@ class ProductsController extends Controller
     {
         return view('admin.product.index');
     }
-    
+
     public function index_data()
     {
         $data = Products::select('id', 'name', 'status', 'created_at', 'stock', 'price', 'photo')->orderBy('id', 'ASC');
@@ -33,7 +33,7 @@ class ProductsController extends Controller
                 return $data ? $data->description : "";
             })
             ->editColumn('status', content: function ($data) {
-                
+
                 switch ($data->status) {
                     case '0':
                         return '<span class="badge badge-primary">' . __('Onay Bekliyor') . ' </span >';
@@ -54,7 +54,7 @@ class ProductsController extends Controller
 //                if ($data->status == 3) {return '<span class="badge badge-danger">' . __('Yayından Kaldırıldı') . '</span>';}
             })
             ->editColumn('price', function ($data) {
-                
+
                 return '<span class="badge" > ' . $data ? $data->price . " TL" : "" . ' </span >';
             })
             ->editColumn('stock', function ($data) {
@@ -69,19 +69,19 @@ class ProductsController extends Controller
                 } else {
                     $msg = "<span class='badge badge-default' >Stok girilmedi</span>";
                 }
-                
+
                 return $msg;
-                
+
             })
             ->editColumn('photo', function ($data) {
                 return "<img src='" . $data->photo . " alt=''  class='img-responsive img-centered' width='34' height='34'    ";
             })
             ->addColumn('action', function ($data) {
-                
+
                 return '
                       <div class="text-center">
                         <a href="' . route('product.edit', $data->id) . '"  data-toggle="tooltip" data-placement="top" title="Düzenle"><i class="icon feather icon-edit f-w-600 f-16 m-r-15 text-c-green"></i></a>
-                        <a href="' . route('product.destroy', $data->id) . '" onclick="return confirm(\'Silme İşlemi onaylıyormusunuz ?\')"  data-toggle="tooltip" 
+                        <a href="' . route('product.destroy', $data->id) . '" onclick="return confirm(\'Silme İşlemi onaylıyormusunuz ?\')"  data-toggle="tooltip"
                         data-placement="top" title="Sil"><i class="feather icon-trash-2 f-w-600 f-16 text-c-red"></i></a>
                       </div>
                 ';
@@ -93,7 +93,7 @@ class ProductsController extends Controller
             ->rawColumns(['name', 'status', 'action', 'photo'])
             ->make(true);
     }
-    
+
     /**
      * Show the form for creating a new resource.
      */
@@ -105,9 +105,9 @@ class ProductsController extends Controller
             })
             ->get();
         return view('admin.product.create', compact('all_categories'));
-        
+
     }
-    
+
     /**
      * Store a newly created resource in storage.
      */
@@ -132,46 +132,46 @@ class ProductsController extends Controller
             'image.mimes' => 'Ürün resmi yalnızca jpeg, png, jpg, gif veya svg formatında olabilir.',
             'image.max' => 'Ürün resmi en fazla 2 MB boyutunda olabilir.',
         ]);
-        
+
         $product = new Products;
         $product->name = $validatedData['name'];
         $product->stock = $validatedData['stock'];
         $product->price = $validatedData['price'] ?? 0;
         $product->status = $request->status;
         $description = $validatedData['description'];
-        
+
         if($request->image) ;
         {
             $file_upload = fileUpload($validatedData['image'], 'products');
             $product->photo = $file_upload['path'];
         }
-        
+
         if(request()->hasFile('files')) {
             $dom = new \DOMDocument();
             $dom->loadHtml($description, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
             $images = $dom->getElementsByTagName('img');
-            
+
             foreach ($images as $k => $img) {
                 $data = $img->getAttribute('src');
-                
+
                 list($type, $data) = explode(';', $data);
                 list(, $data) = explode(',', $data);
                 $data = base64_decode($data);
                 $image_name = "upload/" . time() . $k . '.png';
                 $path = public_path("{$image_name}");
-                
+
                 if(!file_exists(public_path("upload"))) {
                     mkdir(public_path("upload"), 0777, true);
                 }
-                
+
                 file_put_contents($path, $data);
-                
+
                 $img->removeAttribute('src');
                 $img->setAttribute('src', asset("{$image_name}"));
             }
             $description = $dom->saveHTML();
         }
-        
+
         $product->description = $description;
         $product->save();
         if(blank($request->slug)) {
@@ -179,24 +179,24 @@ class ProductsController extends Controller
         } else {
             $slug = slug_format($request->slug);
         }
-        
+
         $product->update([
             'slug' => $slug,
         ]);
-        
+
         toastr()->success('Ürün Ekleme İşlemi Tamamlandı.', 'Başarılı');
 
 //        return response()->json(['message' => 'success', 'status' => true,'action'=>'create'],200);
-        
-        
+
+
         if($request->is_next == '1') {
             return redirect()->back();
         } else {
             return redirect(route('product.index'));
         }
-        
+
     }
-    
+
     /**
      * Display the specified resource.
      */
@@ -204,23 +204,23 @@ class ProductsController extends Controller
     {
         return view('admin.product.show', compact('products'));
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Products $products)
     {
         return view('admin.product.edit', compact('products'));
-        
+
     }
-    
+
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, $products)
     {
-        
-        
+
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:5000',
@@ -251,12 +251,12 @@ class ProductsController extends Controller
             'price' => $validatedData['price'],
             'status' => $validatedData['status'],
         ];
-        
+
         if($request->hasFile('image')) {
             $file_upload = fileUpload($validatedData['image'], 'products');
             $data['photo'] = $file_upload['path'];
         }
-        
+
         $product = Products::find($products);
 //        $data['slug'] = slug_format(Str::limit($validatedData['name'],30));
         if(blank($request->slug)) {
@@ -264,14 +264,14 @@ class ProductsController extends Controller
         } else {
             $data['slug'] = slug_format($request->slug);
         }
-        
+
         $product->update($data);
-        
+
         toastr()->success('Ürün Güncelleme İşlemi Tamamlandı.', 'Başarılı');
         return redirect(route('product.index'));
-        
+
     }
-    
+
     /**
      * Remove the specified resource from storage.
      */
@@ -285,15 +285,15 @@ class ProductsController extends Controller
         }
         return back();
     }
-    
-    
+
+
     public function trashed_index()
     {
         $products = Products::onlyTrashed()->orderBy('deleted_at', 'desc')->paginate(20);
         return view('admin.product.trash_index');
-        
+
     }
-    
+
     public function trashed_data()
     {
         $products = Products::onlyTrashed()->CreatedBy()
@@ -319,10 +319,10 @@ class ProductsController extends Controller
                 }
             })
             ->editColumn('price', function ($data) {
-                
-                
+
+
                 return '<span class="badge" > ' . $data->price ? $data->price . " TL" : "" . ' </span >';
-                
+
             })
             ->editColumn('stock', function ($data) {
                 if($data->stock == 0) {
@@ -333,7 +333,7 @@ class ProductsController extends Controller
                 return $msg;
             })
             ->addColumn('action', function ($data) {
-                
+
                 return '
                       <div class="text-center">
                         <a href="' . route('product.restored', $data->id) . '"  data-toggle="tooltip" data-placement="top" title="Düzenle"><i class="icon feather icon-refresh-ccw f-w-600 f-16 m-r-15 text-c-green"></i></a>
@@ -347,11 +347,11 @@ class ProductsController extends Controller
             ->escapeColumns([])
             ->rawColumns(['name', 'status', 'action'])
             ->make(true);
-        
-        
+
+
     }
-    
-    
+
+
     public function restore($id)
     {
         $model = Products::onlyTrashed()->where('id', $id)->first();
@@ -360,7 +360,7 @@ class ProductsController extends Controller
         toastr()->success('İşlem başarılı şekilde tamamlanmıştır.', 'Başarılı');
         return back();
     }
-    
+
     public function trashed($id)
     {
         $model = Products::onlyTrashed()->findOrFail($id);
@@ -370,6 +370,6 @@ class ProductsController extends Controller
         toastr()->success('İşlem başarılı şekilde tamamlanmıştır.', 'Başarılı');
         return redirect()->back();
     }
-    
-    
+
+
 }

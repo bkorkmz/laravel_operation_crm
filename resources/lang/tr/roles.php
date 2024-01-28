@@ -65,9 +65,9 @@ return [
             "question"=>"Sorular",
             "tests"=>"Test Sonuçları",
             "pages"=>"Sayfalar "
-            
+
         ],
-        "name"=>[  
+        "name"=>[
             "view_dashboard_users" =>"Kullanıcı Anasayfayı Görür",
             "view_menu_article"  =>"Menude Makaleleri Göster",
             "update_article"  =>"Makale Güncelle",
@@ -87,8 +87,6 @@ return [
             "edit_my_profile_users" =>"Kullanıcı Kendi Profilini Düzenleye bilir",
             "update_my_profile_users" =>"Kullanıcı Kendi Profilinde Verileri Güncelleyebilir",
             "bloke_my_profile_users" =>"Kullanıcı Kendi Profilini Silebilir ",
-            "news_letter_list_download_users" =>"Toplu Email Gönderim Eposta Listesi",
-            
             "view_menu_roles" =>"Rolleri Menude Gör ",
             "view_all_roles" =>"Tüm Rolleri Gör",
             "add_roles" =>"Rol Ekle ",
@@ -157,7 +155,13 @@ return [
             "edit_slider"=>   "Portfolyo Düzenle",
             "update_slider"=>   "Portfolyo GÜncelle",
             "delete_slider"=>   "Portfolyo Sil",
-            
+
+            "view_menu_services"=>"Hizmetleri Menüde Göster",
+            "edit_services"=>"Hizmetleri  Düzenleme yetkisi",
+            "view_services"=>"Hizmetleri Görme Yetkisi",
+            "update_services"=>"Hizmetleri  Düzenleme Yetkisi",
+            "create_services"=>"Hizmetleri Oluşturma Yetkisi",
+            "delete_services"=>"Hizmetleri Silme Yetkisi",
             "view_news_ajans_post"=>"Haber ajanslarını görüntüler",
             "view_menu_questionbank"=>"Menude sorubankalarını göster",
             "view_questionbank"=>"Sorubankalarını Göster",
@@ -180,20 +184,20 @@ return [
              "edit_services"  =>"Hizmetlerin düzenlenmesi" ,
              "update_services" =>"Hizmetlerin güncellenmesi" ,
              "delete_services"  =>"Hizmetlerin silinmesi" ,
-            
-            
+
+
              "view_menu_tests"=>"Menude Testleri Göster",
              "show_tests"=>"Testi Görüntüle",
              "delete_tests"=>"Testi Sil",
              "view_my_tests"=>"Sadece Kendi Test Sonuçlarını Gör",
              "view_all_tests"=>"Tüm Test Sonuçlarını Gör",
-            
+
              "view_analysis_list_tests"=>"Test Sonuçları Menüsünü  Göster",
              "show_analysis_tests"=>"Test Sonucunu Görüntüle",
              "create_tests"=>"Test Oluştur",
              "edit_tests"=>"Testi Düzenle",
              "update_tests"=>"Testi Güncelle",
-            
+
              "view_menu_pages"=>"Sayfaları Menude Göster",
              "view_pages"=>"Sayfalar  Listesini Göster",
              "create_pages"=>"Sayfa Oluştur",
@@ -201,8 +205,8 @@ return [
              "update_pages"=>"Sayfaları Güncelle",
              "delete_pages"=>"Sayfaları Sil",
              "restore_pages"=>"Silinen Sayfaları Geri Al",
-            
-            
+
+
             ]
 
     ],

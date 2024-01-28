@@ -58,7 +58,7 @@
                             <label class="col-sm-2 col-form-label">Durum
                                </label>
                             <div class="col-sm-3 row align-self-center" >
-                                
+
                                 <div class="form-check m-2">
                                     <input class="form-check-input" checked type="radio" name="status"
                                         id="active" value="1"
@@ -66,7 +66,7 @@
                                     <label class="form-check-label" for="active">Aktif</label>
                                 </div>
                                 <div class="form-check m-2">
-                                   
+
                                     <input class="form-check-input"  type="radio" name="status"
                                         id="passive" value="0"
                                         {{ old('status',1) == 0 ? 'checked' : '' }}>
@@ -74,9 +74,10 @@
                                 </div>
                             </div>
                         </div>
-                        
 
-                        
+
+
+
 
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">İçerik Resmi  (800x600)</label>
@@ -113,5 +114,5 @@
 
 @section('js')
 
-    
+
 @endsection

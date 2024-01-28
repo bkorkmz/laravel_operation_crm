@@ -13,7 +13,7 @@
                                 <h3>Makale Düzenle</h3>
                                 {{-- <a href="{{ route('post.trashed_index') }}" type="button" class="btn btn-warning btn-sm float-right rounded mr-1 " data-toggle="tooltip" data-placement="top" title="Çöp Kutusu"><i class="fa fa-trash"></i></a> --}}
                                 <a type="button" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "
-                                    href="{{ route($modul_name . '.index') }}"><i class="fa fa-reply"></i>Geri Dön</a>
+                                   href="{{ route($modul_name . '.index') }}"><i class="fa fa-reply"></i>Geri Dön</a>
 
                             </div>
                             <div class="card-block table-border-style">
@@ -34,6 +34,23 @@
                                             <label class="col-sm-2 col-form-label">Makale başlığı <span class="text-danger">
                                                     *</span></label>
                                             <div class="col-sm-10">
+
+                                                <input  type="text" class="form-control form-control-normal" oninput="slug_copy(this)"
+                                                    value="{{ $model->title }}" placeholder="" name="title" maxlength="100"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Opsiyonel url  <span class="text-danger">
+                                                    *</span></label>
+                                            <div class="col-sm-10">
+                                                    <div class="input-group">
+                                                                <span class="input-group-prepend">
+                                                                    <label class="input-group-text">{{"https://".request()->host()."/blog/"}}</label>
+                                                                </span>
+                                                        <input id="slug_content" type="text" class="form-control text-lowercase"
+                                                          name="slug" maxlength="100" value="{{ $model->slug}}" required>
+                                                    </div>
                                                 <input type="text" class="form-control form-control-normal"
                                                     placeholder="" name="title" maxlength="100" oninput="slug_copy(this)"
                                                     value="{{ $model->title }}">
@@ -107,19 +124,17 @@
 
                                                 <div class="form-check m-2">
 
-                                                    <input class="form-check-input"
-                                                        {{ $model->publish == '1' ? 'checked' : '' }} type="radio"
-                                                        name="publish" id="passive"
-                                                        value="0"{{ $model->publish == '0' ? 'checked' : '' }}
-                                                        {{-- @dd($model->publish)      --}}>
-                                                    <label class="form-check-label" for="passive">Yayında </label>
+                                                    <input class="form-check-input" type="radio"
+                                                           name="publish" id="active"
+                                                           value="0" {{ $model->publish == '0' ? 'checked' : '' }} >
+                                                    <label class="form-check-label" for="active">Yayında </label>
                                                 </div>
 
                                                 <div class="form-check m-2">
                                                     <input class="form-check-input"
-                                                        {{ $model->publish == '1' ? 'checked' : '' }} type="radio"
-                                                        name="publish" id="active" value="1">
-                                                    <label class="form-check-label" for="active">Taslak</label>
+                                                           {{ $model->publish == '1' ? 'checked' : '' }} type="radio"
+                                                           name="publish" id="passive" value="1">
+                                                    <label class="form-check-label" for="passive">Taslak</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -128,9 +143,13 @@
                                             <div class="col-5 d-flex ">
                                                 <select name="location" class="form-control fill">
                                                     <option value="0" {{ $model->location == 0 ? 'selected' : '' }}>
-                                                        Normal Görünüm</option>
+                                                        Normal Görünüm
+                                                    </option>
                                                     <option value="1"{{ $model->location == 1 ? 'selected' : '' }}>
-                                                        Anasayfada Göster</option>
+                                                        Anasayfada Göster
+                                                    </option>
+                                                    <option value="2"{{ $model->location  == 2 ? 'selected' : '' }}>
+                                                        Çok Okunan ***</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-3 d-flex">
@@ -146,7 +165,8 @@
 
                                         @canany(['view_photogallery', 'view_videogallery'])
                                             <div class="form-group row clearfix my-4">
-                                                <label class="col-sm-2 col-form-label">Fotograf Galeri / Video Galeri</label>
+                                                <label class="col-sm-2 col-form-label">Fotograf Galeri / Video
+                                                    Galeri</label>
                                                 @canany('view_photogallery')
                                                     <div class="col-sm-5">
                                                         <select name="photogallery_id" class="form-control fill">
@@ -213,13 +233,12 @@
                                                     data-show-remove="false" data-default-file="{{ $model->image }}"
                                                     accept=".png,.jpg,.jpeg,.gif" placeholder="" name="image" >
                                             </div>
-
                                         </div>
 
 
 
-                 
-             
+
+
 
                                         <div class="text-right m-t-20">
                                             <button class="btn btn-primary">Güncelle</button>
@@ -251,7 +270,7 @@
 
             <script>
 
-                $(document).ready(function() {
+                $(document).ready(function () {
                     $('#ckeditor').summernote({
                         lang: 'tr-TR',
                         height: 300,
@@ -271,14 +290,15 @@
                             ['style', ['style']],
                             ['fontsize', ['fontsize']],
                             ['height', ['height']],
-                            ['font', ['bold', 'underline','strikethrough', 'superscript', 'subscript', 'clear']],
+                            ['fontname', ['fontname']],
+                            ['font', ['bold', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
                             ['para', ['ul', 'ol', 'paragraph']],
                             ['color', ['color']],
                             ['para', ['ul', 'ol', 'paragraph']],
                             ['table', ['table']],
                             ['insert', ['link', 'picture', 'video']],
 
-                            ['view', ['fullscreen', 'codeview', 'help']]
+                            ['view', ['codeview', 'help']]
                         ]
 
                     });
@@ -289,6 +309,6 @@
                     console.log(inputElement.value )
                     slug.value = inputElement.value ;
                 }
-                
+
             </script>
 @endsection

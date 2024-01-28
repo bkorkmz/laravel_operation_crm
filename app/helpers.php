@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 
 if(!function_exists('slug_format')) {
@@ -40,21 +41,18 @@ if(!function_exists('menu')) {
     {
 
         $MenuJson = file_get_contents(base_path('resources/views/layouts/menu-data/menu.json'));
-        $MenuData = json_decode($MenuJson,true);
-
-        return $MenuData;
+        return json_decode($MenuJson, true);
     }
 
 }
 
 if(!function_exists('permissionCheck')) {
 
-    function permissionCheck($permission)
+    function permissionCheck($permission): bool
     {
 
         $isSuperAdmin = auth()->check() && auth()->user()->hasRole('Super admin');
-        if( $isSuperAdmin)
-        {
+        if($isSuperAdmin) {
             return true;
         }
         else if(auth()->user()->hasAnyPermission($permission) || $permission == "")
@@ -73,6 +71,7 @@ if(!function_exists('fileUpload')) {
 
     function fileUpload($file, $directory, $fileName = "", $disk = 'custom_disk'): array
     {
+//        $fileName = "";
         try {
             if($fileName == "") {
                 $filePath = $file->store($directory, $disk);
@@ -84,6 +83,8 @@ if(!function_exists('fileUpload')) {
 
             $path = '/storage/' . $filePath;
             $fullPath = Storage::path($filePath);
+//          $path = '/storage/'.$file->store($directory."/".$fileName);
+
 
             return [
                 'success' => true,
@@ -111,6 +112,19 @@ if(!function_exists('deleteOldPicture')) {
 
 
         if (File::exists($publicPath)) {
+
+
+    /**
+     * @param $path
+     * @return array
+     */
+    function deleteOldPicture($path): array
+    {
+
+        $publicPath = public_path($path);
+
+
+        if(File::exists($publicPath)) {
             try {
                 // Dosyayı sil
                 File::delete($publicPath);
@@ -119,6 +133,7 @@ if(!function_exists('deleteOldPicture')) {
                     'message' => 'Dosya başarıyla silindi.',
                 ];
             } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Dosya silme sırasında bir hata oluşursa hata mesajını döndür
                 return [
                     'success' => false,
@@ -137,21 +152,25 @@ if(!function_exists('deleteOldPicture')) {
 }
 
 
+    }
+
+}
+
 if(!function_exists('siteMap')) {
 
     function siteMap(): RedirectResponse
     {
-        $urls = [
-            [
-                'date' => date("Y-m-d\Th:m:s+00:00"),
-                'url' => request()->schemeAndHttpHost(),
-                'priority' => "1.00"
-            ],
-            [
-                'date' => date("Y-m-d\Th:m:s"),
-                'url' => request()->schemeAndHttpHost() . '/blog',
-                'priority' => priorityStatus('/blog')]
-        ];
+    $urls = [
+        [
+         'date' => date("Y-m-d\Th:m:s+00:00"),
+         'url' => request()->schemeAndHttpHost(),
+         'priority' => "1.00"
+        ],
+        [
+        'date' => date("Y-m-d\Th:m:s+00:00"),
+        'url' => request()->schemeAndHttpHost() . '/blog',
+            'priority' => priorityStatus('/blog')]
+    ];
 
         $article = Article::where('publish', 0)
             ->select('slug', 'updated_at')
@@ -166,7 +185,7 @@ if(!function_exists('siteMap')) {
         foreach ($categories as $cat) {
             $catSlug = !blank($cat->slug) ?$cat->slug : slug_format($cat->name);
             $urls[] = [
-                'date' => date("Y-m-d\Th:m:s", $cat->updated_at->timestamp),
+                'date' => date("Y-m-d\Th:m:s+00:00", $cat->updated_at->timestamp),
                 'url' => request()->schemeAndHttpHost() . '/kategori/' . $catSlug,
                 'priority' => priorityStatus('/kategori/' . $catSlug)
             ];
@@ -177,7 +196,7 @@ if(!function_exists('siteMap')) {
             $artSlug = !blank($art->slug) ?$art->slug : slug_format($art->name);
 
             $urls[] = [
-                'date' =>date("Y-m-d\Th:m:s", $art->updated_at->timestamp),
+                'date' =>date("Y-m-d\Th:m:s+00:00", $art->updated_at->timestamp),
                 'url' => request()->schemeAndHttpHost() . '/blog/' . $artSlug,
                 'priority' => priorityStatus('/blog/' . $artSlug)
             ];
@@ -206,3 +225,5 @@ if(!function_exists('priorityStatus'))
 
     }
 }
+
+

@@ -43,8 +43,8 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
-
+   // 'debug' => (bool) config('settings.APP_DEBUG'),
+   'debug' => (bool) env('APP_DEBUG', false),
     /*
     |--------------------------------------------------------------------------
     | Application URL
@@ -70,7 +70,7 @@ return [
     | ahead and set this to a sensible default for you out of the box.
     |
     */
-    
+
     'timezone' => env('APP_TIMEZONE', 'UTC'),
 
     /*
@@ -172,10 +172,10 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\SettingsServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-    
-    
-    
-    
+
+
+
+
     ])->toArray(),
 
     /*
@@ -195,7 +195,7 @@ return [
           "CURRENT_THEME"=>env('CURRENT_THEME','theme2'),
           'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
-    
+
     ])->toArray(),
 
 ];

@@ -10,6 +10,7 @@
 
     <![endif]-->
     <!-- Meta -->
+
     <meta charset="utf-8">
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
@@ -107,19 +108,19 @@
                     </div>
                     <div class="navbar-container container-fluid">
                         <ul class="nav-left">
-                            <li class="header-search">
-                                <div class="main-search morphsearch-search">
-                                    <div class="input-group">
-                                        <span class="input-group-prepend search-close">
-                                            <i class="feather icon-x input-group-text"></i>
-                                        </span>
-                                        <input type="text" class="form-control" placeholder="Enter Keyword">
-                                        <span class="input-group-append search-btn">
-                                            <i class="feather icon-search input-group-text"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </li>
+                            <!--<li class="header-search">-->
+                            <!--    <div class="main-search morphsearch-search">-->
+                            <!--        <div class="input-group">-->
+                            <!--            <span class="input-group-prepend search-close">-->
+                            <!--                <i class="feather icon-x input-group-text"></i>-->
+                            <!--            </span>-->
+                            <!--            <input type="text" class="form-control" placeholder="Enter Keyword">-->
+                            <!--            <span class="input-group-append search-btn">-->
+                            <!--                <i class="feather icon-search input-group-text"></i>-->
+                            <!--            </span>-->
+                            <!--        </div>-->
+                            <!--    </div>-->
+                            <!--</li>-->
                             <li>
                                 <a href="#!" onclick="javascript:toggleFullScreen()"
                                     class="waves-effect waves-light">

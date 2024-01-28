@@ -3,14 +3,10 @@
     {{ __('Kategori Ekleme Sayfası  ') }}
 @endsection
 @section('content')
-{{--    <link rel="stylesheet" href="{{asset('admin/bower_components/select2/css/select2.min.css')}}" />--}}
-
-
-
     <div class="pcoded-inner-content">
-        <div class="main-body">
-            <div class="page-wrapper">
-                <div class="page-body">
+        <div class="page-wrapper">
+            <div class="page-body">
+                <div class="">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
@@ -62,11 +58,10 @@
                                                     <option value="portfolio">Portfolyo</option>
                                                     <option value="services">Hizmet</option>
                                                     <option value="article">Makale</option>
-                                                    <option value="product">Ürün</option>-
-                                                    {{--<option value="post">Haber</option>--}}
-                                                    {{-- <option value="photo_gallery">Foto Galeri</option>
-                                                    <option value="video_gallery">Video Galeri</option> --}}
-
+                                                    <option value="post">Haber</option>
+                                                    <option value="product">Ürün</option>
+                                                    <option value="photo_gallery">Foto Galeri</option>
+                                                    <option value="video_gallery">Video Galeri</option>
 
                                                 </select>
 
@@ -170,18 +165,16 @@
 
 
     @section('css')
+        <style>
 
+        </style>
     @endsection
 
     @section('js')
         {{-- <script type="text/javascript" src="{{ asset('admin/assets/bower_components/sweetalert/js/sweetalert.min.js') }}"> --}}
-{{--        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>--}}
-{{--        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/translations/tr.js"></script>--}}
-
-        <script src="{{asset('admin/bower_components/select2/js/select2.full.min.js')}}"></script>
-
-
-            {{-- <script src="{{ asset('vendor/dropify/dist/js/dropify.js') }}"></script> --}}
+        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
+        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/translations/tr.js"></script>
+        {{-- <script src="{{ asset('vendor/dropify/dist/js/dropify.js') }}"></script> --}}
 
 
         {{-- <script src="{{ asset('admin/assets/partials/ckeditor/ckeditor.js') }}"></script> --}}

@@ -318,7 +318,7 @@
                         'X-Requested-With': 'XMLHttpRequest'
                     }
                 })
-                
+
                 .then(response => response.json()) // JSON formatındaki yanıtı işle
                 .then(data => {
                     if (data.message === 'true') {
@@ -333,7 +333,9 @@
                         setInterval(function() {
                             location.reload();
                         }, 2000);
-                        
+
+                        location.reload();
+
                     } else if (data.errors) {
                         const errorMessages = Object.values(data.errors).flat();
                         // console.log(data.errors)

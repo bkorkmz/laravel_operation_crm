@@ -36,8 +36,10 @@ use Symfony\Component\Console\Output\StreamOutput;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 //Route::domain('{subdomain}.laravel_operation_crm.test')->group(function () {
 //    Route::get('/', function ($subdomain) {
+//        // Subdomain verisini kullanarak işlemler yapabilirsiniz
 //        return 'Subdomain: ' . $subdomain;
 //    });
 //});
@@ -58,11 +60,17 @@ Route::post('/test_definition', [FrontendController::class, 'test_definition'])-
 
 
 
+
 Route::post('heartbeat',[HomeController::class,'heartBeat'])->name('heartbeat');
 Route::get('/site-map', [FrontendController::class,'siteMap'])->name('frontend.sitemap');
 Route::post('/contact', [FrontendController::class,'contactsubmit'])->name('frontend.contactsubmit');
 Route::get('/page/{model?}', [FrontendController::class, 'page'])->name('frontend.page');
 Route::post('/newsletter', [FrontendController::class,'newsletter'])->name('frontend.newsletter');
+
+
+Route::get('/kvkk',function (){ return view('theme1.frontend.pages.kvkk'); } )->name('frontend.kvkk');
+Route::get('/hakkimizda',function (){ return view('theme1.frontend.pages.aboutUs'); } )->name('frontend.aboutUs');
+Route::get('/cerez-politikasi',function (){ return view('theme1.frontend.pages.privacyPolicy'); } )->name('frontend.privacyPolicy');
 
 
 
@@ -74,10 +82,7 @@ Route::post('/newsletter', [FrontendController::class,'newsletter'])->name('fron
 
 Route::get('lang/{locale}', [LanguageController::class, 'swap']);
 
-
-
 Route::get('/migrate/{parameter}', function ($parameter) {
-    
     if(env('app_debug') == true){
         $stream = fopen("php://output", "w");
         Artisan::call($parameter, array(), new StreamOutput($stream));
@@ -85,16 +90,16 @@ Route::get('/migrate/{parameter}', function ($parameter) {
     }else{
         return "noting migrate :))  ";
     }
-       
+
 });
 
 
 Route::get('/jobs-run', function () {
-   
+
     Artisan::call("site-map");
     Artisan::call("evrim-news");
     return back();
-    
+
 });
 
 
@@ -103,7 +108,7 @@ Auth::routes(['register' => false]);
 //Route::prefix('student')->middleware(['auth',])->group(function () {
 //    Route::get('/',  function (){
 //        dd('merhaba');
-//    })->name('student.index');    
+//    })->name('student.index');
 //    Route::controller(StudentController::class)->group(function () {
 //        Route::get('/',  'index')->name('student.index');
 //        Route::get('/status',  'status')->name('student.status');
@@ -125,10 +130,6 @@ Auth::routes(['register' => false]);
 
 
 Route::prefix('backend')->middleware('auth')->group(function () {
-   
-
-
-    
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::post('/sehirler', [HomeController::class, 'cities'])->name('sehirler');
     Route::get('/clear-cache', [AdminController::class, 'clearCache'])->name('clear-cache');
@@ -136,10 +137,10 @@ Route::prefix('backend')->middleware('auth')->group(function () {
     Route::get('/message_edit/{id?}', [AdminController::class, 'info_message_edit'])->name('admin.info_message.edit')->middleware('permission:message_information_comment');
     Route::post('ckeditor/upload', [AdminController::class,'ckEditorUpload'])->name('ckeditor.upload');
     Route::get('/ckeditor/token', [AdminController::class, 'getToken'])->name('ckeditor.token');
-   
+
     Route::get('/newsletter-download', [AdminController::class,'newsletterDownload'])->name('newsletter_download')->middleware('permission:news_letter_list_download_users');
 
-   
+
 
     Route::controller(ProfileController::class)->prefix('profile')->group(function () {
         $module_name = 'profile';
@@ -169,8 +170,8 @@ Route::prefix('backend')->middleware('auth')->group(function () {
         Route::get('/trash', 'trashed_index')->name($module_name . '.trashed_index')->middleware('permission:view_trashed_users');
         Route::get('/restored/{model?}', 'restore')->name($module_name . '.restore')->middleware('permission:restore_users');
         Route::post('/autologin/{model?}', 'autoLogin')->name($module_name . '.autologin');
-        
-    
+
+
 
         Route::get('/teams', 'teams_index')->name($module_name . '.teams.index')->middleware('permission:view_teams');
         Route::get('/teams/index_data', 'teams_index_data')->name($module_name . '.teams.index_data')->middleware('permission:view_teams');
@@ -193,9 +194,7 @@ Route::prefix('backend')->middleware('auth')->group(function () {
         Route::get('/delete/{products}', 'destroy')->name($module_name . '.destroy')->middleware('permission:delete_product');
         Route::get('/trashed_index', 'trashed_index')->name($module_name . '.trashed_index')->middleware('permission:view_trashed_product');
         Route::get('/trashed_data', 'trashed_data')->name($module_name . '.trashed_data')->middleware('permission:view_trashed_product');
-        Route::get('/restored/{products?}', 'restore')->name($module_name . '.restored')->middleware('permission:restore_product');
-        Route::get('/trashed/{products?}', 'trashed')->name($module_name . '.trashed')->middleware('permission:delete_product');
-
+        Route::get('/restored/{products}', 'restore')->name($module_name . '.restored')->middleware('permission:restore_product');
     });
 
 
@@ -219,6 +218,7 @@ Route::prefix('backend')->middleware('auth')->group(function () {
     Route::controller(SystemController::class)->prefix('settings')->group(function () {
         $module_name = 'settings';
         Route::get('/', 'index')->name($module_name . '.index')->middleware('permission:view_settings');
+        //        Route::get('/index_data', 'index_data')->name($module_name.'.index_data');
         Route::get('/create', 'create')->name($module_name . '.create')->middleware('permission:create_settings');
         Route::post('/create', 'store')->name($module_name . '.store')->middleware('permission:create_settings');
         Route::get('/edit/{model?}', 'edit')->name($module_name . '.edit')->middleware('permission:edit_settings');
@@ -250,13 +250,13 @@ Route::prefix('backend')->middleware('auth')->group(function () {
         Route::get('/trashed_index', 'trashed_index')->name($module_name . '.trashed_index')->middleware('permission:delete_post');
         Route::get('/trashed_data', 'trashed_data')->name($module_name . '.trashed_data')->middleware('permission:delete_post');
         Route::get('/restored/{model?}', 'restore')->name($module_name . '.restored')->middleware('permission:restore_post');
-       
-       
+
+
         Route::get('/ajans', 'ajanss')->name($module_name . '.ajanss')->middleware('permission:view_news_ajans_post');
         Route::get('/ajans/{ajans?}', 'getAjans')->name($module_name . '.getAjans')->middleware('permission:view_news_ajans_post');
-        
-        
-        
+
+
+
     });
 
     Route::controller(ArticleController::class)->prefix('article')->group(function () {
@@ -300,11 +300,11 @@ Route::prefix('backend')->middleware('auth')->group(function () {
         Route::get('/trashed_index', 'trashed_index')->name($module_name . '.trashed_index')->middleware('permission:delete_category');
         Route::get('/trashed_data', 'trashed_data')->name($module_name . '.trashed_data')->middleware('permission:delete_category');
         Route::get('/restored/{model?}', 'restore')->name($module_name . '.restored')->middleware('permission:restore_category');
-        
-        Route::get('/category-data/{model?}','parentCategoryData')->name($module_name .'.parent_data');
-        
-        
-        
+
+        Route::post('/category-data','parenCategoryData')->name($module_name .'.parent_data');
+
+
+
     });
 
     // Portfolyo
@@ -330,7 +330,7 @@ Route::prefix('backend')->middleware('auth')->group(function () {
         Route::post('/edit/{model?}', 'update')->name($module_name . '.update')->middleware('permission:update_slider');
         Route::get('/delete/{model?}', 'delete')->name($module_name . '.destroy')->middleware('permission:delete_slider');
     });
-    
+
     //Sık sorulan sorular
     Route::controller(FaqSssController::class)->prefix('faq_sss')->group(function () {
         $module_name = 'faq_sss';
@@ -342,7 +342,7 @@ Route::prefix('backend')->middleware('auth')->group(function () {
         Route::post('/edit/{model?}', 'update')->name($module_name . '.update')->middleware('permission:update_slider');
         Route::get('/delete/{model?}', 'delete')->name($module_name . '.destroy')->middleware('permission:delete_slider');
     });
-    
+
     //Soru-bankaları
     Route::controller(QuestionBankController::class)->prefix('questionbank')->group(function () {
         $module_name = 'questionbank';
@@ -359,9 +359,9 @@ Route::prefix('backend')->middleware('auth')->group(function () {
         Route::get('/restored/{model?}', 'restore')->name($module_name . '.restored')->middleware('permission:return_trash_questionbank');
 
 
-        
-    }); 
-  
+
+    });
+
     //Sorular
     Route::controller(QuestionController::class)->prefix('question')->group(function () {
         $module_name = 'question';
@@ -373,15 +373,15 @@ Route::prefix('backend')->middleware('auth')->group(function () {
         Route::get('/edit-questions/{model?}', 'edit_question')->name($module_name . '.question_edit')->middleware('permission:edit_question');
         Route::post('/edit-questions/{model?}', 'update_question')->name($module_name . '.question_update')->middleware('permission:update_question');
         Route::get('/delete-questions/{model?}', 'destroy')->name($module_name . '.question_delete')->middleware('permission:delete_question');
-        
-        
-        
+
+
+
 
 
 
 
     });
-    
+
     //Sayfalar
     Route::controller(PageController::class)->prefix('pages')->group(function(){
          $module_name = 'pages';
@@ -397,12 +397,12 @@ Route::prefix('backend')->middleware('auth')->group(function () {
          Route::get('/trashed_data', 'trashed_data')->name($module_name.'.trashed_data')->middleware('permission:delete_pages');
          Route::get('/restored/{model?}', 'restore')->name($module_name.'.restored')->middleware('permission:restore_pages');
      });
-    
-    
-      //Testler 
+
+
+      //Testler
     Route::controller(\App\Http\Controllers\TestController::class)->prefix('test')->group(function(){
          $module_name = 'test';
-         
+
          Route::get('/', 'index')->name($module_name.'.index')->middleware('permission:show_tests');
          Route::get('/index_data', 'index_data')->name($module_name.'.index_data')->middleware('permission:show_tests');
          Route::get('/create', 'create')->name($module_name.'.create')->middleware('permission:create_tests');
@@ -411,20 +411,20 @@ Route::prefix('backend')->middleware('auth')->group(function () {
          Route::get('/show/{model?}', 'show')->name($module_name.'.show')->middleware('permission:show_tests');
          Route::post('/edit/{model?}', 'update')->name($module_name.'.update')->middleware('permission:update_tests');
          Route::get('/delete/{model?}', 'destroy')->name($module_name.'.destroy')->middleware('permission:delete_tests');
-         
-         
-         
+
+
+
         Route::get('/test-definition', 'testDefinition')->name($module_name.'.testDefinition')->middleware('permission:view_analysis_list_tests');
         Route::get('/test-definition-data', 'testDefinitionData')->name($module_name.'.testDefinitionData');
         Route::get('/test-definition/{id?}', 'testDefinitionShow')->name($module_name.'.testDefinitionShow')->middleware('permission:show_analysis_tests');
 
      });
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
 
 
     // Route::controller(WayArrivalController::class)->prefix('way_arrival')->group(function(){
@@ -461,7 +461,7 @@ Route::prefix('backend')->middleware('auth')->group(function () {
 
 
     Route::fallback(function(){
-        
+
         return view('admin.notfound');
     });
 

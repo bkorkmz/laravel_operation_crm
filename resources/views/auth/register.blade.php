@@ -23,7 +23,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="text-start m-4">
-                        <button onclick="history.back()" class="btn btn-outline-secondary" title="Geri dön" data-bs-toggle="tooltip" 
+                        <button onclick="history.back()" class="btn btn-outline-secondary" title="Geri dön" data-bs-toggle="tooltip"
                                 data-bs-placement="top"> <i class="fas fa-reply "></i></button>
                     </div>
                     <div class="col-md-9 col-lg-6 col-xl-6">
@@ -32,17 +32,17 @@
                             <h3>Kayıt  Sayfası </h3>
                             <h4>Account Control and System </h4>
                         </div>
-        
+
                     </div>
                     <div class="col-md-8 col-lg-6 col-xl-5 offset-xl-1">
-        
+
                         <form method="POST" action="{{ route('register') }}" class="form-control border-0">
                             @csrf
-        
-        
+
+
                             <div class="my-2  mt-2">
-        
-        
+
+
                                 <div class="row mb-3 flex-column">
                                     @php
                                         $icon =  '<i class="fas fa-user"></i>';
@@ -61,7 +61,7 @@
                                             <input id="{{$input_id }}" type="{{$input_type}}" class="form-control form-select-lg @error($input_name) is-invalid @enderror" name="{{$input_name}}"
                                             value="{{ old($input_name) }}" placeholder="{{ $placeholder }}" required autocomplete="email" autofocus {{$required}}
                                             aria-label="email" aria-describedby="basic-addon1">
-        
+
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -70,10 +70,10 @@
                                         </div>
                                     </div>
                                 </div>
-        
-        
-        
-        
+
+
+
+
                                 <div class="row mb-3  flex-column">
                                     @php
                                         $icon =  '<i class="fas fa-id-card"></i>';
@@ -89,11 +89,11 @@
                                             <span class="input-group-text" id="basic-addon1">
                                             {!! $icon !!}
                                             </span>
-                                            <input id="{{$input_id }}" type="{{$input_type}}"  class="form-control form-select-lg @error($input_name) is-invalid @enderror" 
+                                            <input id="{{$input_id }}" type="{{$input_type}}"  class="form-control form-select-lg @error($input_name) is-invalid @enderror"
                                                     name="{{$input_name}}" value="{{ old($input_name) }}" placeholder="{{ $placeholder }}" {{$required}}
                                                     aria-label="{{$input_name}}" aria-describedby="basic-addon1" maxlength="11" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)">
-                                
-        
+
+
                                             @error('tc_no')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -102,11 +102,11 @@
                                         </div>
                                     </div>
                                 </div>
-        
-        
-        
-        
-        
+
+
+
+
+
                                 <div class="row mb-3  flex-column">
                                     @php
                                         $icon =  '<i class="fas fa-at"></i>';
@@ -125,7 +125,7 @@
                                             <input id="{{$input_id }}" type="{{$input_type}}" class="form-control form-select-lg @error($input_name) is-invalid @enderror" name="{{$input_name}}"
                                                     value="{{ old($input_name) }}" placeholder="{{ $placeholder }}" {{$required}}
                                                     aria-label="{{$input_name}}" aria-describedby="basic-addon1">
-        
+
                                             @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -134,8 +134,8 @@
                                         </div>
                                     </div>
                                 </div>
-        
-        
+
+
                                 <div class="row mb-3  flex-column">
                                     @php
                                         $icon =  '<i class="fas fa-key"></i>';
@@ -155,8 +155,8 @@
                                                     value="{{ old($input_name) }}" placeholder="{{ $placeholder }}" {{$required}}
                                                     aria-label="{{$input_name}}" aria-describedby="basic-addon1" autocomplete="new-password" minlength="8">
                                             <span class="input-group-text"><i class="far fa-eye-slash" id="togglePassword"></i></span>
-        
-        
+
+
                                             @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{$message}}</strong>
@@ -165,7 +165,7 @@
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="row mb-3  flex-column">
                                     @php
                                         $icon =  '<i class="fas fa-key"></i>';
@@ -184,7 +184,7 @@
                                             <input id="{{$input_id }}" type="{{$input_type}}" class="form-control form-select-lg @error($input_name) is-invalid @enderror" name="{{$input_name}}"
                                                     value="{{ old($input_name) }}" placeholder="{{ $placeholder }}" {{$required}}
                                                     aria-label="{{$input_name}}" aria-describedby="basic-addon1" autocomplete="new-password" minlength="8">
-        
+
                                             @error('password_confirmation')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -193,25 +193,25 @@
                                         </div>
                                     </div>
                                 </div>
-        
-        
+
+
                             </div>
-        
-        
+
+
                             <div class="row mb-0 justify-content-start" >
                                 <div class="col-md-12 ">
                                     <button type="submit" class="btn btn-success w-50">
                                         {{ __('Kayıt ol') }}
                                     </button>
-        
-        
+
+
                                 </div>
                             </div>
                         </form>
-        
+
                     </div>
                 </div>
-        
+
             </div>
         </div>
 
@@ -227,7 +227,7 @@
 <style>
     body {
     background-image:url("{{config('settings.site_register_img')}}");
-    background-size:cover;   
+    background-size:cover;
     }
 </style>
 @endsection

@@ -3,13 +3,6 @@
     {{ __('Yönetim Paneli') }}
 @endsection
 @section('content')
-
-    @foreach ($contents as $key => $content)
-        @include('admin.includes.' . $key, ['contents' => $content])
-    @endforeach
-
-@endsection
-@section('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/css/widget.css') }}">
     <style>
         .card_area_icon {
@@ -18,6 +11,11 @@
             right: 0;
         }
     </style>
+    @foreach ($contents as $key => $content)
+        @include('admin.includes.' . $key, ['contents' => $content])
+    @endforeach
+
+
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/bower_components/switchery/css/switchery.min.css') }}">
     <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 
@@ -59,7 +57,7 @@
                         render: function (e) {
                             let text = "";
                             let price = e.price;
-                            if (e.wage_status == 'pay') {
+                            if (e.wage_status === 'pay') {
                                 text = "<span class='badge badge-warning'>Ücretli  - Fiyat: " + price + " </span>";
                             } else {
                                 text = "<span class='badge badge-info'>Ücretsiz</span>";
@@ -67,7 +65,7 @@
 
                             return `
                         <div class="text-center">
-                             ${text}                          
+                             ${text}
                         </div>
                         `;
                         }

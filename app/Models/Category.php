@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -15,7 +14,7 @@ class Category extends Model
     use HasFactory,SoftDeletes;
     protected $guarded = [];
     protected $table = "categories";
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at','created_at','updated_at'];
 
 
 
@@ -25,6 +24,9 @@ class Category extends Model
         parent::boot();
         static::creating(function ($article) {
             $article->user_id = auth()->id();
+        });
+        static::created(function () {
+          //  siteMap();
         });
     }
 
@@ -48,6 +50,7 @@ class Category extends Model
     public function author(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+
     }
 
 
@@ -71,7 +74,12 @@ class Category extends Model
             ->select('id','name','parent_id');
     }
 
-
+    public function get_article(){
+        return $this->hasMany(Article::class, 'category_id');
+    }
+    public function get_product(){
+        return $this->hasMany(Products::class, 'category_id');
+    }
 
 
 
