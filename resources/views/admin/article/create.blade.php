@@ -31,25 +31,27 @@
                                         @csrf
                                         <div class="form-group row">
                                             <label for="title" class="col-sm-2 col-form-label">Makale başlığı <span
-                                                        class="text-danger">
+                                                    class="text-danger">
                                                     *</span></label>
                                             <div class="col-sm-10">
 
-                                                <input  type="text" class="form-control form-control-normal" onkeypress="slugCopy(this)" id="title"
-                                                           value="{{ old('title') }}" placeholder="" name="title"
-                                                           maxlength="100"
-                                                           required>
+                                                <input type="text" class="form-control form-control-normal"
+                                                       onkeypress="slugCopy(this)" id="title"
+                                                       value="{{ old('title') }}" placeholder="" name="title"
+                                                       maxlength="100"
+                                                       required>
 
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="slug" class="col-sm-2 col-form-label">Opsiyonel url <span
-                                                        class="text-danger">
+                                                    class="text-danger">
                                                     *</span></label>
                                             <div class="col-sm-10">
                                                 <div class="input-group">
                                                     <span class="input-group-prepend">
-                                                        <label class="input-group-text">{{"https://".request()->host()."/blog/"}}</label>
+                                                        <label
+                                                            class="input-group-text">{{"https://".request()->host()."/blog/"}}</label>
                                                     </span>
                                                     <input id="slug_content" type="text" id="slug"
                                                            class="form-control text-lowercase" name="slug"
@@ -61,7 +63,7 @@
 
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Makale özeti <span
-                                                        class="text-danger">
+                                                    class="text-danger">
                                                     *</span></label>
                                             <div class="col-sm-10">
 
@@ -72,7 +74,7 @@
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Makale içeriği <span
-                                                        class="text-danger">
+                                                    class="text-danger">
                                                     *</span></label>
                                             <div class="col-sm-10">
                                                 <textarea id="ckeditor" class="form-control form-control-normal"
@@ -94,7 +96,8 @@
                                             <div class="col-sm-3">
                                                 <select name="category_id" class="form-control fill">
                                                     @foreach ($post_category as $category)
-                                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                        <option
+                                                            value="{{ $category->id }}">{{ $category->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 <a type="button" class="float-right badge badge-inverse-danger"
@@ -111,14 +114,14 @@
                                                 <div class="form-check m-2">
                                                     <input class="form-check-input" checked type="radio" name="publish"
                                                            id="active" value="1"
-                                                            {{ old('publish', 0) == 0 ? 'checked' : '' }}>
+                                                        {{ old('publish', 0) == 0 ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="active">Yayında</label>
                                                 </div>
                                                 <div class="form-check m-2">
 
                                                     <input class="form-check-input" type="radio" name="publish"
                                                            id="passive" value="0"
-                                                            {{ old('publish', 0) == 1 ? 'checked' : '' }}>
+                                                        {{ old('publish', 0) == 1 ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="passive">Taslak </label>
                                                 </div>
                                             </div>
@@ -133,7 +136,8 @@
                                                     <option value="1"{{ old('location') == 1 ? 'selected' : '' }}>
                                                         Anasayfada Göster
                                                     <option value="2"{{ old('location') == 2 ? 'selected' : '' }}>
-                                                        Çok Okunan ***</option>
+                                                        Çok Okunan ***
+                                                    </option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-3 d-flex">
@@ -197,7 +201,6 @@
                                         </div>
 
 
-
                                         <div class="text-right m-t-20">
                                             <button class="btn btn-primary">Kaydet</button>
                                         </div>
@@ -219,72 +222,69 @@
             <link href="{{asset('admin/assets/pages/summernote-0.8.18/summernote.css')}}" rel="stylesheet">
         @endsection
 
-    @section('js')
+        @section('js')
             <script src="{{asset('admin/assets/pages/summernote-0.8.18/summernote.js')}}"></script>
             <script src="{{asset('admin/assets/pages/summernote-0.8.18/lang/summernote-tr-TR.js')}}"></script>
-            <script src="{{asset('/admin/assets/pages/summernote-0.8.18/plugin/image2/summernote-image-title.js')}}"></script>
+            <script
+                src="{{asset('/admin/assets/pages/summernote-0.8.18/plugin/image2/summernote-image-title.js')}}"></script>
 
 
-        <script>
+            <script>
 
 
-                $(document).ready(function() {
+                $(document).ready(function () {
 
-                $('#category-form').on('submit', function(e) {
-                    e.preventDefault();
+                    $('#category-form').on('submit', function (e) {
+                        e.preventDefault();
 
-                    var category_name = $('#category-name').val();
-                    if (category_name !== "") {
-                        $.ajax({
-                            url: "{{ route('category.store') }}",
-                            method: 'POST',
-                            data: {
-                                name: category_name,
-                                model: 'article',
-                                _token: "{{ csrf_token() }}"
-                            },
-                            success: function(response) {
-                                swal("Kategori başarıyla oluşturuldu!");
-                                $('#addCategoryModal').Modal().hide()
+                        var category_name = $('#category-name').val();
+                        if (category_name !== "") {
+                            $.ajax({
+                                url: "{{ route('category.store') }}",
+                                method: 'POST',
+                                data: {
+                                    name: category_name,
+                                    model: 'article',
+                                    _token: "{{ csrf_token() }}"
+                                },
+                                success: function (response) {
+                                    swal("Kategori başarıyla oluşturuldu!");
+                                    $('#addCategoryModal').Modal().hide()
 
-                            },
-                            error: function(xhr, status, error) {
-                                swal("Bir hata oluştu!");
-                            }
-                        });
-                    }
-                    swal("Kategori Boş Olamaz!");
+                                },
+                                error: function (xhr, status, error) {
+                                    swal("Bir hata oluştu!");
+                                }
+                            });
+                        }
+                        swal("Kategori Boş Olamaz!");
+
+                    });
 
                 });
 
-            });
 
-
-
-
-
-
-            $(document).ready(function() {
-                $('#ckeditor').summernote({
-                    lang: 'tr-TR',
-                    height: 300,
-                    imageTitle: {
-                        specificAltField: true,
-                    },
-                    popover: {
-                        image: [
-                            ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
-                            ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
-                            ['float', ['floatLeft', 'floatRight', 'floatNone']],
-                            ['remove', ['removeMedia']],
-                            ['custom', ['imageTitle']],
-                        ],
-                    },
-                    toolbar: [
-                        ['style', ['style']],
-                        ['fontsize', ['fontsize']],
-                        ['height', ['height']],
-                        ['fontname', ['fontname']],
+                $(document).ready(function () {
+                    $('#ckeditor').summernote({
+                        lang: 'tr-TR',
+                        height: 300,
+                        imageTitle: {
+                            specificAltField: true,
+                        },
+                        popover: {
+                            image: [
+                                ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                                ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                                ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                                ['remove', ['removeMedia']],
+                                ['custom', ['imageTitle']],
+                            ],
+                        },
+                        toolbar: [
+                            ['style', ['style']],
+                            ['fontsize', ['fontsize']],
+                            ['height', ['height']],
+                            ['fontname', ['fontname']],
                             ['font', ['bold', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
                             ['para', ['ul', 'ol', 'paragraph']],
                             ['color', ['color']],
@@ -293,36 +293,18 @@
                             ['insert', ['link', 'picture', 'video']],
 
                             ['view', ['fullscreen', 'codeview', 'help']]
-                    ]
+                        ]
 
                     });
 
                 });
 
 
-
-
-                function  slugCopy (inputElement){
+                function slugCopy(inputElement) {
                     let slug = document.getElementById('slug_content');
-                    console.log(inputElement.value )
-                    slug.value = inputElement.value ;
+                    console.log(inputElement.value)
+                    slug.value = inputElement.value;
                 }
-
-
-
-
 
             </script>
 @endsection
-                });
-            });
-
-
-
-            function  slug_copy(inputElement){
-                let slug = document.getElementById('slug_content');
-                console.log(inputElement.value )
-                slug.value = inputElement.value ;
-            }
-        </script>
-    @endsection

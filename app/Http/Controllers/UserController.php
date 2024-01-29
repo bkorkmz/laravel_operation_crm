@@ -46,7 +46,7 @@ class UserController extends Controller
         if (auth()->id() != 1) {
             $data->where('id', '<>', 1);
         }
-        
+
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('name', '<strong>{{$name}}</strong>')
@@ -62,7 +62,7 @@ class UserController extends Controller
                 return '<span class="badge ">' . $role . ' </span >';
             })
             ->editColumn('user_check', function ($data) {
-                
+
                 if ($data->user_check == 0) {
                     return '<span class="badge badge-danger" > ' . __('Onaysız') . ' </span >';
                 }
@@ -141,14 +141,12 @@ class UserController extends Controller
         $data = $request->except('_token');
         $data['password'] = Hash::make($validatedData['password']);
         if (request()->hasFile('avatar')) {
-            if ($model->avatar != "") {
-                deleteOldPicture($model->avatar);
-             }
 
              $file_upload = fileUpload($request->avatar,'avatars');
              $data['avatar'] =   $file_upload['path'];
 
 
+            // $data['avatar'] = '/storage/' . $validatedData['avatar']->store('avatars', 'public');
         }
         $user = User::create($data);
         $user->syncRoles($validatedData['role']);
@@ -455,7 +453,7 @@ class UserController extends Controller
     public function teams_delete(JobTeams $model)
     {
 
-        
+
         $model->delete();
         Log::info($model . ' ' . 'Forcedelete user_job' . ' | User:' . Auth::user()->name);
         //        session()->flash('message', 'Delete Successfully');
@@ -486,8 +484,8 @@ class UserController extends Controller
     ////user Onay senaryosu /
 
     /**
-     * 
-     * 
+     *
+     *
      */
 
 
@@ -644,9 +642,9 @@ class UserController extends Controller
 //            Auth::login(User::find($model));
             Auth::login($model);
             toastr('Başarılı', 'success', 'İşlem başarılı.');
-            
+
         }else{
-            
+
             toastr('Hata !!!', 'error', 'İzinsiz bir işlem yapmayua çalışıyorsunuz.');
         }
         return redirect()->route('admin.index');

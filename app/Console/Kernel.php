@@ -14,8 +14,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('site-map')->daily();
-        $schedule->command('evrim-news')->daily();
+        $schedule->command('site-map')->everyFourHours();
+        $schedule->command('evrim-news')->everyFourHours();
+
     }
 
     /**

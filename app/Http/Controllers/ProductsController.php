@@ -25,7 +25,9 @@ class ProductsController extends Controller
 
     public function index_data()
     {
-        $data = Products::select('id', 'name', 'status', 'created_at', 'stock', 'price', 'photo')->orderBy('id', 'ASC');
+        $data = Products::select('id', 'name', 'status', 'created_at', 'stock', 'price', 'photo')
+            ->with('category')
+            ->orderBy('id', 'ASC');
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('name', '<strong>{{$name}}</strong>')
@@ -36,38 +38,43 @@ class ProductsController extends Controller
 
                 switch ($data->status) {
                     case '0':
-                        return '<span class="badge badge-primary">' . __('Onay Bekliyor') . ' </span >';
+                        $status = '<span class="badge badge-primary">' . __('Onay Bekliyor') . ' </span >';
                     case '1':
                         return '<span class="badge badge-success ">' . __('Yayında') . '</span>';
                     case '2':
-                        return '<span class="badge badge-warning">' . __('Tükendi') . '</span >';
+                        $status = '<span class="badge badge-warning">' . __('Tükendi') . '</span >';
                     case '3':
-                        return '<span class="badge badge-danger">' . __('Yayından Kaldırıldı') . '</span>';
+                        $status = '<span class="badge badge-danger">' . __('Yayından Kaldırıldı') . '</span>';
                     default:
-                        return '<span class="badge badge-default">' . __('Durum Yok') . '</span>';
+                        $status = '<span class="badge badge-default">' . __('Durum Yok') . '</span>';
                 }
-
-
-//                if ($data->status == 0) {return '<span class="badge badge-primary">' . __('Onay Bekliyor') . ' </span >';}
-//                if ($data->status == 1) {return '<span class="badge badge-success ">' . __('Yayında') . '</span>';}
-//                if ($data->status == 2) {return '<span class="badge badge-warning">' . __('Tükendi') . '</span >';}
-//                if ($data->status == 3) {return '<span class="badge badge-danger">' . __('Yayından Kaldırıldı') . '</span>';}
+                return $status;
             })
             ->editColumn('price', function ($data) {
-
-                return '<span class="badge" > ' . $data ? $data->price . " TL" : "" . ' </span >';
-            })
-            ->editColumn('stock', function ($data) {
                 if($data->stock) {
                     if($data->stock <= 10) {
-                        $msg = "<span class='badge badge-danger' >" . $data->stock . "</span>";
+                        $msg = "<span class='badge badge-danger text-dark'>" . $data->stock . "</span>";
                     } elseif($data->stock > 10) {
-                        $msg = "<span class='badge badge-success' >" . $data->stock . "</span>";
+                        $msg = "<span class='badge badge-info text-dark' >" . $data->stock . "</span>";
                     } elseif($data->stock == 0) {
-                        $msg = "<span class='badge badge-default' >" . $data->stock . "</span>";
+                        $msg = "<span class='badge badge-default text-dark' >" . $data->stock . "</span>";
                     }
                 } else {
                     $msg = "<span class='badge badge-default' >Stok girilmedi</span>";
+                }
+                $price =$data ? $data->price . " TL" : "" ;
+
+
+
+                return $msg. '/ <span class="badge badge-inverse-primary" >'.$price.'</span>';
+            })
+            ->editColumn('stock', function ($data) {
+                if(!blank($data->category)) {
+                    foreach($data->category as $category) {
+                        $msg[] = "<span class='badge badge-inverse-info' >$category->name</span><br>";
+                    }
+                } else {
+                    $msg = "<span class='badge badge-inverse-danger' >Kategori  girilmedi</span>";
                 }
 
                 return $msg;
@@ -90,7 +97,8 @@ class ProductsController extends Controller
 //                return view('admin.user.include.user_action', compact('data'));
             })
             ->escapeColumns([])
-            ->rawColumns(['name', 'status', 'action', 'photo'])
+            ->rawColumns(['name', 'status', 'action'])
+            ->only()
             ->make(true);
     }
 
@@ -113,24 +121,18 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-//      dd($request->all());
+
         $validatedData = $request->validate([
             'name' => 'required|max:250',
-            'description' => 'required|max:1000',
+            'description' => 'nullable|max:1000',
             'stock' => 'nullable|min:1',
             'price' => 'nullable|min:1',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ], [
-            'name.required' => 'Ürün Adı alanı zorunludur.',
-            'name.max' => 'Ürün adı alanı maximum 250 karakter olmalıdır.',
-            'description.required' => 'Ürün açıklaması alanı zorunludur.',
-            'description.max' => 'Ürün açıklaması alanı maximum 1000 karakter olmalıdır.',
-            'stock.min' => 'Ürün stok  en az 1 olmalıdır.',
-            'image.required' => 'Ürün resmi alanı zorunludur.',
-            'price.min' => 'Fiyat en az 1  olabilir.',
-            'image.image' => 'Ürün resmi bir resim dosyası olmalıdır.',
-            'image.mimes' => 'Ürün resmi yalnızca jpeg, png, jpg, gif veya svg formatında olabilir.',
-            'image.max' => 'Ürün resmi en fazla 2 MB boyutunda olabilir.',
+        ], [],[
+            'name' => 'Ürün Adı',
+            'stock' => 'Ürün stokğu.',
+            'image' => 'Ürün resmi .',
+            'price' => 'Fiyat.',
         ]);
 
         $product = new Products;
@@ -138,9 +140,16 @@ class ProductsController extends Controller
         $product->stock = $validatedData['stock'];
         $product->price = $validatedData['price'] ?? 0;
         $product->status = $request->status;
+        if(blank($request->slug)) {
+            $slug = slug_format($validatedData['name']);
+        } else {
+            $slug = slug_format($request->slug);
+        }
+        $product->slug = $slug;
+
         $description = $validatedData['description'];
 
-        if($request->image) ;
+        if (request()->hasFile('image')) ;
         {
             $file_upload = fileUpload($validatedData['image'], 'products');
             $product->photo = $file_upload['path'];
@@ -153,19 +162,15 @@ class ProductsController extends Controller
 
             foreach ($images as $k => $img) {
                 $data = $img->getAttribute('src');
-
                 list($type, $data) = explode(';', $data);
                 list(, $data) = explode(',', $data);
                 $data = base64_decode($data);
                 $image_name = "upload/" . time() . $k . '.png';
                 $path = public_path("{$image_name}");
-
                 if(!file_exists(public_path("upload"))) {
                     mkdir(public_path("upload"), 0777, true);
                 }
-
                 file_put_contents($path, $data);
-
                 $img->removeAttribute('src');
                 $img->setAttribute('src', asset("{$image_name}"));
             }
@@ -174,15 +179,7 @@ class ProductsController extends Controller
 
         $product->description = $description;
         $product->save();
-        if(blank($request->slug)) {
-            $slug = slug_format(Str::limit($validatedData['name'], 30));
-        } else {
-            $slug = slug_format($request->slug);
-        }
-
-        $product->update([
-            'slug' => $slug,
-        ]);
+        $product->category()->sync($request->category_id);
 
         toastr()->success('Ürün Ekleme İşlemi Tamamlandı.', 'Başarılı');
 
@@ -190,7 +187,7 @@ class ProductsController extends Controller
 
 
         if($request->is_next == '1') {
-            return redirect()->back();
+            return back();
         } else {
             return redirect(route('product.index'));
         }
@@ -228,22 +225,18 @@ class ProductsController extends Controller
             'price' => 'nullable|min:1',
             'status' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ], [
-            'name.required' => 'Ürün Adı alanı zorunludur.',
-            'name.max' => 'Ürün adı alanı maximum 250 karakter olmalıdır.',
-            'description.required' => 'Ürün açıklaması alanı zorunludur.',
-            'description.max' => 'Ürün açıklaması alanı maximum 1000 karakter olmalıdır.',
-//            'stock.required' => 'Ürün miktarı alanı zorunludur.',
-//            'stock.min' => 'Miktar en az 1 olmalıdır.',
-            'stock.max' => 'Miktar  en fazla 9999  olabilir.',
-            'status.required' => 'Ürün durumu alanı zorunludur.',
-//            'price.required' => 'Fiyat alanı zorunludur.',
-            'price.min' => 'Fiyat en az 1  olmalıdır.',
-            'image.image' => 'Ürün resmi bir resim dosyası olmalıdır.',
-            'image.mimes' => 'Ürün resmi yalnızca jpeg, png, jpg, gif veya svg formatında olabilir.',
-            'image.max' => 'Ürün resmi en fazla 2 MB boyutunda olabilir.',
+        ],[],
+            [
+            'name' => 'Ürün Adı ',
+            'description' => 'Ürün açıklaması ',
+            'stock' => 'Ürün miktarı ',
+            'status' => 'Ürün durumu ',
+            'price' => 'Ürün Fiyatı',
+            'image' => 'Ürün resmi',
+
         ]);
-//        dd(str_word_count($request->description));
+
+
         $data = [
             'name' => $validatedData['name'],
             'description' => $validatedData['description'],
@@ -258,6 +251,7 @@ class ProductsController extends Controller
         }
 
         $product = Products::find($products);
+
 //        $data['slug'] = slug_format(Str::limit($validatedData['name'],30));
         if(blank($request->slug)) {
             $data['slug'] = slug_format(Str::limit($validatedData['name'], 30));
@@ -266,6 +260,8 @@ class ProductsController extends Controller
         }
 
         $product->update($data);
+        $product->category()->sync($request->category_id);
+
 
         toastr()->success('Ürün Güncelleme İşlemi Tamamlandı.', 'Başarılı');
         return redirect(route('product.index'));

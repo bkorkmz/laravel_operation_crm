@@ -16,6 +16,7 @@ return [
     | any other location as required by the application or its packages.
     |
     */
+    'namespace' => 'App',
 
     'name' => env('APP_NAME', 'Laravel'),
 

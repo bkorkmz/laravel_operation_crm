@@ -30,7 +30,7 @@
                                            name="slug" value="{{ $products->slug }}" required>
                                 </div>
                             </div>
-                            
+
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Ürün Adı</label>
                                 <div class="col-sm-10">
@@ -44,13 +44,30 @@
                                     <textarea id="detail" class="form-control" name="description" maxlength="255">{!! $products->description !!}</textarea>
                                 </div>
                             </div>
+
+                            <div class="form-group row my-4">
+                                <label for="category_id" class="col-sm-2 col-form-label">Kategori</label>
+                                <div class="col-sm-8">
+                                    <select name="category_id" class="form-control fill js-example-basic-hide-search" id="category_id" required>
+{{--                                        <option value="">Kategori seçiniz</option>--}}
+{{--                                        @foreach ($all_categories as $category)--}}
+{{--                                            <option value="{{ $category->id }}">{{ $category->name }}</option>--}}
+{{--                                        @endforeach--}}
+                                    </select>
+                                    <a type="button" class="float-right badge badge-inverse-danger"
+                                       href="javascript:void(0)" data-toggle="modal"
+                                       data-target="#addCategoryModal">Kategori Ekle</a>
+                                </div>
+
+                            </div>
+
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Miktar / Stok</label>
                                 <div class="col-sm-4">
 
                                     <input type="text" class="form-control autonumber fill" placeholder="Stok 500"
                                            data-v-max="999999" data-v-min="0" name="stock" value="{{ $products->stock ?? ""}}" >
-                         
+
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -104,6 +121,11 @@
 
 
 @section('css')
+    <style>
+        .select2-container {
+            width: 100%!important;
+        }
+    </style>
 @endsection
 
 @section('js')
@@ -136,9 +158,49 @@
             });
         });
 
+        $('#category_id').select2({
+            theme:'bootstrap'
+        });
+
     </script>
 
     <script>
-        // $('.autonumber').autoNumeric('init');
+        $('.autonumber').autoNumeric('init');
+
+
+
+
+        $.ajax({
+            url: '{{ route('category.parent_data') }}',
+            data: {
+                model: 'product',
+            },
+            dataType: "json",
+            success: function (data) {
+                let category = @json($products->category->first());
+                $('#category_id').empty();
+                $('#category_id').append('<option value="">Kategori Seçiniz</option>');
+
+                formatData(data,category);
+                $('#category_id').trigger('change');
+            }
+        });
+
+        function formatData(categories,select_id) {
+            let selected = '';
+            $.each(categories, function (index, item) {
+                if(select_id != null) {
+                    if (select_id === item.id){
+                        selected = 'selected';
+                    }
+                }
+                $('#category_id').append('<option value="' + item.id + '" '+selected+'>'+item.name + '</option>');
+
+
+                if (item.parent && item.parent.length > 0) {
+                    formatData(item.parent);
+                }
+            });
+        }
     </script>
 @endsection

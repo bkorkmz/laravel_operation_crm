@@ -23,10 +23,23 @@
                         <form action="{{ route('product.store') }}" method="post" enctype="multipart/form-data" id="submit-form" >
                             @csrf
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Ürün Adı</label>
+                                <label class="col-sm-2 col-form-label">Ürün Adı<span class="text-danger"> *</span></label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control form-control-normal" placeholder="Ürün adı " maxlength="250"
-                                        name="name" required value="{{old('name')}}">
+                                    <input type="text" class="form-control form-control-normal" placeholder="Ürün adı" maxlength="250"
+                                           onkeypress="slugCopy(this)" name="name" required value="{{old('name')}}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Opsiyonel url <span class="text-danger"> *</span></label>
+                                <div class="col-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-prepend">
+                                                <label class="input-group-text">{{"https://".request()->host()."/ürünler/"}}</label>
+                                            </span>
+                                        <input id="slug_content" type="text" id="slug"
+                                               class="form-control text-lowercase" name="slug"
+                                               maxlength="100" >
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -36,7 +49,7 @@
                                 </div>
                             </div>
                             <div class="form-group row my-4">
-                                <label for="category_id" class="col-sm-2 col-form-label">Kategori</label>
+                                <label for="category_id" class="col-sm-2 col-form-label">Kategori <span class="text-danger"> *</span></label>
                                 <div class="col-sm-8">
                                     <select name="category_id" class="form-control fill js-example-basic-hide-search" id="category_id" required>
                                         <option value="">Kategori seçiniz</option>
@@ -79,7 +92,7 @@
 
 
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Ürün Fotoğrafı (min:630x470)</label>
+                                <label class="col-sm-2 col-form-label">Ürün Fotoğrafı (min:630x470) <span class="text-danger"> *</span></label>
                                 <div class="col-sm-6">
                                     <input type="file" class="form-control form-control-normal dropify" multiple
                                            data-show-remove="false" data-default-file=""
@@ -87,10 +100,6 @@
                                 </div>
 
                             </div>
-
-
-
-
                             <input type="hidden" value="0" hiddeen name="is_next" id="is_next">
                             <div class="text-right m-t-20">
                                 <button class="btn btn-success rounded" onclick="return $('#is_next').val('1')">
@@ -144,6 +153,12 @@
             });
         });
 
+
+        function slugCopy(inputElement) {
+            let slug = document.getElementById('slug_content');
+            console.log(inputElement.value)
+            slug.value = inputElement.value;
+        }
     </script>
 
     <script>

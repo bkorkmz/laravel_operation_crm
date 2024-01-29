@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 
- 
+
     <div class="pcoded-inner-content">
         <div class="page-wrapper">
             <div class="page-body">
@@ -44,19 +44,19 @@
         </div>
     </div>
 
-  
+
 @endsection
 @section('css')
    <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 
 @endsection
-@section('js')
+@section('after-js')
    <script  src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
 
     <script>
         $(function() {
-            $('#datatable').DataTable({
+            var table =$('#datatable').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: '{{route('user.index_data')}}',
@@ -78,9 +78,45 @@
                     'url': "{{ asset('i18N/')}}/{{app()->getLocale() == '' ? Config('app.fallback_locale') : app()->getLocale()}}{{'.json'}}"
                 }
             });
-         
+
 
         });
 
-    </script>
+
+       function banUser(userId) {
+           // AJAX isteği gönder
+           $.ajax({
+               url: '{{ route('user.banUser') }}/' + userId,
+               type: 'GET',
+               success: function(response) {
+                   // table.ajax.reload();
+                   jQuery('#datatable').DataTable().ajax.reload(null, false);
+                   toastr["success"](`${response.message}`);
+
+               },
+               error: function(xhr, status, error) {
+                   toastr["error"](`${xhr.status}`);
+               }
+           });
+       }
+
+       function unbanUser(userId) {
+           $.ajax({
+               url: '{{ route('user.unbanUser') }}/' + userId,
+               type: 'GET',
+               success: function(response) {
+                   // table.ajax.reload( null, false );
+                   $('#datatable').DataTable().ajax.reload(null, false);
+
+                   toastr["success"](`${response.message}`);
+
+                   },
+               error: function(xhr, status, error) {
+                   toastr["error"](`${xhr.status}`);
+                   console.error(xhr.responseText);
+               }
+           });
+       }
+   </script>
+
 @endsection

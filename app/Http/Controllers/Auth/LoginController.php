@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class LoginController extends Controller
 {
@@ -37,4 +41,48 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+
+    protected function authenticated()
+    {
+        if (Auth::user()->user_check !== 1) {
+            Auth::logout();
+            return redirect('/user_block')->withError('Hesabınız banlanmıştır!',);
+        }
+    }
+
+//    protected function authenticated(Request $request)
+//    {
+//
+//        if (auth()->user()->status == 2) {
+//            $this->guard()->logout();
+//            $request->session()->invalidate();
+//            $request->session()->regenerateToken();
+//            if ($request->wantsJson()) {
+//                return response()->json([
+//                    'error' => true,
+//                    'message' => __('Hesabınız banlandı'),
+//                    'code' => 204
+//                ], 200);
+//            }
+//            else {
+//                return view('user_block');
+//            }
+//
+//        }
+//    }
+
+
+
+//   protected function redirectTo()
+//    {
+//        if (auth()->user()->status  == 0) {
+//            $user = User::select('status')->where('id', auth()->user()->id)->first();
+//                return redirect()->route('user_block');
+//        } else {
+//            return redirect()->route('backend.index');
+//        }
+//
+//    }
+
 }

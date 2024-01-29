@@ -4,6 +4,8 @@
 @endsection
 
 @section('content')
+    <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+
     <div class="pcoded-inner-content">
         <div class="main-body">
             <div class="page-wrapper">
@@ -21,7 +23,7 @@
                         <div class="table-responsive">
                             <table id="datatable" class="dataTable table">
                                 <thead>
-                      
+
                                 </thead>
                                 <tbody>
 
@@ -38,7 +40,6 @@
 
 
 @section('js')
-    <link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     {{--    --}}
 
@@ -58,27 +59,28 @@
                     //     title: 'Resim',
                     //     data: 'photo',
                     //     name: 'photo'
-                    // },  
+                    // },
                     {
                         title: 'Ürün Adı',
                         data: 'name',
                         name: 'name'
                     },
-            
+
                     {
                         title: 'Durum',
                         data: 'status',
                         name: 'status'
                     },
                     {
-                        title: 'Stok',
+                        title: 'Kategori',
                         data: 'stock',
                         name: 'stock'
                     },
                     {
-                        title: 'Fiyat',
+                        title: 'Stok / Fiyat ',
                         data: 'price',
-                        name: 'price'
+                        name: 'price',
+                        render: function(d) { return d}
                     },
                     {
                         title: 'İşlemler',

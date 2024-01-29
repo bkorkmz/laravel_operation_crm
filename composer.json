@@ -15,9 +15,9 @@
         "spatie/laravel-permission": "^5.10",
         "yajra/laravel-datatables": "10.0",
         "yoeunes/toastr": "^2.3",
-      "ext-xlswriter": "*",
-      "ext-dom": "*",
-      "ext-libxml": "*",
+        "ext-xlswriter": "*",
+        "ext-dom": "*",
+        "ext-libxml": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",
@@ -37,12 +37,12 @@
         }
     },
     "autoload-dev": {
-      "psr-4": {
-        "Tests\\": "tests/"
-      },
-      "files": [
-        "app/helpers.php"
-      ]
+        "psr-4": {
+            "Tests\\": "tests/"
+        },
+        "files": [
+            "app/helpers.php"
+        ]
     },
     "scripts": {
         "post-autoload-dump": [
