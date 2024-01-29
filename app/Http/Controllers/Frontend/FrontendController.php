@@ -32,12 +32,14 @@ class FrontendController extends Controller
     public function __construct()
     {
         // Current Theme
-        $this->theme = config('app.aliases.CURRENT_THEME');
+        $this->theme = config('app.CURRENT_THEME');
 
     }
 
     public function index()
     {
+
+//        dd(config('app.CURRENT_THEME'));
 
         DB::table('module_landing_page_sections')->get()->groupBy('section_name')->toArray();
 
@@ -60,7 +62,7 @@ class FrontendController extends Controller
 
         $teams = JobTeams::where('status', 1)->get();
 
-        $slider = PortFolio::where('status', 1)
+        $sliders = PortFolio::where('status', 1)
             ->where('type', 'slider')->get();
 
         $about_page = ModelLandingPage::where('section_name', 'about')->first();
@@ -101,7 +103,7 @@ class FrontendController extends Controller
             "services",
             "teams",
             "portfolio",
-            "slider",
+            "sliders",
             "services_category",
             'about_page',
             'faq_sss',

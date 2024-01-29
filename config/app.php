@@ -16,7 +16,7 @@ return [
     | any other location as required by the application or its packages.
     |
     */
-    'namespace' => 'App',
+    "CURRENT_THEME"=>env('CURRENT_THEME','theme2'),
 
     'name' => env('APP_NAME', 'Laravel'),
 
@@ -193,7 +193,6 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
 //        'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
-          "CURRENT_THEME"=>env('CURRENT_THEME','theme2'),
           'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
 
