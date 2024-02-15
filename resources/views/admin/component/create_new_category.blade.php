@@ -1,4 +1,4 @@
-
+@php $modalName = "addCategoryModal"; @endphp
 <style>
     .select2 {
          width: 100%!important;
@@ -6,7 +6,7 @@
 </style>
 
 
-    <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog">
+    <div class="modal fade" id="{{$modalName}}" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -46,7 +46,20 @@
 
                                     </div>
                                 </div>
+
+                                <div class="form-group ">
+                                    <div class="form-group form-primary">
+                                        <label class="float-label">Kategori Fotoğrafı</label>
+                                        <input type="file" class="form-control form-control-normal dropify"
+                                               placeholder="" name="image"
+                                               accept=".jpg,.jpeg,.png,.tiff,.gif,.svg,.webp,.bmp,.ico">
+
+                                    </div>
+                                </div>
+
                                 <input type="hidden" name="show" value="1">
+                                <input type="hidden" name="model" value="{{$model_name}}">
+
                                 <button class="btn btn-success float-right" type="submit">Kaydet</button>
 
                             </form>
@@ -64,36 +77,44 @@
 
 
       <script>
+          var modalName = "{{$modalName}}"
           // $('#parent_id').select2({
           //     theme: 'bootstrap',
           // });
 
     $(document).ready(function () {
-        $('#parent_id').select2( {
+        $('#parent_id').select2({
             theme: 'bootstrap',
-        })
+            language: 'tr',
+            placeholder: 'Üst Kırılım seçiniz'
+        });
+
+
+
         let model = "{{$model_name}}"
 
         $("#category-form").submit(function (e) {
             e.preventDefault();
 
             // Form verilerini al
-            var formData = $(this).serialize();
-            formData += `&model=${model}`;
+            {{--var formData = $(this).serialize();--}}
+            {{--formData += `&_token={{ csrf_token() }}`;--}}
 
             // AJAX isteği gönder
             $.ajax({
-                type: "POST",
                 url: "{{route('category.store')}}", // İstek yapılacak URL'yi güncelleyin
-                data: formData,
+                data: new FormData( this ),
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: 'POST',
                 success: function (response) {
                     if( response.status === "success") {
                         let selectedOption = new Option(response.category.name, response.category.id, true, true);
-                        // let newOption = new Option(response.category.name, response.category.id);
-                        $("select[name='category_id']").append(selectedOption).trigger('change');
-                        // $('#parent_id').append(newOption);
 
-                        $('#addCategoryModal').modal('hide');
+                        $("select[name='category_id']").append(selectedOption).trigger('change');
+
+                        $('#'+ modalName).modal('hide');
                         toastr.success(response.message);
 
                     }
@@ -105,8 +126,8 @@
         });
 
 
-      $('#addCategoryModal').on('shown.bs.modal', function () {
-          // Perform AJAX call to load data into the select dropdown
+      $('#' + modalName).on('shown.bs.modal', function () {
+
           $.ajax({
               url: '{{ route('category.parent_data') }}',
               data: {
@@ -135,8 +156,8 @@
   }
 
 
-  $('#addCategoryModal').on('hidden.bs.modal', function (e) {
-      var form =$("#category-form");
+  $('#'+modalName).on('hidden.bs.modal', function (e) {
+      let form =$("#category-form");
       form.trigger("reset");
   });
 </script>

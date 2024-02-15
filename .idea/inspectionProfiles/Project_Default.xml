@@ -9,8 +9,9 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="1">
+          <list size="2">
             <item index="0" class="java.lang.String" itemvalue="thumbsSlider" />
+            <item index="1" class="java.lang.String" itemvalue="widget-title" />
           </list>
         </value>
       </option>
@@ -35,6 +36,8 @@
       </option>
       <option name="myCustomValuesEnabled" value="true" />
     </inspection_tool>
+    <inspection_tool class="LaravelPintValidationInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
+    <inspection_tool class="PhpCSValidationInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
     <inspection_tool class="XmlInvalidId" enabled="false" level="ERROR" enabled_by_default="false" />
   </profile>
 </component>

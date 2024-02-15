@@ -10,7 +10,7 @@
         <div class="page-wrapper">
             <div class="card">
                 <div class="card-header">
-                    <h3>Çözüm Ortağı  Ekle</h3>
+                    <h3>Slider  Ekle</h3>
                     <a href="{{route('slider.index')}}" class="btn btn-grd-warning btn-sm float-right rounded mr-1  "><i class="fa fa-reply"></i>Geri Dön</a>
                 </div>
                 <div class="card-block">

@@ -27,7 +27,7 @@ class ProductsController extends Controller
     {
         $data = Products::select('id', 'name', 'status', 'created_at', 'stock', 'price', 'photo')
             ->with('category')
-            ->orderBy('id', 'ASC');
+            ->orderBy('id', 'desc');
         return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('name', '<strong>{{$name}}</strong>')
@@ -53,7 +53,7 @@ class ProductsController extends Controller
             ->editColumn('price', function ($data) {
                 if($data->stock) {
                     if($data->stock <= 10) {
-                        $msg = "<span class='badge badge-danger text-dark'>" . $data->stock . "</span>";
+                        $msg = "<span class='badge badge-danger'>" . $data->stock . "</span>";
                     } elseif($data->stock > 10) {
                         $msg = "<span class='badge badge-info text-dark' >" . $data->stock . "</span>";
                     } elseif($data->stock == 0) {
@@ -130,9 +130,10 @@ class ProductsController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], [],[
             'name' => 'Ürün Adı',
-            'stock' => 'Ürün stokğu.',
-            'image' => 'Ürün resmi .',
-            'price' => 'Fiyat.',
+            'description' => 'Ürün Açıklaması',
+            'stock' => 'Ürün stoku.',
+            'image' => 'Ürün resmi',
+            'price' => 'Fiyat',
         ]);
 
         $product = new Products;
@@ -140,6 +141,7 @@ class ProductsController extends Controller
         $product->stock = $validatedData['stock'];
         $product->price = $validatedData['price'] ?? 0;
         $product->status = $request->status;
+        $product->attributes = json_encode($request['attributes']);
         if(blank($request->slug)) {
             $slug = slug_format($validatedData['name']);
         } else {
@@ -183,7 +185,6 @@ class ProductsController extends Controller
 
         toastr()->success('Ürün Ekleme İşlemi Tamamlandı.', 'Başarılı');
 
-//        return response()->json(['message' => 'success', 'status' => true,'action'=>'create'],200);
 
 
         if($request->is_next == '1') {
@@ -205,8 +206,11 @@ class ProductsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Products $products)
+    public function edit( $id)
     {
+
+        $products = Products::where('id', $id)
+            ->with('category:id,name')->first();
         return view('admin.product.edit', compact('products'));
 
     }
@@ -243,6 +247,7 @@ class ProductsController extends Controller
             'stock' => $validatedData['stock'],
             'price' => $validatedData['price'],
             'status' => $validatedData['status'],
+            'attributes' => json_encode($request['attributes']),
         ];
 
         if($request->hasFile('image')) {
@@ -254,14 +259,13 @@ class ProductsController extends Controller
 
 //        $data['slug'] = slug_format(Str::limit($validatedData['name'],30));
         if(blank($request->slug)) {
-            $data['slug'] = slug_format(Str::limit($validatedData['name'], 30));
+            $data['slug'] = slug_format($validatedData['name']);
         } else {
             $data['slug'] = slug_format($request->slug);
         }
 
         $product->update($data);
         $product->category()->sync($request->category_id);
-
 
         toastr()->success('Ürün Güncelleme İşlemi Tamamlandı.', 'Başarılı');
         return redirect(route('product.index'));

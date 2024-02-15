@@ -16,7 +16,7 @@ return [
     | any other location as required by the application or its packages.
     |
     */
-    "CURRENT_THEME"=>env('CURRENT_THEME','theme2'),
+    "CURRENT_THEME"=>env('CURRENT_THEME','nest'),
 
     'name' => env('APP_NAME', 'Laravel'),
 
@@ -194,7 +194,6 @@ return [
         // 'Example' => App\Facades\Example::class,
 //        'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
           'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-
 
     ])->toArray(),
 

@@ -20,11 +20,11 @@ return new class extends Migration
             $table->string('stock',10)->default(0);
             $table->tinyInteger('status')->nullable();
             $table->integer('created_by')->nullable();
-            $table->text('attributes')->nullable()->comment('product other description and image');
+            $table->json('attributes')->nullable()->comment('product other description and image');
             $table->string('photo')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            
+
         });
     }
 

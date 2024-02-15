@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Mail\testScoreSendMail;
 use App\Models\Article;
 use App\Models\Category;
-use App\Models\ContactMessage;
 use App\Models\FaqSss;
 use App\Models\InfoMessage;
 use App\Models\JobTeams;
@@ -16,11 +15,11 @@ use App\Models\PortFolio;
 use App\Models\Products;
 use App\Models\Test;
 use App\Models\TestDefinition;
-use Illuminate\Http\RedirectResponse;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -36,95 +35,163 @@ class FrontendController extends Controller
 
     }
 
-    public function index()
+    public function popularProducts(): array
     {
-
-//        dd(config('app.CURRENT_THEME'));
-
-        DB::table('module_landing_page_sections')->get()->groupBy('section_name')->toArray();
-
-        $article = Article::withwhereHas('category', function ($query) {
-            $query->where('model', 'article')->select('id','name','slug');
-        })
-            ->with('author:id,name')
-            ->where(['location' => 1, 'publish' => 0])
-            ->orderby('id', 'desc')
-            ->limit(10)->get();
+//        $category = Category::latest()->get('id');
 //
-        $services = Article::withwhereHas('category', function ($query) {
-            $query->where('model', 'services');
+//        for ($i = 0; $i < 10 ; $i ++){
+//            $name = fake()->name();
+//            $product = Products::create([
+//                'name' => $name,
+//                'description' => fake()->realText();,
+//                'slug' => slug_format($name),
+//                'attributes' => json_encode(['popular' => '1', 'color' => 'kırmızı']),
+//                  'stock'=>100,
+//                  'price'=>100,
+//            ]);
+//            $product->category()->attach($category[rand(0,10)]);
+//        }
+
+
+
+        $categoriesWithPopularProducts = Category::whereHas('getProduct', function ($query) {
+            $query->whereJsonContains('attributes->popular', '1')
+                ->where('stock', '>', 0)
+                ->where(['status' => 1]);
         })
-            ->with('author:id,name,avatar')
-            ->get();
+            ->with(['getProduct' => function ($query) {
+                $query->where(['status' => 1])->where('stock', '>', 0)
+                    ->whereJsonContains('attributes->popular', '1')->latest();
+            }, 'getProduct.category'])
+            ->limit(5)
+            ->latest()
+            ->get(['id', 'name']);
 
-        $services_category = Category::where('model', 'services')
-            ->where('show', 1)->get();
+        $allProduct = $categoriesWithPopularProducts->pluck('getProduct.*')->flatten()->toArray();
 
-        $teams = JobTeams::where('status', 1)->get();
-
-        $sliders = PortFolio::where('status', 1)
-            ->where('type', 'slider')->get();
-
-        $about_page = ModelLandingPage::where('section_name', 'about')->first();
-
-        $faq_sss = FaqSss::where('status', 1)
-            ->orderby('order', 'asc')->get();
-
-        $portfolio = PortFolio::where(['status' => 1, 'type' => 'portfolio'])
-            ->select('id', 'name', 'link', 'category_id', 'image')
-            ->withwherehas('category',function($q){
-                $q->where('show',1)
-                ->where('model','portfolio')
-                ->select('id','name','slug');
-            })->get();
-
-        $all_article = Article::whereRelation('category', function ($query) {
-            $query->where('model', 'article');
-        })->where(['location' => 1, 'publish' => 0])->orderby('id', 'desc')->paginate(5);
-
-        $referance =  PortFolio::where('type', 'portfolio')->where('status',1)->whereRelation('category',function ($q){
-            $q->where('slug','referanslar');
-        })->limit(20)->select('name','link','image')->get();
-
-        $filePath = storage_path('app/evrimNews.json');
-        $newsList = "";
-        if (file_exists($filePath)) {
-         $jsonContent = file_get_contents($filePath);
-         $newsData = json_decode($jsonContent, true);
-         $newsList =  array_slice($newsData['haberlist'], 0, 12);
-        }
-
-        $products =  Products::where(['status' => 1])
-            ->select('id', 'name', 'slug', 'description', 'price','stock','photo')
-           ->get();
-
-        return view( $this->theme.'.frontend.index', compact(
-            "article",
-            "services",
-            "teams",
-            "portfolio",
-            "sliders",
-            "services_category",
-            'about_page',
-            'faq_sss',
-            'all_article','referance','newsList','products'
-        ));
+        return compact('categoriesWithPopularProducts', 'allProduct');
     }
 
-
-
-    public function contactsubmit(Request $request)
+    public function featuredCategories()
     {
 
+        //        $sliders = PortFolio::where(['type' => 'slider', 'status' => 1])->get();
+        //        return compact('sliders');
+    }
 
-        $validatedData =  $request->validate([
+    public function sliders()
+    {
+
+        $sliders = PortFolio::where(['type' => 'slider', 'status' => 1])->get();
+
+        return compact('sliders');
+    }
+
+    public function categorySliders()
+    {
+        $categories = Category::product()->where(['show' => 1])->withCount('get_product')->get();
+
+        return compact('categories');
+    }
+
+    public function index()
+    {
+        $contents = collect();
+
+        $pages['sliders'] = 'sliders';
+        //        $pages['categorySliders'] = 'categorySliders';
+        //        $pages['featuredCategories'] = 'featuredCategories';
+        $pages['popularProducts'] = 'popularProducts';
+        //                $pages['products'] = 'products';
+        //        $pages['end_deals'] = 'end_deals';
+        //        $pages['category_sliders'] = 'category_sliders';
+        //        $pages['best_sales'] = 'best_sales';
+
+        foreach ($pages as $key => $page) {
+            $contents->put($key, $this->$page());
+        }
+
+        return view($this->theme.'.frontend.index', compact('contents'));
+
+        //        DB::table('module_landing_page_sections')->get()->groupBy('section_name')->toArray();
+        //
+        //        $article = Article::withwhereHas('category', function ($query) {
+        //            $query->where('model', 'article')->select('id','name','slug');
+        //        })
+        //            ->with('author:id,name')
+        //            ->where(['location' => 1, 'publish' => 0])
+        //            ->orderby('id', 'desc')
+        //            ->limit(10)->get();
+        //
+        //        $services = Article::withwhereHas('category', function ($query) {
+        //            $query->where('model', 'services');
+        //        })
+        //            ->with('author:id,name,avatar')
+        //            ->get();
+        //
+        //        $services_category = Category::where('model', 'services')
+        //            ->where('show', 1)->get();
+        //
+        //        $teams = JobTeams::where('status', 1)->get();
+        //
+        //        $sliders = PortFolio::where('status', 1)
+        //            ->where('type', 'slider')->get();
+        //
+        //        $about_page = ModelLandingPage::where('section_name', 'about')->first();
+        //
+        //        $faq_sss = FaqSss::where('status', 1)
+        //            ->orderby('order', 'asc')->get();
+        //
+        //        $portfolio = PortFolio::where(['status' => 1, 'type' => 'portfolio'])
+        //            ->select('id', 'name', 'link', 'category_id', 'image')
+        //            ->withwherehas('category',function($q){
+        //                $q->where('show',1)
+        //                ->where('model','portfolio')
+        //                ->select('id','name','slug');
+        //            })->get();
+        //
+        //        $all_article = Article::whereRelation('category', function ($query) {
+        //            $query->where('model', 'article');
+        //        })->where(['location' => 1, 'publish' => 0])->orderby('id', 'desc')->paginate(5);
+
+        //        $referance =  PortFolio::where('type', 'portfolio')->where('status',1)->whereRelation('category',function ($q){
+        //            $q->where('slug','referanslar');
+        //        })->limit(20)->select('name','link','image')->get();
+
+        //        $filePath = storage_path('app/evrimNews.json');
+        //        $newsList = "";
+        //        if (file_exists($filePath)) {
+        //         $jsonContent = file_get_contents($filePath);
+        //         $newsData = json_decode($jsonContent, true);
+        //         $newsList =  array_slice($newsData['haberlist'], 0, 12);
+        //        }
+
+        //        $products =  Products::where(['status' => 1])
+        //            ->select('id', 'name', 'slug', 'description', 'price','stock','photo')
+        //           ->get();
+
+        /* return view( $this->theme.'.frontend.index', compact(
+             "article",
+             "services",
+             "teams",
+             "portfolio",
+             "sliders",
+             "services_category",
+             'about_page',
+             'faq_sss',
+             'all_article','referance','newsList','products'
+         ));*/
+    }
+
+    public function contactsubmit(Request $request): JsonResponse
+    {
+
+        $validatedData = $request->validate([
             'name' => 'required',
             'email' => 'required|email:rfc,dns',
             'message' => 'nullable|max:255',
             'resume_file' => 'sometimes|mimes:word,pdf,jpg,jpeg,webp|max:4096',
             'subject' => 'required',
-            'message' => 'required|max:255',
-            'resume_file' => 'sometimes|mimes:word,pdf,jpg,jpeg,webp|max:4096',
 
         ], [
             'name.required' => 'İsim alanı  gereklidir.',
@@ -139,47 +206,43 @@ class FrontendController extends Controller
 
         ]);
 
-
-
-
         $contact = new InfoMessage();
         $contact->title = strip_tags($validatedData['name']);
         $contact->email = strip_tags($validatedData['email']);
-        $contact->subject = $request->subject ? strip_tags($request->subject) : "-";
-        $contact->content = $request->message  ? strip_tags($request->message) : "-";
+        $contact->subject = $request->subject ? strip_tags($request->subject) : '-';
+        $contact->content = $request->message ? strip_tags($request->message) : '-';
         $contact->publish = 0;
         $contact->ip = request()->ip();
-        $contact->type = $request->form_type ?? "info_message";
-        $contact->phone =  $request->phone ?? "0";
+        $contact->type = $request->form_type ?? 'info_message';
+        $contact->phone = $request->phone ?? '0';
 
         if (request()->hasFile('resume_file')) {
-            $this->validate(request(), array(
-                [ 'resume_file' => 'sometimes|mimes:word,pdf,jpg,jpeg,webp|max:4096'],
+            $this->validate(request(), [
+                ['resume_file' => 'sometimes|mimes:word,pdf,jpg,jpeg,webp|max:4096'],
                 [
-                  'resume_file.sometimes' => 'Yüklenen dosya sadece izin verilen dosya türünde olmalıdır',
-                  'resume_file.mimes' => 'Yüklenen dosya sadece izin verilen dosya türünde olmalıdır',
-                  'resume_file.max' => 'Yüklenen dosya  4 MB tan büyük olmamalıdır.'
-                ]
-            ));
+                    'resume_file.sometimes' => 'Yüklenen dosya sadece izin verilen dosya türünde olmalıdır',
+                    'resume_file.mimes' => 'Yüklenen dosya sadece izin verilen dosya türünde olmalıdır',
+                    'resume_file.max' => 'Yüklenen dosya  4 MB tan büyük olmamalıdır.',
+                ],
+            ]);
             $image = request()->file('resume_file');
             if ($image->isValid()) {
-                $file_upload = fileUpload($request->resume_file,'contact_file');
-                $contact->resume_file=   $file_upload['path'];
+                $file_upload = fileUpload($request->resume_file, 'contact_file');
+                $contact->resume_file = $file_upload['path'];
             }
         }
         $contact->save();
         if ($contact) {
-            $message = "OK";
+            $message = 'OK';
         } else {
-            $message = "Bilgilerinizi kontrol ederek formu tekrar gönderiniz";
+            $message = 'Bilgilerinizi kontrol ederek formu tekrar gönderiniz';
         }
 
-        return response()->json(['message' => $message] , 200);
+        return response()->json(['message' => $message], 200);
 
-        }
+    }
 
-
-    public function blog($kategoriadi= null,$id = null)
+    public function blog($kategoriadi = null, $id = null): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         $sidebar_article = Article::whereRelation('category', function ($query) {
             $query->where('model', 'article');
@@ -187,25 +250,25 @@ class FrontendController extends Controller
             ->latest()->limit(5)->get();
 
         $categories = Category::where('model', 'article')
-        ->where('show',1)
-        ->withwhereHas('get_article')
-        ->select('id','name','slug')
-        ->withCount('get_article')
-        ->orderBy('name', 'desc')
-        ->get();
+            ->where('show', 1)
+            ->withwhereHas('get_article')
+            ->select('id', 'name', 'slug')
+            ->withCount('get_article')
+            ->orderBy('name', 'desc')
+            ->get();
 
         $cat = $id;
         $search = request()->arama;
         $perPage = 8;
 
-        if (!blank($cat)) {
+        if (! blank($cat)) {
             $categoryId = $cat;
             $article = Article::whereRelation('category', function ($query) use ($categoryId) {
                 $query->where('model', 'article')
                     ->where('id', $categoryId);
-            })->where(['publish' => 0,'category_id'=>$categoryId])->orderBy('id', 'desc');
+            })->where(['publish' => 0, 'category_id' => $categoryId])->orderBy('id', 'desc');
 
-        } else  {
+        } else {
             $article = Article::whereRelation('category', function ($query) {
                 $query->where('model', 'article');
             })
@@ -213,40 +276,38 @@ class FrontendController extends Controller
                 ->orderBy('id', 'desc');
         }
 
-        if (!blank($search)) {
+        if (! blank($search)) {
 
-            $article->where('title', 'like', '%' . $search . '%');
+            $article->where('title', 'like', '%'.$search.'%');
         }
         $all_article = $article->paginate($perPage);
 
-        return view( $this->theme.'.frontend.pages.blog', compact( 'sidebar_article','categories','all_article'));
+        return view($this->theme.'.frontend.pages.blog', compact('sidebar_article', 'categories', 'all_article'));
     }
-
 
     public function getMoreArticles(): \Illuminate\Contracts\Foundation\Application|Factory|View|Application
     {
-
 
         $page = request()->page;
         $perPage = request()->perPage;
         $cat = request()->cat;
         $search = request()->search;
 
-        if (!blank($cat)) {
+        if (! blank($cat)) {
             $categoryId = $cat;
             $all_article = Article::whereRelation('category', function ($query) use ($categoryId) {
                 $query->where('model', 'article')
                     ->where('id', $categoryId);
-            })->where(['publish' => 0,'category_id'=>$categoryId])->orderBy('id', 'desc')
+            })->where(['publish' => 0, 'category_id' => $categoryId])->orderBy('id', 'desc')
                 ->paginate($perPage, ['*'], 'page', $page);
 
-        } else if (!blank($search)) {
-            $search_value= $search;
+        } elseif (! blank($search)) {
+            $search_value = $search;
             $all_article = Article::where(['publish' => 0])
-                ->where('title', 'like', '%' . $search_value . '%')
+                ->where('title', 'like', '%'.$search_value.'%')
                 ->orderBy('id', 'desc')
                 ->paginate($perPage, ['*'], 'page', $page);
-        }else {
+        } else {
             $all_article = Article::whereRelation('category', function ($query) {
                 $query->where('model', 'article');
             })
@@ -255,31 +316,30 @@ class FrontendController extends Controller
                 ->paginate($perPage, ['*'], 'page', $page);
         }
 
-        return view('frontend.includes.more_articles',compact('all_article'));
+        return view('frontend.includes.more_articles', compact('all_article'));
     }
-
 
     public function blog_detail(Request $request, $slug)
     {
         $article = Article::where('slug', $slug)->first();
-        if($article){
-            $sidebar_article = Article::whereRelation('category', function ($query) use($article) {
+        if ($article) {
+            $sidebar_article = Article::whereRelation('category', function ($query) use ($article) {
                 $query->where('model', 'article')
-                    ->where('id',$article->category_id);
-            })->where(['publish' => 0])->where('id','<>', $article->id)->orderby('created_at', 'desc')->limit(4)->get();
+                    ->where('id', $article->category_id);
+            })->where(['publish' => 0])->where('id', '<>', $article->id)->orderby('created_at', 'desc')->limit(4)->get();
 
-            return view( $this->theme.'.frontend.pages.blog_detail', compact('article', 'sidebar_article'));
+            return view($this->theme.'.frontend.pages.blog_detail', compact('article', 'sidebar_article'));
         }
-     abort(404);
+        abort(404);
     }
 
-    public function news_letter(Request $request)
+    public function news_letter(Request $request): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
 
-        return view( $this->theme.'.frontend.pages.blog');
+        return view($this->theme.'.frontend.pages.blog');
     }
 
-    public function newsletter(Request $request)
+    public function newsletter(Request $request): JsonResponse
     {
 
         $request->validate(
@@ -292,39 +352,36 @@ class FrontendController extends Controller
             ]
         );
 
-        Newsletter::updateOrCreate(['email'=>$request->email]);
-        $message = "OK";
-
+        Newsletter::updateOrCreate(['email' => $request->email]);
+        $message = 'OK';
 
         return response()->json(['message' => $message]);
     }
 
-    public function contact_submit(Request $request)
+    public function contact_submit(Request $request): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
 
-        return view( $this->theme.'.frontend.pages.blog');
+        return view($this->theme.'.frontend.pages.blog');
     }
 
-    public function siteMap()
+    public function siteMap(): RedirectResponse
     {
         return siteMap();
     }
 
-
-
-    public function postDetail (int $post)
+    public function postDetail(int $post): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
 
         $id = $post;
         $nonselect_id = [];
-        $nonselect_id[]= $id;
+        $nonselect_id[] = $id;
         $filePath = storage_path('app/evrimNews.json');
         $jsonContent = file_get_contents($filePath);
         $newsData = json_decode($jsonContent, true);
-        $sidebar_group = collect($newsData['haberlist'])->where('Id','!=',$id)->take(5);
+        $sidebar_group = collect($newsData['haberlist'])->where('Id', '!=', $id)->take(5);
 
-        foreach($sidebar_group->pluck('Id')->toarray() as $ids){
-            $nonselect_id[]= $ids;
+        foreach ($sidebar_group->pluck('Id')->toarray() as $ids) {
+            $nonselect_id[] = $ids;
         }
 
         $other_post = collect($newsData['haberlist'])->whereNotIn('Id', $nonselect_id)->take(5);
@@ -332,154 +389,153 @@ class FrontendController extends Controller
         $url = 'http://haber.evrim.com/Rest/HaberDetay?id='.$id;
         $response = Http::get($url);
 
-
-
         if ($response->successful()) {
             $data = $response->json();
         } else {
             return redirect()->back();
         }
 
-        return view($this->theme.'.frontend.pages.post_detail',compact('data','sidebar_group','other_post'));
+        return view($this->theme.'.frontend.pages.post_detail', compact('data', 'sidebar_group', 'other_post'));
     }
 
-    public function products(){
-         Products::all();
+    public function products(): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application
+    {
+        Products::all();
+
         return view($this->theme.'.frontend.pages.products');
     }
 
+    public function productDetail($slug): \Illuminate\Contracts\View\View|Application|Factory|RedirectResponse|\Illuminate\Contracts\Foundation\Application
+    {
 
-        public function productDetail($slug){
+        $product = Products::where('slug', $slug)->first();
 
-        $product = Products::where('slug',$slug)->first();
-
-        if(!$product){
+        if (! $product) {
             return back();
         }
 
-        return view($this->theme.'.frontend.pages.product_detail',compact('product'));
-
+        return view($this->theme.'.frontend.pages.product_detail', compact('product'));
 
     }
 
-
-    /**
-     * @return Application|Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
-     */
-    public function tests ()
+    public function tests(): \Illuminate\Contracts\View\View|Application|Factory
     {
 
-        $tests = Test::where('status',1)->whereHas('questionBank')
+        $tests = Test::where('status', 1)->whereHas('questionBank')
             ->with('questionBank')
-            ->orderBy('wage_status','desc')
+            ->orderBy('wage_status', 'desc')
             ->paginate(10);
-//        $tests->appends(['search' => 'votes']);
-        return view($this->theme.'.frontend.test.index',compact('tests'));
+
+        //        $tests->appends(['search' => 'votes']);
+        return view($this->theme.'.frontend.test.index', compact('tests'));
     }
 
-
-    public function test($slug, $id)
+    public function test($slug, $id): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $test = Test::where('id',$id)->first();
+        $test = Test::where('id', $id)->first();
         $questions = $test->questionBank->questions;
-        $questionArray =[];
-        foreach($questions as $question){
-            $answers =json_decode($question->answers,true);
-            $sections =[];
-            foreach ($answers as $answer){
-                $answerData =array_values($answer)[0];
-                $sections[]= [
-                    'code'=>$answerData['code'],
-                    'title'=>$answerData['title'],
+        $questionArray = [];
+        foreach ($questions as $question) {
+            $answers = json_decode($question->answers, true);
+            $sections = [];
+            foreach ($answers as $answer) {
+                $answerData = array_values($answer)[0];
+                $sections[] = [
+                    'code' => $answerData['code'],
+                    'title' => $answerData['title'],
                 ];
             }
-            $questionArray[]=[
-                'id'=>$question->id,
-                'question'=>$question->question,
-                'answers'=> $sections,
+            $questionArray[] = [
+                'id' => $question->id,
+                'question' => $question->question,
+                'answers' => $sections,
             ];
         }
 
-
-        return view($this->theme.'.frontend.test.exam_test',compact('test','questionArray'));
+        return view($this->theme.'.frontend.test.exam_test', compact('test', 'questionArray'));
 
     }
+
     public function test_definition(Request $request): RedirectResponse
     {
 
-      $send_email =$request->send_email;
-      $data_array = [
-          'user_id'=>auth()->id() ?? 0,
-          'user_email'=>auth()->user()->email ?? $request->email,
-          'test_id'=> $request->test_id,
-          'qbank_id'=> $request->qbank_id,
-          'question_answers'=>json_encode($request->question)
+        $send_email = $request->send_email;
+        $data_array = [
+            'user_id' => auth()->id() ?? 0,
+            'user_email' => auth()->user()->email ?? $request->email,
+            'test_id' => $request->test_id,
+            'qbank_id' => $request->qbank_id,
+            'question_answers' => json_encode($request->question),
 
-      ];
+        ];
 
+        $createData = TestDefinition::create($data_array);
+        $answerDetail = json_encode($this->testUserScore($createData->id));
+        if ($createData) {
+            $createData->update(['answer_details' => $answerDetail]);
 
-     $createData = TestDefinition::create($data_array);
-      $answerDetail =   json_encode($this->testUserScore($createData->id));
-        if($createData ){
-            $createData->update(['answer_details'=>$answerDetail]);
-
-            if(auth()->user()){
+            if (auth()->user()) {
                 toastr()->success('Test sonuçlarını panelden görüntüleyebilirsiniz. ', 'Başarılı');
-            }else{
+            } else {
                 toastr()->success('Cevaplarınız kayıt edildi. ', 'Başarılı');
             }
 
-            if($send_email){
-                $score =   json_decode($createData->answer_details,true);
-                $data  = [
-                    "email"=>$createData->user_email,
-                    "test_name"=>$createData->getTestData->name,
-                    "true"=>$score['true'],
-                    "false"=>$score['false'],
-                    "create_date"=>Carbon::parse($createData->created_at)->format('d-m-Y H:i')
+            if ($send_email) {
+                $score = json_decode($createData->answer_details, true);
+                $data = [
+                    'email' => $createData->user_email,
+                    'test_name' => $createData->getTestData->name,
+                    'true' => $score['true'],
+                    'false' => $score['false'],
+                    'create_date' => Carbon::parse($createData->created_at)->format('d-m-Y H:i'),
                 ];
 
-                Mail::to( $createData->user_email)->send(new testScoreSendMail($data));
+                Mail::to($createData->user_email)->send(new testScoreSendMail($data));
 
                 toastr()->success('Cevaplarını e-posta ile göndereceğiz. ', 'Başarılı');
 
             }
+
             return redirect()->route('frontend.tests');
-         }else {
+        } else {
 
             toastr()->error('Cevaplarınız kayıt edilemedi. Testi eksiksiz doldurarak tekrar deneyiniz. ', 'Başarısız');
+
             return back();
-         }
+        }
     }
-
-
-
 
     protected function testUserScore($testId): array
     {
-        $test = TestDefinition::where('id',$testId)->with('getQbank.questions')->first();
+        $test = TestDefinition::where('id', $testId)->with('getQbank.questions')->first();
         $trueAnswer = 0;
         $falseAnswer = 0;
         $empty = 0;
-        $questionAnswer = json_decode($test->question_answers,true);
+        $questionAnswer = json_decode($test->question_answers, true);
 
-        foreach($test['getQbank']['questions'] as $question){
+        foreach ($test['getQbank']['questions'] as $question) {
             $questionTrueAnswer = $question->questionAnswerTrue();
-            if($questionTrueAnswer['code']== '0') {
+            if ($questionTrueAnswer['code'] == '0') {
                 $empty++;
-            }else{
-                if($questionTrueAnswer['code'] == $questionAnswer[$question->id]){
+            } else {
+                if ($questionTrueAnswer['code'] == $questionAnswer[$question->id]) {
                     $trueAnswer++;
-                }else{
+                } else {
                     $falseAnswer++;
                 }
             }
         }
-        return ['true'=> $trueAnswer, 'false'=>$falseAnswer,'empty'=> $empty];
+
+        return ['true' => $trueAnswer, 'false' => $falseAnswer, 'empty' => $empty];
+    }
+
+    public function productInformation($id): JsonResponse
+    {
+        $product = Products::where('status', 1)
+            ->where('id', $id)->select('id', 'attributes', 'name', 'photo', 'price', 'slug', 'stock', 'description', 'created_at')
+            ->with('category:id,name')->first();
+
+        return response()->json(['product' => $product]);
+
     }
 }
-
-
-
-
-
