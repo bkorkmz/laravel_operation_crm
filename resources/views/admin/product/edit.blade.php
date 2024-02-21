@@ -138,15 +138,15 @@
                                             <div class="form-group ">
                                                 <h4>Ürün Ek Özellikleri </h4>
                                                 <div class="product-attributes">
-                                                    @php $attrArray =['size','color']; $type = 'text'; @endphp
+                                                    @php $attrArray =['size','color']; $type = 'text';  $hidden = ""; @endphp
                                                     @foreach($attributes as $attr=>$value)
                                                         @if($attr == "popular")
-                                                            @php $type = 'number';  @endphp
+                                                            @php $type = 'number'; $hidden = "hidden" @endphp
                                                         @endif
                                                         <div class="row m-2" id="{{'attr_'.$loop->iteration}}">
                                                             <label class="col-4"> @lang('product.'.$attr)</label>
                                                             <div class="col-6">
-                                                                <input type="{{$type}}" class="form-control"
+                                                                <input type="{{$type}}" {{$hidden}} class="form-control"
                                                                        name="attributes[{{$attr}}]" value="{{$value}}"
                                                                        {{$type = 'number' ? 'min = 0 max = 1' : ''}}
                                                                        placeholder="Değer giriniz" required></div>
@@ -231,7 +231,7 @@
                     input = '<div class="row m-2" id="attr_' + random_id + '">' +
                         '<label class="col-4">' + selectedText + ' </label>' +
                         '<div class="col-6">' +
-                        '<input type="number" pattern="[0-9]*" class="form-control" name="attributes[' + selectedAttr + ']" value="" placeholder="Sadece Sayı Giriniz" min="0" max="1" required>' +
+                        '<input type="hidden" pattern="[0-9]*" class="form-control" name="attributes[' + selectedAttr + ']" value="1" placeholder="Sadece Sayı Giriniz" min="0" max="1" required>' +
                         '</div>' +
                         '<button type="button" class="btn btn-danger btn-sm remove-attr" data-id="' + random_id + '">Sil</button>' +
                         '</div>';

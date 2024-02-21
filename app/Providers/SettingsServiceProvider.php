@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Page;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -20,6 +21,12 @@ class SettingsServiceProvider extends ServiceProvider
                 ->get()->toArray();
             Config::set(['settings' => $settings, 'allCetegories' => $allCategories]);
         }
+
+        if (Schema::hasTable('pages')) {
+            $pages = DB::connection()->table('pages')->where('publish',0)->get()->toArray();
+            Config::set('pages' , $pages);
+        }
+
 
     }
 

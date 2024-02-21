@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 class PortFolioController extends Controller
 
 {
-    
+
     public function __construct()
     {
         $this->model_name = "App\Models\Portfolio";
@@ -90,13 +90,13 @@ class PortFolioController extends Controller
         return view('admin.slider.edit', compact('slider','module_name'));
     }
 
-    
+
     public function store(Request $request)
     {
         $request->validate([
             "image" => "required|image|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:2048",
-            "name" => "required|max:50",
-            "value" => "required|max:500",
+            "name" => "nullable|max:50",
+            "value" => "nullable|max:500",
             "link" => "nullable",
             'status' => 'required',
         ], [
@@ -114,7 +114,7 @@ class PortFolioController extends Controller
 
 
         $data = $request->except('_token');
-       
+
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $file_upload = fileUpload($request->image,'sliders');
             $data['image']=   $file_upload['path'];
@@ -143,15 +143,15 @@ class PortFolioController extends Controller
 
 
         $request->validate([
-            "name" => "required|max:50",
-            "value" => "required|max:500",
+            "name" => "nullable|max:50",
+            "value" => "nullable|max:500",
             "image" => "image|mimes:jpg,jpeg,png,tiff,gif,svg,webp,bmp,ico|max:2048",
             "link" => "nullable",
             "type" => "required",
             'status' => 'required',
         ], [
             'name.required' => 'Slogan adı zorunludur',
-            'name.max' => 'Slogan adı en fazla 50 karakter olmalıdır adızorunludur',  
+            'name.max' => 'Slogan adı en fazla 50 karakter olmalıdır adızorunludur',
             'value.required' => 'Slogan Mesajı zorunludur',
             'value.max' => 'Slogan Mesajı en fazla 500 karakter olmalıdır adızorunludur',
             'image.required' => 'İçerik resmi alanı zorunludur',
@@ -195,7 +195,7 @@ class PortFolioController extends Controller
 
 
 
-    ////portfolio 
+    ////portfolio
 
     public function portfolio_index()
     {
@@ -222,8 +222,8 @@ class PortFolioController extends Controller
             ->editColumn('name', function ($data) {
                 return '  <span class="chat-header">'.$data->name.'</span>';
             })
-           
-      
+
+
              ->editColumn('category_name', function ($data) {
                 return '<span>'. $data["category"]->name.'</span>';
             })
@@ -328,7 +328,7 @@ class PortFolioController extends Controller
             'status.required' => 'Durum alanı zorunludur',
         ]);
         // dd($request->all());
-        $data = $request->except('_token'); 
+        $data = $request->except('_token');
 
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {

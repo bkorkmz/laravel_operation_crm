@@ -27,17 +27,17 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Slogan Adı <span class="text-danger"> *</span></label>
+                            <label class="col-sm-2 col-form-label">Slogan Adı <span class="text-danger"> </span></label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control form-control-normal" placeholder="İçerik adı giriniz"
-                                    name="name" maxlength="50" value="{{ old('name') }}" required>
+                                    name="name" maxlength="50" value="{{ old('name') }}" >
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Slogan Mesajı  <span class="text-danger"> *</span></label>
+                            <label class="col-sm-2 col-form-label">Slogan Mesajı  <span class="text-danger"> </span></label>
                             <div class="col-sm-10">
                                 <textarea type="text" class="form-control form-control-normal" placeholder="İçerik Mesajı giriniz"
-                                    name="value" maxlength="500" required> {{ old('value') ?? "" }} </textarea>
+                                    name="value" maxlength="500" > {{ old('value') ?? "" }} </textarea>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -82,7 +82,7 @@
 
 
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">İçerik Resmi (min:1920x800)</label>
+                            <label class="col-sm-2 col-form-label">İçerik Resmi (min: 2370x800)</label>
                             <div class="col-sm-5">
                                 <input type="file" class="form-control form-control-normal dropify" placeholder=""
                                     name="image" accept=".png,.jpg,.jpeg,.gif,.webp,.bmp" >

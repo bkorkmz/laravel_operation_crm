@@ -22,7 +22,6 @@
                                 </div>
                             </div>
                             <div class="card-block">
-                    {{--@dd($modul_name)--}}
                                 <form action="{{ route($modul_name.'.store') }}" method="post" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group row">
@@ -31,28 +30,28 @@
                                             <input type="text" class="form-control form-control-normal" placeholder="" name="title" required>
                                         </div>
                                     </div>
-                    
+
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Sayfa içeriği</label>
                                         <div class="col-sm-10">
                                             <textarea id="ckeditor" name="detail" required></textarea>
                                         </div>
                                     </div>
-                    
+
+{{--                                    <div class="form-group row">--}}
+{{--                                        <label class="col-sm-2 col-form-label">Fotoğraf</label>--}}
+{{--                                        <div class="col-sm-10">--}}
+{{--                                            <input type="file" class="form-control form-control-normal" placeholder="" name="image">--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Fotoğraf</label>
-                                        <div class="col-sm-10">
-                                            <input type="file" class="form-control form-control-normal" placeholder="" name="image">
-                                        </div>
-                                    </div>
-                    
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">PDF Dosyası</label>
+                                        <label class="col-sm-2 col-form-label">PDF Dosyası </label>
                                         <div class="col-sm-10">
                                             <input type="file" class="form-control form-control-normal" placeholder="" name="pdf" accept="application/pdf">
                                         </div>
                                     </div>
-                    
+
                                     <div class="form-group row clearfix">
                                         <label class="col-sm-2 col-form-label">Sayfa Türü</label>
                                         <div class="col-sm-2">
@@ -77,9 +76,9 @@
                                             </select>
                                         </div>
                                     </div>
-                    
-                    
-                    
+
+
+
                                     <div class="text-right m-t-20">
                                         <button class="btn btn-primary rounded">Kaydet</button>
                                     </div>
@@ -91,7 +90,7 @@
             </div>
         </div>
     </div>
-    
+
 @endsection
 
 

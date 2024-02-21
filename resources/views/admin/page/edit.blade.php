@@ -42,50 +42,50 @@
                                             <a class="btn btn-success btn-sm"  href="{{ route('frontend.page', $model->slug) }}" target="_blank">Tıkla Git</a>
                                         </div>
                                         <div class="col-sm-2">
-                    
+
                                             <a href="{{ route($modul_name.'.create') }}" type="button" class="btn btn-primary btn-sm  rounded ml-1 mr-1 " ><i class="fa fa-plus"></i>Yeni ekle</a>
                                             <a href="" onclick="window.history.back()" type="button" class="btn btn-warning btn-sm  rounded"><i class="fa fa-reply"></i></a>
-                    
+
                                         </div>
-                    
+
                                     </div>
-                    
+
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Sayfa başlığı</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control form-control-normal" placeholder="" name="title" value="{{ $model->title }}" required>
                                         </div>
                                     </div>
-                    
+
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Sayfa içeriği</label>
                                         <div class="col-sm-10">
                                             <textarea id="ckeditor" name="detail" required>{{ $model->detail }}</textarea>
                                         </div>
                                     </div>
-                    
+
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Fotoğraf</label>
                                         <div class="col-sm-10">
                                             <input type="file" class="form-control form-control-normal" placeholder="" name="image" accept=".png,.jpg,.jpeg,.gif">
                                         </div>
                                     </div>
-                    
+
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Mevcut Fotoğraf</label>
                                         <div class="col-sm-10">
                                             <img src="{{ $model->image }}" width="200"  alt="page image">
                                         </div>
                                     </div>
-                    
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">PDF Dosyası</label>
-                                        <div class="col-sm-10">
-                                            <input type="file" class="form-control form-control-normal" placeholder="" name="pdf" accept="application/pdf">
-                                        </div>
-                                    </div>
-                    
-                    
+
+{{--                                    <div class="form-group row">--}}
+{{--                                        <label class="col-sm-2 col-form-label">PDF Dosyası</label>--}}
+{{--                                        <div class="col-sm-10">--}}
+{{--                                            <input type="file" class="form-control form-control-normal" placeholder="" name="pdf" accept="application/pdf">--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+
+
                                     @if($model->pdf!=NULL)
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Mevcut PDF</label>
@@ -94,10 +94,10 @@
                                             </div>
                                         </div>
                                     @endif
-                    
-                    
-                    
-                    
+
+
+
+
                                     <div class="form-group row clearfix">
                                         <label class="col-sm-2 col-form-label">Sayfa Türü</label>
                                         <div class="col-sm-2">
@@ -109,13 +109,8 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <select name="publish" class="form-control fill">
-                                                @if($model->publish==0)
-                                                    <option value="0" selected>Yayında</option>
-                                                    <option value="1">Taslak</option>
-                                                @elseif($model->publish==1)
-                                                    <option value="0">Yayında</option>
-                                                    <option value="1" selected>Taslak</option>
-                                                @endif
+                                               <option value="0" {{$model->publish==0 ? "selected" : ""}}>Yayında</option>
+                                               <option value="1" $model->publish==1 ? "selected" : "">Taslak</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
@@ -127,9 +122,9 @@
                                             </select>
                                         </div>
                                     </div>
-                    
-                    
-                    
+
+
+
                                     <div class="text-right m-t-20">
                                         <button class="btn btn-primary rounded">Güncelle</button>
                                     </div>

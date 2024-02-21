@@ -1,10 +1,10 @@
 <!--End banners-->
 @php
-    $popularProducts = !blank($contents['popularProducts']) ? $contents['popularProducts'] : "";
-    $categories =    !blank($popularProducts['categoriesWithPopularProducts']) ? $popularProducts['categoriesWithPopularProducts'] : "";
-    $allProducts = !blank($popularProducts['allProduct']) ? $popularProducts['allProduct'] : "";
-
+    $popularProducts = !blank($contents['popularProducts']) ? $contents['popularProducts'] : [];
+    $categories =    !blank($popularProducts['categoriesWithPopularProducts']) ? $popularProducts['categoriesWithPopularProducts'] : [];
+    $allProducts = !blank($popularProducts['allProduct']) ? $popularProducts['allProduct'] : [];
 @endphp
+@if(!blank($popularProducts['categoriesWithPopularProducts']))
 <section class="product-tabs section-padding position-relative">
     <div class="container">
         <div class="section-title style-2 wow animate__animated animate__fadeIn">
@@ -53,7 +53,7 @@
                                             </a>
                                         </div>
                                         <div class="product-action-1">
-                                            <a aria-label="Favorilere Ekle" class="action-btn" href="" ><i
+                                            <a aria-label="Favorilere Ekle" class="action-btn d-none" href="" ><i
                                                     class="fi-rs-heart"></i></a>
                                             {{--                                            <a aria-label="Compare" class="action-btn" href=""><i--}}
                                             {{--                                                    class="fi-rs-shuffle"></i></a>--}}
@@ -84,7 +84,7 @@
                                                 {{--                                                <span class="old-price">$32.8</span>--}}
                                             </div>
                                             <div class="add-cart">
-                                                <a class="add" href=""><i class="fi-rs-shopping-cart mr-5"></i>Ekle
+                                                <a class="add" target="_blank" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$productOne['name']}}"><i class="fi-rs-shopping-cart mr-5"></i>Whatsapp
                                                 </a>
                                             </div>
                                         </div>
@@ -119,7 +119,7 @@
                                             </a>
                                         </div>
                                         <div class="product-action-1">
-                                            <a aria-label="Favorilere Ekle" class="action-btn" href="" ><i
+                                            <a aria-label="Favorilere Ekle" class="action-btn d-none" href="" ><i
                                                     class="fi-rs-heart"></i></a>
 {{--                                            <a aria-label="Compare" class="action-btn" href=""><i--}}
 {{--                                                    class="fi-rs-shuffle"></i></a>--}}
@@ -150,7 +150,7 @@
 {{--                                                <span class="old-price">$32.8</span>--}}
                                             </div>
                                             <div class="add-cart">
-                                                <a class="add" href=""><i class="fi-rs-shopping-cart mr-5"></i>Ekle
+                                                <a class="add" target="_blank" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$product->name}}">{{--<i class="fi-rs-shopping-cart mr-5"></i>--}}Whatsapp
                                                 </a>
                                             </div>
                                         </div>
@@ -221,9 +221,10 @@
 {{--                                    <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>--}}
 {{--                                </div>--}}
                                 <div class="product-extra-link2">
-                                    <button type="submit" class="button button-add-to-cart"><i
-                                            class="fi-rs-shopping-cart"></i>Sepete Ekle
+                                    <button id="whatsapp_share" type="submit" class="button button-add-to-cart">
+                                        {{-- <i class="fi-rs-shopping-cart"></i>--}}Whatsapp
                                     </button>
+
                                 </div>
                             </div>
                         </div>
@@ -235,7 +236,7 @@
     </div>
 </div>
 
-
+@endif
 <script>
 
     function quickModal(id) {
@@ -248,6 +249,8 @@
                 let product = data.product;
                 let attributesHtml = '';
                 let attributes = JSON.parse(product.attributes);
+                // let whatsapp_button = $('#whatsapp_share');
+
 
                 Object.entries(attributes).map(([key, value]) => {
                     // Eğer özellik "popular" ise döngüyü atla
@@ -285,14 +288,16 @@
             })
         });
 
-
-
-
-
-
     }
 
+    const button = document.getElementById('whatsapp_share');
 
+    button.addEventListener('click', function() {
+        const whatsapp_number= "{{config('settings.site_whatsapp_phone')}}";
+        const productName = $('#quickViewModal .modal-body .product-title')[0].text;
+        const whatsappUrl = `https://wa.me/${whatsapp_number}?text=${productName}`;
+        window.open(whatsappUrl, '_blank');
+    });
 </script>
 
 

@@ -13,10 +13,19 @@
     <meta property="og:type" content="" />
     <meta property="og:url" content="" />
     <meta property="og:image" content="" />
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org/",
+            "@type": "WebPage",
+            "@id": "#WebPage",
+             "url": "{{ request()->url() }}",
+             "name": "{{ config('settings.site_title') }}"
+         }
+    </script>
 @endsection
 
 @section('content')
-
 
     @foreach ($contents as $key => $value)
       @include(config('app.CURRENT_THEME').'.frontend.partital.' . $key, ['content' => $value])

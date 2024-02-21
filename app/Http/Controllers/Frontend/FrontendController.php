@@ -11,6 +11,7 @@ use App\Models\InfoMessage;
 use App\Models\JobTeams;
 use App\Models\ModelLandingPage;
 use App\Models\Newsletter;
+use App\Models\Page;
 use App\Models\PortFolio;
 use App\Models\Products;
 use App\Models\Test;
@@ -35,24 +36,19 @@ class FrontendController extends Controller
 
     }
 
+
+    public function products(): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application
+    {
+        $products = Products::where(['status' => 1])->where('stock', '>', 0)->with('category:id,name,slug')->paginate('20');
+        $categories = Category::product()->where(['show' => 1])->withCount('getProduct')->get();
+
+
+        return view($this->theme . '.frontend.pages.products', compact('products', 'categories'));
+
+    }
+
     public function popularProducts(): array
     {
-//        $category = Category::latest()->get('id');
-//
-//        for ($i = 0; $i < 10 ; $i ++){
-//            $name = fake()->name();
-//            $product = Products::create([
-//                'name' => $name,
-//                'description' => fake()->realText();,
-//                'slug' => slug_format($name),
-//                'attributes' => json_encode(['popular' => '1', 'color' => 'kırmızı']),
-//                  'stock'=>100,
-//                  'price'=>100,
-//            ]);
-//            $product->category()->attach($category[rand(0,10)]);
-//        }
-
-
 
         $categoriesWithPopularProducts = Category::whereHas('getProduct', function ($query) {
             $query->whereJsonContains('attributes->popular', '1')
@@ -61,7 +57,7 @@ class FrontendController extends Controller
         })
             ->with(['getProduct' => function ($query) {
                 $query->where(['status' => 1])->where('stock', '>', 0)
-                    ->whereJsonContains('attributes->popular', '1')->latest();
+                    ->whereJsonContains('attributes->popular', '1')->latest()->limit(10);
             }, 'getProduct.category'])
             ->limit(5)
             ->latest()
@@ -89,7 +85,7 @@ class FrontendController extends Controller
 
     public function categorySliders()
     {
-        $categories = Category::product()->where(['show' => 1])->withCount('get_product')->get();
+        $categories = Category::product()->where(['show' => 1])->withCount('getProduct')->get();
 
         return compact('categories');
     }
@@ -102,7 +98,6 @@ class FrontendController extends Controller
         //        $pages['categorySliders'] = 'categorySliders';
         //        $pages['featuredCategories'] = 'featuredCategories';
         $pages['popularProducts'] = 'popularProducts';
-        //                $pages['products'] = 'products';
         //        $pages['end_deals'] = 'end_deals';
         //        $pages['category_sliders'] = 'category_sliders';
         //        $pages['best_sales'] = 'best_sales';
@@ -111,76 +106,8 @@ class FrontendController extends Controller
             $contents->put($key, $this->$page());
         }
 
-        return view($this->theme.'.frontend.index', compact('contents'));
+        return view($this->theme . '.frontend.index', compact('contents'));
 
-        //        DB::table('module_landing_page_sections')->get()->groupBy('section_name')->toArray();
-        //
-        //        $article = Article::withwhereHas('category', function ($query) {
-        //            $query->where('model', 'article')->select('id','name','slug');
-        //        })
-        //            ->with('author:id,name')
-        //            ->where(['location' => 1, 'publish' => 0])
-        //            ->orderby('id', 'desc')
-        //            ->limit(10)->get();
-        //
-        //        $services = Article::withwhereHas('category', function ($query) {
-        //            $query->where('model', 'services');
-        //        })
-        //            ->with('author:id,name,avatar')
-        //            ->get();
-        //
-        //        $services_category = Category::where('model', 'services')
-        //            ->where('show', 1)->get();
-        //
-        //        $teams = JobTeams::where('status', 1)->get();
-        //
-        //        $sliders = PortFolio::where('status', 1)
-        //            ->where('type', 'slider')->get();
-        //
-        //        $about_page = ModelLandingPage::where('section_name', 'about')->first();
-        //
-        //        $faq_sss = FaqSss::where('status', 1)
-        //            ->orderby('order', 'asc')->get();
-        //
-        //        $portfolio = PortFolio::where(['status' => 1, 'type' => 'portfolio'])
-        //            ->select('id', 'name', 'link', 'category_id', 'image')
-        //            ->withwherehas('category',function($q){
-        //                $q->where('show',1)
-        //                ->where('model','portfolio')
-        //                ->select('id','name','slug');
-        //            })->get();
-        //
-        //        $all_article = Article::whereRelation('category', function ($query) {
-        //            $query->where('model', 'article');
-        //        })->where(['location' => 1, 'publish' => 0])->orderby('id', 'desc')->paginate(5);
-
-        //        $referance =  PortFolio::where('type', 'portfolio')->where('status',1)->whereRelation('category',function ($q){
-        //            $q->where('slug','referanslar');
-        //        })->limit(20)->select('name','link','image')->get();
-
-        //        $filePath = storage_path('app/evrimNews.json');
-        //        $newsList = "";
-        //        if (file_exists($filePath)) {
-        //         $jsonContent = file_get_contents($filePath);
-        //         $newsData = json_decode($jsonContent, true);
-        //         $newsList =  array_slice($newsData['haberlist'], 0, 12);
-        //        }
-
-        //        $products =  Products::where(['status' => 1])
-        //            ->select('id', 'name', 'slug', 'description', 'price','stock','photo')
-        //           ->get();
-
-        /* return view( $this->theme.'.frontend.index', compact(
-             "article",
-             "services",
-             "teams",
-             "portfolio",
-             "sliders",
-             "services_category",
-             'about_page',
-             'faq_sss',
-             'all_article','referance','newsList','products'
-         ));*/
     }
 
     public function contactsubmit(Request $request): JsonResponse
@@ -261,7 +188,7 @@ class FrontendController extends Controller
         $search = request()->arama;
         $perPage = 8;
 
-        if (! blank($cat)) {
+        if (!blank($cat)) {
             $categoryId = $cat;
             $article = Article::whereRelation('category', function ($query) use ($categoryId) {
                 $query->where('model', 'article')
@@ -276,13 +203,13 @@ class FrontendController extends Controller
                 ->orderBy('id', 'desc');
         }
 
-        if (! blank($search)) {
+        if (!blank($search)) {
 
-            $article->where('title', 'like', '%'.$search.'%');
+            $article->where('title', 'like', '%' . $search . '%');
         }
         $all_article = $article->paginate($perPage);
 
-        return view($this->theme.'.frontend.pages.blog', compact('sidebar_article', 'categories', 'all_article'));
+        return view($this->theme . '.frontend.pages.blog', compact('sidebar_article', 'categories', 'all_article'));
     }
 
     public function getMoreArticles(): \Illuminate\Contracts\Foundation\Application|Factory|View|Application
@@ -293,7 +220,7 @@ class FrontendController extends Controller
         $cat = request()->cat;
         $search = request()->search;
 
-        if (! blank($cat)) {
+        if (!blank($cat)) {
             $categoryId = $cat;
             $all_article = Article::whereRelation('category', function ($query) use ($categoryId) {
                 $query->where('model', 'article')
@@ -301,10 +228,10 @@ class FrontendController extends Controller
             })->where(['publish' => 0, 'category_id' => $categoryId])->orderBy('id', 'desc')
                 ->paginate($perPage, ['*'], 'page', $page);
 
-        } elseif (! blank($search)) {
+        } elseif (!blank($search)) {
             $search_value = $search;
             $all_article = Article::where(['publish' => 0])
-                ->where('title', 'like', '%'.$search_value.'%')
+                ->where('title', 'like', '%' . $search_value . '%')
                 ->orderBy('id', 'desc')
                 ->paginate($perPage, ['*'], 'page', $page);
         } else {
@@ -328,7 +255,7 @@ class FrontendController extends Controller
                     ->where('id', $article->category_id);
             })->where(['publish' => 0])->where('id', '<>', $article->id)->orderby('created_at', 'desc')->limit(4)->get();
 
-            return view($this->theme.'.frontend.pages.blog_detail', compact('article', 'sidebar_article'));
+            return view($this->theme . '.frontend.pages.blog_detail', compact('article', 'sidebar_article'));
         }
         abort(404);
     }
@@ -336,7 +263,7 @@ class FrontendController extends Controller
     public function news_letter(Request $request): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
 
-        return view($this->theme.'.frontend.pages.blog');
+        return view($this->theme . '.frontend.pages.blog');
     }
 
     public function newsletter(Request $request): JsonResponse
@@ -361,7 +288,7 @@ class FrontendController extends Controller
     public function contact_submit(Request $request): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
 
-        return view($this->theme.'.frontend.pages.blog');
+        return view($this->theme . '.frontend.pages.blog');
     }
 
     public function siteMap(): RedirectResponse
@@ -386,7 +313,7 @@ class FrontendController extends Controller
 
         $other_post = collect($newsData['haberlist'])->whereNotIn('Id', $nonselect_id)->take(5);
 
-        $url = 'http://haber.evrim.com/Rest/HaberDetay?id='.$id;
+        $url = 'http://haber.evrim.com/Rest/HaberDetay?id=' . $id;
         $response = Http::get($url);
 
         if ($response->successful()) {
@@ -395,26 +322,20 @@ class FrontendController extends Controller
             return redirect()->back();
         }
 
-        return view($this->theme.'.frontend.pages.post_detail', compact('data', 'sidebar_group', 'other_post'));
+        return view($this->theme . '.frontend.pages.post_detail', compact('data', 'sidebar_group', 'other_post'));
     }
 
-    public function products(): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application
-    {
-        Products::all();
-
-        return view($this->theme.'.frontend.pages.products');
-    }
 
     public function productDetail($slug): \Illuminate\Contracts\View\View|Application|Factory|RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
 
         $product = Products::where('slug', $slug)->first();
 
-        if (! $product) {
+        if (!$product) {
             return back();
         }
 
-        return view($this->theme.'.frontend.pages.product_detail', compact('product'));
+        return view($this->theme . '.frontend.pages.product_detail', compact('product'));
 
     }
 
@@ -427,7 +348,7 @@ class FrontendController extends Controller
             ->paginate(10);
 
         //        $tests->appends(['search' => 'votes']);
-        return view($this->theme.'.frontend.test.index', compact('tests'));
+        return view($this->theme . '.frontend.test.index', compact('tests'));
     }
 
     public function test($slug, $id): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application
@@ -452,7 +373,7 @@ class FrontendController extends Controller
             ];
         }
 
-        return view($this->theme.'.frontend.test.exam_test', compact('test', 'questionArray'));
+        return view($this->theme . '.frontend.test.exam_test', compact('test', 'questionArray'));
 
     }
 
@@ -538,4 +459,19 @@ class FrontendController extends Controller
         return response()->json(['product' => $product]);
 
     }
+
+    public function page($model)
+    {
+        $page = Page::where('slug', $model)->first();
+        $products = Products::whereJsonContains('attributes->popular', '1')
+            ->where('stock', '>', 0)
+            ->where(['status' => 1])->limit(4)->latest()->get();
+        $categories = Category::product()->whereHas('getProduct')->where(['show' => 1])->withCount('getProduct')->latest()->get();
+
+        return view($this->theme . '.frontend.pages.pages', compact('page','products','categories'));
+
+
+    }
+
+
 }

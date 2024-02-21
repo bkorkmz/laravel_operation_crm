@@ -44,8 +44,9 @@ Route::get('/blog', [FrontendController::class, 'blog'])->name('frontend.blog');
 Route::get('/blog/{model?}', [FrontendController::class, 'blog_detail'])->name('frontend.blog_detail');
 //Route::get('/post', [FrontendController::class, 'blog'])->name('frontend.post');
 Route::get('/post-detail/{model?}', [FrontendController::class, 'postDetail'])->name('frontend.post_detail');
-Route::get('/products', [FrontendController::class, 'products'])->name('frontend.products');
-Route::get('/product/{slug?}', [FrontendController::class, 'productDetail'])->name('frontend.product_detail');
+Route::get('/ürünler', [FrontendController::class, 'products'])->name('frontend.products');
+Route::get('/ürünler/{slug?}', [FrontendController::class, 'productDetail'])->name('frontend.product_detail');
+
 
 Route::get('/tests', [FrontendController::class, 'tests'])->name('frontend.tests');
 Route::get('/test/{slug?}/{id?}', [FrontendController::class, 'test'])->name('frontend.test');
@@ -54,7 +55,7 @@ Route::post('/test_definition', [FrontendController::class, 'test_definition'])-
 Route::post('heartbeat', [HomeController::class, 'heartBeat'])->name('heartbeat');
 Route::get('/site-map', [FrontendController::class, 'siteMap'])->name('frontend.sitemap');
 Route::post('/contact', [FrontendController::class, 'contactsubmit'])->name('frontend.contactsubmit');
-Route::get('/page/{model?}', [FrontendController::class, 'page'])->name('frontend.page');
+Route::get('/sayfa/{model}', [FrontendController::class, 'page'])->name('frontend.page');
 Route::post('/newsletter', [FrontendController::class, 'newsletter'])->name('frontend.newsletter');
 
 
@@ -82,14 +83,11 @@ Route::get('user_block', function () {
 
 Route::get('/jobs-run', function () {
     Artisan::call('site-map');
-    Artisan::call('evrim-news');
+//    Artisan::call('evrim-news');
     return back();
 });
 
 Route::get('product-info/{id?}',[FrontendController::class,'productInformation'])->name('product-info');
-
-
-
 
 
 
@@ -135,9 +133,7 @@ Route::prefix('backend')->middleware('auth')->group(function () {
         Route::post('/edit', 'update')->name($module_name.'.update')->middleware('permission:update_my_profile_users');
         Route::post('/edit/password', 'passwordUpdate')->name($module_name.'.password.update')->middleware('permission:update_my_profile_users');
         Route::get('/delete-account', 'deleteAccount')->name($module_name.'.delete_account')->middleware('permission:bloke_my_profile_users');
-        // Route::get('/edit/{model?}', 'edit')->name($module_name . '.edit')->middleware('permission:edit_slider');
-        // Route::post('/edit/{model?}', 'update')->name($module_name . '.update')->middleware('permission:update_slider');
-        // Route::get('/delete/{model?}', 'delete')->name($module_name . '.destroy')->middleware('permission:delete_slider');
+
     });
 
     Route::controller(UserController::class)->prefix('user')->group(function () {
@@ -209,11 +205,7 @@ Route::prefix('backend')->middleware('auth')->group(function () {
         $module_name = 'page';
         Route::get('/about', 'landing_page_about')->name($module_name.'.about')->middleware('permission:view_settings');
         Route::POST('/update/{page?}', 'landing_page_update')->name($module_name.'.update')->middleware('permission:view_settings');
-        //        Route::get('/index_data', 'index_data')->name($module_name.'.index_data');
-        // Route::get('/create', 'create')->name($module_name . '.create')->middleware('permission:create_settings');
-        // Route::post('/create', 'store')->name($module_name . '.store')->middleware('permission:create_settings');
-        // Route::get('/edit/{model?}', 'edit')->name($module_name . '.edit')->middleware('permission:edit_settings');
-        // Route::post('/edit/{model?}', 'update')->name($module_name . '.update')->middleware('permission:update_settings');
+
     });
 
     Route::controller(PostController::class)->prefix('post')->group(function () {

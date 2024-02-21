@@ -12,14 +12,14 @@
                               {{$slider->name ? $slider->name : ""}}
                             </h1>
                             <p class="mb-65">{{$slider->value ? $slider->value :""}}</p>
-                            @if($slider->link)
-                                <a href="{{$slider->link}}" class="btn" type="submit">İletişim</a>
-                                @else
-                                <form class="form-subcriber d-flex">
-                                    <input type="email" placeholder="Eposta adresi giriniz" />
-                                    <button class="btn" type="submit">Kayıt</button>
-                                </form>
-                            @endif
+{{--                            @if($slider->link)--}}
+{{--                                <a href="{{$slider->link}}" class="btn" type="submit">İletişim</a>--}}
+{{--                                @else--}}
+{{--                                <form class="form-subcriber d-flex">--}}
+{{--                                    <input type="email" placeholder="Eposta adresi giriniz" />--}}
+{{--                                    <button class="btn" type="submit">Kayıt</button>--}}
+{{--                                </form>--}}
+{{--                            @endif--}}
 
                         </div>
                     </div>

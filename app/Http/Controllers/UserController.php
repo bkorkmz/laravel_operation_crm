@@ -140,12 +140,10 @@ class UserController extends Controller
 
         $data = $request->except('_token');
         $data['password'] = Hash::make($validatedData['password']);
+        $data['user_check'] = 1;
         if (request()->hasFile('avatar')) {
-
              $file_upload = fileUpload($request->avatar,'avatars');
              $data['avatar'] =   $file_upload['path'];
-
-
             // $data['avatar'] = '/storage/' . $validatedData['avatar']->store('avatars', 'public');
         }
         $user = User::create($data);
@@ -241,9 +239,6 @@ class UserController extends Controller
             $data['password'] = Hash::make($request->password);
         }
 
-        // dd($data);
-
-        // $user = User::find($id);
         $model->update($data);
         $model->syncRoles($request->role);
 
@@ -639,8 +634,8 @@ class UserController extends Controller
     public function autoLogin($model)
     {
         if(auth()->id() == 1){
-//            Auth::login(User::find($model));
-            Auth::login($model);
+            $user = User::find($model);
+            Auth::login($user);
             toastr('Başarılı', 'success', 'İşlem başarılı.');
 
         }else{

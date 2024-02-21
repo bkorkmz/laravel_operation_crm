@@ -127,7 +127,7 @@ class ProductsController extends Controller
             'description' => 'nullable|max:1000',
             'stock' => 'nullable|min:1',
             'price' => 'nullable|min:1',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ], [],[
             'name' => 'Ürün Adı',
             'description' => 'Ürün Açıklaması',
@@ -228,7 +228,7 @@ class ProductsController extends Controller
             'stock' => 'nullable|max:9999',
             'price' => 'nullable|min:1',
             'status' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ],[],
             [
             'name' => 'Ürün Adı ',

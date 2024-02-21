@@ -4,18 +4,17 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="position-relative newsletter-inner">
-                        <div class="newsletter-content">
+                        <div class="newsletter-content text-center">
                             <h2 class="mb-20">
-                                Stay home & get your daily <br />
-                                needs from our shop
+                                Hemen Bültene Abone oldun!
                             </h2>
-                            <p class="mb-45">Start You'r Daily Shopping with <span class="text-brand">Nest Mart</span></p>
-                            <form class="form-subcriber d-flex">
-                                <input type="email" placeholder="Your emaill address" />
-                                <button class="btn" type="submit">Subscribe</button>
+                            <p class="mb-45"> Sağlığınızı korumak için ihtiyacınız olan tüm takviye edici gıdalar mağazamızda.</p>
+                            <form class="form-subcriber d-inline-flex">
+                                <input type="email" placeholder="Email adresi giriniz" />
+                                <button class="btn" type="submit">Katıl</button>
                             </form>
                         </div>
-                        <img src="{{asset('frontend/nest/imgs/banner/banner-9.png')}}" alt="newsletter" />
+{{--                        <img src="{{asset('frontend/nest/imgs/banner/banner-9.png')}}" alt="newsletter" />--}}
                     </div>
                 </div>
             </div>
@@ -99,7 +98,7 @@
                 <div class="col">
                     <div class="widget-about font-md mb-md-3 mb-lg-3 mb-xl-0 wow animate__animated animate__fadeInUp" data-wow-delay="0">
                         <div class="logo mb-30">
-                            <a href="/" class="text-center"><img src="{{config('settings.site_logo')}}" width="150" height="" title="Logo" alt="logo" /></a>
+                            <a href="/" class="text-left"><img src="{{config('settings.site_logo')}}" width="" height="" title="Logo" alt="logo" /></a>
                             <p class="font-lg text-heading">{{config('settings.site_description')}}</p>
                         </div>
                         <ul class="contact-infor">
@@ -109,14 +108,15 @@
                         </ul>
                     </div>
                 </div>
-                <div class="footer-link-widget col wow animate__animated animate__fadeInUp" data-wow-delay=".1s>
-                        <h4 class="widget-title">Company</h4>
+                <div class="footer-link-widget col wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
+                        <h4 class="widget-title">Kurumsal</h4>
                 <ul class="footer-list mb-sm-5 mb-md-0">
-                    <li><a href="#">Hakkımızda</a></li>
-                    <li><a href="#">Gizlilik Politikamız</a></li>
+                    @foreach(config('pages') as $page)
+                        <li><a href="{{ route('frontend.page', $page->slug) }}">{{$page->title}}</a></li>
+                    @endforeach
+
                     <li><a href="#">İletişim</a></li>
-                    <li><a href="#">Destek Merkezi</a></li>
-                    <li><a href="#">Kariyer</a></li>
+
                 </ul>
             </div>
 
