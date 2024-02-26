@@ -198,11 +198,11 @@
                                         {{--                                                <span class="qty-val">1</span>--}}
                                         {{--                                                <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>--}}
                                         {{--                                            </div>--}}
-                                        {{--                                            <div class="product-extra-link2">--}}
-                                        {{--                                                <button type="submit" class="button button-add-to-cart"><i class="fi-rs-shopping-cart"></i>Add to cart</button>--}}
-                                        {{--                                                <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>--}}
-                                        {{--                                                <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>--}}
-                                        {{--                                            </div>--}}
+                                                                                    <div class="product-extra-link2">
+                                                                                        <button onclick="sendWhatsApp('{{$product->name}}')" type="button" class="button button-add-to-cart"  ><i class="fi-rs-shopping-cart"></i>Fityat Al</button>
+{{--                                                                                        <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>--}}
+{{--                                                                                        <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>--}}
+                                                                                    </div>
                                         {{--                                        </div>--}}
                                         <div class="font-xs">
                                             <ul class="mr-50 float-start">
@@ -489,9 +489,9 @@
                                                         <div class="product-img product-img-zoom">
                                                             <a href="{{route('frontend.product_detail',['slug'=>$otherProduct->slug])}}" tabindex="0">
                                                                 <img class="default-img"
-                                                                     src="{{$otherProduct->image}}" alt="{{$otherProduct->name}}"/>
+                                                                     src="{{$otherProduct->photo}}" alt="{{$otherProduct->name}}"/>
                                                                 <img class="hover-img"
-                                                                     src="{{$otherProduct->image}}" alt="{{$otherProduct->name}}"/>
+                                                                     src="{{$otherProduct->photo}}" alt="{{$otherProduct->name}}"/>
                                                             </a>
                                                         </div>
                                                         <div class="product-action-1">
@@ -613,7 +613,7 @@
                                     </div>
                                     <div class="clearfix product-price-cover">
                                         <div class="product-price primary-color float-left">
-                                            <span class="current-price text-brand" id= "price"> 38 TL</span>
+                                            <span class="current-price text-brand" id= "price"> </span>
                                             {{--                                    <span>--}}
                                             {{--                                       <span class="save-price font-md color3 ml-15">26% </span>--}}
                                             {{--                                       <span class="old-price font-md ml-15">$52</span>--}}
@@ -687,7 +687,7 @@
                     $('#quickViewModal .modal-body .product-title').html(`${product.name}`);
                     $('#quickViewModal .modal-body .product-desc').html(`${product.short_detail? product.short_detail : ""}`);
                     $('#quickViewModal .modal-body #product-attributes').html(`${attributesHtml}`);
-                    $('#quickViewModal .modal-body #price').html(`${product.price} TL`);
+                    // $('#quickViewModal .modal-body #price').html(`${product.price} TL`);
 
                     // $('#whatsapp_share').attr('href', whatsappUrl);
 
@@ -710,5 +710,7 @@
             const whatsappUrl = `https://wa.me/${whatsapp_number}?text=${productName}`;
             window.open(whatsappUrl, '_blank');
         });
+
+
     </script>
 @endsection

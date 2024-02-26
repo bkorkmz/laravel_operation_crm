@@ -207,7 +207,7 @@
                             </div>
                             <div class="clearfix product-price-cover">
                                 <div class="product-price primary-color float-left">
-                                    <span class="current-price text-brand" id= "price"> 38 TL</span>
+                                    <span class="current-price text-brand" id= "price"> </span>
 {{--                                    <span>--}}
 {{--                                       <span class="save-price font-md color3 ml-15">26% </span>--}}
 {{--                                       <span class="old-price font-md ml-15">$52</span>--}}

@@ -47,7 +47,7 @@
                                 health</a></h4>
                         <div class="clearfix product-price-cover">
                             <div class="product-price primary-color float-left">
-                                <span class="current-price text-brand">$38</span>
+                                <span class="current-price text-brand"></span>
                                 <span>
                                         <span class="save-price font-md color3 ml-15">26% Off</span>
                                         <span class="old-price font-md ml-15">$52</span>
@@ -589,6 +589,17 @@ Telefon:  0532 637 27 52</span>
 @yield('js')
 
 @yield('after-js')
+
+
+<script>
+
+    function sendWhatsApp(name) {
+        let site_whatsapp_phone = "{{ config('settings.site_whatsapp_phone') }}";
+        let productName = name;
+        let whatsappLink = "https://wa.me/" + site_whatsapp_phone + "?text=" + encodeURIComponent(productName);
+        window.open(whatsappLink);
+    }
+</script>
 </body>
 
 </html>
