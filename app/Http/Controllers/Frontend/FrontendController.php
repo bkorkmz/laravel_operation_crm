@@ -6,10 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\testScoreSendMail;
 use App\Models\Article;
 use App\Models\Category;
-use App\Models\FaqSss;
 use App\Models\InfoMessage;
-use App\Models\JobTeams;
-use App\Models\ModelLandingPage;
 use App\Models\Newsletter;
 use App\Models\Page;
 use App\Models\PortFolio;
@@ -22,7 +19,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
@@ -36,14 +32,12 @@ class FrontendController extends Controller
 
     }
 
-
     public function products(): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         $products = Products::where(['status' => 1])->where('stock', '>', 0)->with('category:id,name,slug')->paginate('20');
-        $categories = Category::product()->where(['show' => 1])->withCount('getProduct')->get();
+        $categories = Category::product()->whereHas('getProduct')->where(['show' => 1])->withCount('getProduct')->get();
 
-
-        return view($this->theme . '.frontend.pages.products', compact('products', 'categories'));
+        return view($this->theme.'.frontend.pages.products', compact('products', 'categories'));
 
     }
 
@@ -71,8 +65,6 @@ class FrontendController extends Controller
     public function featuredCategories()
     {
 
-        //        $sliders = PortFolio::where(['type' => 'slider', 'status' => 1])->get();
-        //        return compact('sliders');
     }
 
     public function sliders()
@@ -85,7 +77,7 @@ class FrontendController extends Controller
 
     public function categorySliders()
     {
-        $categories = Category::product()->where(['show' => 1])->withCount('getProduct')->get();
+        $categories = Category::product()->where(['show' => 1])->whereHas('getProduct')->withCount('getProduct')->get();
 
         return compact('categories');
     }
@@ -106,7 +98,7 @@ class FrontendController extends Controller
             $contents->put($key, $this->$page());
         }
 
-        return view($this->theme . '.frontend.index', compact('contents'));
+        return view($this->theme.'.frontend.index', compact('contents'));
 
     }
 
@@ -188,7 +180,7 @@ class FrontendController extends Controller
         $search = request()->arama;
         $perPage = 8;
 
-        if (!blank($cat)) {
+        if (! blank($cat)) {
             $categoryId = $cat;
             $article = Article::whereRelation('category', function ($query) use ($categoryId) {
                 $query->where('model', 'article')
@@ -203,13 +195,13 @@ class FrontendController extends Controller
                 ->orderBy('id', 'desc');
         }
 
-        if (!blank($search)) {
+        if (! blank($search)) {
 
-            $article->where('title', 'like', '%' . $search . '%');
+            $article->where('title', 'like', '%'.$search.'%');
         }
         $all_article = $article->paginate($perPage);
 
-        return view($this->theme . '.frontend.pages.blog', compact('sidebar_article', 'categories', 'all_article'));
+        return view($this->theme.'.frontend.pages.blog', compact('sidebar_article', 'categories', 'all_article'));
     }
 
     public function getMoreArticles(): \Illuminate\Contracts\Foundation\Application|Factory|View|Application
@@ -220,7 +212,7 @@ class FrontendController extends Controller
         $cat = request()->cat;
         $search = request()->search;
 
-        if (!blank($cat)) {
+        if (! blank($cat)) {
             $categoryId = $cat;
             $all_article = Article::whereRelation('category', function ($query) use ($categoryId) {
                 $query->where('model', 'article')
@@ -228,10 +220,10 @@ class FrontendController extends Controller
             })->where(['publish' => 0, 'category_id' => $categoryId])->orderBy('id', 'desc')
                 ->paginate($perPage, ['*'], 'page', $page);
 
-        } elseif (!blank($search)) {
+        } elseif (! blank($search)) {
             $search_value = $search;
             $all_article = Article::where(['publish' => 0])
-                ->where('title', 'like', '%' . $search_value . '%')
+                ->where('title', 'like', '%'.$search_value.'%')
                 ->orderBy('id', 'desc')
                 ->paginate($perPage, ['*'], 'page', $page);
         } else {
@@ -255,7 +247,7 @@ class FrontendController extends Controller
                     ->where('id', $article->category_id);
             })->where(['publish' => 0])->where('id', '<>', $article->id)->orderby('created_at', 'desc')->limit(4)->get();
 
-            return view($this->theme . '.frontend.pages.blog_detail', compact('article', 'sidebar_article'));
+            return view($this->theme.'.frontend.pages.blog_detail', compact('article', 'sidebar_article'));
         }
         abort(404);
     }
@@ -263,7 +255,7 @@ class FrontendController extends Controller
     public function news_letter(Request $request): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
 
-        return view($this->theme . '.frontend.pages.blog');
+        return view($this->theme.'.frontend.pages.blog');
     }
 
     public function newsletter(Request $request): JsonResponse
@@ -288,7 +280,7 @@ class FrontendController extends Controller
     public function contact_submit(Request $request): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
 
-        return view($this->theme . '.frontend.pages.blog');
+        return view($this->theme.'.frontend.pages.blog');
     }
 
     public function siteMap(): RedirectResponse
@@ -313,7 +305,7 @@ class FrontendController extends Controller
 
         $other_post = collect($newsData['haberlist'])->whereNotIn('Id', $nonselect_id)->take(5);
 
-        $url = 'http://haber.evrim.com/Rest/HaberDetay?id=' . $id;
+        $url = 'http://haber.evrim.com/Rest/HaberDetay?id='.$id;
         $response = Http::get($url);
 
         if ($response->successful()) {
@@ -322,20 +314,34 @@ class FrontendController extends Controller
             return redirect()->back();
         }
 
-        return view($this->theme . '.frontend.pages.post_detail', compact('data', 'sidebar_group', 'other_post'));
+        return view($this->theme.'.frontend.pages.post_detail', compact('data', 'sidebar_group', 'other_post'));
     }
-
 
     public function productDetail($slug): \Illuminate\Contracts\View\View|Application|Factory|RedirectResponse|\Illuminate\Contracts\Foundation\Application
     {
 
-        $product = Products::where('slug', $slug)->first();
+        $product = Products::where('slug', $slug)->with('category')->first();
+        $relatedProducts = Products::where('id', '<>', $product->id)
+            ->with('category',function ($query) use($product){
+                $query->where('category_id',$product['category'][0]->id);
+            })
+            ->latest()
+            ->limit(8)
+            ->get();
+
+        $otherProducts = $relatedProducts->splice(4); // İlk 4 ürünü al
+        $newProducts = $relatedProducts;
 
         if (!$product) {
             return back();
         }
 
-        return view($this->theme . '.frontend.pages.product_detail', compact('product'));
+        $categories = Category::product()->where(['show' => 1])->whereHas('getProduct')->withCount('getProduct')->get();
+
+
+
+
+        return view($this->theme.'.frontend.pages.product_detail', compact('product','categories','otherProducts','newProducts'));
 
     }
 
@@ -348,7 +354,7 @@ class FrontendController extends Controller
             ->paginate(10);
 
         //        $tests->appends(['search' => 'votes']);
-        return view($this->theme . '.frontend.test.index', compact('tests'));
+        return view($this->theme.'.frontend.test.index', compact('tests'));
     }
 
     public function test($slug, $id): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application
@@ -373,7 +379,7 @@ class FrontendController extends Controller
             ];
         }
 
-        return view($this->theme . '.frontend.test.exam_test', compact('test', 'questionArray'));
+        return view($this->theme.'.frontend.test.exam_test', compact('test', 'questionArray'));
 
     }
 
@@ -453,7 +459,7 @@ class FrontendController extends Controller
     public function productInformation($id): JsonResponse
     {
         $product = Products::where('status', 1)
-            ->where('id', $id)->select('id', 'attributes', 'name', 'photo', 'price', 'slug', 'stock', 'description', 'created_at')
+            ->where('id', $id)->select('id', 'attributes', 'name', 'photo', 'price', 'slug', 'stock', 'short_detail', 'created_at')
             ->with('category:id,name')->first();
 
         return response()->json(['product' => $product]);
@@ -463,15 +469,27 @@ class FrontendController extends Controller
     public function page($model)
     {
         $page = Page::where('slug', $model)->first();
-        $products = Products::whereJsonContains('attributes->popular', '1')
-            ->where('stock', '>', 0)
-            ->where(['status' => 1])->limit(4)->latest()->get();
-        $categories = Category::product()->whereHas('getProduct')->where(['show' => 1])->withCount('getProduct')->latest()->get();
+        $category = Category::product()->where('slug', $model)->where(['show' => 1])->with('getProduct')->first();
 
-        return view($this->theme . '.frontend.pages.pages', compact('page','products','categories'));
+        if ($page) {
 
+            $products = Products::whereJsonContains('attributes->popular', '1')
+                ->where('stock', '>', 0)
+                ->where(['status' => 1])->limit(4)->latest()->get();
+            $categories = Category::product()->whereHas('getProduct')->where(['show' => 1])->withCount('getProduct')->latest()->get();
+
+            return view($this->theme.'.frontend.pages.pages', compact('page', 'products', 'categories'));
+
+        }
+        if ($category) {
+            $categories = Category::product()->whereHas('getProduct')->where(['show' => 1])->withCount('getProduct')->latest()->get();
+
+            $getProduct = $category->getProduct()->paginate(20);
+
+
+            return view($this->theme.'.frontend.pages.category_products', compact('categories', 'category','getProduct'));
+
+        }
 
     }
-
-
 }

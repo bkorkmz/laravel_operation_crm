@@ -29,16 +29,21 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Soru Metni  <span class="text-danger"> *</span></label>
                             <div class="col-sm-10">
-                                <textarea  class="form-control form-control-normal" placeholder="Soru metni  giriniz" rows="2" cols="2"
-                                    name="question" maxlength="500"  required></textarea>
+                                <textarea  class="form-control form-control-normal with-maxlength" placeholder="Soru metni  giriniz" rows="2" cols="2"
+                                    name="question" data-maxlength="500"  required></textarea>
+                                <div class="char-count-style">
+                                    <span class="char-count">0</span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Bağlantı (Url)</label>
                             <div class="col-sm-10">
-                                <textarea  class="form-control form-control-normal" placeholder="Soru metni  giriniz" rows="2" cols="2"
-                                name="answer" maxlength="999"  required></textarea>
-                                
+                                <textarea  class="form-control form-control-normal with-maxlength" placeholder="Soru metni  giriniz" rows="2" cols="2"
+                                name="answer" data-maxlength="999"  required></textarea>
+                                <div class="char-count-style">
+                                    <span class="char-count">0</span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -52,7 +57,7 @@
                             <label class="col-sm-2 col-form-label">Durum
                                </label>
                             <div class="col-sm-3 row align-self-center" >
-                                
+
                                 <div class="form-check m-2">
                                     <input class="form-check-input" checked type="radio" name="status"
                                         id="active" value="1"
@@ -60,7 +65,7 @@
                                     <label class="form-check-label" for="active">Aktif</label>
                                 </div>
                                 <div class="form-check m-2">
-                                   
+
                                     <input class="form-check-input"  type="radio" name="status"
                                         id="passive" value="0"
                                         {{ old('status',1) == 0 ? 'checked' : '' }}>
@@ -68,7 +73,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         {{-- <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Onay Durumu<span class="text-danger">
                                     *</span></label>
@@ -80,7 +85,7 @@
                                 </select>
                             </div>
                         </div> --}}
-                       
+
                         <div class="text-right m-t-20">
                             <button class="btn btn-primary rounded">Kaydet</button>
                         </div>
@@ -100,5 +105,5 @@
 
 @section('js')
 
-    
+
 @endsection

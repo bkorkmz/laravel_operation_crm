@@ -122,14 +122,17 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
 
+
         $validatedData = $request->validate([
-            'name' => 'required|max:250',
-            'description' => 'nullable|max:1000',
+            'name' => 'required|max:200',
+            'short_detail' => 'nullable|string|max:500',
+            'description' => 'nullable|max:5000',
             'stock' => 'nullable|min:1',
             'price' => 'nullable|min:1',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ], [],[
             'name' => 'Ürün Adı',
+            'short_detail' => 'Ürün Kısa Açıklaması',
             'description' => 'Ürün Açıklaması',
             'stock' => 'Ürün stoku.',
             'image' => 'Ürün resmi',
@@ -138,7 +141,8 @@ class ProductsController extends Controller
 
         $product = new Products;
         $product->name = $validatedData['name'];
-        $product->stock = $validatedData['stock'];
+        $product->short_detail = $validatedData['short_detail'];
+        $product->stock = $validatedData['stock'] ? $validatedData['stock'] : 0 ;
         $product->price = $validatedData['price'] ?? 0;
         $product->status = $request->status;
         $product->attributes = json_encode($request['attributes']);
@@ -148,6 +152,7 @@ class ProductsController extends Controller
             $slug = slug_format($request->slug);
         }
         $product->slug = $slug;
+
 
         $description = $validatedData['description'];
 
@@ -182,7 +187,6 @@ class ProductsController extends Controller
         $product->description = $description;
         $product->save();
         $product->category()->sync($request->category_id);
-
         toastr()->success('Ürün Ekleme İşlemi Tamamlandı.', 'Başarılı');
 
 
@@ -223,7 +227,8 @@ class ProductsController extends Controller
 
 
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:200',
+            'short_detail' => 'nullable|string|max:500',
             'description' => 'nullable|string|max:5000',
             'stock' => 'nullable|max:9999',
             'price' => 'nullable|min:1',
@@ -232,6 +237,7 @@ class ProductsController extends Controller
         ],[],
             [
             'name' => 'Ürün Adı ',
+            'short_detail' => 'Ürün Kısa Açıklaması ',
             'description' => 'Ürün açıklaması ',
             'stock' => 'Ürün miktarı ',
             'status' => 'Ürün durumu ',
@@ -243,8 +249,9 @@ class ProductsController extends Controller
 
         $data = [
             'name' => $validatedData['name'],
+            'short_detail' => $validatedData['short_detail'],
             'description' => $validatedData['description'],
-            'stock' => $validatedData['stock'],
+            'stock' => $validatedData['stock']?$validatedData['stock']:1,
             'price' => $validatedData['price'],
             'status' => $validatedData['status'],
             'attributes' => json_encode($request['attributes']),

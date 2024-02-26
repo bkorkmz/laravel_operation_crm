@@ -8,7 +8,7 @@
         <div class="main-body">
             <div class="page-wrapper">
                 <div class="page-body">
-            
+
                      <div class="card">
         <div class="card-header">
             <h3>Kullanıcı Ekle</h3>
@@ -177,7 +177,10 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Biyografi</label>
                     <div class="col-sm-10">
-                        <textarea rows="5" cols="5" class="form-control" placeholder="Başvuru yapıldığında ön yazı olarak gönderilecektir. " name="about">@if(old('about')){{old('about')}} @endif</textarea>
+                        <textarea rows="5" cols="5" class="form-control" data-max-length="250"  placeholder="Başvuru yapıldığında ön yazı olarak gönderilecektir. " name="about">@if(old('about')){{old('about')}} @endif</textarea>
+                        <div class="char-count-style">
+                            <span class="char-count">0</span>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row">

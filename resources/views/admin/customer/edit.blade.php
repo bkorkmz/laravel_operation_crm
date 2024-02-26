@@ -164,7 +164,11 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Biyografi</label>
                                     <div class="col-sm-10">
-                                        <textarea rows="5" cols="5" class="form-control" placeholder="Staj başvurusu yapıldığında İş Yerine gösterilmektedir.  " name="about" >{{ $user->about }}</textarea>
+                                        <textarea data-maxlength="250" rows="5" cols="5" class="form-controlwith-maxlength with-maxlength" placeholder="Staj başvurusu yapıldığında İş Yerine gösterilmektedir.  " name="about" >{{ $user->about }}</textarea>
+
+                                        <div class="char-count-style">
+                                            <span class="char-count">0</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group row">

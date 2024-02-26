@@ -38,8 +38,11 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Hizmet Özeti <span class="text-danger"> </span></label>
                             <div class="col-sm-10">
-                                    <textarea type="text" class="form-control form-control-normal"
-                                        placeholder="" name="short_detail" maxlength="250">{{old('short_detail')}}</textarea>
+                                    <textarea type="text" class="form-control form-control-normal with-maxlength"
+                                        placeholder="" name="short_detail" data-maxlength="250">{{old('short_detail')}}</textarea>
+                                <div class="char-count-style">
+                                    <span class="char-count">0</span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -149,8 +152,11 @@
                                     (Opsiyonel)</label>
                             </div>
                             <div class="col-sm-10">
-                                <textarea rows="2" cols="5" class="form-control form-control-warning" placeholder=""
-                                    name="meta_description" id="meta2"  maxlength="200"> </textarea>
+                                <textarea rows="2" cols="5" class="form-control form-control-warning with-maxlength" placeholder=""
+                                    name="meta_description" id="meta2"  data-maxlength="200"> </textarea>
+                                <div class="char-count-style">
+                                    <span class="char-count">0</span>
+                                </div>
                                 <div class="col-form-label">Arama motorları maksimum 200 karakteri
                                     geçmeyecek şekilde doldurulabilir.</div>
                             </div>

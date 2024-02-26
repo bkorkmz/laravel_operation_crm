@@ -65,8 +65,11 @@
                                         <label for="exampleTextarea" class="float-label">Kategori Açıklaması</label>
                                         <textarea class="form-control fill" id="exampleTextarea"
                                                   placeholder="Kategori Açıklaması Girin"
-                                                  name="description" maxlength="250"></textarea>
+                                                  name="description" data-maxlength="250"></textarea>
                                         <span class="form-bar"></span>
+                                        <div class="char-count-style">
+                                            <span class="char-count">0</span>
+                                        </div>
 
                                     </div>
                                 </div>

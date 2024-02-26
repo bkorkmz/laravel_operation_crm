@@ -28,7 +28,7 @@
                                         class="text-danger"> *</span></label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control form-control-normal" placeholder="Ürün adı"
-                                           maxlength="250"
+                                           maxlength="200"
                                            onkeypress="slugCopy(this)" name="name" required value="{{old('name')}}">
                                 </div>
                             </div>
@@ -42,15 +42,26 @@
                                             </span>
                                         <input id="slug_content" type="text" id="slug"
                                                class="form-control text-lowercase" name="slug"
-                                               maxlength="100">
+                                               maxlength="200">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Ürün Kısa Açıklaması</label>
+                                <div class="col-sm-10">
+                                    <textarea id="short_detail" class="form-control with-maxlength" name="short_detail"
+                                              data-maxlength="500">{{old('short_detail')}}</textarea>
+                                    <div class="char-count-style">
+                                        <span class="char-count">0</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Ürün Açıklaması</label>
                                 <div class="col-sm-10">
-                                    <textarea id="detail" class="form-control" name="description"
-                                              maxlength="1000">{{old('description')}}</textarea>
+                                    <textarea id="detail" class="form-control " name="description"
+                                              maxlength="5000">{{old('description')}}</textarea>
+
                                 </div>
                             </div>
                             <div class="form-group row my-4">
@@ -90,17 +101,29 @@
                                                 <div class="col-sm-6">
                                                     <input type="text" class="form-control autonumber fill"
                                                            data-v-max="9999999" data-v-min="0" placeholder="Fiyat 5.000"
-                                                           name="price" step="0.01" value="{{old('price')}}">
+                                                           name="price" step="0000.01" value="{{old('price')}}">
                                                     {{--                                    <input   name="price" type="text" class="form-control autonumber fill" data-a-sep="." data-v-max="999999"   >--}}
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-sm-2 col-form-label">Ürün Durumu</label>
-                                                <div class="col-sm-6">
-                                                    <select class="form-control" name="status">
-                                                        <option value="0"> Pasif</option>
-                                                        <option value="1" selected> Aktif</option>
-                                                    </select>
+                                                <label class="col-sm-2 col-form-label">Durum
+                                                </label>
+                                                <div class="col-sm-10 row align-self-center">
+
+                                                    <div class="form-check m-2">
+                                                        <input class="form-check-input" checked type="radio"
+                                                               name="publish"
+                                                               id="active" value="1"
+                                                            {{ old('publish', 1) == 0 ? 'checked' : '' }}>
+                                                        <label class="form-check-label" for="active">Pasif</label>
+                                                    </div>
+                                                    <div class="form-check m-2">
+
+                                                        <input class="form-check-input" type="radio" name="publish"
+                                                               id="passive" value="0"
+                                                            {{ old('publish', 1) == 1 ? 'checked' : '' }}>
+                                                        <label class="form-check-label" for="passive">Aktif </label>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -137,7 +160,7 @@
 
 
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Ürün Fotoğrafı (min:630x470) <span
+                                <label class="col-sm-2 col-form-label">Ürün Fotoğrafı (min:188x188)<span
                                         class="text-danger"> *</span></label>
                                 <div class="col-sm-6">
                                     <input type="file" class="form-control form-control-normal dropify" multiple
@@ -208,7 +231,7 @@
                     input = '<div class="row m-2" id="attr_' + random_id + '">' +
                         '<label class="col-4">' + selectedText + ' </label>' +
                         '<div class="col-6">' +
-                        '<input type="hidden" pattern="[0-9]*" class="form-control" name="attributes[' + selectedAttr + ']" value="1" placeholder="Sadece Sayı Giriniz" min="0" max="1" required>' +
+                        '<input type="hidden" class="form-control" name="attributes[' + selectedAttr + ']" value="1">' +
                         '</div>' +
                         '<button type="button" class="btn btn-danger btn-sm remove-attr" data-id="' + random_id + '">Sil</button>' +
                         '</div>';

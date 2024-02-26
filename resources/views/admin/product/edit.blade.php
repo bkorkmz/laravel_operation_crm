@@ -40,6 +40,7 @@
                                     </div>
                                 </div>
                             </div>
+{{--                            @dd($products)--}}
 
 
                             <div class="form-group row">
@@ -49,7 +50,16 @@
                                            name="name" value="{{ $products->name }}" required>
                                 </div>
                             </div>
-
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Ürün Kısa Açıklaması</label>
+                                <div class="col-sm-10">
+                                    <textarea id="short_detail" class="form-control with-maxlength" name="short_detail"
+                                              data-maxlength="500">{{ $products->short_detail}}</textarea>
+                                    <div class="char-count-style">
+                                        <span class="char-count">0</span>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Ürün Açıklaması</label>
                                 <div class="col-sm-10">
@@ -92,7 +102,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-sm-4 col-form-label">Ürün Durumu</label>
+                                                <label class="col-sm-4 col-form-label">Durum</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" name="status">
                                                         <option
@@ -231,7 +241,7 @@
                     input = '<div class="row m-2" id="attr_' + random_id + '">' +
                         '<label class="col-4">' + selectedText + ' </label>' +
                         '<div class="col-6">' +
-                        '<input type="hidden" pattern="[0-9]*" class="form-control" name="attributes[' + selectedAttr + ']" value="1" placeholder="Sadece Sayı Giriniz" min="0" max="1" required>' +
+                        '<input type="hidden"  class="form-control" name="attributes[' + selectedAttr + ']" value="1" >' +
                         '</div>' +
                         '<button type="button" class="btn btn-danger btn-sm remove-attr" data-id="' + random_id + '">Sil</button>' +
                         '</div>';

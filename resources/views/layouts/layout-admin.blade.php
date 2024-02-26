@@ -70,6 +70,17 @@
             overflow-y: scroll;
         }
 
+        .char-count-style{
+            display: flex;
+            float: right;
+            background-color: blue;
+            padding: 1px 15px 0px 8px;
+            color: white;
+            border-radius: 15%;
+        }
+        .max-length-reached {
+            background-color: #b71515;
+        }
     </style>
 
 
@@ -520,6 +531,36 @@
             });
     };
 </script>
+
+    <script>
+        class TextareaWithMaxlength {
+            constructor(selector) {
+                this.textareas = document.querySelectorAll(selector);
+                this.init();
+            }
+            init() {
+                this.textareas.forEach(textarea => {
+                    const maxLength = textarea.getAttribute('data-maxlength');
+                    const charCountSpan = textarea.nextElementSibling;
+                    const charCountStyle = textarea.nextElementSibling;
+
+                    textarea.addEventListener('input', () => {
+                        let charCount = textarea.value.length;
+                        if (charCount >= maxLength) {
+                            textarea.value = textarea.value.slice(0, maxLength);
+                            charCount = maxLength;
+                            charCountStyle.classList.add('max-length-reached');
+
+                        } else {
+                            charCountStyle.classList.remove('max-length-reached');
+                        }
+                        charCountSpan.textContent = `${charCount}/${maxLength}`;
+                    });
+                });
+            }
+        }
+        new TextareaWithMaxlength('.with-maxlength');
+    </script>
 
     @yield('js')
 

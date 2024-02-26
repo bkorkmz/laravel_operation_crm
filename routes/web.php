@@ -39,24 +39,7 @@ use Symfony\Component\Console\Output\StreamOutput;
 //    });
 //});
 
-Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
-Route::get('/blog', [FrontendController::class, 'blog'])->name('frontend.blog');
-Route::get('/blog/{model?}', [FrontendController::class, 'blog_detail'])->name('frontend.blog_detail');
-//Route::get('/post', [FrontendController::class, 'blog'])->name('frontend.post');
-Route::get('/post-detail/{model?}', [FrontendController::class, 'postDetail'])->name('frontend.post_detail');
-Route::get('/ürünler', [FrontendController::class, 'products'])->name('frontend.products');
-Route::get('/ürünler/{slug?}', [FrontendController::class, 'productDetail'])->name('frontend.product_detail');
-
-
-Route::get('/tests', [FrontendController::class, 'tests'])->name('frontend.tests');
-Route::get('/test/{slug?}/{id?}', [FrontendController::class, 'test'])->name('frontend.test');
-Route::post('/test_definition', [FrontendController::class, 'test_definition'])->name('frontend.test_definition');
-
-Route::post('heartbeat', [HomeController::class, 'heartBeat'])->name('heartbeat');
-Route::get('/site-map', [FrontendController::class, 'siteMap'])->name('frontend.sitemap');
-Route::post('/contact', [FrontendController::class, 'contactsubmit'])->name('frontend.contactsubmit');
-Route::get('/sayfa/{model}', [FrontendController::class, 'page'])->name('frontend.page');
-Route::post('/newsletter', [FrontendController::class, 'newsletter'])->name('frontend.newsletter');
+Auth::routes(['register' => false]);
 
 
 
@@ -93,7 +76,6 @@ Route::get('product-info/{id?}',[FrontendController::class,'productInformation']
 
 
 
-Auth::routes(['register' => false]);
 
 //Route::prefix('student')->middleware(['auth',])->group(function () {
 //    Route::get('/',  function (){
@@ -414,3 +396,35 @@ Route::prefix('backend')->middleware('auth')->group(function () {
 });
 
 //Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+
+
+
+
+
+
+
+//Route Frontend
+
+
+
+Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
+Route::get('/blog', [FrontendController::class, 'blog'])->name('frontend.blog');
+Route::get('/blog/{model?}', [FrontendController::class, 'blog_detail'])->name('frontend.blog_detail');
+//Route::get('/post', [FrontendController::class, 'blog'])->name('frontend.post');
+Route::get('/post-detail/{model?}', [FrontendController::class, 'postDetail'])->name('frontend.post_detail');
+Route::get('/ürünler', [FrontendController::class, 'products'])->name('frontend.products');
+Route::get('/ürünler/{slug?}', [FrontendController::class, 'productDetail'])->name('frontend.product_detail');
+
+
+Route::get('/tests', [FrontendController::class, 'tests'])->name('frontend.tests');
+Route::get('/test/{slug?}/{id?}', [FrontendController::class, 'test'])->name('frontend.test');
+Route::post('/test_definition', [FrontendController::class, 'test_definition'])->name('frontend.test_definition');
+
+Route::post('heartbeat', [HomeController::class, 'heartBeat'])->name('heartbeat');
+Route::get('/site-map', [FrontendController::class, 'siteMap'])->name('frontend.sitemap');
+Route::post('/contact', [FrontendController::class, 'contactsubmit'])->name('frontend.contactsubmit');
+Route::get('/{model}', [FrontendController::class, 'page'])->name('frontend.page');
+Route::post('/newsletter', [FrontendController::class, 'newsletter'])->name('frontend.newsletter');
+
+

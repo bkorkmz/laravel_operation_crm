@@ -39,13 +39,17 @@
                                                         maxlength="50" required>
                                                 </div>
                                             </div>
-    
+
 
                                             <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label">Açıklama </label>
                                                 <div class="col-sm-10">
-                                                    <textarea type="text" class="form-control form-control-normal"  placeholder="" name="description"
-                                                        maxlength="250">{{ $model->description }}</textarea>
+                                                    <textarea type="text" class="form-control form-control-normal with-maxlength"   placeholder="" name="description"
+                                                              data-maxlength="250">{{ $model->description }}</textarea>
+
+                                                    <div class="char-count-style">
+                                                        <span class="char-count">0</span>
+                                                    </div>
                                                 </div>
                                             </div>
 

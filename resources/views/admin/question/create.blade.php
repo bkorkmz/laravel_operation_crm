@@ -42,10 +42,14 @@
                                             <label class="col-sm-2 col-form-label">Soru Metni <span class="text-danger">
                                                     *</span></label>
                                             <div class="col-sm-10">
-                                                <textarea type="text" class="form-control form-control-normal" rows="5"
+                                                <textarea type="text" class="form-control form-control-normal with-maxlength" rows="5"
                                                           cols="300"
-                                                          value="{{ old('question') }}" placeholder="" name="question"
-                                                          maxlength="250" required> </textarea>
+                                                           placeholder="" name="question"
+                                                          data-maxlength="250" required> {{ old('question') }}</textarea>
+
+                                                <div class="char-count-style">
+                                                    <span class="char-count">0</span>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -115,7 +119,7 @@
 
                                                                 </thead>
                                                                 <tbody id="task-list">
-                                                              
+
 
                                                                 </tbody>
 
@@ -154,12 +158,12 @@
         @endsection
 
         @section('js')
- 
-            
+
+
             <script src="/admin/assets/js/page-build/add_question_answer.js"></script>
             <script src="/admin/assets/js/page-build/submit.js"></script>
-       
-    
+
+
 
 
 @endsection

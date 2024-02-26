@@ -6,13 +6,45 @@
     {{config('settings.site_title') }}
 @endsection
 @section('head')
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta property="og:title" content="" />
-    <meta property="og:type" content="" />
-    <meta property="og:url" content="" />
-    <meta property="og:image" content="" />
+    <meta name="description" content="{{ config('settings.site_description') }}">
+    <meta name="title" content="{{ config('settings.site_title') }}">
+    <meta name="Author" content="{{ config('settings.site_url') }}">
+
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Anasayfa",
+            "item": "{{route('frontend.index')}}"
+          },{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Ürünler",
+            "item": " {{request()->fullUrl()}} "
+          }]
+        }
+    </script>
+
+
+
+
+
+@endsection
+
+@section('breadcrumb')
+
+    <div class="page-header breadcrumb-wrap">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="/" rel="nofollow"><i class="fi-rs-home mr-5"></i>Anasayfa</a>
+                <span> Ürünler</span>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('content')
@@ -29,7 +61,7 @@
                         <div class="product-cart-wrap mb-30">
                             <div class="product-img-action-wrap">
                                 <div class="product-img product-img-zoom">
-                                    <a href="">
+                                    <a href="{{route('frontend.product_detail',['slug'=>$product['slug']])}}">
                                         <img class="default-img"
                                              src="{{$product->photo}}"
                                              alt="{{$product->name}}" title="{{$product->name}}" />
@@ -57,7 +89,7 @@
                                 <div class="product-category">
                                     <a href="">{{$product['category'][0]->name}}</a>
                                 </div>
-                                <h2><a href="">{{$product->name}}</a></h2>
+                                <h2><a href="{{route('frontend.product_detail',['slug'=>$product['slug']])}}">{{$product->name}}</a></h2>
                                 <div class="product-rate-cover">
                                     {{--     <div class="product-rate d-inline-block">
                                              <div class="product-rating" style="width: 90%"></div>
@@ -69,11 +101,11 @@
                                 </div>
                                 <div class="product-card-bottom">
                                     <div class="product-price">
-                                        <span>{{$product->price}} TL</span>
+                                        <span>{{$product->price != 0 ?$product->price." TL" : ""}}</span>
                                         {{--                                                <span class="old-price">$32.8</span>--}}
                                     </div>
                                     <div class="add-cart">
-                                        <a class="add" target="_blank" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$product->name}}">{{--<i class="fi-rs-shopping-cart mr-5"></i>--}}Whatsapp
+                                        <a class="add" target="_blank" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$product->name}}">{{--<i class="fi-rs-shopping-cart mr-5"></i>--}}Fiyat Al
                                         </a>
                                     </div>
                                 </div>
@@ -86,21 +118,7 @@
             <!--product grid-->
             <div class="pagination-area mt-20 mb-20">
                 {!! $products->links('vendor.pagination.bootstrap-4') !!}
-{{--                <nav aria-label="Page navigation example">--}}
-{{--                    <ul class="pagination justify-content-start">--}}
-{{--                        <li class="page-item">--}}
-{{--                            <a class="page-link" href="#"><i class="fi-rs-arrow-small-left"></i></a>--}}
-{{--                        </li>--}}
-{{--                        <li class="page-item"><a class="page-link" href="#">1</a></li>--}}
-{{--                        <li class="page-item active"><a class="page-link" href="#">2</a></li>--}}
-{{--                        <li class="page-item"><a class="page-link" href="#">3</a></li>--}}
-{{--                        <li class="page-item"><a class="page-link dot" href="#">...</a></li>--}}
-{{--                        <li class="page-item"><a class="page-link" href="#">6</a></li>--}}
-{{--                        <li class="page-item">--}}
-{{--                            <a class="page-link" href="#"><i class="fi-rs-arrow-small-right"></i></a>--}}
-{{--                        </li>--}}
-{{--                    </ul>--}}
-{{--                </nav>--}}
+
             </div>
             <section class="section-padding pb-5 d-none">
                 <div class="section-title">
@@ -269,55 +287,16 @@
                 <ul>
                     @foreach($categories as $category)
                     <li>
-                        <a href=""> <img src="{{$category->image}}" alt="" />{{$category->name}}</a><span class="count">{{$category->get_product_count}}</span>
+                        <a href="{{ route('frontend.page', $category->slug) }}"> <img src="{{$category->image}}" alt="" />{{$category->name}}</a><span class="count">{{$category->get_product_count}}</span>
                     </li>
                     @endforeach
 
                 </ul>
             </div>
-            <!-- Fillter By Price -->
-            <div class="sidebar-widget price_range range mb-30 d-none">
-                <h5 class="section-title style-1 mb-30">Fill by price</h5>
-                <div class="price-filter">
-                    <div class="price-filter-inner">
-                        <div id="slider-range" class="mb-20"></div>
-                        <div class="d-flex justify-content-between">
-                            <div class="caption">From: <strong id="slider-range-value1" class="text-brand"></strong></div>
-                            <div class="caption">To: <strong id="slider-range-value2" class="text-brand"></strong></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-group">
-                    <div class="list-group-item mb-10 mt-10">
-                        <label class="fw-900">Color</label>
-                        <div class="custome-checkbox">
-                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="" />
-                            <label class="form-check-label" for="exampleCheckbox1"><span>Red (56)</span></label>
-                            <br />
-                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox2" value="" />
-                            <label class="form-check-label" for="exampleCheckbox2"><span>Green (78)</span></label>
-                            <br />
-                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox3" value="" />
-                            <label class="form-check-label" for="exampleCheckbox3"><span>Blue (54)</span></label>
-                        </div>
-                        <label class="fw-900 mt-15">Item Condition</label>
-                        <div class="custome-checkbox">
-                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox11" value="" />
-                            <label class="form-check-label" for="exampleCheckbox11"><span>New (1506)</span></label>
-                            <br />
-                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox21" value="" />
-                            <label class="form-check-label" for="exampleCheckbox21"><span>Refurbished (27)</span></label>
-                            <br />
-                            <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox31" value="" />
-                            <label class="form-check-label" for="exampleCheckbox31"><span>Used (45)</span></label>
-                        </div>
-                    </div>
-                </div>
-                <a href="shop-grid-right.html" class="btn btn-sm btn-default"><i class="fi-rs-filter mr-5"></i> Fillter</a>
-            </div>
+
             <!-- Product sidebar Widget -->
-            <div class="sidebar-widget product-sidebar mb-30 p-30 bg-grey border-radius-10">
-                <h5 class="section-title style-1 mb-30 d-none">Popüler Ürünler</h5>
+            <div class="sidebar-widget product-sidebar mb-30 p-30 bg-grey border-radius-10  d-none">
+                <h5 class="section-title style-1 mb-30 ">Popüler Ürünler</h5>
 {{--                <div class="single-post clearfix">--}}
 {{--                    <div class="image">--}}
 {{--                        <img src="assets/imgs/shop/thumbnail-3.jpg" alt="#" />--}}
@@ -423,7 +402,7 @@
                                 {{--                                </div>--}}
                                 <div class="product-extra-link2">
                                                                         <button id="whatsapp_share" type="submit" class="button button-add-to-cart">
-                                                                           {{-- <i class="fi-rs-shopping-cart"></i>--}}Whatsapp
+                                                                           {{-- <i class="fi-rs-shopping-cart"></i>--}}Fiyat Al
                                                                         </button>
 
                                 </div>
@@ -455,24 +434,20 @@
                 url: '{{ route('product-info') }}/'+id,
                 dataType: "json",
                 success: function (data) {
-                    console.log('data',data)
-                    let whatsapp_number= "{{config('settings.site_whatsapp_phone')}}";
                     let product = data.product;
                     let attributesHtml = '';
                     let attributes = JSON.parse(product.attributes);
-                    // let whatsapp_button = $('#whatsapp_share');
-                    // const whatsappUrl = `https://wa.me/${whatsapp_number}?text=${product.name}`;
 
 
                     Object.entries(attributes).map(([key, value]) => {
-                        // Eğer özellik "popular" ise döngüyü atla
+
                         console.log(key,value)
                         if (key === 'popular') {
                             return;
                         }
                         attributesHtml += `<li class="mb-5">${key}: <span class="text-brand">${value}</span></li>`;
                     });
-
+                    debugger;
 
                     $('#quickViewModal .modal-body #slider').html(`<figure class="border-radius-10">
                                         <img src="${product.photo}"
@@ -486,12 +461,10 @@
                                     </div>`);
 
                     $('#quickViewModal .modal-body .product-title').html(`${product.name}`);
-                    $('#quickViewModal .modal-body .product-desc').html(`${product.description}`);
-                    $('#quickViewModal .modal-body .product-desc').html(`${product.description}`);
-                    $('#quickViewModal .modal-body #product-attributes').html(`${attributesHtml}`);
+                    $('#quickViewModal .modal-body .product-desc').html(`${product.short_detail? product.short_detail : ""}`);
+                    $('#quickViewModal .modal-body #product-attributes').html(`${attributesHtml?attributesHtml:""}`);
                     $('#quickViewModal .modal-body #price').html(`${product.price} TL`);
 
-                    // $('#whatsapp_share').attr('href', whatsappUrl);
 
                     modal.modal('show');
 

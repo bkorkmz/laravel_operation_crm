@@ -56,17 +56,26 @@ class AdminController  extends Controller
         $total_article = $article->get()->count();
         $last_article = $article->latest()->limit(5)->get();
 
+
         $services = Article::whereRelation('category', function ($query) {
             $query->where('model', 'services');
         });
         $total_services = $services->count();
         $last_services = $services->latest()->limit(5)->get();
+
+
+
         $user_count = JobTeams::where('status', 1)->get()->count();
+
+
         $requestForm = InfoMessage::where('type','request_form')
             ->orderByRaw('publish ASC, created_at DESC')->paginate(10);
+
+
         $infoMessages = InfoMessage::where('type','info_form')->orderBy('created_at', 'asc');
         $infoMessages =  $infoMessages->limit(5)->get();
         $mesageCount =  $infoMessages->where('publish',0)->count();
+
 
         $newsletter = Newsletter::latest();
         $newsletterCount =  $newsletter->count();
@@ -74,10 +83,13 @@ class AdminController  extends Controller
 
         $testsCount = TestDefinition::count();
 
+        $total_product = Products::latest()->count();
+
         return compact(
             'total_article',
             'last_article',
             'total_services',
+            'total_product',
             'last_services',
             'user_count',
             'infoMessages',

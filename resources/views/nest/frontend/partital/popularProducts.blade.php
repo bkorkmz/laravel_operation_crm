@@ -39,11 +39,11 @@
                      aria-labelledby="tab-all">
                     <div class="row product-grid-4">
                         @foreach($allProducts as $productOne)
-                            <div class="col-lg-1-5 col-md-4 col-12 col-sm-6">
+                            <div class="col-lg-1-5 col-md-4  col-sm-6">
                                 <div class="product-cart-wrap mb-30">
                                     <div class="product-img-action-wrap">
                                         <div class="product-img product-img-zoom">
-                                            <a href="">
+                                            <a href="{{route('frontend.product_detail',['slug'=>$productOne['slug']])}}">
                                                 <img class="default-img"
                                                      src="{{$productOne['photo']}}"
                                                      alt="{{$productOne['name']}}" title="{{$productOne['name']}}" />
@@ -66,9 +66,9 @@
                                     </div>
                                     <div class="product-content-wrap">
                                         <div class="product-category">
-                                            <a href="">{{$productOne['category'][0]['name']}}</a>
+                                            <a href="javascript:void(0)">{{$productOne['category'][0]['name']}}</a>
                                         </div>
-                                        <h2><a href="">{{$productOne['name']}}</a></h2>
+                                        <h2><a href="{{route('frontend.product_detail',['slug'=>$productOne['slug']])}}">{{$productOne['name']}}</a></h2>
                                         <div class="product-rate-cover">
                                             {{--     <div class="product-rate d-inline-block">
                                                      <div class="product-rating" style="width: 90%"></div>
@@ -80,11 +80,11 @@
                                         </div>
                                         <div class="product-card-bottom">
                                             <div class="product-price">
-                                                <span>{{$productOne['price']}} TL</span>
+                                                <span>{{$productOne['price'] !=0 ?$productOne['price'].' TL':"" }}</span>
                                                 {{--                                                <span class="old-price">$32.8</span>--}}
                                             </div>
                                             <div class="add-cart">
-                                                <a class="add" target="_blank" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$productOne['name']}}"><i class="fi-rs-shopping-cart mr-5"></i>Whatsapp
+                                                <a class="add" target="_blank" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$productOne['name']}}"><i class="fi-rs-shopping-cart mr-5"></i>Fiyat Al
                                                 </a>
                                             </div>
                                         </div>
@@ -109,7 +109,7 @@
                                 <div class="product-cart-wrap mb-30">
                                     <div class="product-img-action-wrap">
                                         <div class="product-img product-img-zoom">
-                                            <a href="">
+                                            <a href="{{route('frontend.product_detail',['slug'=>$product->slug])}}">
                                                 <img class="default-img"
                                                      src="{{$product->photo}}"
                                                      alt="{{$product->name}}" title="{{$product->name}}" />
@@ -134,7 +134,7 @@
                                         <div class="product-category">
                                             <a href="">{{$category->name}}</a>
                                         </div>
-                                        <h2><a href="">{{$product->name}}</a></h2>
+                                        <h2><a href="{{route('frontend.product_detail',['slug'=>$product->slug])}}">{{$product->name}}</a></h2>
                                         <div class="product-rate-cover">
                                        {{--     <div class="product-rate d-inline-block">
                                                 <div class="product-rating" style="width: 90%"></div>
@@ -146,11 +146,11 @@
                                         </div>
                                         <div class="product-card-bottom">
                                             <div class="product-price">
-                                                <span>{{$product->price}} TL</span>
+                                                <span>{{$product->price !=0 ?$product->price.' TL':"" }}</span>
 {{--                                                <span class="old-price">$32.8</span>--}}
                                             </div>
                                             <div class="add-cart">
-                                                <a class="add" target="_blank" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$product->name}}">{{--<i class="fi-rs-shopping-cart mr-5"></i>--}}Whatsapp
+                                                <a class="add" target="_blank" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$product->name}}">{{--<i class="fi-rs-shopping-cart mr-5"></i>--}}Fiyat Al
                                                 </a>
                                             </div>
                                         </div>
@@ -222,7 +222,7 @@
 {{--                                </div>--}}
                                 <div class="product-extra-link2">
                                     <button id="whatsapp_share" type="submit" class="button button-add-to-cart">
-                                        {{-- <i class="fi-rs-shopping-cart"></i>--}}Whatsapp
+                                        {{-- <i class="fi-rs-shopping-cart"></i>--}}Fiyat Al
                                     </button>
 
                                 </div>
@@ -274,10 +274,9 @@
                                     </div>`);
 
                 $('#quickViewModal .modal-body .product-title').html(`${product.name}`);
-                $('#quickViewModal .modal-body .product-desc').html(`${product.description}`);
-                $('#quickViewModal .modal-body .product-desc').html(`${product.description}`);
-                $('#quickViewModal .modal-body #product-attributes').html(`${attributesHtml}`);
-                $('#quickViewModal .modal-body #price').html(`${product.price} TL`);
+                $('#quickViewModal .modal-body .product-desc').html(`${product.short_detail? product.short_detail : ""}`);
+                $('#quickViewModal .modal-body #product-attributes').html(`${attributesHtml?attributesHtml:""}`);
+                // $('#quickViewModal .modal-body #price').html(`${product.price != null ? product.price + 'TL' : "" }`);
 
 
                  modal.modal('show');

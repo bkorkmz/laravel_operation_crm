@@ -28,7 +28,7 @@
 
 
     <script>
-        $(function () {
+     /*   $(function () {
             $('#datatable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -95,7 +95,7 @@
                 }
             });
 
-        });
+        });*/
 
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();

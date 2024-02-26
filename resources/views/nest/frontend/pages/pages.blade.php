@@ -44,16 +44,21 @@
 
 
 @endsection
+@section('breadcrumb')
 
-@section('content')
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
                 <a href="/" rel="nofollow"><i class="fi-rs-home mr-5"></i>Anasayfa</a>
-                {{ $page->title}}
+                <span>{{ $page->title}}</span>
             </div>
         </div>
     </div>
+
+@endsection
+
+@section('content')
+
     <div class="page-content pt-50">
         <div class="container">
             <div class="row">
@@ -65,7 +70,7 @@
                                     <h2>{{$page->title}}</h2>
                                     <div class="entry-meta meta-1 meta-3 font-xs mt-15 mb-15">
                                         <span class="post-on has-dot">{{$page->created_at->format('d-m-Y')}}</span>
-                                        <span class="time-reading has-dot">8 dk okuma</span>
+                                        <span class="time-reading has-dot"> 8 dk okuma</span>
                                         {{--                                        <span class="hit-count has-dot">29k Views</span>--}}
                                     </div>
                                 </div>
@@ -89,8 +94,7 @@
                                     <ul>
                                         @foreach($categories as $category)
                                             <li>
-                                                <a href=""> <img src="assets/imgs/theme/icons/category-1.svg"
-                                                                 alt="{{$category->name}}"/>{{$category->name}}</a><span
+                                                <a href="{{ route('frontend.page', $category->slug) }}"> {{$category->name}}</a><span
                                                     class="count">{{$category->get_product_count}}</span>
                                             </li>
                                         @endforeach
@@ -108,7 +112,7 @@
                                             </div>
                                             <div class="content pt-10">
                                                 <h5><a href="">{{$product->name}}</a></h5>
-                                                <p class="price mb-0 mt-5">{{($product->price) ? $product->price. 'TL'  :  ""}}</p>
+                                                <p class="price mb-0 mt-5">{{ $product->price != 0 ? $product->price. 'TL'  :  ""}}</p>
 {{--                                                <div class="product-rate">--}}
 {{--                                                    <div class="product-rating" style="width: 90%"></div>--}}
 {{--                                                </div>--}}

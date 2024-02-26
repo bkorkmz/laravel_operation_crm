@@ -72,7 +72,10 @@
                                             <label class="col-sm-2 col-form-label">Makale özeti <span class="text-danger">
                                                     *</span></label>
                                             <div class="col-sm-10">
-                                                <textarea type="text" class="form-control form-control-normal" placeholder="" name="short_detail" maxlength="250">{{ $model->short_detail }}</textarea>
+                                                <textarea type="text" class="form-control form-control-normal with-maxlength" placeholder="" name="short_detail" data-maxlength="250">{{ $model->short_detail }}</textarea>
+                                                <div class="char-count-style">
+                                                    <span class="char-count">0</span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">

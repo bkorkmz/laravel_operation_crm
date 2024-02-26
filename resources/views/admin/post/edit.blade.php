@@ -33,15 +33,18 @@
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Haber başlığı</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control form-control-normal" 
+                                                <input type="text" class="form-control form-control-normal"
                                                     placeholder="" name="title" maxlength="50" value="{{$post->title}}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Haber özeti</label>
                                             <div class="col-sm-10">
-                                                <textarea type="text" class="form-control form-control-normal"
-                                                    placeholder="" name="short_detail" maxlength="250">{{$post->short_detail}}</textarea>
+                                                <textarea type="text" class="form-control form-control-normal with-maxlength"
+                                                    placeholder="" name="short_detail" data-maxlength="250">{{$post->short_detail}}</textarea>
+                                                <div class="char-count-style">
+                                                    <span class="char-count">0</span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -79,7 +82,7 @@
                                                     <label class="form-check-label" for="showMtitle">Göster</label>
                                                 </div>
                                                 <div class="form-check text-left">
-                                                    <input class="form-check-input" type="radio" name="mtitle"{{$post->mtitle == 1 ? 'checked' : "" }} 
+                                                    <input class="form-check-input" type="radio" name="mtitle"{{$post->mtitle == 1 ? 'checked' : "" }}
                                                         id="hideMtitle" value="1">
                                                     <label class="form-check-label" for="hideMtitle">Gösterme</label>
                                                 </div>
@@ -87,7 +90,7 @@
                                             <div class="col-sm-3">
                                                 <label>Durum</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="publish" {{$post->publish == 0 ?: 'checked'}} 
+                                                    <input class="form-check-input" type="radio" name="publish" {{$post->publish == 0 ?: 'checked'}}
                                                         id="showMtitle" value="0">
                                                     <label class="form-check-label" for="showMtitle">Yayında</label>
                                                 </div>
@@ -170,8 +173,11 @@
                                                     (Opsiyonel)</label>
                                             </div>
                                             <div class="col-sm-10">
-                                                <textarea rows="2" cols="5" class="form-control form-control-warning" placeholder=""
-                                                    name="meta_description" id="meta2">{{$post->meta_description}}</textarea>
+                                                <textarea rows="2" cols="5" class="form-control form-control-warning with-maxlength" placeholder=""
+                                                          data-maxlength="250"   name="meta_description" id="meta2">{{$post->meta_description}}</textarea>
+                                                <div class="char-count-style">
+                                                    <span class="char-count">0</span>
+                                                </div>
                                                 <div class="col-form-label">Arama motorları maksimum 200 karakteri
                                                     geçmeyecek şekilde doldurulabilir.</div>
                                             </div>
@@ -180,26 +186,26 @@
 
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Standart Haber Fotoğrafı</label>
-                                            <div class="col-sm-6"> 
+                                            <div class="col-sm-6">
                                                 <input type="file" class="form-control form-control-normal dropify"
                                                 data-show-remove="false"
                                                 data-default-file="{{ $post->image }}"
                                                 accept=".jpg,.jpeg,.png,.tiff,.gif,.svg,.webp,.bmp,.ico"
                                                     placeholder="" name="image">
                                              </div>
-                                       
+
                                         </div>
 
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Ana Manşet Fotoğrafı</label>
-                                            <div class="col-sm-6"> 
+                                            <div class="col-sm-6">
                                                 <input type="file" class="form-control form-control-normal dropify"
                                                 data-show-remove="false"
                                                 data-default-file="{{ $post->image_main }}"
                                                 accept=".jpg,.jpeg,.png,.tiff,.gif,.svg,.webp,.bmp,.ico"
                                                     placeholder="" name="image_main">
                                             </div>
-                                           
+
                                         </div>
 
                                         <div class="form-group row">
@@ -211,7 +217,7 @@
                                                 accept=".jpg,.jpeg,.png,.tiff,.gif,.svg,.webp,.bmp,.ico"
                                                 placeholder="" name="image_top">
                                             </div>
-                                           
+
                                         </div>
 
                                         <div class="form-group row">
@@ -223,7 +229,7 @@
                                                 accept=".jpg,.jpeg,.png,.tiff,.gif,.svg,.webp,.bmp,.ico"
                                                     placeholder="" name="image_mini">
                                             </div>
-                                           
+
                                         </div>
 
                                         {{-- <div class="form-group row">
@@ -290,13 +296,13 @@
     <style>
 
     </style>
- 
+
     @endsection
 
     @section('js')
 
         {{-- <script type="text/javascript" src="{{ asset('admin/assets/bower_components/sweetalert/js/sweetalert.min.js') }}"> </script> --}}
-        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script> 
+        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/translations/tr.js"></script>
 
 
@@ -380,12 +386,12 @@
                 //         }
                 //     });
                 // })
-               
+
                 // .catch(error => {
                 //     console.error(error);
-                // }); 
+                // });
 
-                
+
                         </script>
         {{-- <script type="text/javascript" src="{{ asset('admin/assets/js/jquery.marcopolo.min.js') }}"></script> --}}
     @endsection

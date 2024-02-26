@@ -103,7 +103,7 @@ $data = $section_page[0];
                         <div class="card p-20 m-1">
                             <div class="card-header">
                                 <h3>Hakkımızda  Sayfası Düzenle</h3>
-                                
+
                             </div>
 
                             @if ($errors->any())
@@ -158,8 +158,10 @@ $data = $section_page[0];
                                     <div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="country-floating">Hizmet 1 Açıklama</label>
-                                            <textarea id="country-floating" class="form-control" name="service_1_description"  cols="10" rows="2">{{$page->service_1_description}}</textarea>
-                                           
+                                            <textarea id="country-floating with-maxlength" class="form-control" data-maxlength="500" name="service_1_description"  cols="10" rows="2">{{$page->service_1_description}}</textarea>
+                                            <div class="char-count-style">
+                                                <span class="char-count">0</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-12">
@@ -265,7 +267,7 @@ $data = $section_page[0];
                                         </select>
                                     </div>
                                 </div>
-                            
+
                                 {{-- <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">İçerik Resmi</label>
                                     <div class="col-sm-5">

@@ -4,6 +4,10 @@
 <head>
     <meta charset="utf-8"/>
     <title>@yield('title')</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('head')
     {!!config('settings.site_meta_tag')!!}
     <!-- Favicon -->
@@ -266,7 +270,7 @@ Telefon:  0532 637 27 52</span>
                                     <img class="svgInject" alt="Herballayf Turkey"
                                          src="{{asset('frontend/nest/imgs/theme/icons/icon-user.svg')}}"/>
                                 </a>
-                                <a href=""><span class="lable ml-0">Hesap</span></a>
+                                <a href="javascript:void(0)"><span class="lable ml-0">Hesap</span></a>
                                 <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
                                     <ul>
                                         @guest
@@ -558,18 +562,22 @@ Telefon:  0532 637 27 52</span>
                         src="{{asset('frontend/nest/imgs/theme/icons/icon-youtube-white.svg')}}"
                         alt="Sosyal Youtube Link"/></a>
             </div>
-            <div class="site-copyright">Copyright 2022 © Nest. All rights reserved. Powered by AliThemes.</div>
+            <div class="site-copyright">Copyright 2024 © HerbalifeTurkey Tüm Hakları Saklıdır</div>
         </div>
     </div>
 </div>
 <!--End header-->
 <main class="main">
+    @yield('breadcrumb')
 
+
+
+
+    @yield('content')
 
 </main>
 
 
-@yield('content')
 <!--  footer page--->
 @include('nest.frontend.layout.includes.footer')
 

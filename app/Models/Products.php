@@ -15,7 +15,7 @@ class Products extends Model
     protected $fillable = [
         'id',
         'name',
-        'description',
+        'description','short_detail',
         'stock', 'settings', 'slug',
         'price', 'status', 'created_by', 'photo','attributes'
     ];
@@ -24,7 +24,7 @@ class Products extends Model
     {
         parent::boot();
         static::saving(function ($product) {
-            $product->created_by = auth()->id();
+//            $product->created_by = auth()->id();
             $product->status = 1; //0: onay bekleniyor 1:aktif 2:tükendi 3:yayından kaldırıldı
         });
         static::created(function () {

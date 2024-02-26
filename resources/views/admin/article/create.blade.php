@@ -67,9 +67,12 @@
                                                     *</span></label>
                                             <div class="col-sm-10">
 
-                                                <textarea type="text" class="form-control form-control-normal" required
+                                                <textarea type="text" class="form-control form-control-normal with-maxlength"  required
                                                           placeholder="" name="short_detail"
-                                                          maxlength="250">{{ old('short_detail') }}</textarea>
+                                                          data-maxlength="250">{{ old('short_detail') }}</textarea>
+                                                <div class="char-count-style">
+                                                    <span class="char-count">0</span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">

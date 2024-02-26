@@ -36,7 +36,7 @@
                                                     placeholder="" name="title" maxlength="50" required>
                                             </div>
                                         </div>
-                                        {{--                         
+                                        {{--
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Seo başlık ( URL - Opsiyonel )</label>
                                             <div class="col-sm-10">
@@ -47,14 +47,18 @@
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Haber özeti <span class="text-danger"> *</span></label>
                                             <div class="col-sm-10">
-                                                    <textarea type="text" class="form-control form-control-normal" required
-                                                        placeholder="" name="short_detail" maxlength="250">{{old('short_detail')}}</textarea>
+                                                    <textarea type="text" class="form-control form-control-normal with-maxlength" required
+                                                        placeholder="" name="short_detail" data-maxlength="250">{{old('short_detail')}}</textarea>
+                                                <div class="char-count-style">
+                                                    <span class="char-count">0</span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Haber içeriği <span class="text-danger"> *</span></label>
                                             <div class="col-sm-10">
                                                 <textarea id="ckeditor" class="form-control form-control-normal" name="detail" rows="5"  >{{old('detail')}}</textarea>
+
                                             </div>
                                         </div>
 
@@ -151,7 +155,7 @@
                                         </div>
 
                                         @endcanany
-                                       
+
                                         <hr>
                                         <div class="form-group has-warning row">
                                             <div class="col-sm-2">
@@ -171,8 +175,12 @@
                                                     (Opsiyonel)</label>
                                             </div>
                                             <div class="col-sm-10">
-                                                <textarea rows="2" cols="5" class="form-control form-control-warning" placeholder=""
-                                                    name="meta_description" id="meta2"  maxlength="200"> </textarea>
+                                                <textarea rows="2" cols="5" class="form-control form-control-warning with-maxlength" placeholder=""
+                                                    name="meta_description" id="meta2"  data-maxlength="200"> </textarea>
+                                                <div class="char-count-style">
+                                                    <span class="char-count">0</span>
+                                                </div>
+
                                                 <div class="col-form-label">Arama motorları maksimum 200 karakteri
                                                     geçmeyecek şekilde doldurulabilir.</div>
                                             </div>
@@ -275,7 +283,7 @@
     <style>
 
     </style>
- 
+
     @endsection
 
     @section('js')
@@ -341,12 +349,12 @@
             ClassicEditor
 
                 .create(document.querySelector('#ckeditor'))
-            
+
                 .catch(error => {
                     console.error(error);
-                }); 
+                });
 
-                
+
 
                 $('.dropify').dropify({
             messages: {
@@ -357,7 +365,7 @@
             }
         });
 
-                
+
                         </script>
         {{-- <script type="text/javascript" src="{{ asset('admin/assets/js/jquery.marcopolo.min.js') }}"></script> --}}
     @endsection

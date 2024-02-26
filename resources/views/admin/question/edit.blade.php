@@ -35,10 +35,15 @@
                                                         class="text-danger"> *</span></label>
                                             <div class="col-sm-10">
                                                     <textarea rows="5" cols="30" type="text"
-                                                              class="form-control form-control-normal"
-                                                              value="{{ $model->name }}" placeholder="" name="question"
-                                                              maxlength="250"
+                                                              class="form-control form-control-normal with-maxlength"
+                                                              placeholder="" name="question"
+                                                              data-maxlength="250"
                                                               required> {!! $model->question !!} </textarea>
+
+
+                                                <div class="char-count-style">
+                                                    <span class="char-count">0</span>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -106,24 +111,24 @@
                                                                     $sections =json_decode($model->answers,TRUE);
                                                                 @endphp
 
-                                                                @foreach($sections as $answer) 
+                                                                @foreach($sections as $answer)
                                                                 @php $data= array_values($answer)[0];
                                                                     $mark= false;
                                                                     if($data['mark'])
- 
+
                                                                         $mark= true;
                                                                     @endphp
                                                                 <tr id="{{$data['code']}}">
-                                                                   
+
                                                                     <td> {{chr(65 + $loop->index	)}}</td>
                                                                     <td>
 
                                                                         <label class="form-check-label mt-2"
                                                                                for="checkbox_{{$data['code']}}">
                                                                             <input class="answer_section" type="radio"
-                                                                                   name="selectedAnswer" {{$mark== true ? "checked"   :"" }} 
+                                                                                   name="selectedAnswer" {{$mark== true ? "checked"   :"" }}
                                                                                    value="{{$data['code']}},{{$data['title']}}"
-                                                                                   id="checkbox_${answer.code}" required 
+                                                                                   id="checkbox_${answer.code}" required
                                                                                    onclick="(check_section({{$data['code']}}))">
                                                                         </label>
 
@@ -173,7 +178,7 @@
 
 
         @endsection
-        
+
         @section('css')
             <style>
                 .section_width {

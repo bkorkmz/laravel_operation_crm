@@ -29,7 +29,10 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Yorum</label>
                     <div class="col-sm-10">
-                        <textarea rows="5" cols="5" class="form-control" placeholder="" name="comment">{{ $comment->comment }}</textarea>
+                        <textarea rows="5" data-maxlength="250" cols="5" class="form-control" placeholder="" name="comment">{{ $comment->comment }}</textarea>
+                        <div class="char-count-style">
+                            <span class="char-count">0</span>
+                        </div>
                     </div>
                 </div>
 
