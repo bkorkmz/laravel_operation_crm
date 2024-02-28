@@ -11,10 +11,10 @@
     @yield('head')
     {!!config('settings.site_meta_tag')!!}
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{asset('frontend/nest/imgs/theme/favicon.svg')}}"/>
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('frontend/assets/imgs/theme/favicon.svg')}}"/>
     <!-- Template CSS -->
-    <link rel="stylesheet" href="{{asset('frontend/nest/css/plugins/animate.min.css')}}"/>
-    <link rel="stylesheet" href="{{asset('frontend/nest/css/main.css?v=5.6.css')}}"/>
+    <link rel="stylesheet" href="{{asset('frontend/assets/css/plugins/animate.min.css')}}"/>
+    <link rel="stylesheet" href="{{asset('frontend/assets/css/main.css?v=5.6.css')}}"/>
 
     @yield('css')
 
@@ -25,7 +25,7 @@
     <div class="preloader d-flex align-items-center justify-content-center">
         <div class="preloader-inner position-relative">
             <div class="text-center">
-                <img src="{{asset('frontend/nest/imgs/theme/loading.gif')}}" alt="Herballayf Turkey"/>
+                <img src="{{asset('frontend/assets/imgs/theme/loading.gif')}}" alt="Herballayf Turkey"/>
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
         <div class="modal-content">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             <div class="modal-body">
-                <div class="deal" style="background-image: url('frontend/nest/imgs/banner/popup-1.png')">
+                <div class="deal" style="background-image: url('frontend/assets/imgs/banner/popup-1.png')">
                     <div class="deal-top">
                         <h6 class="mb-10 text-brand-2">Deal of the Day</h6>
                     </div>
@@ -83,7 +83,8 @@
     </div>
 </div>
 <!-- Quick view -->
-<header class="header-area header-style-1 header-height-2">
+<header class="header-area header-style-1 header-style-5 header-height-2">
+{{--<header class="header-area header-style-1 header-height-2">--}}
     <div class="mobile-promotion">
         <span>Herbalife Bağımsız Distribütör - Hayri Mandollu
 Telefon:  0532 637 27 52</span>
@@ -97,9 +98,6 @@ Telefon:  0532 637 27 52</span>
                             @foreach(config('pages') as $page)
                                 <li><a href="{{ route('frontend.page', $page->slug) }}">{{$page->title}}</a></li>
                             @endforeach
-
-{{--                            <li><a href="">Favoriler</a></li>--}}
-{{--                            <li><a href="">Order Tracking</a></li>--}}
                         </ul>
                     </div>
                 </div>
@@ -122,15 +120,15 @@ Telefon:  0532 637 27 52</span>
                                 <a class="language-dropdown-active" href="#">{!! trans('Türkçe') !!}</a>
 {{--                                <ul class="language-dropdown">--}}
 {{--                                    <li>--}}
-{{--                                        <a href="#"><img src="{{asset('frontend/nest/imgs/theme/flag-fr.png')}}"--}}
+{{--                                        <a href="#"><img src="{{asset('frontend/assets/imgs/theme/flag-fr.png')}}"--}}
 {{--                                                         alt="Herballayf Turkey"/>Français</a>--}}
 {{--                                    </li>--}}
 {{--                                    <li>--}}
-{{--                                        <a href="#"><img src="{{asset('frontend/nest/imgs/theme/flag-dt.png')}}"--}}
+{{--                                        <a href="#"><img src="{{asset('frontend/assets/imgs/theme/flag-dt.png')}}"--}}
 {{--                                                         alt="Herballayf Turkey"/>Deutsch</a>--}}
 {{--                                    </li>--}}
 {{--                                    <li>--}}
-{{--                                        <a href="#"><img src="{{asset('frontend/nest/imgs/theme/flag-ru.png')}}"--}}
+{{--                                        <a href="#"><img src="{{asset('frontend/assets/imgs/theme/flag-ru.png')}}"--}}
 {{--                                                         alt="Herballayf Turkey"/>Pусский</a>--}}
 {{--                                    </li>--}}
 {{--                                </ul>--}}
@@ -139,15 +137,15 @@ Telefon:  0532 637 27 52</span>
                                 <a class="language-dropdown-active" href="#">TRY <i class="fi-rs-angle-small-down"></i></a>
 {{--                                <ul class="language-dropdown">--}}
 {{--                                    <li>--}}
-{{--                                        <a href="#"><img src="{{asset('frontend/nest/imgs/theme/flag-fr.png')}}"--}}
+{{--                                        <a href="#"><img src="{{asset('frontend/assets/imgs/theme/flag-fr.png')}}"--}}
 {{--                                                         alt="Herballayf Turkey"/>INR</a>--}}
 {{--                                    </li>--}}
 {{--                                    <li>--}}
-{{--                                        <a href="#"><img src="{{asset('frontend/nest/imgs/theme/flag-dt.png')}}"--}}
+{{--                                        <a href="#"><img src="{{asset('frontend/assets/imgs/theme/flag-dt.png')}}"--}}
 {{--                                                         alt="Herballayf Turkey"/>MBP</a>--}}
 {{--                                    </li>--}}
 {{--                                    <li>--}}
-{{--                                        <a href="#"><img src="{{asset('frontend/nest/imgs/theme/flag-ru.png')}}"--}}
+{{--                                        <a href="#"><img src="{{asset('frontend/assets/imgs/theme/flag-ru.png')}}"--}}
 {{--                                                         alt="Herballayf Turkey"/>EU</a>--}}
 {{--                                    </li>--}}
 {{--                                </ul>--}}
@@ -204,7 +202,7 @@ Telefon:  0532 637 27 52</span>
                             {{--                            <div class="header-action-icon-2">--}}
                             {{--                                <a href="">--}}
                             {{--                                    <img class="svgInject" alt="Herballayf Turkey"--}}
-                            {{--                                         src="{{asset('frontend/nest/imgs/theme/icons/icon-compare.svg')}}"/>--}}
+                            {{--                                         src="{{asset('frontend/assets/imgs/theme/icons/icon-compare.svg')}}"/>--}}
                             {{--                                    <span class="pro-count blue">3</span>--}}
                             {{--                                </a>--}}
                             {{--                                <a href=""><span class="lable ml-0">Compare</span></a>--}}
@@ -212,7 +210,7 @@ Telefon:  0532 637 27 52</span>
                             <div class="header-action-icon-2">
                                 <a href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text=Bilgi almak istiyorum">
                                     <img class="svgInject" alt="Herballayf Turkey"
-                                         src="{{asset('frontend/nest/imgs/theme/whatsapp.png')}}"/>
+                                         src="{{asset('frontend/assets/imgs/theme/whatsapp.png')}}"/>
 {{--                                    <span class="pro-count blue">0</span>--}}
                                 </a>
                                 <a href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text=Bilgi almak istiyorum">
@@ -221,7 +219,7 @@ Telefon:  0532 637 27 52</span>
                             <div class="header-action-icon-2 d-none">
                                 <a class="mini-cart-icon" href="">
                                     <img alt="Herballayf Turkey"
-                                         src="{{asset('frontend/nest/imgs/theme/icons/icon-cart.svg')}}"/>
+                                         src="{{asset('frontend/assets/imgs/theme/icons/icon-cart.svg')}}"/>
                                     <span class="pro-count blue">0</span>
                                 </a>
                                 <a href=""><span class="lable">Sepet</span></a>
@@ -230,7 +228,7 @@ Telefon:  0532 637 27 52</span>
                                         <li>
                                             <div class="shopping-cart-img">
                                                 <a href=""><img alt="Herballayf Turkey"
-                                                                src="{{asset('frontend/nest/imgs/shop/thumbnail-3.jpg')}}"/></a>
+                                                                src="{{asset('frontend/assets/imgs/shop/thumbnail-3.jpg')}}"/></a>
                                             </div>
                                             <div class="shopping-cart-title">
                                                 <h4><a href="">Daisy Casual Bag</a></h4>
@@ -243,7 +241,7 @@ Telefon:  0532 637 27 52</span>
                                         <li>
                                             <div class="shopping-cart-img">
                                                 <a href=""><img alt="Herballayf Turkey"
-                                                                src="{{asset('frontend/nest/imgs/shop/thumbnail-2.jpg')}}"/></a>
+                                                                src="{{asset('frontend/assets/imgs/shop/thumbnail-2.jpg')}}"/></a>
                                             </div>
                                             <div class="shopping-cart-title">
                                                 <h4><a href="">Corduroy Shirts</a></h4>
@@ -268,7 +266,7 @@ Telefon:  0532 637 27 52</span>
                             <div class="header-action-icon-2">
                                 <a href="">
                                     <img class="svgInject" alt="Herballayf Turkey"
-                                         src="{{asset('frontend/nest/imgs/theme/icons/icon-user.svg')}}"/>
+                                         src="{{asset('frontend/assets/imgs/theme/icons/icon-user.svg')}}"/>
                                 </a>
                                 <a href="javascript:void(0)"><span class="lable ml-0">Hesap</span></a>
                                 <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
@@ -348,46 +346,33 @@ Telefon:  0532 637 27 52</span>
                         <div class="categories-dropdown-wrap categories-dropdown-active-large font-heading">
                             <div class="d-flex categori-dropdown-inner">
                                 <ul>
-
-                                    @foreach(categories('product') as $category)
-                                        <li>
-                                            <a href=""> <img
-                                                    src="{{asset('frontend/nest/imgs/theme/icons/category-1.svg')}}"
-                                                    alt="{{$category->name}}"/>{{$category->name}}</a>
-                                        </li>
+                                    @php $categories = categories('product'); $totalCategories = count($categories); $half = ceil($totalCategories / 2); @endphp
+                                    @foreach($categories as $key => $category)
+                                        @if($key < $half)
+                                            <li>
+                                                <a href="{{ route('frontend.page', $category->slug) }}">
+                                                    <img src="{{asset($category->image ??'frontend/assets/imgs/theme/icons/category-1.svg')}}" alt="{{$category->name}}"/>
+                                                    {{$category->name}}
+                                                </a>
+                                            </li>
+                                        @endif
                                     @endforeach
                                 </ul>
+
+                                <ul>
+                                    @foreach($categories as $key => $category)
+                                        @if($key >= $half)
+                                            <li>
+                                                <a href="{{ route('frontend.page', $category->slug) }}">
+                                                    <img src="{{asset($category->image ??'frontend/assets/imgs/theme/icons/category-1.svg')}}" alt="{{$category->name}}"/>
+                                                    {{$category->name}}
+                                                </a>
+                                            </li>
+                                        @endif
+                                    @endforeach
+                                </ul>
+
                             </div>
-                            {{--                            <div class="more_slide_open" style="display: none">--}}
-                            {{--                                <div class="d-flex categori-dropdown-inner">--}}
-                            {{--                                    <ul>--}}
-                            {{--                                        <li>--}}
-                            {{--                                            <a href=""> <img--}}
-                            {{--                                                    src="{{asset('frontend/nest/imgs/theme/icons/icon-1.svg')}}"--}}
-                            {{--                                                    alt="Herballayf Turkey"/>Milks and Dairies</a>--}}
-                            {{--                                        </li>--}}
-                            {{--                                        <li>--}}
-                            {{--                                            <a href=""> <img--}}
-                            {{--                                                    src="{{asset('frontend/nest/imgs/theme/icons/icon-2.svg')}}"--}}
-                            {{--                                                    alt="Herballayf Turkey"/>Clothing & beauty</a>--}}
-                            {{--                                        </li>--}}
-                            {{--                                    </ul>--}}
-                            {{--                                    <ul class="end">--}}
-                            {{--                                        <li>--}}
-                            {{--                                            <a href=""> <img--}}
-                            {{--                                                    src="{{asset('frontend/nest/imgs/theme/icons/icon-3.svg')}}"--}}
-                            {{--                                                    alt="Herballayf Turkey"/>Wines & Drinks</a>--}}
-                            {{--                                        </li>--}}
-                            {{--                                        <li>--}}
-                            {{--                                            <a href=""> <img--}}
-                            {{--                                                    src="{{asset('frontend/nest/imgs/theme/icons/icon-4.svg')}}"--}}
-                            {{--                                                    alt="Herballayf Turkey"/>Fresh Seafood</a>--}}
-                            {{--                                        </li>--}}
-                            {{--                                    </ul>--}}
-                            {{--                                </div>--}}
-                            {{--                            </div>--}}
-                            {{--                            <div class="more_categories"><span class="icon"></span> <span class="heading-sm-1">Daha fazla ...</span>--}}
-                            {{--                            </div>--}}
                         </div>
                     </div>
                     <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block font-heading">
@@ -400,17 +385,6 @@ Telefon:  0532 637 27 52</span>
                                     <a href="{{route('frontend.products')}}" class="">Ürünler <i class=""></i></a>
                                 </li>
 
-
-                                {{--                                <li>--}}
-                                {{--                                    <a href="">Blog <i class="fi-rs-angle-down"></i></a>--}}
-                                {{--                                    <ul class="sub-menu">--}}
-                                {{--                                        <li><a href="">Kategori 1</a></li>--}}
-                                {{--                                        <li><a href="">Kategori 2</a></li>--}}
-                                {{--                                        <li><a href="">Kategori 3</a></li>--}}
-                                {{--                                        <li><a href="">Kategori 4</a></li>--}}
-                                {{--                                    </ul>--}}
-                                {{--                                </li>--}}
-
                                 <li>
                                     <a href="">İletişim </a>
                                 </li>
@@ -419,7 +393,7 @@ Telefon:  0532 637 27 52</span>
                     </div>
                 </div>
                 <div class="hotline d-none d-lg-flex">
-                    <img src="{{asset('frontend/nest/imgs/theme/icons/icon-headphone.svg')}}" alt="hotline"/>
+                    <img src="{{asset('frontend/assets/imgs/theme/icons/icon-headphone.svg')}}" alt="hotline"/>
                     <p>{{config('settings.site_phone')}}
                         <span>24/7 İletişim</span></p>
                 </div>
@@ -435,7 +409,7 @@ Telefon:  0532 637 27 52</span>
                         <div class="header-action-icon-2">
                             <a href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text=Bilgi almak istiyorum">
                                 <img alt="Herballayf Turkey"
-                                     src="{{asset('frontend/nest/imgs/theme/whatsapp.png')}}"/>
+                                     src="{{asset('frontend/assets/imgs/theme/whatsapp.png')}}"/>
 {{--                                <span class="pro-count white"></span>--}}
                             </a>
                         </div>
@@ -443,7 +417,7 @@ Telefon:  0532 637 27 52</span>
 {{--                        <div class="header-action-icon-2 d-lg-none">--}}
                             <a class="mini-cart-icon" href="#">
                                 <img alt="Herballayf Turkey"
-                                     src="{{asset('frontend/nest/imgs/theme/icons/icon-cart.svg')}}"/>
+                                     src="{{asset('frontend/assets/imgs/theme/icons/icon-cart.svg')}}"/>
                                 <span class="pro-count white">0</span>
                             </a>
                             <div class="cart-dropdown-wrap cart-dropdown-hm2">
@@ -451,7 +425,7 @@ Telefon:  0532 637 27 52</span>
                                     <li>
                                         <div class="shopping-cart-img">
                                             <a href=""><img alt="Herballayf Turkey"
-                                                            src="{{asset('frontend/nest/imgs/shop/thumbnail-3.jpg')}}')}}"/></a>
+                                                            src="{{asset('frontend/assets/imgs/shop/thumbnail-3.jpg')}}')}}"/></a>
                                         </div>
                                         <div class="shopping-cart-title">
                                             <h4><a href="">Plain Striola Shirts</a></h4>
@@ -464,7 +438,7 @@ Telefon:  0532 637 27 52</span>
                                     <li>
                                         <div class="shopping-cart-img">
                                             <a href=""><img alt="Herballayf Turkey"
-                                                            src="{{asset('frontend/nest/imgs/shop/thumbnail-4.jpg')}}')}}"/></a>
+                                                            src="{{asset('frontend/assets/imgs/shop/thumbnail-4.jpg')}}')}}"/></a>
                                         </div>
                                         <div class="shopping-cart-title">
                                             <h4><a href="">Macbook Pro 2022</a></h4>
@@ -550,16 +524,16 @@ Telefon:  0532 637 27 52</span>
             <div class="mobile-social-icon mb-50">
                 <h6 class="mb-15">Bizi Takipte Kalın</h6>
                 <a {{config('settings.site_facebook_url') ?? "d-none"}} href="{{config('settings.site_facebook_url')}}"><img
-                        src="{{asset('frontend/nest/imgs/theme/icons/icon-facebook-white.svg')}}"
+                        src="{{asset('frontend/assets/imgs/theme/icons/icon-facebook-white.svg')}}"
                         alt="Sosyal Facebook Link"/></a>
                 <a {{config('settings.site_twitter_url') ?? "d-none"}} href="{{config('settings.site_twitter_url')}}"><img
-                        src="{{asset('frontend/nest/imgs/theme/icons/icon-twitter-white.svg')}}"
+                        src="{{asset('frontend/assets/imgs/theme/icons/icon-twitter-white.svg')}}"
                         alt="Sosyal Twitter Link"/></a>
                 <a {{config('settings.site_instagram_url') ?? "d-none"}} href="{{config('settings.site_instagram_url')}}"><img
-                        src="{{asset('frontend/nest/imgs/theme/icons/icon-instagram-white.svg')}}"
+                        src="{{asset('frontend/assets/imgs/theme/icons/icon-instagram-white.svg')}}"
                         alt="Sosyal Instagram Link"/></a>
                 <a {{config('settings.site_youtube_url') ?? "d-none"}} href="{{config('settings.site_youtube_url')}}"><img
-                        src="{{asset('frontend/nest/imgs/theme/icons/icon-youtube-white.svg')}}"
+                        src="{{asset('frontend/assets/imgs/theme/icons/icon-youtube-white.svg')}}"
                         alt="Sosyal Youtube Link"/></a>
             </div>
             <div class="site-copyright">Copyright 2024 © HerbalifeTurkey Tüm Hakları Saklıdır</div>
