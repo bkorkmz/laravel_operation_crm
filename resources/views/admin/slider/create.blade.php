@@ -48,14 +48,9 @@
                             </div>
                         </div>
 
-                        {{-- <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">İçerik Türü<span class="text-danger"> *</span></label>
-                            <div class="col-sm-10">
-                                <select name="type" class="form-control fill" required>
-                                    <option value="slider" selected>slider</option>
-                                </select>
-                            </div>
-                        </div> --}}
+
+
+
                         <div class="form-group row my-4">
                             <label class="col-sm-2 col-form-label">Durum
                                </label>
@@ -79,7 +74,14 @@
 
 
 
-
+                        <div class="form-group row my-4">
+                            <label class="col-sm-2 col-form-label" >Sağ Blok Banner
+                            </label>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input mt-2" type="checkbox" id="banner_image" name="banner_image" value="1">
+                                <label class="form-check-label badge badge-info ml-4" for="banner_image"><i class="fa fa-info fa-2x mr-2"></i>Slider yanı banner olarak seçilirse slider içerisinde görünmez</label>
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">İçerik Resmi (min: 2370x800)</label>

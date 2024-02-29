@@ -21,6 +21,7 @@ return new class extends Migration
                 $table->text('image')->nullable();
                 $table->bigInteger('user_id')->nullable();
                 $table->tinyInteger('category_id')->nullable();
+                $table->tinyInteger('banner_image')->nullable();
                 $table->timestamps();
         });
     }

@@ -48,6 +48,8 @@
                             </div>
                         </div>
 
+
+
                         {{-- <div class="form-group row">
                             <label class="col-sm-2 col-form-label">İçerik Türü<span class="text-danger"> *</span></label>
                             <div class="col-sm-10">
@@ -64,16 +66,24 @@
                                 <div class="form-check m-2">
                                     <input class="form-check-input" checked type="radio" name="status"
                                         id="active" value="1"
-                                        {{$slider->status == 1 ? "cheched" : "" }}>
+                                        {{$slider->status == 1 ? "checked" : "" }}>
                                     <label class="form-check-label" for="active">Aktif</label>
                                 </div>
                                 <div class="form-check m-2">
 
                                     <input class="form-check-input"  type="radio" name="status"
                                         id="passive" value="0"
-                                        {{$slider->status == 0 ? "cheched" : "" }}>
+                                        {{$slider->status == 0 ? "checked" : "" }}>
                                     <label class="form-check-label" for="passive">Pasif </label>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group row my-4">
+                            <label class="col-sm-2 col-form-label" >Sağ Blok Banner
+                            </label>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input mt-2" type="checkbox" id="banner_image" name="banner_image" value="1"   {{$slider->banner_image == 1 ? "checked" : "" }}>
+                                <label class="form-check-label badge badge-info ml-4" for="banner_image"><i class="fa fa-info fa-2x mr-2"></i>Slider yanı banner olarak seçilirse slider içerisinde görünmez</label>
                             </div>
                         </div>
                         <div class="form-group row">

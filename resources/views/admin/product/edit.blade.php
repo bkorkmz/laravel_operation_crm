@@ -40,9 +40,6 @@
                                     </div>
                                 </div>
                             </div>
-{{--                            @dd($products)--}}
-
-
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Ürün Adı</label>
                                 <div class="col-sm-10">
@@ -132,27 +129,40 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Ek Özellikler</label>
-                                                <div class="col-sm-7">
-                                                    <select class="form-control" name="attributes">
+                                                <div class="input-group mb-3">
+                                                    <label class="col-sm-3 col-form-label">Ek Özellikler</label>
+                                                    <select class="form-control" id="attributes">
+                                                        <option value="">Özellik seçiniz</option>
                                                         <option value="popular">Popüler Ürün</option>
                                                         <option value="size">Boyut</option>
                                                         <option value="color">Renk</option>
                                                     </select>
+                                                    <div class="input-group-append">
+                                                        <button type="button" class="btn btn-success btn-sm add-attr"> Ekle
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                                <div class="col-sm-2">
-                                                    <button type="button" class="btn btn-success add-attr"> Ekle
-                                                    </button>
-                                                </div>
+
                                             </div>
+
                                             <div class="form-group ">
                                                 <h4>Ürün Ek Özellikleri </h4>
                                                 <div class="product-attributes">
                                                     @php $attrArray =['size','color']; $type = 'text';  $hidden = ""; @endphp
+
                                                     @foreach($attributes as $attr=>$value)
                                                         @if($attr == "popular")
                                                             @php $type = 'number'; $hidden = "hidden" @endphp
                                                         @endif
+
+{{--                                                        <div class="row m-2 input-group mb-3" id="attr_' + random_id + '">--}}
+{{--                                                            <div class="input-group-prepend"><span class="input-group-text" id="inputGroup-sizing-default">' + selectedText + ' </span></div>--}}
+{{--                                                            <input type="hidden" aria-label="Default" aria-describedby="inputGroup-sizing-default" class="form-control" name="attributes[' + selectedAttr + ']" value="1" placeholder="Değer giriniz" required>--}}
+{{--                                                             <div class="input-group-append"> <button type="button" class="btn btn-danger p-2 remove-attr" data-id="' + random_id + '">Sil</button></div>--}}
+{{--                                                            </div>--}}
+
+
+
                                                         <div class="row m-2" id="{{'attr_'.$loop->iteration}}">
                                                             <label class="col-4"> @lang('product.'.$attr)</label>
                                                             <div class="col-6">
@@ -235,27 +245,44 @@
 
             $('.add-attr').click(function () {
                 let random_id = randomId();
-                let selectedAttr = $('select[name="attributes"]').val();
-                let selectedText = $('select[name="attributes"] option:selected').text();
+                let selectedAttr = $('select[id="attributes"]').val();
+                if(selectedAttr === '') {
+                    toastr.warning('Lütfen bir seçenek seçiniz');
+                    return false;
+                }
                 if (selectedAttr === 'popular') {
-                    input = '<div class="row m-2" id="attr_' + random_id + '">' +
-                        '<label class="col-4">' + selectedText + ' </label>' +
-                        '<div class="col-6">' +
-                        '<input type="hidden"  class="form-control" name="attributes[' + selectedAttr + ']" value="1" >' +
-                        '</div>' +
-                        '<button type="button" class="btn btn-danger btn-sm remove-attr" data-id="' + random_id + '">Sil</button>' +
+                    let hiddenInputs = $('.product-attributes').find('input[name^="attributes[popular]"]');
+                    if (hiddenInputs.length > 0) {
+                        console.log('add popular attr')
+                        toastr.warning('Uyarı: Üründe popüler özelliği bulunuyor. Tekrar ekleyemez siziniz!');
+                        return false;
+                    }
+                }
+
+                let selectedText = $('select[id="attributes"] option:selected').text();
+                if (selectedAttr === 'popular') {
+                    input =
+                        '<div class="row m-2 input-group mb-3" id="attr_' + random_id + '">' +
+                        '<div class="input-group-prepend"><span class="input-group-text" id="inputGroup-sizing-default">' + selectedText + ' </span></div>' +
+                        '<input type="hidden" aria-label="Default" aria-describedby="inputGroup-sizing-default" class="form-control" name="attributes[' + selectedAttr + ']" value="1" placeholder="Değer giriniz" required>' +
+                        ' <div class="input-group-append"> <button type="button" class="btn btn-danger p-2 remove-attr" data-id="' + random_id + '">Sil</button></div>' +
                         '</div>';
                 } else {
-                    input = '<div class="row m-2" id="attr_' + random_id + '">' +
-                        '<label class="col-4">' + selectedText + ' </label>' +
-                        '<div class="col-6">' +
-                        '<input type="text" class="form-control" name="attributes[' + selectedAttr + ']" value="" placeholder="Değer giriniz" required>' +
-                        '</div>' +
-                        '<button type="button" class="btn btn-danger btn-sm remove-attr" data-id="' + random_id + '">Sil</button>' +
+                    input = '<div class="row m-2 input-group mb-3" id="attr_' + random_id + '">' +
+                        '<div class="input-group-prepend"><span class="input-group-text" id="inputGroup-sizing-default">' + selectedText + ' </span></div>' +
+                        '<input type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default" class="form-control" name="attributes[' + selectedAttr + ']" value="" placeholder="Değer giriniz" required>' +
+                        ' <div class="input-group-append"> <button type="button" class="btn btn-danger btn-sm remove-attr" data-id="' + random_id + '">Sil</button></div>' +
                         '</div>';
                 }
 
+
                 $('.product-attributes').append(input);
+
+                let lastInput = $('#attr_' + random_id).find('input');
+
+                if (lastInput.length > 0) {
+                    lastInput.focus();
+                }
             });
 
 

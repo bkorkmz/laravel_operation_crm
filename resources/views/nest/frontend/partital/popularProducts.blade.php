@@ -78,15 +78,20 @@
                                         <div>
                                             {{--                                            <span class="font-small text-muted">By <a href="vendor-details-1.html">NestFood</a></span>--}}
                                         </div>
+                                        <div class="product-price mt-10">
+                                            <span>{{$productOne['price'] !=0 ?$productOne['price'].' TL':"" }}</span>
+{{--                                            @if(!blank($productOne['old_price']))--}}
+{{--                                                <span class="old-price">{{$productOne['old_price'] !=0 ?$productOne['old_price'].' TL':"" }}</span>--}}
+
+{{--                                            @endif--}}
+                                        </div>
                                         <div class="product-card-bottom">
-                                            <div class="product-price">
-                                                <span>{{$productOne['price'] !=0 ?$productOne['price'].' TL':"" }}</span>
-                                                {{--                                                <span class="old-price">$32.8</span>--}}
-                                            </div>
-                                            <div class="add-cart">
-                                                <a class="add" target="_blank" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$productOne['name']}}"><i class="fi-rs-shopping-cart mr-5"></i>Fiyat Al
-                                                </a>
-                                            </div>
+                                            <a href="shop-cart.html" class="btn w-100 hover-up"><i class="fi-rs-shopping-cart mr-5"></i>Add To Cart</a>
+{{----}}
+{{--                                            <div class="add-cart">--}}
+{{--                                                <a class="add" target="_blank" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$productOne['name']}}"><i class="fi-rs-shopping-cart mr-5"></i>Fiyat Al--}}
+{{--                                                </a>--}}
+{{--                                            </div>--}}
                                         </div>
                                     </div>
                                 </div>
@@ -145,14 +150,17 @@
 {{--                                            <span class="font-small text-muted">By <a href="vendor-details-1.html">NestFood</a></span>--}}
                                         </div>
                                         <div class="product-card-bottom">
+                                            <a href="shop-cart.html" class="btn w-100 hover-up"><i class="fi-rs-shopping-cart mr-5"></i>Add To Cart</a>
+
                                             <div class="product-price">
                                                 <span>{{$product->price !=0 ?$product->price.' TL':"" }}</span>
 {{--                                                <span class="old-price">$32.8</span>--}}
                                             </div>
-                                            <div class="add-cart">
-                                                <a class="add" target="_blank" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$product->name}}">{{--<i class="fi-rs-shopping-cart mr-5"></i>--}}Fiyat Al
-                                                </a>
-                                            </div>
+
+                                            {{--                                            <div class="add-cart">--}}
+{{--                                                <a class="add" target="_blank" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$product->name}}">--}}{{--<i class="fi-rs-shopping-cart mr-5"></i>--}}{{--Fiyat Al--}}
+{{--                                                </a>--}}
+{{--                                            </div>--}}
                                         </div>
                                     </div>
                                 </div>
@@ -194,7 +202,7 @@
                     <div class="col-md-6 col-sm-12 col-xs-12">
                         <div class="detail-info pr-30 pl-30">
                             <span class="stock-status out-stock"> Popüler </span>
-                            <h3 class="title-detail"><a href="" class="text-heading product-title">Ürün adı</a></h3>
+                            <h3 class="title-detail"><a href="javascript:void(0)" class="text-heading product-title">Ürün adı</a></h3>
                             <div class="product-detail-rating">
                                 <div class="product-rate-cover product-desc" >
 
@@ -224,7 +232,6 @@
                                     <button id="whatsapp_share" type="submit" class="button button-add-to-cart">
                                         {{-- <i class="fi-rs-shopping-cart"></i>--}}Fiyat Al
                                     </button>
-
                                 </div>
                             </div>
                         </div>

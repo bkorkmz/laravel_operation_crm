@@ -225,7 +225,6 @@ class ProductsController extends Controller
     public function update(Request $request, $products)
     {
 
-
         $validatedData = $request->validate([
             'name' => 'required|string|max:200',
             'short_detail' => 'nullable|string|max:500',
@@ -254,23 +253,23 @@ class ProductsController extends Controller
             'stock' => $validatedData['stock']?$validatedData['stock']:1,
             'price' => $validatedData['price'],
             'status' => $validatedData['status'],
-            'attributes' => json_encode($request['attributes']),
         ];
+
+        $data['attributes']=  !blank($request['attributes'])? json_encode($request['attributes']) : [];
 
         if($request->hasFile('image')) {
             $file_upload = fileUpload($validatedData['image'], 'products');
             $data['photo'] = $file_upload['path'];
         }
 
+
         $product = Products::find($products);
 
-//        $data['slug'] = slug_format(Str::limit($validatedData['name'],30));
         if(blank($request->slug)) {
             $data['slug'] = slug_format($validatedData['name']);
         } else {
             $data['slug'] = slug_format($request->slug);
         }
-
         $product->update($data);
         $product->category()->sync($request->category_id);
 

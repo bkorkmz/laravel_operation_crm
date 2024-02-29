@@ -175,8 +175,9 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
+
         $request->validate(
             [
                 'name' => 'required|max:50',
@@ -195,7 +196,7 @@ class CategoryController extends Controller
 
         $data_array = $request->except(
             '_token',
-            'image'
+            'image','model_id'
         );
 
         $data_array['slug'] = slug_format($request->name);
@@ -207,10 +208,9 @@ class CategoryController extends Controller
 
                 $file_upload = fileUpload($request->image, 'category');
                 $data_array['image'] = $file_upload['path'];
-                // $data_array['image'] =  '/storage/' . $request->image->store('category', 'public');
             }
         }
-
+        $id = $request->model_id;
         $category = Category::where('id', $id)->update($data_array);
 
         if ($category) {
@@ -219,7 +219,7 @@ class CategoryController extends Controller
             toastr()->error('Kategori  Ekleme İşlemi Sırasında Bir Hata Oluştu ', 'Başarısız !!! ');
         }
 
-        return redirect()->back();
+        return redirect()->route('category.index');
     }
 
     /**

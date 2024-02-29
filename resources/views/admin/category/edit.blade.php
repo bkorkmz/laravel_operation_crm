@@ -26,9 +26,10 @@
                                                 </ul>
                                             </div>
                                         @endif
-                                        <form action="{{ route($modul_name . '.update', ['model' => $model->id]) }}"
+                                        <form action="{{ route($modul_name . '.update') }}"
                                             method="post" enctype="multipart/form-data">
                                             @csrf
+                                            <input type="hidden" name="model_id" value="{{$model->id}}">
                                             <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label">Kategori başlığı <span
                                                         class="text-danger"> *</span></label>

@@ -70,9 +70,10 @@ class FrontendController extends Controller
     public function sliders()
     {
 
-        $sliders = PortFolio::where(['type' => 'slider', 'status' => 1])->get();
+        $sliders = PortFolio::where(['type' => 'slider', 'status' => 1])->whereNull('banner_image')->get();
+        $banners = PortFolio::where(['type' => 'slider', 'status' => 1])->whereNotNull('banner_image')->get();
 
-        return compact('sliders');
+        return compact('sliders','banners');
     }
 
     public function categorySliders()

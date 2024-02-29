@@ -110,7 +110,6 @@ class PortFolioController extends Controller
             'image.max' => 'İçerik resmi en fazla 2 MB boyutunda olabilir.',
             'status.required' => 'Durum alanı zorunludur',
         ]);
-        // dd($request->all());
 
 
         $data = $request->except('_token');
@@ -118,11 +117,8 @@ class PortFolioController extends Controller
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $file_upload = fileUpload($request->image,'sliders');
             $data['image']=   $file_upload['path'];
-
-
-
-            // $data['image'] = '/storage/' . $request->image->store('sliders', 'public');
         }
+
         PortFolio::create($data);
 
         toastr()->success('İşlem başarılı şekilde tamamlanmıştır.', 'Başarılı');

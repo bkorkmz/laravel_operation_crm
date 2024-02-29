@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-lg-4 col-md-6">
                 <div class="banner-img wow animate__animated animate__fadeInUp" data-wow-delay="0">
-                    <img src="{{asset('frontend/assets/imgs/banner/banner-1.png')}}" alt="" />
+                    <img src="{{asset('frontend/assetsimgs/banner/banner-1.png')}}" alt="" />
                     <div class="banner-text">
                         <h4>
                             Everyday Fresh & <br />Clean with Our<br />
@@ -17,7 +17,7 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="banner-img wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
-                    <img src="{{asset('frontend/assets/imgs/banner/banner-2.png')}}" alt="" />
+                    <img src="{{asset('frontend/assetsimgs/banner/banner-2.png')}}" alt="" />
                     <div class="banner-text">
                         <h4>
                             Make your Breakfast<br />
