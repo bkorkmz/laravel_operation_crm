@@ -43,7 +43,6 @@ class FrontendController extends Controller
 
     public function popularProducts(): array
     {
-
         $categoriesWithPopularProducts = Category::whereHas('getProduct', function ($query) {
             $query->whereJsonContains('attributes->popular', '1')
                 ->where('stock', '>', 0)
@@ -62,38 +61,61 @@ class FrontendController extends Controller
         return compact('categoriesWithPopularProducts', 'allProduct');
     }
 
-    public function featuredCategories()
+    public function bestSalesProduct(): array
+    {
+        $products = Products::where(['status' => 1])->where('stock', '>', 0)
+            ->whereJsonContains('attributes->best-sales', '1')->latest()->limit(3)->get();
+
+        return compact('products');
+    }
+
+    public function sliders(): array
+    {
+        $portfolios = PortFolio::where('type', 'slider')
+            ->where('status', 1)
+            ->get();
+        $sliders = $portfolios->whereNull('banner_image');
+        $banners = $portfolios->whereNotNull('banner_image')->first();
+
+        return compact('sliders', 'banners');
+    }
+
+    public function best_sales()
     {
 
     }
 
-    public function sliders()
-    {
-
-        $sliders = PortFolio::where(['type' => 'slider', 'status' => 1])->whereNull('banner_image')->get();
-        $banners = PortFolio::where(['type' => 'slider', 'status' => 1])->whereNotNull('banner_image')->get();
-
-        return compact('sliders','banners');
-    }
-
-    public function categorySliders()
+    public function categorySliders(): array
     {
         $categories = Category::product()->where(['show' => 1])->whereHas('getProduct')->withCount('getProduct')->get();
 
         return compact('categories');
     }
 
+
+
+    public function featuredCategories()
+    {
+//        $categories = Category::product()->where(['show' => 1])->whereHas('getProduct')->withCount('getProduct')->get();
+//
+//        return compact('categories');
+    }
+
+
+
+
     public function index()
     {
         $contents = collect();
 
         $pages['sliders'] = 'sliders';
-        //        $pages['categorySliders'] = 'categorySliders';
-        //        $pages['featuredCategories'] = 'featuredCategories';
+        $pages['bestSalesProduct'] = 'bestSalesProduct';
         $pages['popularProducts'] = 'popularProducts';
+        $pages['featuredCategories'] = 'featuredCategories';
         //        $pages['end_deals'] = 'end_deals';
         //        $pages['category_sliders'] = 'category_sliders';
-        //        $pages['best_sales'] = 'best_sales';
+        //                $pages['best_sales'] = 'best_sales';
+        //        $pages['categorySliders'] = 'categorySliders';
 
         foreach ($pages as $key => $page) {
             $contents->put($key, $this->$page());
@@ -323,8 +345,8 @@ class FrontendController extends Controller
 
         $product = Products::where('slug', $slug)->with('category')->first();
         $relatedProducts = Products::where('id', '<>', $product->id)
-            ->with('category',function ($query) use($product){
-                $query->where('category_id',$product['category'][0]->id);
+            ->with('category', function ($query) use ($product) {
+                $query->where('category_id', $product['category'][0]->id);
             })
             ->latest()
             ->limit(8)
@@ -333,16 +355,13 @@ class FrontendController extends Controller
         $otherProducts = $relatedProducts->splice(4); // İlk 4 ürünü al
         $newProducts = $relatedProducts;
 
-        if (!$product) {
+        if (! $product) {
             return back();
         }
 
         $categories = Category::product()->where(['show' => 1])->whereHas('getProduct')->withCount('getProduct')->get();
 
-
-
-
-        return view($this->theme.'.frontend.pages.product_detail', compact('product','categories','otherProducts','newProducts'));
+        return view($this->theme.'.frontend.pages.product_detail', compact('product', 'categories', 'otherProducts', 'newProducts'));
 
     }
 
@@ -487,8 +506,7 @@ class FrontendController extends Controller
 
             $getProduct = $category->getProduct()->paginate(20);
 
-
-            return view($this->theme.'.frontend.pages.category_products', compact('categories', 'category','getProduct'));
+            return view($this->theme.'.frontend.pages.category_products', compact('categories', 'category', 'getProduct'));
 
         }
 

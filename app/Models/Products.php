@@ -16,7 +16,7 @@ class Products extends Model
         'id',
         'name',
         'description','short_detail',
-        'stock', 'settings', 'slug',
+        'stock', 'settings', 'slug', 'old_price',
         'price', 'status', 'created_by', 'photo','attributes'
     ];
 

@@ -28,7 +28,6 @@
                         </button>
                     </li>
                 @endforeach
-
             </ul>
         </div>
         <!--End nav-tabs-->
@@ -78,20 +77,18 @@
                                         <div>
                                             {{--                                            <span class="font-small text-muted">By <a href="vendor-details-1.html">NestFood</a></span>--}}
                                         </div>
-                                        <div class="product-price mt-10">
-                                            <span>{{$productOne['price'] !=0 ?$productOne['price'].' TL':"" }}</span>
-{{--                                            @if(!blank($productOne['old_price']))--}}
-{{--                                                <span class="old-price">{{$productOne['old_price'] !=0 ?$productOne['old_price'].' TL':"" }}</span>--}}
-
-{{--                                            @endif--}}
-                                        </div>
                                         <div class="product-card-bottom">
-                                            <a href="shop-cart.html" class="btn w-100 hover-up"><i class="fi-rs-shopping-cart mr-5"></i>Add To Cart</a>
-{{----}}
-{{--                                            <div class="add-cart">--}}
-{{--                                                <a class="add" target="_blank" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$productOne['name']}}"><i class="fi-rs-shopping-cart mr-5"></i>Fiyat Al--}}
-{{--                                                </a>--}}
-{{--                                            </div>--}}
+                                            <div class="product-price">
+                                                <span>{{$productOne['price'] !=0 ?$productOne['price'].' TL':"" }}</span>
+                                                <span class="old-price">{{(!blank($productOne['old_price']) && $productOne['old_price'] !=0) ?$productOne['old_price'].' TL':"" }}</span>
+                                            </div>
+                                            <div class="add-cart">
+
+                                                <a class="add" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$productOne['name']}}">
+{{--                                                    <i class="fi-rs-shopping-cart mr-5"></i>   --}}
+                                                    <i class="fi-rs-info"></i>
+                                                    Whatsapp</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

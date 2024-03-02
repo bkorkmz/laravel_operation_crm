@@ -3,6 +3,16 @@
     $banners = $content['banners'];
 
  @endphp
+
+<style>
+    .banner-img.style-3 .banner-text {
+        bottom: 0px;
+        align-self: self-end;
+        margin-bottom: 30px;
+        width: 100%;
+        text-align: center;
+    }
+</style>
 <section class="home-slider style-2 position-relative mb-50">
     <div class="container">
         <div class="row">
@@ -22,7 +32,7 @@
                                 @endif
                                 @if($slider->link)
                                     <div class="form-subcriber d-flex">
-                                        <a href=" {{$banners[0]->link}}" class="btn btn-xs">Linke git <i class="fi-rs-arrow-small-right"></i></a>
+                                        <a href="{{$slider->link}}" class="btn btn-xs">Linke git <i class="fi-rs-arrow-small-right"></i></a>
                                     </div>
                                 @endif
                             </div>
@@ -34,16 +44,16 @@
             </div>
             <div class="col-lg-4 d-none d-xl-block">
                 @if(!blank($banners))
-                    <div class="banner-img style-3 animated animated" style="background-image: url({{asset($banners[0]->image)}})">
+                    <div class="banner-img style-3 animated animated" style="background-image: url({{asset($banners->image)}})">
                         <div class="banner-text mt-50">
-                            @if(!blank($banners[0]->name))
+                            @if(!blank($banners->name))
                             <h2 class="mb-50">
-                               {{$banners[0]->name}}
-                                <span class="text-brand"> {{$banners[0]->value}}</span>
+                               {{$banners->name}}
+                                <span class="text-brand"> {{$banners->value}}</span>
                             </h2>
                             @endif
-                            @if($banners[0]->link)
-                                    <a href=" {{$banners[0]->link}}" class="btn btn-xs">Linke git <i class="fi-rs-arrow-small-right"></i></a>
+                            @if($banners->link)
+                                    <a href=" {{$banners->link}}" class="btn btn-xs">Linke it <i class="fi-rs-arrow-small-right"></i></a>
                             @endif
                         </div>
                     </div>

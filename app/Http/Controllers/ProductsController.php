@@ -129,21 +129,24 @@ class ProductsController extends Controller
             'description' => 'nullable|max:5000',
             'stock' => 'nullable|min:1',
             'price' => 'nullable|min:1',
+            'old_price' => 'nullable|min:1',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ], [],[
-            'name' => 'Ürün Adı',
-            'short_detail' => 'Ürün Kısa Açıklaması',
-            'description' => 'Ürün Açıklaması',
+            'name' => 'Ürün adı',
+            'short_detail' => 'Ürün kısa açıklaması',
+            'description' => 'Ürün açıklaması',
             'stock' => 'Ürün stoku.',
             'image' => 'Ürün resmi',
             'price' => 'Fiyat',
+            'old_price' => 'Eski fiyat',
         ]);
 
         $product = new Products;
         $product->name = $validatedData['name'];
         $product->short_detail = $validatedData['short_detail'];
-        $product->stock = $validatedData['stock'] ? $validatedData['stock'] : 0 ;
+        $product->stock = $validatedData['stock'] ?? 0 ;
         $product->price = $validatedData['price'] ?? 0;
+        $product->old_price = $validatedData['old_price'];
         $product->status = $request->status;
         $product->attributes = json_encode($request['attributes']);
         if(blank($request->slug)) {
@@ -222,7 +225,7 @@ class ProductsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $products)
+    public function update(Request $request, $id)
     {
 
         $validatedData = $request->validate([
@@ -231,19 +234,20 @@ class ProductsController extends Controller
             'description' => 'nullable|string|max:5000',
             'stock' => 'nullable|max:9999',
             'price' => 'nullable|min:1',
+            'old_price' => 'nullable|min:1',
             'status' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ],[],
             [
-            'name' => 'Ürün Adı ',
-            'short_detail' => 'Ürün Kısa Açıklaması ',
+            'name' => 'Ürün adı ',
+            'short_detail' => 'Ürün kısa açıklaması ',
             'description' => 'Ürün açıklaması ',
             'stock' => 'Ürün miktarı ',
             'status' => 'Ürün durumu ',
-            'price' => 'Ürün Fiyatı',
+            'price' => 'Ürün fiyatı',
+            'old_price' => 'Ürün eski fiyatı',
             'image' => 'Ürün resmi',
-
-        ]);
+            ]);
 
 
         $data = [
@@ -252,6 +256,7 @@ class ProductsController extends Controller
             'description' => $validatedData['description'],
             'stock' => $validatedData['stock']?$validatedData['stock']:1,
             'price' => $validatedData['price'],
+            'old_price' => $validatedData['old_price'],
             'status' => $validatedData['status'],
         ];
 
@@ -263,7 +268,8 @@ class ProductsController extends Controller
         }
 
 
-        $product = Products::find($products);
+
+        $product = Products::find($id);
 
         if(blank($request->slug)) {
             $data['slug'] = slug_format($validatedData['name']);
@@ -272,7 +278,6 @@ class ProductsController extends Controller
         }
         $product->update($data);
         $product->category()->sync($request->category_id);
-
         toastr()->success('Ürün Güncelleme İşlemi Tamamlandı.', 'Başarılı');
         return redirect(route('product.index'));
 

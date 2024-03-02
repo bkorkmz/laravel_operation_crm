@@ -450,7 +450,6 @@
     </div>
 
 
-    {{-- <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script> --}}
     <script type="text/javascript" src="{{ asset('admin/bower_components/popper.js/js/popper.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('admin/bower_components/jquery/js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('admin/bower_components/jquery-ui/js/jquery-ui.min.js') }}"></script>
@@ -460,12 +459,7 @@
 
     <!-- notification  -->
     <script type="text/javascript" src="{{ asset('admin/assets/js/bootstrap-growl.min.js') }}"></script>
-    {{-- <script type="text/javascript" src="{{ asset('admin/assets/pages/notification/notification.js') }}"></script> --}}
-    {{-- <script src="{{ asset('admin/assets/js/pcoded.min.js') }}"></script> --}}
-    {{-- <script src="{{ asset('admin/assets/js/vertical/vertical-layout.min.js') }}"></script> --}}
-    {{-- <script src="{{ asset('admin/assets/js/jquery.mCustomScrollbar.concat.min.js') }}"></script> --}}
 
-    <!-- dropify  -->
     <script src="{{ asset('vendor/dropify/dist/js/dropify.js') }}"></script>
 
     <!-- Custom js -->
@@ -481,21 +475,12 @@
 
 
 
-    {{-- <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
-<script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script> --}}
-    {{-- @include('sweetalert::alert') --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-    {{-- swich  --}}
-    {{-- <script type="text/javascript" src=".{{asset('admin/bower_components/switchery/js\switchery.min.js')}}"></script> --}}
-
-
     <script>
-
         $('.dropify').dropify({
             messages: {
                 'default': 'Resim yükle ya da sürükle',
@@ -560,6 +545,14 @@
             }
         }
         new TextareaWithMaxlength('.with-maxlength');
+
+
+        function slugCopy(inputElement) {
+            let slug = document.getElementById('slug_content');
+            console.log(inputElement.value)
+            slug.value = inputElement.value;
+        }
+
     </script>
 
     @yield('js')

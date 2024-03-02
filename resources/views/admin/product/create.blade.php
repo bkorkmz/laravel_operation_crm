@@ -29,7 +29,7 @@
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control form-control-normal" placeholder="Ürün adı"
                                            maxlength="200"
-                                           onkeypress="slugCopy(this)" name="name" required value="{{old('name')}}">
+                                           onkeyup="slugCopy(this)" name="name" required value="{{old('name')}}">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -106,6 +106,15 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
+                                                <label class="col-sm-2 col-form-label">Eski Fiyat</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control autonumber fill"
+                                                           data-v-max="9999999" data-v-min="0" placeholder="Eski Fiyat 5.000"
+                                                           name="old_price" step="0000.01" value="{{old('old_price')}}">
+                                                    {{--                                    <input   name="price" type="text" class="form-control autonumber fill" data-a-sep="." data-v-max="999999"   >--}}
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label">Durum
                                                 </label>
                                                 <div class="col-sm-10 row align-self-center">
@@ -135,12 +144,13 @@
                                         <div class="card-body">
                                             <div class="form-group row">
                                                 <div class="input-group mb-3">
-                                                    <label class="col-sm-3 col-form-label">Ek Özellikler</label>
+                                                    <label class="col-sm-3 col-form-label">@lang('product.add_special_features')</label>
                                                     <select class="form-control" id="attributes">
-                                                        <option value="">Özellik seçiniz</option>
-                                                        <option value="popular">Popüler Ürün</option>
-                                                        <option value="size">Boyut</option>
-                                                        <option value="color">Renk</option>
+                                                        <option value="">@lang('product.select_an_attributes')</option>
+                                                        <option value="best-sales">@lang('product.best-sales')</option>
+                                                        <option value="popular">@lang('product.select_an_attributes')</option>
+                                                        <option value="size">@lang('product.size')</option>
+                                                        <option value="color">@lang('product.color')</option>
                                                     </select>
                                                     <div class="input-group-append">
                                                         <button type="button" class="btn btn-success btn-sm add-attr"> Ekle
@@ -243,11 +253,11 @@
                 }
 
                 let selectedText = $('select[id="attributes"] option:selected').text();
-                if (selectedAttr === 'popular') {
+                if (selectedAttr === 'popular' || selectedAttr === 'best-sales') {
                     input =
                         '<div class="row m-2 input-group mb-3" id="attr_' + random_id + '">' +
                         '<div class="input-group-prepend"><span class="input-group-text" id="inputGroup-sizing-default">' + selectedText + ' </span></div>' +
-                        '<input type="hidden" aria-label="Default" aria-describedby="inputGroup-sizing-default" class="form-control" name="attributes[' + selectedAttr + ']" value="1" placeholder="Değer giriniz" required>' +
+                        '<input type="hidden" aria-label="default" aria-describedby="inputGroup-sizing-default" class="form-control" name="attributes[' + selectedAttr + ']" value="1" placeholder="Değer giriniz" required>' +
                         ' <div class="input-group-append"> <button type="button" class="btn btn-danger p-2 remove-attr" data-id="' + random_id + '">Sil</button></div>' +
                         '</div>';
                 } else {
@@ -280,11 +290,6 @@
         });
 
 
-        function slugCopy(inputElement) {
-            let slug = document.getElementById('slug_content');
-            console.log(inputElement.value)
-            slug.value = inputElement.value;
-        }
     </script>
 
     <script>

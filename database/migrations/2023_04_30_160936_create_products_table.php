@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('short_detail',500)->nullable();
             $table->text('description')->nullable();
             $table->string('price',10)->nullable();
+            $table->string('old_price',10)->nullable();
             $table->string('stock',10)->default(0);
             $table->tinyInteger('status')->nullable();
             $table->integer('created_by')->nullable();

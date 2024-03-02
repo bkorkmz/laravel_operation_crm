@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
-            $table->string('value')->nullable();
+            $table->string('value',1500)->nullable();
             $table->string('group')->nullable();
             $table->string('type')->nullable();
             $table->string('definations')->nullable();

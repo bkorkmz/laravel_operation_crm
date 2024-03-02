@@ -101,8 +101,8 @@
                                 </div>
                                 <div class="product-card-bottom">
                                     <div class="product-price">
-                                        <span>{{$product->price != 0 ?$product->price." TL" : ""}}</span>
-                                        {{--                                                <span class="old-price">$32.8</span>--}}
+                                        <span>{{$product['price'] !=0 ?$product['price'].' TL':"" }}</span>
+                                        <span class="old-price">{{ $product['old_price'] !=0 ?$product['old_price'].' TL':"" }}</span>
                                     </div>
                                     <div class="add-cart">
                                         <a class="add" target="_blank" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$product->name}}">{{--<i class="fi-rs-shopping-cart mr-5"></i>--}}Fiyat Al
@@ -297,42 +297,7 @@
             <!-- Product sidebar Widget -->
             <div class="sidebar-widget product-sidebar mb-30 p-30 bg-grey border-radius-10  d-none">
                 <h5 class="section-title style-1 mb-30 ">Popüler Ürünler</h5>
-{{--                <div class="single-post clearfix">--}}
-{{--                    <div class="image">--}}
-{{--                        <img src="assets/imgs/shop/thumbnail-3.jpg" alt="#" />--}}
-{{--                    </div>--}}
-{{--                    <div class="content pt-10">--}}
-{{--                        <h5><a href="shop-product-detail.html">Chen Cardigan</a></h5>--}}
-{{--                        <p class="price mb-0 mt-5">$99.50</p>--}}
-{{--                        <div class="product-rate">--}}
-{{--                            <div class="product-rating" style="width: 90%"></div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="single-post clearfix">--}}
-{{--                    <div class="image">--}}
-{{--                        <img src="assets/imgs/shop/thumbnail-4.jpg" alt="#" />--}}
-{{--                    </div>--}}
-{{--                    <div class="content pt-10">--}}
-{{--                        <h6><a href="shop-product-detail.html">Chen Sweater</a></h6>--}}
-{{--                        <p class="price mb-0 mt-5">$89.50</p>--}}
-{{--                        <div class="product-rate">--}}
-{{--                            <div class="product-rating" style="width: 80%"></div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="single-post clearfix">--}}
-{{--                    <div class="image">--}}
-{{--                        <img src="assets/imgs/shop/thumbnail-5.jpg" alt="#" />--}}
-{{--                    </div>--}}
-{{--                    <div class="content pt-10">--}}
-{{--                        <h6><a href="shop-product-detail.html">Colorful Jacket</a></h6>--}}
-{{--                        <p class="price mb-0 mt-5">$25</p>--}}
-{{--                        <div class="product-rate">--}}
-{{--                            <div class="product-rating" style="width: 60%"></div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+
             </div>
             <div class="banner-img wow fadeIn mb-lg-0 animated d-lg-block d-none">
                 <img src="assets/imgs/banner/banner-11.png" alt="" />

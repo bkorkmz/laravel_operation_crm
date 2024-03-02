@@ -26,25 +26,26 @@
                               enctype="multipart/form-data">
                             @csrf
 
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" for="name">Ürün Adı</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control form-control-normal" placeholder="" id="name"
+                                           onkeyup="slugCopy(this)"  name="name" value="{{ $products->name }}" required>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Opsiyonel url <span class="text-danger"> *</span></label>
                                 <div class="col-sm-10">
                                     <div class="input-group">
                                         <span class="input-group-prepend">
-                                                <label
+                                                <label for="slug"
                                                     class="input-group-text">{{"https://".request()->host()."/ürünler/"}}</label>
                                             </span>
                                         <input id="slug_content" type="text" id="slug" value="{{ $products->slug }}"
                                                class="form-control text-lowercase" name="slug"
                                                maxlength="100">
                                     </div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Ürün Adı</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control form-control-normal" placeholder=""
-                                           name="name" value="{{ $products->name }}" required>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -92,10 +93,22 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-sm-4 col-form-label">Fiyat</label>
+                                                <label class="col-sm-4 col-form-label" for="price">Fiyat</label>
                                                 <div class="col-sm-8">
-                                                    <input type="number" class="form-control  fill" name="price"
-                                                           value="{{ $products->price ?? ""}}">
+                                                        <input type="text" class="form-control autonumber fill"  id="price"
+
+                                                               name="price" placeholder="Fiyat Giriniz"
+                                                               value="{{ $products->price ?? ""}}">
+
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-4 col-form-label" for="old_price">Eski Fiyat</label>
+                                                <div class="col-sm-8">
+                                                        <input type="text" class="form-control autonumber fill" id="old_price"
+                                                               placeholder="Eski Fiyat 5.000"
+                                                               name="old_price" step="0000.01" value="{{$products->old_price}}">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -130,12 +143,13 @@
                                         <div class="card-body">
                                             <div class="form-group row">
                                                 <div class="input-group mb-3">
-                                                    <label class="col-sm-3 col-form-label">Ek Özellikler</label>
+                                                    <label class="col-sm-3 col-form-label">@lang('product.add_special_features')</label>
                                                     <select class="form-control" id="attributes">
-                                                        <option value="">Özellik seçiniz</option>
-                                                        <option value="popular">Popüler Ürün</option>
-                                                        <option value="size">Boyut</option>
-                                                        <option value="color">Renk</option>
+                                                        <option value="">@lang('product.select_an_attributes')</option>
+                                                        <option value="best-sales">@lang('product.best-sales')</option>
+                                                        <option value="popular">@lang('product.popular')</option>
+                                                        <option value="size">@lang('product.size')</option>
+                                                        <option value="color">@lang('product.color')</option>
                                                     </select>
                                                     <div class="input-group-append">
                                                         <button type="button" class="btn btn-success btn-sm add-attr"> Ekle
@@ -151,7 +165,7 @@
                                                     @php $attrArray =['size','color']; $type = 'text';  $hidden = ""; @endphp
 
                                                     @foreach($attributes as $attr=>$value)
-                                                        @if($attr == "popular")
+                                                        @if($attr == "popular" || $attr == "best-sales")
                                                             @php $type = 'number'; $hidden = "hidden" @endphp
                                                         @endif
 
@@ -161,20 +175,27 @@
 {{--                                                             <div class="input-group-append"> <button type="button" class="btn btn-danger p-2 remove-attr" data-id="' + random_id + '">Sil</button></div>--}}
 {{--                                                            </div>--}}
 
+                                                            <div class="row m-2 input-group mb-3" id="{{'attr_'.$loop->iteration}}">
+                                                                <div class="input-group-prepend"><span class="input-group-text" id="inputGroup-sizing-default"> @lang('product.'.$attr) </span></div>
+                                                                <input type="{{$type}}" {{$hidden}} aria-label="Default" aria-describedby="inputGroup-sizing-default"
+                                                                       class="form-control" name="attributes[{{$attr}}]" value="{{$value}}" placeholder="Değer giriniz" required>
+                                                                 <div class="input-group-append">
+                                                                     <button type="button" class="btn btn-danger p-2 remove-attr" data-id="{{$loop->iteration}}">Sil</button>
+                                                                 </div>
+                                                            </div>
 
-
-                                                        <div class="row m-2" id="{{'attr_'.$loop->iteration}}">
-                                                            <label class="col-4"> @lang('product.'.$attr)</label>
-                                                            <div class="col-6">
-                                                                <input type="{{$type}}" {{$hidden}} class="form-control"
-                                                                       name="attributes[{{$attr}}]" value="{{$value}}"
-                                                                       {{$type = 'number' ? 'min = 0 max = 1' : ''}}
-                                                                       placeholder="Değer giriniz" required></div>
-                                                            <button type="button"
-                                                                    class="btn btn-danger btn-sm remove-attr"
-                                                                    data-id="{{$loop->iteration}}">Sil
-                                                            </button>
-                                                        </div>
+{{--                                                        <div class="row m-2" id="{{'attr_'.$loop->iteration}}">--}}
+{{--                                                            <label class="col-4"> @lang('product.'.$attr)</label>--}}
+{{--                                                            <div class="col-6">--}}
+{{--                                                                <input type="{{$type}}" {{$hidden}} class="form-control"--}}
+{{--                                                                       name="attributes[{{$attr}}]" value="{{$value}}"--}}
+{{--                                                                       {{$type = 'number' ? 'min = 0 max = 1' : ''}}--}}
+{{--                                                                       placeholder="Değer giriniz" required></div>--}}
+{{--                                                            <button type="button"--}}
+{{--                                                                    class="btn btn-danger btn-sm remove-attr"--}}
+{{--                                                                    data-id="{{$loop->iteration}}">Sil--}}
+{{--                                                            </button>--}}
+{{--                                                        </div>--}}
                                                     @endforeach
                                                 </div>
                                             </div>
@@ -219,6 +240,8 @@
 
 @section('js')
     <script type="text/javascript" src="{{ asset('admin/assets/pages/form-masking/autoNumeric.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin/assets/pages/form-masking/autoNumeric.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('admin/assets/pages/form-masking/autoNumeric.js') }}"></script>
 
     <script src="{{asset('admin/assets/pages/summernote-0.8.18/summernote.js')}}"></script>
     <script src="{{asset('admin/assets/pages/summernote-0.8.18/lang/summernote-tr-TR.js')}}"></script>
@@ -226,6 +249,10 @@
     <script>
 
         $(document).ready(function () {
+
+            $('.autonumber').autoNumeric('init');
+
+
             $('#detail').summernote({
                 lang: 'tr-TR',
                 height: 200,
