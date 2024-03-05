@@ -83,11 +83,10 @@
                                 <div class="product-card-bottom">
                                     <div class="product-price">
                                         <span>{{$product->price != 0 ?$product->price." TL" : ""}}</span>
-                                        {{--                                                <span class="old-price">$32.8</span>--}}
+{{--                                                                                        <span class="old-price">{{$product->old_price != 0 ?$product->old_price." TL" : ""}}</span>--}}
                                     </div>
                                     <div class="add-cart">
-                                        <a class="add" target="_blank" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$product->name}}">{{--<i class="fi-rs-shopping-cart mr-5"></i>--}}Fiyat Al
-                                        </a>
+                                        <a class="add" target="_blank" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$product->name}}"><i class="fi-rs-shopping-cart mr-5"></i>Sepete Ekle</a>
                                     </div>
                                 </div>
                             </div>
@@ -157,8 +156,8 @@
                     </div>
                     <div class="col-md-6 col-sm-12 col-xs-12">
                         <div class="detail-info pr-30 pl-30">
-                            <span class="stock-status out-stock"> Popüler </span>
-                            <h3 class="title-detail"><a href="" class="text-heading product-title">Ürün adı</a></h3>
+{{--                            <span class="stock-status out-stock"> Popüler </span>--}}
+                            <h3 class="title-detail"><a href="" class="text-heading product-title"></a></h3>
                             <div class="product-detail-rating">
                                 <div class="product-rate-cover product-desc" >
 
@@ -172,24 +171,32 @@
                             <div class="clearfix product-price-cover">
                                 <div class="product-price primary-color float-left">
                                     <span class="current-price text-brand" id= "price"> </span>
-                                    {{--                                    <span>--}}
-                                    {{--                                       <span class="save-price font-md color3 ml-15">26% </span>--}}
-                                    {{--                                       <span class="old-price font-md ml-15">$52</span>--}}
-                                    {{--                                    </span>--}}
+                                      <span>
+                                         <span class="save-price font-md color3 ml-15"> </span>
+                                         <span class="old-price font-md ml-15"></span>
+                                      </span>
                                 </div>
                             </div>
                             <div class="detail-extralink mb-30">
-                                {{--                                <div class="detail-qty border radius" >--}}
-                                {{--                                    <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>--}}
-                                {{--                                    <span class="qty-val">1</span>--}}
-                                {{--                                    <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>--}}
-                                {{--                                </div>--}}
-                                <div class="product-extra-link2">
-                                                                        <button id="whatsapp_share" type="submit" class="button button-add-to-cart">
-                                                                           {{-- <i class="fi-rs-shopping-cart"></i>--}}
-                                                                        </button>
+                                <form class="add-to-cart-form" method="POST" action="">
+                                    @csrf
+                                    <input type="hidden" name="id" class="hidden-product-id" value="37">
+                                    <div class="detail-extralink mb-50">
+                                        <div class="detail-qty border radius">
+                                            <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                                            <input type="number" min="1" value="1" name="qty" class="qty-val qty-input">
+                                            <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                                        </div>
 
-                                </div>
+                                        <div class="product-extra-link2  has-buy-now-button ">
+                                            <button type="submit" class="button button-add-to-cart">
+                                                <i class="fi-rs-shopping-cart"></i> Sepete Ekle</button>
+
+                                            <a aria-label="Favoriye Ekle" class="action-btn hover-up js-add-to-wishlist-button" data-url="" href="#"><i class="fi-rs-heart"></i></a>
+                                            {{--                                            <a aria-label="Add To Compare" href="#" class="action-btn hover-up js-add-to-compare-button" data-url="https://nest.botble.com/compare/4"><i class="fi-rs-shuffle"></i></a>--}}
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <!-- Detail Info -->
@@ -246,9 +253,10 @@
                     $('#quickViewModal .modal-body .product-title').html(`${product.name}`);
                     $('#quickViewModal .modal-body .product-desc').html(`${product.short_detail? product.short_detail : ""}`);
                     $('#quickViewModal .modal-body #product-attributes').html(`${attributesHtml?attributesHtml:""}`);
-                    $('#quickViewModal .modal-body #price').html(`${product.price} TL`);
+                    modal.find('.modal-body #price').html(`${product.price != null ? product.price + 'TL' : "" }`);
+                    modal.find('.modal-body .old-price ').html(`${product.old_price != null ? product.old_price + 'TL' : "" }`);
 
-                    // $('#whatsapp_share').attr('href', whatsappUrl);
+
 
                     modal.modal('show');
 

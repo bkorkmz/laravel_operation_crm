@@ -69,10 +69,10 @@
                                         </div>
                                         <h2><a href="{{route('frontend.product_detail',['slug'=>$productOne['slug']])}}">{{$productOne['name']}}</a></h2>
                                         <div class="product-rate-cover">
-                                            {{--     <div class="product-rate d-inline-block">
-                                                     <div class="product-rating" style="width: 90%"></div>
+                                                 <div class="product-rate d-inline-block">
+                                                     <div class="product-rating" style="width: 100%"></div>
                                                  </div>
-                                                     <span class="font-small ml-5 text-muted"> (4.0)</span>--}}
+                                                     <span class="font-small ml-5 text-muted"> (5.0)</span>
                                         </div>
                                         <div>
                                             {{--                                            <span class="font-small text-muted">By <a href="vendor-details-1.html">NestFood</a></span>--}}
@@ -85,9 +85,9 @@
                                             <div class="add-cart">
 
                                                 <a class="add" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$productOne['name']}}">
-{{--                                                    <i class="fi-rs-shopping-cart mr-5"></i>   --}}
-                                                    <i class="fi-rs-info"></i>
-                                                    Whatsapp</a>
+                                                    <i class="fi-rs-shopping-cart mr-5"></i>
+{{--                                                    <i class="fi-rs-info"></i>--}}
+                                                    Sepet Ekle</a>
                                             </div>
                                         </div>
                                     </div>
@@ -147,17 +147,17 @@
 {{--                                            <span class="font-small text-muted">By <a href="vendor-details-1.html">NestFood</a></span>--}}
                                         </div>
                                         <div class="product-card-bottom">
-                                            <a href="shop-cart.html" class="btn w-100 hover-up"><i class="fi-rs-shopping-cart mr-5"></i>Add To Cart</a>
-
                                             <div class="product-price">
-                                                <span>{{$product->price !=0 ?$product->price.' TL':"" }}</span>
-{{--                                                <span class="old-price">$32.8</span>--}}
+                                                <span>{{$productOne['price'] !=0 ?$productOne['price'].' TL':"" }}</span>
+                                                <span class="old-price">{{(!blank($productOne['old_price']) && $productOne['old_price'] !=0) ?$productOne['old_price'].' TL':"" }}</span>
                                             </div>
+                                            <div class="add-cart">
 
-                                            {{--                                            <div class="add-cart">--}}
-{{--                                                <a class="add" target="_blank" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$product->name}}">--}}{{--<i class="fi-rs-shopping-cart mr-5"></i>--}}{{--Fiyat Al--}}
-{{--                                                </a>--}}
-{{--                                            </div>--}}
+                                                <a class="add" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$productOne['name']}}">
+                                                     <i class="fi-rs-shopping-cart mr-5"></i>
+{{--                                                    <i class="fi-rs-info"></i>--}}
+                                                    Sepet Ekle</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -213,23 +213,31 @@
                             <div class="clearfix product-price-cover">
                                 <div class="product-price primary-color float-left">
                                     <span class="current-price text-brand" id= "price"> </span>
-{{--                                    <span>--}}
-{{--                                       <span class="save-price font-md color3 ml-15">26% </span>--}}
-{{--                                       <span class="old-price font-md ml-15">$52</span>--}}
-{{--                                    </span>--}}
+                                    <span>
+                                       <span class="old-price font-md ml-15"></span>
+                                    </span>
                                 </div>
                             </div>
                             <div class="detail-extralink mb-30">
-{{--                                <div class="detail-qty border radius" >--}}
-{{--                                    <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>--}}
-{{--                                    <span class="qty-val">1</span>--}}
-{{--                                    <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>--}}
-{{--                                </div>--}}
-                                <div class="product-extra-link2">
-                                    <button id="whatsapp_share" type="submit" class="button button-add-to-cart">
-                                        {{-- <i class="fi-rs-shopping-cart"></i>--}}Fiyat Al
-                                    </button>
-                                </div>
+                                <form class="add-to-cart-form" method="POST" action="">
+                                    @csrf
+                                    <input type="hidden" name="id" class="hidden-product-id" value="37">
+                                    <div class="detail-extralink mb-50">
+                                        <div class="detail-qty border radius">
+                                            <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                                            <input type="number" min="1" value="1" name="qty" class="qty-val qty-input">
+                                            <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                                        </div>
+
+                                        <div class="product-extra-link2  has-buy-now-button ">
+                                            <button type="submit" class="button button-add-to-cart">
+                                                <i class="fi-rs-shopping-cart"></i> Sepete Ekle</button>
+
+                                            <a aria-label="Favoriye Ekle" class="action-btn hover-up js-add-to-wishlist-button" data-url="" href="#"><i class="fi-rs-heart"></i></a>
+{{--                                            <a aria-label="Add To Compare" href="#" class="action-btn hover-up js-add-to-compare-button" data-url="https://nest.botble.com/compare/4"><i class="fi-rs-shuffle"></i></a>--}}
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <!-- Detail Info -->
@@ -245,6 +253,8 @@
 
     function quickModal(id) {
         let modal = $('#quickViewModal');
+        modal.find('.modal-body .hidden-product-id').val("");
+
         $.ajax({
             url: '{{ route('product-info') }}/'+id,
             dataType: "json",
@@ -253,7 +263,6 @@
                 let product = data.product;
                 let attributesHtml = '';
                 let attributes = JSON.parse(product.attributes);
-                // let whatsapp_button = $('#whatsapp_share');
 
 
                 Object.entries(attributes).map(([key, value]) => {
@@ -266,21 +275,24 @@
                 });
 
 
-                $('#quickViewModal .modal-body #slider').html(`<figure class="border-radius-10">
+                modal.find('.modal-body #slider').html(`<figure class="border-radius-10">
                                         <img src="${product.photo}"
                                               alt="${product.slug}" title="${product.name}"/>
                                     </figure>`);
 
-                $('#quickViewModal .modal-body #slider-thumbnails').html(`
+                modal.find('.modal-body #slider-thumbnails').html(`
                                      <div>
                                             <img src="${product.photo ?? ""  }"
                                               alt="${product.slug}" title="${product.name}" width="77" height="77"/>
                                     </div>`);
 
-                $('#quickViewModal .modal-body .product-title').html(`${product.name}`);
-                $('#quickViewModal .modal-body .product-desc').html(`${product.short_detail? product.short_detail : ""}`);
-                $('#quickViewModal .modal-body #product-attributes').html(`${attributesHtml?attributesHtml:""}`);
-                // $('#quickViewModal .modal-body #price').html(`${product.price != null ? product.price + 'TL' : "" }`);
+                modal.find(' .modal-body .product-title').html(`${product.name}`);
+                modal.find(' .modal-body .hidden-product-id').val(`${product.id}`);
+
+                modal.find(' .modal-body .product-desc').html(`${product.short_detail? product.short_detail : ""}`);
+                modal.find(' .modal-body #product-attributes').html(`${attributesHtml?attributesHtml:""}`);
+                modal.find('.modal-body #price').html(`${product.price != null ? product.price + 'TL' : "" }`);
+                modal.find('.modal-body .old-price ').html(`${product.old_price != null ? product.old_price + 'TL' : "" }`);
 
 
                  modal.modal('show');
