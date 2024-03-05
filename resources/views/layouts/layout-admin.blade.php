@@ -553,6 +553,8 @@
             slug.value = inputElement.value;
         }
 
+
+
     </script>
 
     @yield('js')

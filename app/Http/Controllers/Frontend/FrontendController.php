@@ -22,6 +22,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
+use Cart;
 
 class FrontendController extends Controller
 {
@@ -92,17 +93,12 @@ class FrontendController extends Controller
         return compact('categories');
     }
 
-
-
     public function featuredCategories()
     {
-//        $categories = Category::product()->where(['show' => 1])->whereHas('getProduct')->withCount('getProduct')->get();
-//
-//        return compact('categories');
+        //        $categories = Category::product()->where(['show' => 1])->whereHas('getProduct')->withCount('getProduct')->get();
+        //
+        //        return compact('categories');
     }
-
-
-
 
     public function index()
     {
@@ -511,4 +507,53 @@ class FrontendController extends Controller
         }
 
     }
+
+    //#### CİHAN ÇALIŞMA ALANI #####
+    public function cart_add(Request $request, $slug)
+    {
+        $product = Products::where('slug', $slug)->first();
+
+        Cart::add(
+            [
+                'id' => $product->id,
+                'name' => $product->name,
+                'qty' => 1,
+                'price' => $product->price,
+                'options' => ['attributes' => $product->attributes, 'photo' => $product->photo],
+            ]
+        );
+
+        return redirect(route('frontend.cart'));
+    }
+
+    public function cart_update(Request $request, $rowId)
+    {
+        $qty = $request->qty;
+        Cart::update($rowId, $qty);
+
+        return redirect(route('frontend.cart'));
+    }
+
+    public function cart_remove(Request $request, $rowId)
+    {
+        Cart::remove($rowId);
+
+        return redirect(route('frontend.cart'));
+    }
+
+    public function cart_destroy(Request $request)
+    {
+        Cart::destroy();
+
+        return redirect(route('frontend.cart'));
+    }
+
+    public function cart()
+    {
+        $cart_content = Cart::content();
+
+        return view($this->theme.'.frontend.cart.cart', compact('cart_content'));
+    }
+    //#### CİHAN ÇALIŞMA ALANI #####
+
 }

@@ -53,7 +53,7 @@
                             </h2>
                             @endif
                             @if($banners->link)
-                                    <a href=" {{$banners->link}}" class="btn btn-xs">Linke it <i class="fi-rs-arrow-small-right"></i></a>
+                                    <a href=" {{$banners->link}}" class="btn btn-xs">Linke git <i class="fi-rs-arrow-small-right"></i></a>
                             @endif
                         </div>
                     </div>

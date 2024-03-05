@@ -99,19 +99,17 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label">Fiyat</label>
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control autonumber fill"
-                                                           data-v-max="9999999" data-v-min="0" placeholder="Fiyat 5.000"
-                                                           name="price" step="0000.01" value="{{old('price')}}">
-                                                    {{--                                    <input   name="price" type="text" class="form-control autonumber fill" data-a-sep="." data-v-max="999999"   >--}}
+                                                    <input type="text" class="form-control number-mask fill"
+                                                           max="9999999" min="1" placeholder="Fiyat 5.000"
+                                                           name="price" value="{{old('price')}}">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label">Eski Fiyat</label>
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control autonumber fill"
-                                                           data-v-max="9999999" data-v-min="0" placeholder="Eski Fiyat 5.000"
+                                                    <input type="text" class="form-control number-mask  fill"
+                                                         max="9999999" min="1" placeholder="Eski Fiyat 5.000"
                                                            name="old_price" step="0000.01" value="{{old('old_price')}}">
-                                                    {{--                                    <input   name="price" type="text" class="form-control autonumber fill" data-a-sep="." data-v-max="999999"   >--}}
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -213,6 +211,7 @@
     <script src="{{asset('/admin/assets/pages/summernote-0.8.18/plugin/image2/summernote-image-title.js')}}"></script>
     <script type="text/javascript" src="{{ asset('admin/assets/pages/form-masking/autoNumeric.js') }}"></script>
     <script type="text/javascript" src="{{asset('admin/bower_components/select2/js/select2.full.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
 
     {{--    <script src="{{asset('admin/assets/js/page-build/submit.js')}}"></script>--}}
 
@@ -293,6 +292,8 @@
     </script>
 
     <script>
+
+
         $('.autonumber').autoNumeric('init');
         $('#category_id').select2({
             theme: 'bootstrap'
@@ -327,5 +328,17 @@
             return Math.random().toString(36).substr(2, 9);
 
         }
+
+
+        $(document).ready(function() {
+            $('.number-mask').inputmask({
+                alias: 'numeric',
+                groupSeparator: ',',
+                autoGroup: false,
+                placeholder: '0',
+                rightAlign: false,
+                allowMinus: false
+            });
+        });
     </script>
 @endsection

@@ -144,11 +144,12 @@ class ProductsController extends Controller
         $product = new Products;
         $product->name = $validatedData['name'];
         $product->short_detail = $validatedData['short_detail'];
-        $product->stock = $validatedData['stock'] ?? 0 ;
-        $product->price = $validatedData['price'] ?? 0;
+        $product->stock = $validatedData['stock'] ?? null ;
+        $product->price = $validatedData['price'] ?? null;
         $product->old_price = $validatedData['old_price'];
         $product->status = $request->status;
-        $product->attributes = json_encode($request['attributes']);
+
+        $product->attributes =  !blank($request['attributes']) ?json_encode($request['attributes']) :json_encode([]) ;
         if(blank($request->slug)) {
             $slug = slug_format($validatedData['name']);
         } else {
@@ -260,7 +261,7 @@ class ProductsController extends Controller
             'status' => $validatedData['status'],
         ];
 
-        $data['attributes']=  !blank($request['attributes'])? json_encode($request['attributes']) : [];
+        $data['attributes']=  !blank($request['attributes'])? json_encode($request['attributes']) : json_encode([]) ;
 
         if($request->hasFile('image')) {
             $file_upload = fileUpload($validatedData['image'], 'products');

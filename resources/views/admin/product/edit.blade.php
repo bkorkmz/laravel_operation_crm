@@ -3,7 +3,9 @@
     {{ __('Ürün Düzenle ') }}
 @endsection
 @section('content')
-    @php $attributes =json_decode($products->attributes,true) @endphp
+
+    @php
+ $attributes = !blank($products->attributes) ? json_decode($products->attributes,true) : "" ; @endphp
 
     <div class="pcoded-inner-content">
         <div class="main-body">
@@ -88,17 +90,21 @@
                                                     <input type="text" class="form-control autonumber fill"
                                                            placeholder="Stok 500"
                                                            data-v-max="999999" data-v-min="0" name="stock"
-                                                           value="{{ $products->stock ?? ""}}">
+                                                           value="{{ $products->stock}}">
 
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-4 col-form-label" for="price">Fiyat</label>
                                                 <div class="col-sm-8">
-                                                        <input type="text" class="form-control autonumber fill"  id="price"
+                                                    <input type="text" class="form-control number-mask  fill"
+                                                           max="9999999" min="1" placeholder="Eski Fiyat 5.000"
+                                                           name="price" step="0000.01"     value="{{ $products->price}}">
 
-                                                               name="price" placeholder="Fiyat Giriniz"
-                                                               value="{{ $products->price ?? ""}}">
+
+{{--                                                        <input type="text" class="form-control autonumber fill"  id="price"--}}
+{{--                                                               name="price" placeholder="Fiyat Giriniz"--}}
+{{--                                                               value="{{ $products->price}}">--}}
 
                                                 </div>
 
@@ -106,9 +112,15 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-4 col-form-label" for="old_price">Eski Fiyat</label>
                                                 <div class="col-sm-8">
-                                                        <input type="text" class="form-control autonumber fill" id="old_price"
-                                                               placeholder="Eski Fiyat 5.000"
-                                                               name="old_price" step="0000.01" value="{{$products->old_price}}">
+                                                    <input type="text" class="form-control number-mask  fill"
+                                                           max="9999999" min="1" placeholder="Eski Fiyat 5.000"
+                                                           name="old_price" step="0000.01" value="{{$products->old_price}}">
+
+
+
+{{--                                                        <input type="text" class="form-control autonumber fill" id="old_price"--}}
+{{--                                                               placeholder="Eski Fiyat 5.000"--}}
+{{--                                                               name="old_price" step="0000.01" value="{{$products->old_price}}">--}}
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -164,7 +176,7 @@
                                                 <div class="product-attributes">
                                                     @php $attrArray =['size','color']; $type = 'text';  $hidden = ""; @endphp
 
-                                                    @foreach($attributes as $attr=>$value)
+                                                    @forelse($attributes as $attr=>$value)
                                                         @if($attr == "popular" || $attr == "best-sales")
                                                             @php $type = 'number'; $hidden = "hidden" @endphp
                                                         @endif
@@ -196,7 +208,8 @@
 {{--                                                                    data-id="{{$loop->iteration}}">Sil--}}
 {{--                                                            </button>--}}
 {{--                                                        </div>--}}
-                                                    @endforeach
+                                                        @empty
+                                                    @endforelse
                                                 </div>
                                             </div>
                                         </div>
@@ -245,12 +258,13 @@
 
     <script src="{{asset('admin/assets/pages/summernote-0.8.18/summernote.js')}}"></script>
     <script src="{{asset('admin/assets/pages/summernote-0.8.18/lang/summernote-tr-TR.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
 
     <script>
 
         $(document).ready(function () {
 
-            $('.autonumber').autoNumeric('init');
+            // $('.autonumber').autoNumeric('init');
 
 
             $('#detail').summernote({
@@ -360,5 +374,16 @@
             return Math.random().toString(36).substr(2, 9);
 
         }
+
+        $(document).ready(function() {
+            $('.number-mask').inputmask({
+                alias: 'numeric',
+                groupSeparator: ',',
+                autoGroup: false,
+                placeholder: '0',
+                rightAlign: false,
+                allowMinus: false
+            });
+        });
     </script>
 @endsection

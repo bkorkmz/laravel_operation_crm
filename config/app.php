@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
-
 return [
 
     /*
@@ -16,7 +15,7 @@ return [
     | any other location as required by the application or its packages.
     |
     */
-    "CURRENT_THEME"=>env('CURRENT_THEME','nest'),
+    'CURRENT_THEME' => env('CURRENT_THEME', 'nest'),
 
     'name' => env('APP_NAME', 'Laravel'),
 
@@ -44,8 +43,8 @@ return [
     |
     */
 
-   // 'debug' => (bool) config('settings.APP_DEBUG'),
-   'debug' => (bool) env('APP_DEBUG', false),
+    // 'debug' => (bool) config('settings.APP_DEBUG'),
+    'debug' => (bool) env('APP_DEBUG', false),
     /*
     |--------------------------------------------------------------------------
     | Application URL
@@ -173,10 +172,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\SettingsServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class
-
-
-
+        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
 
     ])->toArray(),
 
@@ -193,9 +189,9 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
-//        'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
-          'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-          'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
+        //        'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
     ])->toArray(),
 
 ];

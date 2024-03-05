@@ -138,7 +138,7 @@ Telefon:  0532 637 27 52</span>
                             </div>
 
                             <div class="header-action-icon-2">
-                                <a class="mini-cart-icon" href="javascript:void(0)">
+                                <a class="mini-cart-icon" href="{{route('frontend.cart')}}">
                                     <img alt="cart" src="frontend/assets/imgs/theme/icons/icon-cart.svg" />
                                     <span class="pro-count blue">3</span>
                                 </a>

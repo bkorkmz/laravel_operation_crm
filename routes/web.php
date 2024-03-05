@@ -406,7 +406,13 @@ Route::prefix('backend')->middleware('auth')->group(function () {
 
 //Route Frontend
 
-
+##### CİHAN ÇALIŞMA ALANI #####
+Route::get('/sepeteekle/{slug}', [FrontendController::class, 'cart_add'])->name('frontend.cart_add');
+Route::post('/sepetguncelle/{rowId}', [FrontendController::class, 'cart_update'])->name('frontend.cart_update');
+Route::get('/sepettensil/{rowId}', [FrontendController::class, 'cart_remove'])->name('frontend.cart_remove');
+Route::get('/sepetbosalt', [FrontendController::class, 'cart_destroy'])->name('frontend.cart_destroy');
+Route::get('/sepet', [FrontendController::class, 'cart'])->name('frontend.cart');
+##### CİHAN ÇALIŞMA ALANI #####
 
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
 Route::get('/blog', [FrontendController::class, 'blog'])->name('frontend.blog');
@@ -426,5 +432,4 @@ Route::get('/site-map', [FrontendController::class, 'siteMap'])->name('frontend.
 Route::post('/contact', [FrontendController::class, 'contactsubmit'])->name('frontend.contactsubmit');
 Route::get('/{model}', [FrontendController::class, 'page'])->name('frontend.page');
 Route::post('/newsletter', [FrontendController::class, 'newsletter'])->name('frontend.newsletter');
-
 

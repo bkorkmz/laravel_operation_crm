@@ -15,7 +15,31 @@
       "path": "/^profile/",
       "badge": "false",
       "permission": "view_my_profile_users"
-    },    {
+    },
+      {
+          "text": "E-ticaret",
+          "icon": "feather icon-pie-chart",
+          "route": "",
+          "path": "/^product/",
+          "badge": "false",
+          "permission": [
+              "view_menu_product"
+          ],
+          "submenu": [
+              {
+                  "text": "Ürün Listesi",
+                  "icon": "feather icon-users",
+                  "route": "product.index",
+                  "path": "/^product(\\/index|\\/create|\\/edit|\\/show|\\/)?$/",
+                  "badge": "false",
+                  "permission": [
+                      "view_product"
+                  ]
+              }
+          ]
+      },
+
+      {
       "text": "Testler",
       "icon": "feather icon-zap",
       "route": "",
@@ -347,29 +371,7 @@
       ]
     },
 
-    {
-      "text": "Ürünler",
-      "icon": "feather icon-pie-chart",
-      "route": "",
-      "path": "/^product/",
-      "badge": "false",
-      "permission": [
-        "view_menu_product",
-        "view_product"
-      ],
-      "submenu": [
-        {
-          "text": "Ürün Listesi",
-          "icon": "feather icon-users",
-          "route": "product.index",
-          "path": "/^product/",
-          "badge": "false",
-          "permission": [
-            "view_product"
-          ]
-        }
-      ]
-    },
+
     {
       "text": "Ayarlar",
       "icon": "feather icon-settings",
