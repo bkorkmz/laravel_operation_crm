@@ -173,6 +173,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\SettingsServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class
 
 
 
@@ -194,7 +195,7 @@ return [
         // 'Example' => App\Facades\Example::class,
 //        'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
           'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-
+          'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
     ])->toArray(),
 
 ];
