@@ -87,7 +87,7 @@
                                                 <a class="add" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$productOne['name']}}">
                                                     <i class="fi-rs-shopping-cart mr-5"></i>
 {{--                                                    <i class="fi-rs-info"></i>--}}
-                                                    Sepet Ekle</a>
+                                                    Ekle</a>
                                             </div>
                                         </div>
                                     </div>
@@ -156,7 +156,7 @@
                                                 <a class="add" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$productOne['name']}}">
                                                      <i class="fi-rs-shopping-cart mr-5"></i>
 {{--                                                    <i class="fi-rs-info"></i>--}}
-                                                    Sepet Ekle</a>
+                                                    Ekle</a>
                                             </div>
                                         </div>
                                     </div>
@@ -231,7 +231,7 @@
 
                                         <div class="product-extra-link2  has-buy-now-button ">
                                             <button type="submit" class="button button-add-to-cart">
-                                                <i class="fi-rs-shopping-cart"></i> Sepete Ekle</button>
+                                                <i class="fi-rs-shopping-cart"></i> Ekle</button>
 
                                             <a aria-label="Favoriye Ekle" class="action-btn hover-up js-add-to-wishlist-button" data-url="" href="#"><i class="fi-rs-heart"></i></a>
 {{--                                            <a aria-label="Add To Compare" href="#" class="action-btn hover-up js-add-to-compare-button" data-url="https://nest.botble.com/compare/4"><i class="fi-rs-shuffle"></i></a>--}}

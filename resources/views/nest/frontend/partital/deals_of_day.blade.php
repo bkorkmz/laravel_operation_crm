@@ -13,7 +13,7 @@
                 <div class="product-cart-wrap style-2 wow animate__animated animate__fadeInUp" data-wow-delay="0">
                     <div class="product-img-action-wrap">
                         <div class="product-img">
-                            <a href="shop-product-right.html">
+                            <a href="javascript:void(0)">
                                 <img src="{{asset('frontend/assets/imgs/banner/banner-5.png')}}" alt="" />
                             </a>
                         </div>
@@ -23,7 +23,7 @@
                             <div class="deals-countdown" data-countdown="2025/03/25 00:00:00"></div>
                         </div>
                         <div class="deals-content">
-                            <h2><a href="shop-product-right.html">Seeds of Change Organic Quinoa, Brown, & Red Rice</a></h2>
+                            <h2><a href="javascript:void(0)">Seeds of Change Organic Quinoa, Brown, & Red Rice</a></h2>
                             <div class="product-rate-cover">
                                 <div class="product-rate d-inline-block">
                                     <div class="product-rating" style="width: 90%"></div>
@@ -31,7 +31,7 @@
                                 <span class="font-small ml-5 text-muted"> (4.0)</span>
                             </div>
                             <div>
-                                <span class="font-small text-muted">By <a href="vendor-details-1.html">NestFood</a></span>
+                                <span class="font-small text-muted">By <a href="javascript:void(0)">NestFood</a></span>
                             </div>
                             <div class="product-card-bottom">
                                 <div class="product-price">
@@ -39,7 +39,7 @@
                                     <span class="old-price">$33.8</span>
                                 </div>
                                 <div class="add-cart">
-                                    <a class="add" href="shop-cart.html"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
+                                    <a class="add" href="javascript:void(0)"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                 <div class="product-cart-wrap style-2 wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
                     <div class="product-img-action-wrap">
                         <div class="product-img">
-                            <a href="shop-product-right.html">
+                            <a href="javascript:void(0)">
                                 <img src="{{asset('frontend/assets/imgs/banner/banner-6.png')}}" alt="" />
                             </a>
                         </div>
@@ -60,7 +60,7 @@
                             <div class="deals-countdown" data-countdown="2026/04/25 00:00:00"></div>
                         </div>
                         <div class="deals-content">
-                            <h2><a href="shop-product-right.html">Perdue Simply Smart Organics Gluten Free</a></h2>
+                            <h2><a href="javascript:void(0)">Perdue Simply Smart Organics Gluten Free</a></h2>
                             <div class="product-rate-cover">
                                 <div class="product-rate d-inline-block">
                                     <div class="product-rating" style="width: 90%"></div>
@@ -68,7 +68,7 @@
                                 <span class="font-small ml-5 text-muted"> (4.0)</span>
                             </div>
                             <div>
-                                <span class="font-small text-muted">By <a href="vendor-details-1.html">Old El Paso</a></span>
+                                <span class="font-small text-muted">By <a href="javascript:void(0)">Old El Paso</a></span>
                             </div>
                             <div class="product-card-bottom">
                                 <div class="product-price">
@@ -76,7 +76,7 @@
                                     <span class="old-price">$26.8</span>
                                 </div>
                                 <div class="add-cart">
-                                    <a class="add" href="shop-cart.html"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
+                                    <a class="add" href="javascript:void(0)"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                 <div class="product-cart-wrap style-2 wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
                     <div class="product-img-action-wrap">
                         <div class="product-img">
-                            <a href="shop-product-right.html">
+                            <a href="javascript:void(0)">
                                 <img src="{{asset('frontend/assets/imgs/banner/banner-7.png')}}" alt="" />
                             </a>
                         </div>
@@ -97,7 +97,7 @@
                             <div class="deals-countdown" data-countdown="2027/03/25 00:00:00"></div>
                         </div>
                         <div class="deals-content">
-                            <h2><a href="shop-product-right.html">Signature Wood-Fired Mushroom and Caramelized</a></h2>
+                            <h2><a href="javascript:void(0)">Signature Wood-Fired Mushroom and Caramelized</a></h2>
                             <div class="product-rate-cover">
                                 <div class="product-rate d-inline-block">
                                     <div class="product-rating" style="width: 80%"></div>
@@ -105,7 +105,7 @@
                                 <span class="font-small ml-5 text-muted"> (3.0)</span>
                             </div>
                             <div>
-                                <span class="font-small text-muted">By <a href="vendor-details-1.html">Progresso</a></span>
+                                <span class="font-small text-muted">By <a href="javascript:void(0)">Progresso</a></span>
                             </div>
                             <div class="product-card-bottom">
                                 <div class="product-price">
@@ -113,7 +113,7 @@
                                     <span class="old-price">$13.8</span>
                                 </div>
                                 <div class="add-cart">
-                                    <a class="add" href="shop-cart.html"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
+                                    <a class="add" href="javascript:void(0)"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
                                 </div>
                             </div>
                         </div>
@@ -124,7 +124,7 @@
                 <div class="product-cart-wrap style-2 wow animate__animated animate__fadeInUp" data-wow-delay=".3s">
                     <div class="product-img-action-wrap">
                         <div class="product-img">
-                            <a href="shop-product-right.html">
+                            <a href="javascript:void(0)">
                                 <img src="{{asset('frontend/assets/imgs/banner/banner-8.png')}}" alt="" />
                             </a>
                         </div>
@@ -134,7 +134,7 @@
                             <div class="deals-countdown" data-countdown="2025/02/25 00:00:00"></div>
                         </div>
                         <div class="deals-content">
-                            <h2><a href="shop-product-right.html">Simply Lemonade with Raspberry Juice</a></h2>
+                            <h2><a href="javascript:void(0)">Simply Lemonade with Raspberry Juice</a></h2>
                             <div class="product-rate-cover">
                                 <div class="product-rate d-inline-block">
                                     <div class="product-rating" style="width: 80%"></div>
@@ -142,7 +142,7 @@
                                 <span class="font-small ml-5 text-muted"> (3.0)</span>
                             </div>
                             <div>
-                                <span class="font-small text-muted">By <a href="vendor-details-1.html">Yoplait</a></span>
+                                <span class="font-small text-muted">By <a href="javascript:void(0)">Yoplait</a></span>
                             </div>
                             <div class="product-card-bottom">
                                 <div class="product-price">
@@ -150,7 +150,7 @@
                                     <span class="old-price">$16.8</span>
                                 </div>
                                 <div class="add-cart">
-                                    <a class="add" href="shop-cart.html"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
+                                    <a class="add" href="javascript:void(0)"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
                                 </div>
                             </div>
                         </div>

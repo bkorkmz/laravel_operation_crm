@@ -5,7 +5,6 @@
 @if(!blank($products))
     <section class="banners mb-25">
         <div class="container">
-            <h3 class="mt-2 mb-40" >Çok Satanlar</h3>
             <div class="row">
                 @foreach($products as $product)
                     <div class="col-lg-4 d-md-none d-lg-flex">

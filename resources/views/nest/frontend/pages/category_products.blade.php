@@ -86,7 +86,7 @@
 {{--                                                                                        <span class="old-price">{{$product->old_price != 0 ?$product->old_price." TL" : ""}}</span>--}}
                                     </div>
                                     <div class="add-cart">
-                                        <a class="add" target="_blank" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$product->name}}"><i class="fi-rs-shopping-cart mr-5"></i>Sepete Ekle</a>
+                                        <a class="add" target="_blank" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$product->name}}"><i class="fi-rs-shopping-cart mr-5"></i> Ekle</a>
                                     </div>
                                 </div>
                             </div>
@@ -190,7 +190,7 @@
 
                                         <div class="product-extra-link2  has-buy-now-button ">
                                             <button type="submit" class="button button-add-to-cart">
-                                                <i class="fi-rs-shopping-cart"></i> Sepete Ekle</button>
+                                                <i class="fi-rs-shopping-cart"></i> Ekle</button>
 
                                             <a aria-label="Favoriye Ekle" class="action-btn hover-up js-add-to-wishlist-button" data-url="" href="#"><i class="fi-rs-heart"></i></a>
                                             {{--                                            <a aria-label="Add To Compare" href="#" class="action-btn hover-up js-add-to-compare-button" data-url="https://nest.botble.com/compare/4"><i class="fi-rs-shuffle"></i></a>--}}

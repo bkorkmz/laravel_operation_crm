@@ -42,6 +42,18 @@ class FrontendController extends Controller
 
     }
 
+    public function sliders(): array
+    {
+        $portfolios = PortFolio::where('type', 'slider')
+            ->where('status', 1)
+            ->get();
+        $sliders = $portfolios->whereNull('banner_image');
+        $banners = $portfolios->whereNotNull('banner_image')->first();
+
+        return compact('sliders', 'banners');
+    }
+
+
     public function popularProducts(): array
     {
         $categoriesWithPopularProducts = Category::whereHas('getProduct', function ($query) {
@@ -70,18 +82,9 @@ class FrontendController extends Controller
         return compact('products');
     }
 
-    public function sliders(): array
-    {
-        $portfolios = PortFolio::where('type', 'slider')
-            ->where('status', 1)
-            ->get();
-        $sliders = $portfolios->whereNull('banner_image');
-        $banners = $portfolios->whereNotNull('banner_image')->first();
 
-        return compact('sliders', 'banners');
-    }
 
-    public function best_sales()
+    public function deals_of_day()
     {
 
     }
@@ -93,7 +96,7 @@ class FrontendController extends Controller
         return compact('categories');
     }
 
-    public function featuredCategories()
+    public function DailyBestSells()
     {
         //        $categories = Category::product()->where(['show' => 1])->whereHas('getProduct')->withCount('getProduct')->get();
         //
@@ -104,14 +107,16 @@ class FrontendController extends Controller
     {
         $contents = collect();
 
-        $pages['sliders'] = 'sliders';
-        $pages['bestSalesProduct'] = 'bestSalesProduct';
-        $pages['popularProducts'] = 'popularProducts';
-        $pages['featuredCategories'] = 'featuredCategories';
-        //        $pages['end_deals'] = 'end_deals';
-        //        $pages['category_sliders'] = 'category_sliders';
-        //                $pages['best_sales'] = 'best_sales';
-        //        $pages['categorySliders'] = 'categorySliders';
+        $pages['sliders'] = 'sliders'; // Slider
+        $pages['bestSalesProduct'] = 'bestSalesProduct';   // Slider tanıtım
+        $pages['categorySliders'] = 'categorySliders'; // Kategori ler
+        $pages['popularProducts'] = 'popularProducts'; // Popüler ürünler
+        $pages['DailyBestSells'] = 'DailyBestSells';
+        $pages['deals_of_day'] = 'deals_of_day';
+
+
+//                $pages['top_selling'] = 'top_selling';
+//                $pages['end_deals'] = 'end_deals';
 
         foreach ($pages as $key => $page) {
             $contents->put($key, $this->$page());

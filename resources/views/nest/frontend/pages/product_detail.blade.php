@@ -7,15 +7,14 @@
 @endsection
 @section('head')
 
-
-    <meta name="keywords" content="{{ $product->name}} " />
+    <meta name="keywords" content="{{ $product->name}} "/>
     <meta name="description" content="{{ $product->detail }}">
     <meta name="datePublished" content="{{ $product->created_at }}">
     <meta name="dateModified" content="{{ $product->updated_at }}">
 
-{{--    <meta property="product:price:amount" content="{{ $product->price }}" />--}}
-    <meta property="product:price:currency" content="TRY" />
-    <meta property="product:availability" content="instock" />
+    {{--    <meta property="product:price:amount" content="{{ $product->price }}" />--}}
+    <meta property="product:price:currency" content="TRY"/>
+    <meta property="product:availability" content="instock"/>
 
 
 
@@ -63,9 +62,9 @@
   },
   "offers": {
     "@type": "Offer",
-{{--    "priceCurrency": "{{ $product->price }}",--}}
-{{--    "price": "{{ $product->price }}",--}}
-    "availability": "{{ $product->stock > 0 ? 'InStock' : 'SoldOut'}}"
+            "priceCurrency": "{{ $product->price }}",
+            "price": "{{ $product->price }}",
+        "availability": "{{ $product->stock > 0 ? 'InStock' : 'SoldOut'}}"
   },
   "aggregateRating": {
     "@type": "AggregateRating",
@@ -92,8 +91,6 @@
         }
     </script>
 
-
-
 @endsection
 @section('breadcrumb')
     <div class="page-header breadcrumb-wrap">
@@ -106,6 +103,9 @@
     </div>
 @endsection
 @section('content')
+
+    @php $attributes = json_validate($product->attributes)? json_decode($product->attributes,true) : []; @endphp
+
     <div class="container mb-30">
         <div class="row">
             <div class="col-xl-11 col-lg-12 m-auto">
@@ -121,29 +121,29 @@
                                             <figure class="border-radius-10">
                                                 <img src="{{$product->photo}}" alt="{{$product->name}}"/>
                                             </figure>
-{{--                                            <figure class="border-radius-10">--}}
-{{--                                                <img src="assets/imgs/shop/product-16-1.jpg" alt="product image"/>--}}
-{{--                                            </figure>--}}
-{{--                                            <figure class="border-radius-10">--}}
-{{--                                                <img src="assets/imgs/shop/product-16-3.jpg" alt="product image"/>--}}
-{{--                                            </figure>--}}
-{{--                                            <figure class="border-radius-10">--}}
-{{--                                                <img src="assets/imgs/shop/product-16-4.jpg" alt="product image"/>--}}
-{{--                                            </figure>--}}
-{{--                                            <figure class="border-radius-10">--}}
-{{--                                                <img src="assets/imgs/shop/product-16-5.jpg" alt="product image"/>--}}
-{{--                                            </figure>--}}
-{{--                                            <figure class="border-radius-10">--}}
-{{--                                                <img src="assets/imgs/shop/product-16-6.jpg" alt="product image"/>--}}
-{{--                                            </figure>--}}
-{{--                                            <figure class="border-radius-10">--}}
-{{--                                                <img src="assets/imgs/shop/product-16-7.jpg" alt="product image"/>--}}
-{{--                                            </figure>--}}
+                                            {{--                                            <figure class="border-radius-10">--}}
+                                            {{--                                                <img src="assets/imgs/shop/product-16-1.jpg" alt="product image"/>--}}
+                                            {{--                                            </figure>--}}
+                                            {{--                                            <figure class="border-radius-10">--}}
+                                            {{--                                                <img src="assets/imgs/shop/product-16-3.jpg" alt="product image"/>--}}
+                                            {{--                                            </figure>--}}
+                                            {{--                                            <figure class="border-radius-10">--}}
+                                            {{--                                                <img src="assets/imgs/shop/product-16-4.jpg" alt="product image"/>--}}
+                                            {{--                                            </figure>--}}
+                                            {{--                                            <figure class="border-radius-10">--}}
+                                            {{--                                                <img src="assets/imgs/shop/product-16-5.jpg" alt="product image"/>--}}
+                                            {{--                                            </figure>--}}
+                                            {{--                                            <figure class="border-radius-10">--}}
+                                            {{--                                                <img src="assets/imgs/shop/product-16-6.jpg" alt="product image"/>--}}
+                                            {{--                                            </figure>--}}
+                                            {{--                                            <figure class="border-radius-10">--}}
+                                            {{--                                                <img src="assets/imgs/shop/product-16-7.jpg" alt="product image"/>--}}
+                                            {{--                                            </figure>--}}
                                         </div>
                                         <!-- THUMBNAILS -->
                                         <div class="slider-nav-thumbnails">
                                             <div><img src="{{$product->photo}}" alt="{{$product->name}}"/></div>
-{{--                                            <div><img src="assets/imgs/shop/thumbnail-4.jpg" alt="product image"/></div>--}}
+                                            {{--                                            <div><img src="assets/imgs/shop/thumbnail-4.jpg" alt="product image"/></div>--}}
 
                                         </div>
                                     </div>
@@ -153,18 +153,19 @@
                                 <div class="col-md-6 col-sm-12 col-xs-12">
                                     <div class="detail-info pr-30 pl-30">
                                         @if($product->stock <= 20)
-                                            <span class="stock-status out-stock">{{$product->stock <= 20 ? 'Sınırlı Stok':""}} </span>
+                                            <span
+                                                class="stock-status out-stock">{{$product->stock <= 20 ? 'Sınırlı Stok':""}} </span>
                                         @endif
                                         <h2 class="title-detail">{{$product->name}}</h2>
                                         <br>
-                                                                                {{--<div class="product-detail-rating">
-                                                                                    <div class="product-rate-cover text-end">
-                                                                                        <div class="product-rate d-inline-block">
-                                                                                            <div class="product-rating" style="width: 90%"></div>
-                                                                                        </div>
-                                                                                        <span class="font-small ml-5 text-muted"> (32 reviews)</span>
-                                                                                    </div>
-                                                                                </div>--}}
+                                        {{--<div class="product-detail-rating">
+                                            <div class="product-rate-cover text-end">
+                                                <div class="product-rate d-inline-block">
+                                                    <div class="product-rating" style="width: 90%"></div>
+                                                </div>
+                                                <span class="font-small ml-5 text-muted"> (32 reviews)</span>
+                                            </div>
+                                        </div>--}}
                                         <div class="clearfix product-price-cover">
                                             <div class="product-price primary-color float-left">
                                                 <span
@@ -172,8 +173,7 @@
                                                 <span>
 {{--                                                        <span class="save-price font-md color3 ml-15">26% Off</span>--}}
                                                     @if($product->old_price)
-                                                        <span
-                                                            class="old-price font-md ml-15">{{$product->old_price." Tl"}}</span>
+                                                        <span class="old-price font-md ml-15">{{$product->old_price." TL"}}</span>
 
                                                     @endif
                                                     </span>
@@ -182,34 +182,36 @@
                                         <div class="short-desc mb-30">
                                             <p class="font-lg">{{$product->short_detail}}</p>
                                         </div>
-                                        {{--                                        <div class="attr-detail attr-size mb-30">--}}
-                                        {{--                                            <strong class="mr-10">Size / Weight: </strong>--}}
-                                        {{--                                            <ul class="list-filter size-filter font-small">--}}
-                                        {{--                                                <li><a href="#">50g</a></li>--}}
-                                        {{--                                                <li class="active"><a href="#">60g</a></li>--}}
-                                        {{--                                                <li><a href="#">80g</a></li>--}}
-                                        {{--                                                <li><a href="#">100g</a></li>--}}
-                                        {{--                                                <li><a href="#">150g</a></li>--}}
-                                        {{--                                            </ul>--}}
-                                        {{--                                        </div>--}}
-                                        {{--                                        <div class="detail-extralink mb-50">--}}
-                                        {{--                                            <div class="detail-qty border radius">--}}
-                                        {{--                                                <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>--}}
-                                        {{--                                                <span class="qty-val">1</span>--}}
-                                        {{--                                                <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>--}}
-                                        {{--                                            </div>--}}
-                                                                                    <div class="product-extra-link2">
-                                                                                        <button onclick="sendWhatsApp('{{$product->name}}')" type="button" class="button button-add-to-cart"  ><i class="fi-rs-shopping-cart"></i>Fityat Al</button>
-{{--                                                                                        <a aria-label="Add To Wishlist" class="action-btn hover-up" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>--}}
-{{--                                                                                        <a aria-label="Compare" class="action-btn hover-up" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>--}}
-                                                                                    </div>
-                                        {{--                                        </div>--}}
+{{--                                        <div class="attr-detail attr-size mb-30">--}}
+{{--                                            <strong class="mr-10">Size / Weight: </strong>--}}
+{{--                                            <ul class="list-filter size-filter font-small">--}}
+{{--                                                <li><a href="#">50g</a></li>--}}
+{{--                                                <li class="active"><a href="#">60g</a></li>--}}
+{{--                                                <li><a href="#">80g</a></li>--}}
+{{--                                                <li><a href="#">100g</a></li>--}}
+{{--                                                <li><a href="#">150g</a></li>--}}
+{{--                                            </ul>--}}
+{{--                                        </div>--}}
+                                        <div class="detail-extralink mb-50">
+                                            <div class="detail-qty border radius">
+                                                <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                                                <span class="qty-val">1</span>
+                                                <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                                            </div>
+                                            <div class="product-extra-link2">
+                                                <button onclick="sendWhatsApp('{{$product->name}}')" type="button"
+                                                        class="button button-add-to-cart"><i
+                                                        class="fi-rs-shopping-cart"></i>Sepete Ekle
+                                                </button>
+                                                  <a aria-label="Add To Wishlist" class="action-btn hover-up"href="javascript:void(0)"><i class="fi-rs-heart"></i></a>
+                                                {{--  <a aria-label="Compare" class="action-btn hover-up"href="javascript:void(0)"><i class="fi-rs-shuffle"></i></a>--}}
+                                            </div>
+                                        </div>
                                         <div class="font-xs">
                                             <ul class="mr-50 float-start">
 
-                                                @php $attributes = json_validate($product->attributes)? json_decode($product->attributes,true) : []; @endphp
                                                 @forelse($attributes as $key => $attr)
-                                                    @if($key != 'popular')
+                                                    @if($key != 'popular' && $key != 'best-sales' )
                                                         <li class="mb-5">{{$key}}: <span
                                                                 class="text-brand">{{$attr}}</span></li>
                                                     @endif
@@ -482,51 +484,56 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="row related-products">
-                                       @foreach($otherProducts as $otherProduct)
+                                        @foreach($otherProducts as $otherProduct)
                                             <div class="col-lg-3 col-md-4 col-12 col-sm-6">
                                                 <div class="product-cart-wrap hover-up">
                                                     <div class="product-img-action-wrap">
                                                         <div class="product-img product-img-zoom">
-                                                            <a href="{{route('frontend.product_detail',['slug'=>$otherProduct->slug])}}" tabindex="0">
+                                                            <a href="{{route('frontend.product_detail',['slug'=>$otherProduct->slug])}}"
+                                                               tabindex="0">
                                                                 <img class="default-img"
-                                                                     src="{{$otherProduct->photo}}" alt="{{$otherProduct->name}}"/>
+                                                                     src="{{$otherProduct->photo}}"
+                                                                     alt="{{$otherProduct->name}}"/>
                                                                 <img class="hover-img"
-                                                                     src="{{$otherProduct->photo}}" alt="{{$otherProduct->name}}"/>
+                                                                     src="{{$otherProduct->photo}}"
+                                                                     alt="{{$otherProduct->name}}"/>
                                                             </a>
                                                         </div>
                                                         <div class="product-action-1">
-                                                            <a aria-label="Hızlı Göster" class="action-btn"   onclick="quickModal({{$otherProduct->id}})">
-                                                            <i class="fi-rs-eye"></i></a>
+                                                            <a aria-label="Hızlı Göster" class="action-btn"
+                                                               onclick="quickModal({{$otherProduct->id}})">
+                                                                <i class="fi-rs-eye"></i></a>
 
-{{--                                                            <a aria-label="Quick view" class="action-btn small hover-up"--}}
-{{--                                                               data-bs-toggle="modal" data-bs-target="#quickViewModal"><i--}}
-{{--                                                                    class="fi-rs-search"></i></a>--}}
-{{--                                                            <a aria-label="Add To Wishlist"--}}
-{{--                                                               class="action-btn small hover-up" href="shop-wishlist.html"--}}
-{{--                                                               tabindex="0"><i class="fi-rs-heart"></i></a>--}}
-{{--                                                            <a aria-label="Compare" class="action-btn small hover-up"--}}
-{{--                                                               href="shop-compare.html" tabindex="0"><i--}}
-{{--                                                                    class="fi-rs-shuffle"></i></a>--}}
+                                                            {{--                                                            <a aria-label="Quick view" class="action-btn small hover-up"--}}
+                                                            {{--                                                               data-bs-toggle="modal" data-bs-target="#quickViewModal"><i--}}
+                                                            {{--                                                                    class="fi-rs-search"></i></a>--}}
+                                                            {{--                                                            <a aria-label="Add To Wishlist"--}}
+                                                            {{--                                                               class="action-btn small hover-up"href="javascript:void(0)"--}}
+                                                            {{--                                                               tabindex="0"><i class="fi-rs-heart"></i></a>--}}
+                                                            {{--                                                            <a aria-label="Compare" class="action-btn small hover-up"--}}
+                                                            {{--                                                              href="javascript:void(0)" tabindex="0"><i--}}
+                                                            {{--                                                                    class="fi-rs-shuffle"></i></a>--}}
                                                         </div>
-{{--                                                        <div--}}
-{{--                                                            class="product-badges product-badges-position product-badges-mrg">--}}
-{{--                                                            <span class="hot">Hot</span>--}}
-{{--                                                        </div>--}}
+                                                        {{--                                                        <div--}}
+                                                        {{--                                                            class="product-badges product-badges-position product-badges-mrg">--}}
+                                                        {{--                                                            <span class="hot">Hot</span>--}}
+                                                        {{--                                                        </div>--}}
                                                     </div>
                                                     <div class="product-content-wrap">
-                                                        <h2><a href="{{route('frontend.product_detail',['slug'=>$otherProduct->slug])}}" tabindex="0">{{$otherProduct->name}}</a></h2>
-{{--                                                        <div class="rating-result" title="90%">--}}
-{{--                                                            <span> </span>--}}
-{{--                                                        </div>--}}
+                                                        <h2>
+                                                            <a href="{{route('frontend.product_detail',['slug'=>$otherProduct->slug])}}"
+                                                               tabindex="0">{{$otherProduct->name}}</a></h2>
+                                                        {{--                                                        <div class="rating-result" title="90%">--}}
+                                                        {{--                                                            <span> </span>--}}
+                                                        {{--                                                        </div>--}}
                                                         <div class="product-price">
                                                             <span>{{$otherProduct->price != 0 ?$otherProduct->price." TL" : ""}}</span>
-{{--                                                            <span class="old-price">$245.8</span>--}}
+                                                            {{--                                                            <span class="old-price">$245.8</span>--}}
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                       @endforeach
-
+                                        @endforeach
 
 
                                     </div>
@@ -541,7 +548,7 @@
                                 @foreach($categories as  $category)
                                     <li>
                                         <a href="{{ route('frontend.page', $category->slug) }}"> {{$category->name}}</a>
-                                        <span  class="count">{{$category->get_product_count}}</span>
+                                        <span class="count">{{$category->get_product_count}}</span>
                                     </li>
                                 @endforeach
                             </ul>
@@ -551,29 +558,29 @@
                         <div class="sidebar-widget product-sidebar mb-30 p-30 bg-grey border-radius-10">
                             <h5 class="section-title style-1 mb-30">Yeni Ürünler</h5>
 
-                             @foreach($otherProducts as $newProduct)
-                            <div class="single-post clearfix">
-                                <div class="image">
-                                    <img src="{{$newProduct->photo}}" alt="{{$newProduct->name}}"/>
+                            @foreach($otherProducts as $newProduct)
+                                <div class="single-post clearfix">
+                                    <div class="image">
+                                        <img src="{{$newProduct->photo}}" alt="{{$newProduct->name}}"/>
+                                    </div>
+                                    <div class="content pt-10">
+                                        <h5><a class="font-xs"
+                                               href="{{route('frontend.product_detail',['slug'=>$newProduct->slug])}}"> {{$newProduct->name}}</a>
+                                        </h5>
+                                        <p class="price mb-0 mt-5">{{$newProduct->price != 0 ?$newProduct->price." TL" : ""}}</p>
+                                        {{--                                    <div class="product-rate">--}}
+                                        {{--                                        <div class="product-rating" style="width: 90%"></div>--}}
+                                        {{--                                    </div>--}}
+                                    </div>
                                 </div>
-                                <div class="content pt-10">
-                                    <h5><a class="font-xs" href="{{route('frontend.product_detail',['slug'=>$newProduct->slug])}}"> {{$newProduct->name}}</a></h5>
-                                    <p class="price mb-0 mt-5">{{$newProduct->price != 0 ?$newProduct->price." TL" : ""}}</p>
-{{--                                    <div class="product-rate">--}}
-{{--                                        <div class="product-rating" style="width: 90%"></div>--}}
-{{--                                    </div>--}}
-                                </div>
-                            </div>
 
                             @endforeach
 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-
 
 
         <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel"
@@ -600,35 +607,35 @@
                             <div class="col-md-6 col-sm-12 col-xs-12">
                                 <div class="detail-info pr-30 pl-30">
                                     <span class="stock-status out-stock"> Popüler </span>
-                                    <h3 class="title-detail"><a href="" class="text-heading product-title">Ürün adı</a></h3>
+                                    <h3 class="title-detail"><a href="" class="text-heading product-title">Ürün adı</a>
+                                    </h3>
                                     <div class="product-detail-rating">
-                                        <div class="product-rate-cover product-desc" >
+                                        <div class="product-rate-cover product-desc">
 
                                         </div>
 
                                     </div>
                                     <div class="font-xs">
-                                        <ul id="product-attributes">
-                                        </ul>
+                                        <ul id="product-attributes"></ul>
                                     </div>
                                     <div class="clearfix product-price-cover">
                                         <div class="product-price primary-color float-left">
-                                            <span class="current-price text-brand" id= "price"> </span>
-                                            {{--                                    <span>--}}
-                                            {{--                                       <span class="save-price font-md color3 ml-15">26% </span>--}}
-                                            {{--                                       <span class="old-price font-md ml-15">$52</span>--}}
-                                            {{--                                    </span>--}}
+                                            <span class="current-price text-brand" id="price"> </span>
+                                            <span>
+{{--                                               <span class="save-price font-md color3 ml-15">26% </span>--}}
+                                                {{--                                               <span class="old-price font-md ml-15">$52</span>--}}
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="detail-extralink mb-30">
-                                        {{--                                <div class="detail-qty border radius" >--}}
-                                        {{--                                    <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>--}}
-                                        {{--                                    <span class="qty-val">1</span>--}}
-                                        {{--                                    <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>--}}
-                                        {{--                                </div>--}}
+                                        <div class="detail-qty border radius">
+                                            <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                                            <span class="qty-val">1</span>
+                                            <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                                        </div>
                                         <div class="product-extra-link2">
                                             <button id="whatsapp_share" type="submit" class="button button-add-to-cart">
-                                                {{-- <i class="fi-rs-shopping-cart"></i>--}}Fiyat Al
+                                                <i class="fi-rs-shopping-cart"></i>Ekle
                                             </button>
 
                                         </div>
@@ -645,72 +652,72 @@
         @endsection
 
 
-@section('js')
-@endsection
+        @section('js')
+        @endsection
 
 
-@section('after-js')
-    <script>
+        @section('after-js')
+            <script>
 
-        function quickModal(id) {
-            let modal = $('#quickViewModal');
-            $.ajax({
-                url: '{{ route('product-info') }}/' + id,
-                dataType: "json",
-                success: function (data) {
-                    console.log('data', data)
-                    let product = data.product;
-                    let attributesHtml = '';
-                    let attributes = JSON.parse(product.attributes);
+                function quickModal(id) {
+                    let modal = $('#quickViewModal');
+                    $.ajax({
+                        url: '{{ route('product-info') }}/' + id,
+                        dataType: "json",
+                        success: function (data) {
+                            console.log('data', data)
+                            let product = data.product;
+                            let attributesHtml = '';
+                            let attributes = JSON.parse(product.attributes);
 
-                    Object.entries(attributes).map(([key, value]) => {
-                        // Eğer özellik "popular" ise döngüyü atla
-                        console.log(key, value)
-                        if (key === 'popular') {
-                            return;
-                        }
-                        attributesHtml += `<li class="mb-5">${key}: <span class="text-brand">${value}</span></li>`;
-                    });
+                            Object.entries(attributes).map(([key, value]) => {
+                                // Eğer özellik "popular" ise döngüyü atla
+                                console.log(key, value)
+                                if (key === 'popular') {
+                                    return;
+                                }
+                                attributesHtml += `<li class="mb-5">${key}: <span class="text-brand">${value}</span></li>`;
+                            });
 
 
-                    $('#quickViewModal .modal-body #slider').html(`<figure class="border-radius-10">
+                            $('#quickViewModal .modal-body #slider').html(`<figure class="border-radius-10">
                                         <img src="${product.photo}"
                                               alt="${product.slug}" title="${product.name}"/>
                                     </figure>`);
 
-                    $('#quickViewModal .modal-body #slider-thumbnails').html(`
+                            $('#quickViewModal .modal-body #slider-thumbnails').html(`
                                      <div>
                                             <img src="${product.photo ?? ""}"
                                               alt="${product.slug}" title="${product.name}" width="77" height="77"/>
                                     </div>`);
 
-                    $('#quickViewModal .modal-body .product-title').html(`${product.name}`);
-                    $('#quickViewModal .modal-body .product-desc').html(`${product.short_detail? product.short_detail : ""}`);
-                    $('#quickViewModal .modal-body #product-attributes').html(`${attributesHtml}`);
-                    // $('#quickViewModal .modal-body #price').html(`${product.price} TL`);
+                            $('#quickViewModal .modal-body .product-title').html(`${product.name}`);
+                            $('#quickViewModal .modal-body .product-desc').html(`${product.short_detail ? product.short_detail : ""}`);
+                            $('#quickViewModal .modal-body #product-attributes').html(`${attributesHtml}`);
+                            // $('#quickViewModal .modal-body #price').html(`${product.price} TL`);
 
-                    // $('#whatsapp_share').attr('href', whatsappUrl);
+                            // $('#whatsapp_share').attr('href', whatsappUrl);
 
-                    modal.modal('show');
+                            modal.modal('show');
 
-                },
-                error: (function () {
-                    console.error('Ajax hatası ');
-                })
-            });
-
-
-        }
-
-        const button = document.getElementById('whatsapp_share');
-
-        button.addEventListener('click', function () {
-            const whatsapp_number = "{{config('settings.site_whatsapp_phone')}}";
-            const productName = $('#quickViewModal .modal-body .product-title')[0].text;
-            const whatsappUrl = `https://wa.me/${whatsapp_number}?text=${productName}`;
-            window.open(whatsappUrl, '_blank');
-        });
+                        },
+                        error: (function () {
+                            console.error('Ajax hatası ');
+                        })
+                    });
 
 
-    </script>
+                }
+
+                const button = document.getElementById('whatsapp_share');
+
+                button.addEventListener('click', function () {
+                    const whatsapp_number = "{{config('settings.site_whatsapp_phone')}}";
+                    const productName = $('#quickViewModal .modal-body .product-title')[0].text;
+                    const whatsappUrl = `https://wa.me/${whatsapp_number}?text=${productName}`;
+                    window.open(whatsappUrl, '_blank');
+                });
+
+
+            </script>
 @endsection
