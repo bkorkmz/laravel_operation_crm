@@ -22,20 +22,23 @@
         <div class="card text-center">
             <div class="card-body">
                 <div class="row">
-                    <div class="text-start m-4">
-                        <button onclick="history.back()" class="btn btn-outline-secondary" title="Geri dön" data-bs-toggle="tooltip"
+                    <div class="text-start ">
+                        <img src="{{config('settings.site_logo')}}" class="img-fluid mb-4 mt-3 " alt="logo" width="180px">
+                        <button onclick="history.back()" class="btn btn-outline-secondary float-lg-end mt-4" title="Geri dön" data-bs-toggle="tooltip"
                                 data-bs-placement="top"> <i class="fas fa-reply "></i></button>
-                    </div>
-                    <div class="col-md-9 col-lg-6 col-xl-6">
-                        <img src="{{config('settings.site_logo')}}" class="img-fluid mb-4 mt-3" alt="logo" width="180px">
-                        <div class="align-self-center">
-                            <h3>Kayıt  Sayfası </h3>
-                            <h4>Account Control and System </h4>
-                        </div>
+
 
                     </div>
-                    <div class="col-md-8 col-lg-6 col-xl-5 offset-xl-1">
+{{--                    <div class="col-md-9 col-lg-6 col-xl-6">--}}
+{{--                        <img src="{{config('settings.site_logo')}}" class="img-fluid mb-4 mt-3" alt="logo" width="180px">--}}
+{{--                        <div class="align-self-center">--}}
+{{--                          --}}
+{{--                           <h4>Account Control and System </h4>--}}
+{{--                        </div>--}}
 
+{{--                    </div>--}}
+                    <div class="col-md-12">
+                        <h3>Kayıt  Sayfası </h3>
                         <form method="POST" action="{{ route('register') }}" class="form-control border-0">
                             @csrf
 
@@ -127,6 +130,61 @@
                                                     aria-label="{{$input_name}}" aria-describedby="basic-addon1">
 
                                             @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3 flex-column">
+                                    @php
+                                        $icon =  '<i class="fas fa-phone"></i>';
+                                        $title = "Telefon ";
+                                        $input_name = "phone";
+                                        $input_id = "phone";
+                                        $input_type = "text";
+                                        $placeholder = "Telefon Numarası ";
+                                        $required = "required";
+                                    @endphp
+                                    <div class="">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                            {!! $icon !!}
+                                            </span>
+                                            <input id="{{$input_id }}" type="{{$input_type}}" class="form-control form-select-lg @error($input_name) is-invalid @enderror" name="{{$input_name}}"
+                                                   value="{{ old($input_name) }}" placeholder="{{ $placeholder }}" required autocomplete="email" autofocus {{$required}}
+                                                   aria-label="email" aria-describedby="basic-addon1">
+
+                                            @error('name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3 flex-column">
+                                    @php
+                                        $icon =  '<i class="fas fa-address-card"></i>';
+                                        $title = "Adres Bilgisi  ";
+                                        $input_name = "address";
+                                        $input_id = "address";
+                                        $input_type = "text";
+                                        $placeholder = "Adres Giriniz";
+                                        $required = "required";
+                                    @endphp
+                                    <div class="">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="basic-addon1">
+                                            {!! $icon !!}
+                                            </span>
+                                            <input id="{{$input_id }}" type="{{$input_type}}" class="form-control form-select-lg @error($input_name) is-invalid @enderror" name="{{$input_name}}"
+                                                   value="{{ old($input_name) }}" placeholder="{{ $placeholder }}" required autocomplete="email" autofocus {{$required}}
+                                                   aria-label="email" aria-describedby="basic-addon1">
+
+                                            @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

@@ -31,8 +31,11 @@ class User extends Authenticatable
         'avatar',
         'tc_no',
         'gender',
-        'phone'
-    
+        'phone',
+        'address',
+        'country',
+        'zip_code'
+
     ];
 
     /**
@@ -54,31 +57,31 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'create_at'=>'datetime',
     ];
-    
+
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
-    
+
     public function mostOrderedProducts()
     {
         $orders = $this->orders;
         $products = collect();
-        
+
         foreach ($orders as $order) {
             foreach ($order->products as $product) {
                 $products->push($product);
             }
         }
-        
+
         return $products->countBy('id')->sortDesc();
     }
-    
+
     public function get_role_names()
     {
         return $this->getRoleNames();
     }
-    
-    
-    
+
+
+
 }

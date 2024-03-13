@@ -105,7 +105,7 @@
 
 
                                             <div class="form-group row">
-                                                <label class="col-sm-2 col-form-label">Kategori Fotoğrafı</label>
+                                                <label class="col-sm-2 col-form-label">Kategori Fotoğrafı (120x120)</label>
                                                 <div class="col-sm-5">
                                                     <input type="file" class="form-control form-control-normal dropify"
                                                         placeholder="" name="image"

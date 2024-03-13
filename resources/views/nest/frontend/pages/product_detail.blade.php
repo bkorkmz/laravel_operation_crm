@@ -26,7 +26,7 @@
     <link rel="publisher" href="{{ config('settings.site_google_plus_url') }}"/>
     <link rel="canonical" href="{{request()->url()}}">
 
-    <meta property="og:locale" content="tr_TR"/>
+    <meta property="og:locale" content="tr"/>
     <meta property="og:site_name" content="{{ config('settings.site_title') }}"/>
     <meta property="og:title" content="{{ $product->name }}"/>
     <meta property="og:type" content="article"/>
@@ -49,28 +49,28 @@
 
     <script type="application/ld+json">
         {
-           {
-  "@context": "https://schema.org",
-  "@type": "Product",
-  "@id": "{{ $product->id }}",
-  "name": "{{ $product->name }}",
-  "image": "{{ $product->photo }}",
-  "description": "{{ $product->description }}",
-  "brand": {
-    "@type": "Brand",
-    "name": "{{ $product->name }}"
-  },
-  "offers": {
-    "@type": "Offer",
-            "priceCurrency": "{{ $product->price }}",
-            "price": "{{ $product->price }}",
-        "availability": "{{ $product->stock > 0 ? 'InStock' : 'SoldOut'}}"
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "5.0"
-  }
-}
+
+              "@context": "https://schema.org",
+              "@type": "Product",
+              "@id": "{{ $product->id }}",
+              "name": "{{ $product->name }}",
+              "image": "{{ $product->photo }}",
+              "description": "{{ $product->description }}",
+              "brand": {
+                "@type": "Brand",
+                "name": "{{ $product->name }}"
+              },
+              "offers": {
+                "@type": "Offer",
+                        "priceCurrency": "{{ $product->price }}",
+                        "price": "{{ $product->price }}",
+                    "availability": "{{ $product->stock > 0 ? 'InStock' : 'SoldOut'}}"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5.0"
+
+            }
     </script>
 
     <script type="application/ld+json">
@@ -149,7 +149,6 @@
                                     </div>
                                     <!-- End Gallery -->
                                 </div>
-                                {{--                                @dd($product)--}}
                                 <div class="col-md-6 col-sm-12 col-xs-12">
                                     <div class="detail-info pr-30 pl-30">
                                         @if($product->stock <= 20)
@@ -170,13 +169,10 @@
                                             <div class="product-price primary-color float-left">
                                                 <span
                                                     class="current-price text-brand">{{$product->price != 0 ?$product->price." TL" : ""}}</span>
-                                                <span>
 {{--                                                        <span class="save-price font-md color3 ml-15">26% Off</span>--}}
                                                     @if($product->old_price)
                                                         <span class="old-price font-md ml-15">{{$product->old_price." TL"}}</span>
-
                                                     @endif
-                                                    </span>
                                             </div>
                                         </div>
                                         <div class="short-desc mb-30">
@@ -193,13 +189,13 @@
 {{--                                            </ul>--}}
 {{--                                        </div>--}}
                                         <div class="detail-extralink mb-50">
-                                            <div class="detail-qty border radius">
-                                                <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                                <span class="qty-val">1</span>
-                                                <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                                            </div>
+{{--                                            <div class="detail-qty border radius">--}}
+{{--                                                <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>--}}
+{{--                                                <span class="qty-val">1</span>--}}
+{{--                                                <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>--}}
+{{--                                            </div>--}}
                                             <div class="product-extra-link2">
-                                                <button onclick="sendWhatsApp('{{$product->name}}')" type="button"
+                                                <button onclick="addToCart('{{$product->slug}}')" type="button"
                                                         class="button button-add-to-cart"><i
                                                         class="fi-rs-shopping-cart"></i>Sepete Ekle
                                                 </button>
@@ -247,234 +243,7 @@
                                                 {!! $product->description ?? ' Açıklama bilgisi bulunamadı ' !!}
                                             </div>
                                         </div>
-                                        {{--                                        <div class="tab-pane fade" id="Additional-info">--}}
-                                        {{--                                            <table class="font-md">--}}
-                                        {{--                                                <tbody>--}}
-                                        {{--                                                <tr class="stand-up">--}}
-                                        {{--                                                    <th>Stand Up</th>--}}
-                                        {{--                                                    <td>--}}
-                                        {{--                                                        <p>35″L x 24″W x 37-45″H(front to back wheel)</p>--}}
-                                        {{--                                                    </td>--}}
-                                        {{--                                                </tr>--}}
-                                        {{--                                                <tr class="folded-wo-wheels">--}}
-                                        {{--                                                    <th>Folded (w/o wheels)</th>--}}
-                                        {{--                                                    <td>--}}
-                                        {{--                                                        <p>32.5″L x 18.5″W x 16.5″H</p>--}}
-                                        {{--                                                    </td>--}}
-                                        {{--                                                </tr>--}}
-                                        {{--                                                <tr class="folded-w-wheels">--}}
-                                        {{--                                                    <th>Folded (w/ wheels)</th>--}}
-                                        {{--                                                    <td>--}}
-                                        {{--                                                        <p>32.5″L x 24″W x 18.5″H</p>--}}
-                                        {{--                                                    </td>--}}
-                                        {{--                                                </tr>--}}
-                                        {{--                                                <tr class="door-pass-through">--}}
-                                        {{--                                                    <th>Door Pass Through</th>--}}
-                                        {{--                                                    <td>--}}
-                                        {{--                                                        <p>24</p>--}}
-                                        {{--                                                    </td>--}}
-                                        {{--                                                </tr>--}}
-                                        {{--                                                <tr class="frame">--}}
-                                        {{--                                                    <th>Frame</th>--}}
-                                        {{--                                                    <td>--}}
-                                        {{--                                                        <p>Aluminum</p>--}}
-                                        {{--                                                    </td>--}}
-                                        {{--                                                </tr>--}}
-                                        {{--                                                <tr class="weight-wo-wheels">--}}
-                                        {{--                                                    <th>Weight (w/o wheels)</th>--}}
-                                        {{--                                                    <td>--}}
-                                        {{--                                                        <p>20 LBS</p>--}}
-                                        {{--                                                    </td>--}}
-                                        {{--                                                </tr>--}}
-                                        {{--                                                <tr class="weight-capacity">--}}
-                                        {{--                                                    <th>Weight Capacity</th>--}}
-                                        {{--                                                    <td>--}}
-                                        {{--                                                        <p>60 LBS</p>--}}
-                                        {{--                                                    </td>--}}
-                                        {{--                                                </tr>--}}
-                                        {{--                                                <tr class="width">--}}
-                                        {{--                                                    <th>Width</th>--}}
-                                        {{--                                                    <td>--}}
-                                        {{--                                                        <p>24″</p>--}}
-                                        {{--                                                    </td>--}}
-                                        {{--                                                </tr>--}}
-                                        {{--                                                <tr class="handle-height-ground-to-handle">--}}
-                                        {{--                                                    <th>Handle height (ground to handle)</th>--}}
-                                        {{--                                                    <td>--}}
-                                        {{--                                                        <p>37-45″</p>--}}
-                                        {{--                                                    </td>--}}
-                                        {{--                                                </tr>--}}
-                                        {{--                                                <tr class="wheels">--}}
-                                        {{--                                                    <th>Wheels</th>--}}
-                                        {{--                                                    <td>--}}
-                                        {{--                                                        <p>12″ air / wide track slick tread</p>--}}
-                                        {{--                                                    </td>--}}
-                                        {{--                                                </tr>--}}
-                                        {{--                                                <tr class="seat-back-height">--}}
-                                        {{--                                                    <th>Seat back height</th>--}}
-                                        {{--                                                    <td>--}}
-                                        {{--                                                        <p>21.5″</p>--}}
-                                        {{--                                                    </td>--}}
-                                        {{--                                                </tr>--}}
-                                        {{--                                                <tr class="head-room-inside-canopy">--}}
-                                        {{--                                                    <th>Head room (inside canopy)</th>--}}
-                                        {{--                                                    <td>--}}
-                                        {{--                                                        <p>25″</p>--}}
-                                        {{--                                                    </td>--}}
-                                        {{--                                                </tr>--}}
-                                        {{--                                                <tr class="pa_color">--}}
-                                        {{--                                                    <th>Color</th>--}}
-                                        {{--                                                    <td>--}}
-                                        {{--                                                        <p>Black, Blue, Red, White</p>--}}
-                                        {{--                                                    </td>--}}
-                                        {{--                                                </tr>--}}
-                                        {{--                                                <tr class="pa_size">--}}
-                                        {{--                                                    <th>Size</th>--}}
-                                        {{--                                                    <td>--}}
-                                        {{--                                                        <p>M, S</p>--}}
-                                        {{--                                                    </td>--}}
-                                        {{--                                                </tr>--}}
-                                        {{--                                                </tbody>--}}
-                                        {{--                                            </table>--}}
-                                        {{--                                        </div>--}}
-                                        {{--                                        <div class="tab-pane fade" id="Vendor-info">--}}
-                                        {{--                                   --}}
-                                        {{--                                        </div>--}}
-                                        {{--                                        <div class="tab-pane fade" id="Reviews">--}}
-                                        {{--                                            <!--Comments-->--}}
-                                        {{--                                            <div class="comments-area">--}}
-                                        {{--                                                <div class="row">--}}
-                                        {{--                                                    <div class="col-lg-8">--}}
-                                        {{--                                                        <h4 class="mb-30">Customer questions & answers</h4>--}}
-                                        {{--                                                        <div class="comment-list">--}}
-                                        {{--                                                            <div class="single-comment justify-content-between d-flex mb-30">--}}
-                                        {{--                                                                <div class="user justify-content-between d-flex">--}}
-                                        {{--                                                                    <div class="thumb text-center">--}}
-                                        {{--                                                                        <img src="assets/imgs/blog/author-2.png" alt="" />--}}
-                                        {{--                                                                        <a href="#" class="font-heading text-brand">Sienna</a>--}}
-                                        {{--                                                                    </div>--}}
-                                        {{--                                                                    <div class="desc">--}}
-                                        {{--                                                                        <div class="d-flex justify-content-between mb-10">--}}
-                                        {{--                                                                            <div class="d-flex align-items-center">--}}
-                                        {{--                                                                                <span class="font-xs text-muted">December 4, 2022 at 3:12 pm </span>--}}
-                                        {{--                                                                            </div>--}}
-                                        {{--                                                                            <div class="product-rate d-inline-block">--}}
-                                        {{--                                                                                <div class="product-rating" style="width: 100%"></div>--}}
-                                        {{--                                                                            </div>--}}
-                                        {{--                                                                        </div>--}}
-                                        {{--                                                                        <p class="mb-10">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, suscipit exercitationem accusantium obcaecati quos voluptate nesciunt facilis itaque modi commodi dignissimos sequi repudiandae minus ab deleniti totam officia id incidunt? <a href="#" class="reply">Reply</a></p>--}}
-                                        {{--                                                                    </div>--}}
-                                        {{--                                                                </div>--}}
-                                        {{--                                                            </div>--}}
-                                        {{--                                                            <div class="single-comment justify-content-between d-flex mb-30 ml-30">--}}
-                                        {{--                                                                <div class="user justify-content-between d-flex">--}}
-                                        {{--                                                                    <div class="thumb text-center">--}}
-                                        {{--                                                                        <img src="assets/imgs/blog/author-3.png" alt="" />--}}
-                                        {{--                                                                        <a href="#" class="font-heading text-brand">Brenna</a>--}}
-                                        {{--                                                                    </div>--}}
-                                        {{--                                                                    <div class="desc">--}}
-                                        {{--                                                                        <div class="d-flex justify-content-between mb-10">--}}
-                                        {{--                                                                            <div class="d-flex align-items-center">--}}
-                                        {{--                                                                                <span class="font-xs text-muted">December 4, 2022 at 3:12 pm </span>--}}
-                                        {{--                                                                            </div>--}}
-                                        {{--                                                                            <div class="product-rate d-inline-block">--}}
-                                        {{--                                                                                <div class="product-rating" style="width: 80%"></div>--}}
-                                        {{--                                                                            </div>--}}
-                                        {{--                                                                        </div>--}}
-                                        {{--                                                                        <p class="mb-10">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, suscipit exercitationem accusantium obcaecati quos voluptate nesciunt facilis itaque modi commodi dignissimos sequi repudiandae minus ab deleniti totam officia id incidunt? <a href="#" class="reply">Reply</a></p>--}}
-                                        {{--                                                                    </div>--}}
-                                        {{--                                                                </div>--}}
-                                        {{--                                                            </div>--}}
-                                        {{--                                                            <div class="single-comment justify-content-between d-flex">--}}
-                                        {{--                                                                <div class="user justify-content-between d-flex">--}}
-                                        {{--                                                                    <div class="thumb text-center">--}}
-                                        {{--                                                                        <img src="assets/imgs/blog/author-4.png" alt="" />--}}
-                                        {{--                                                                        <a href="#" class="font-heading text-brand">Gemma</a>--}}
-                                        {{--                                                                    </div>--}}
-                                        {{--                                                                    <div class="desc">--}}
-                                        {{--                                                                        <div class="d-flex justify-content-between mb-10">--}}
-                                        {{--                                                                            <div class="d-flex align-items-center">--}}
-                                        {{--                                                                                <span class="font-xs text-muted">December 4, 2022 at 3:12 pm </span>--}}
-                                        {{--                                                                            </div>--}}
-                                        {{--                                                                            <div class="product-rate d-inline-block">--}}
-                                        {{--                                                                                <div class="product-rating" style="width: 80%"></div>--}}
-                                        {{--                                                                            </div>--}}
-                                        {{--                                                                        </div>--}}
-                                        {{--                                                                        <p class="mb-10">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, suscipit exercitationem accusantium obcaecati quos voluptate nesciunt facilis itaque modi commodi dignissimos sequi repudiandae minus ab deleniti totam officia id incidunt? <a href="#" class="reply">Reply</a></p>--}}
-                                        {{--                                                                    </div>--}}
-                                        {{--                                                                </div>--}}
-                                        {{--                                                            </div>--}}
-                                        {{--                                                        </div>--}}
-                                        {{--                                                    </div>--}}
-                                        {{--                                                    <div class="col-lg-4">--}}
-                                        {{--                                                        <h4 class="mb-30">Customer reviews</h4>--}}
-                                        {{--                                                        <div class="d-flex mb-30">--}}
-                                        {{--                                                            <div class="product-rate d-inline-block mr-15">--}}
-                                        {{--                                                                <div class="product-rating" style="width: 90%"></div>--}}
-                                        {{--                                                            </div>--}}
-                                        {{--                                                            <h6>4.8 out of 5</h6>--}}
-                                        {{--                                                        </div>--}}
-                                        {{--                                                        <div class="progress">--}}
-                                        {{--                                                            <span>5 star</span>--}}
-                                        {{--                                                            <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>--}}
-                                        {{--                                                        </div>--}}
-                                        {{--                                                        <div class="progress">--}}
-                                        {{--                                                            <span>4 star</span>--}}
-                                        {{--                                                            <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>--}}
-                                        {{--                                                        </div>--}}
-                                        {{--                                                        <div class="progress">--}}
-                                        {{--                                                            <span>3 star</span>--}}
-                                        {{--                                                            <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">45%</div>--}}
-                                        {{--                                                        </div>--}}
-                                        {{--                                                        <div class="progress">--}}
-                                        {{--                                                            <span>2 star</span>--}}
-                                        {{--                                                            <div class="progress-bar" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">65%</div>--}}
-                                        {{--                                                        </div>--}}
-                                        {{--                                                        <div class="progress mb-30">--}}
-                                        {{--                                                            <span>1 star</span>--}}
-                                        {{--                                                            <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">85%</div>--}}
-                                        {{--                                                        </div>--}}
-                                        {{--                                                        <a href="#" class="font-xs text-muted">How are ratings calculated?</a>--}}
-                                        {{--                                                    </div>--}}
-                                        {{--                                                </div>--}}
-                                        {{--                                            </div>--}}
-                                        {{--                                            <!--comment form-->--}}
-                                        {{--                                            <div class="comment-form">--}}
-                                        {{--                                                <h4 class="mb-15">Add a review</h4>--}}
-                                        {{--                                                <div class="product-rate d-inline-block mb-30"></div>--}}
-                                        {{--                                                <div class="row">--}}
-                                        {{--                                                    <div class="col-lg-8 col-md-12">--}}
-                                        {{--                                                        <form class="form-contact comment_form" action="#" id="commentForm">--}}
-                                        {{--                                                            <div class="row">--}}
-                                        {{--                                                                <div class="col-12">--}}
-                                        {{--                                                                    <div class="form-group">--}}
-                                        {{--                                                                        <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="9" placeholder="Write Comment"></textarea>--}}
-                                        {{--                                                                    </div>--}}
-                                        {{--                                                                </div>--}}
-                                        {{--                                                                <div class="col-sm-6">--}}
-                                        {{--                                                                    <div class="form-group">--}}
-                                        {{--                                                                        <input class="form-control" name="name" id="name" type="text" placeholder="Name" />--}}
-                                        {{--                                                                    </div>--}}
-                                        {{--                                                                </div>--}}
-                                        {{--                                                                <div class="col-sm-6">--}}
-                                        {{--                                                                    <div class="form-group">--}}
-                                        {{--                                                                        <input class="form-control" name="email" id="email" type="email" placeholder="Email" />--}}
-                                        {{--                                                                    </div>--}}
-                                        {{--                                                                </div>--}}
-                                        {{--                                                                <div class="col-12">--}}
-                                        {{--                                                                    <div class="form-group">--}}
-                                        {{--                                                                        <input class="form-control" name="website" id="website" type="text" placeholder="Website" />--}}
-                                        {{--                                                                    </div>--}}
-                                        {{--                                                                </div>--}}
-                                        {{--                                                            </div>--}}
-                                        {{--                                                            <div class="form-group">--}}
-                                        {{--                                                                <button type="submit" class="button button-contactForm">Submit Review</button>--}}
-                                        {{--                                                            </div>--}}
-                                        {{--                                                        </form>--}}
-                                        {{--                                                    </div>--}}
-                                        {{--                                                </div>--}}
-                                        {{--                                            </div>--}}
-                                        {{--                                        </div>--}}
+
                                     </div>
                                 </div>
                             </div>
@@ -560,6 +329,7 @@
 
                             @foreach($otherProducts as $newProduct)
                                 <div class="single-post clearfix">
+                                    <a href="{{route('frontend.product_detail',['slug'=>$newProduct->slug])}}">
                                     <div class="image">
                                         <img src="{{$newProduct->photo}}" alt="{{$newProduct->name}}"/>
                                     </div>
@@ -568,81 +338,15 @@
                                                href="{{route('frontend.product_detail',['slug'=>$newProduct->slug])}}"> {{$newProduct->name}}</a>
                                         </h5>
                                         <p class="price mb-0 mt-5">{{$newProduct->price != 0 ?$newProduct->price." TL" : ""}}</p>
-                                        {{--                                    <div class="product-rate">--}}
-                                        {{--                                        <div class="product-rating" style="width: 90%"></div>--}}
-                                        {{--                                    </div>--}}
+                                        <div class="product-rate">
+                                            <div class="product-rating" style="width: 100%"></div>
+                                        </div>
                                     </div>
+                                    </a>
                                 </div>
 
                             @endforeach
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">
-                                <div class="detail-gallery">
-                                    <span class="zoom-icon"><i class="fi-rs-search"></i></span>
-                                    <!-- MAIN SLIDES -->
-                                    <div class="product-image-slider" id="slider">
-
-                                    </div>
-                                    <!-- THUMBNAILS -->
-                                    <div class="slider-nav-thumbnails" id="slider-thumbnails">
-
-                                    </div>
-                                </div>
-                                <!-- End Gallery -->
-                            </div>
-                            <div class="col-md-6 col-sm-12 col-xs-12">
-                                <div class="detail-info pr-30 pl-30">
-                                    <span class="stock-status out-stock"> Popüler </span>
-                                    <h3 class="title-detail"><a href="" class="text-heading product-title">Ürün adı</a>
-                                    </h3>
-                                    <div class="product-detail-rating">
-                                        <div class="product-rate-cover product-desc">
-
-                                        </div>
-
-                                    </div>
-                                    <div class="font-xs">
-                                        <ul id="product-attributes"></ul>
-                                    </div>
-                                    <div class="clearfix product-price-cover">
-                                        <div class="product-price primary-color float-left">
-                                            <span class="current-price text-brand" id="price"> </span>
-                                            <span>
-{{--                                               <span class="save-price font-md color3 ml-15">26% </span>--}}
-                                                {{--                                               <span class="old-price font-md ml-15">$52</span>--}}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="detail-extralink mb-30">
-                                        <div class="detail-qty border radius">
-                                            <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                            <span class="qty-val">1</span>
-                                            <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                                        </div>
-                                        <div class="product-extra-link2">
-                                            <button id="whatsapp_share" type="submit" class="button button-add-to-cart">
-                                                <i class="fi-rs-shopping-cart"></i>Ekle
-                                            </button>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Detail Info -->
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -659,55 +363,6 @@
         @section('after-js')
             <script>
 
-                function quickModal(id) {
-                    let modal = $('#quickViewModal');
-                    $.ajax({
-                        url: '{{ route('product-info') }}/' + id,
-                        dataType: "json",
-                        success: function (data) {
-                            console.log('data', data)
-                            let product = data.product;
-                            let attributesHtml = '';
-                            let attributes = JSON.parse(product.attributes);
-
-                            Object.entries(attributes).map(([key, value]) => {
-                                // Eğer özellik "popular" ise döngüyü atla
-                                console.log(key, value)
-                                if (key === 'popular') {
-                                    return;
-                                }
-                                attributesHtml += `<li class="mb-5">${key}: <span class="text-brand">${value}</span></li>`;
-                            });
-
-
-                            $('#quickViewModal .modal-body #slider').html(`<figure class="border-radius-10">
-                                        <img src="${product.photo}"
-                                              alt="${product.slug}" title="${product.name}"/>
-                                    </figure>`);
-
-                            $('#quickViewModal .modal-body #slider-thumbnails').html(`
-                                     <div>
-                                            <img src="${product.photo ?? ""}"
-                                              alt="${product.slug}" title="${product.name}" width="77" height="77"/>
-                                    </div>`);
-
-                            $('#quickViewModal .modal-body .product-title').html(`${product.name}`);
-                            $('#quickViewModal .modal-body .product-desc').html(`${product.short_detail ? product.short_detail : ""}`);
-                            $('#quickViewModal .modal-body #product-attributes').html(`${attributesHtml}`);
-                            // $('#quickViewModal .modal-body #price').html(`${product.price} TL`);
-
-                            // $('#whatsapp_share').attr('href', whatsappUrl);
-
-                            modal.modal('show');
-
-                        },
-                        error: (function () {
-                            console.error('Ajax hatası ');
-                        })
-                    });
-
-
-                }
 
                 const button = document.getElementById('whatsapp_share');
 

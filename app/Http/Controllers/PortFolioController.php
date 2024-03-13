@@ -99,16 +99,13 @@ class PortFolioController extends Controller
             "value" => "nullable|max:500",
             "link" => "nullable",
             'status' => 'required',
-        ], [
-            'name.required' => 'Slogan adı zorunludur',
-            'name.max' => 'Slogan adı en fazla 50 karakter olmalıdır adızorunludur',
-            'value.required' => 'Slogan Mesajı zorunludur',
-            'value.max' => 'Slogan Mesajı en fazla 500 karakter olmalıdır adızorunludur',
-            'image.required' => 'İçerik resmi alanı zorunludur',
-            'image.image' => 'İçerik resmi bir resim dosyası olmalıdır.',
-            'image.mimes' => 'İçerik resmi yalnızca jpg,jpeg,png,tiff,gif,svg,webp,ico veya bmp formatında olabilir.',
-            'image.max' => 'İçerik resmi en fazla 2 MB boyutunda olabilir.',
-            'status.required' => 'Durum alanı zorunludur',
+            'banner_image' => 'required',
+        ],[],[
+            'name' => 'Slogan adı',
+            'value' => 'Slogan Mesajı ',
+            'image' => 'İçerik resmi ',
+            'status' => 'Durum ',
+            'banner_image' => 'Slider Tipi ',
         ]);
 
 
@@ -122,7 +119,7 @@ class PortFolioController extends Controller
         PortFolio::create($data);
 
         toastr()->success('İşlem başarılı şekilde tamamlanmıştır.', 'Başarılı');
-        return redirect()->back();
+        return redirect()->route('slider.index');
     }
 
 
@@ -145,16 +142,13 @@ class PortFolioController extends Controller
             "link" => "nullable",
             "type" => "required",
             'status' => 'required',
-        ], [
-            'name.required' => 'Slogan adı zorunludur',
-            'name.max' => 'Slogan adı en fazla 50 karakter olmalıdır adızorunludur',
-            'value.required' => 'Slogan Mesajı zorunludur',
-            'value.max' => 'Slogan Mesajı en fazla 500 karakter olmalıdır adızorunludur',
-            'image.required' => 'İçerik resmi alanı zorunludur',
-            'image.mimes' => 'İçerik resmi yalnızca jpg,jpeg,png,tiff,gif,svg,webp,ico veya bmp formatında olabilir.',
-            'image.max' => 'İçerik resmi en fazla 2 MB boyutunda olabilir.',
-            'type.required' => 'İçerik türü alanı zorunludur',
-            'status.required' => 'Durum alanı zorunludur',
+            'banner_image' => 'required',
+        ],[],[
+             'name' => 'Slogan adı',
+             'value' => 'Slogan Mesajı ',
+             'image' => 'İçerik resmi ',
+             'status' => 'Durum ',
+             'banner_image' => 'Slider Tipi ',
         ]);
         // dd($request->all());
         $data = $request->except('_token');

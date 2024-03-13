@@ -270,21 +270,17 @@ class ArticleController extends Controller
 
 
         // $data_array['slug'] = $slug;
-
-
+         $slug = slug_format($request->slug);
 
         if(request()->hasFile('image')) {
             $this->validate(request(), array('image' => 'image|mimes:png,jpg,jpeg,gif|max:4096'));
             $image = request()->file('image');
             if($image->isValid()) {
                 $file_upload = fileUpload($request->image, 'articles', $slug);
-
                 $data_array['image'] = $file_upload['path'];
-                // $data_array['image'] = '/storage/' . $request->image->store('articles', 'public');
             }
         }
 
-        $slug = slug_format($request->slug);
         $has_article=$this->model_name::where('slug', $slug)->first();
         $validator->after(function ($validator) use ($has_article,$id) {
             if ($has_article) {

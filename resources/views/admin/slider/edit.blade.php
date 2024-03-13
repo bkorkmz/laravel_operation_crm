@@ -78,15 +78,53 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group row my-4">
-                            <label class="col-sm-2 col-form-label" >Sağ Blok Banner
-                            </label>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input mt-2" type="checkbox" id="banner_image" name="banner_image" value="1"   {{$slider->banner_image == 1 ? "checked" : "" }}>
-                                <label class="form-check-label badge badge-info ml-4" for="banner_image"><i class="fa fa-info fa-2x mr-2"></i>Slider yanı banner olarak seçilirse slider içerisinde görünmez</label>
+                            <label class="col-sm-2 col-form-label">Slider Tipi <span class="text-danger"> *</span></label>
+
+                            <div class="card slider_type mr-2">
+                                <label for="flexRadioDefault1">
+                                    <div class="card-body">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" checked
+                                                   name="banner_image"  {{ $slider->banner_image == 0 ? 'checked' : '' }}
+                                                   id="flexRadioDefault1" value="0" required>
+                                            <label class="form-check-label" >Ana Slider</label>
+                                            <p class="mb-0"><i class="fa fa-info fa-2x mr-2"></i>Resim boyutu 2370x800  </p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="card slider_type mr-2">
+                                <label for="flexRadioDefault2">
+                                    <div class="card-body">
+                                        <div class="form-check">
+                                            <input class="form-check-input" {{ $slider->banner_image == 1 ? 'checked' : '' }}
+                                            type="radio" name="banner_image"
+                                                   id="flexRadioDefault2" value="1" required>
+                                            <label class="form-check-label" >Sağ Blok Slider</label>
+                                            <p class="mb-0"><i class="fa fa-info fa-2x mr-2"></i>Resim boyutu 1024x1070 </p>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="card slider_type mr-2">
+                                <label for="flexRadioDefault3">
+                                    <div class="card-body">
+                                        <div class="form-check">
+                                            <input class="form-check-input" {{$slider->banner_image == 2 ? 'checked' : '' }}
+                                            type="radio" name="banner_image"
+                                                   id="flexRadioDefault3" value="2" required>
+                                            <label class="form-check-label" >Alt Üçlü Blok Slider</label>
+                                            <p class="mb-0"><i class="fa fa-info fa-2x mr-2"></i>Resim boyutu 460x270 </p>
+                                        </div>
+                                    </div>
+                                </label>
                             </div>
                         </div>
-                        <div class="form-group row">
+
+
+                            <div class="form-group row">
                             <label class="col-sm-2 col-form-label">İçerik Resmi (min:2370x800</label>
                             <div class="col-sm-5">
                                 <input type="file" class="form-control form-control-normal dropify" placeholder=""
@@ -115,6 +153,17 @@
 
 
 @section('css')
+    <style>
+        .slider_type {
+            background-color: beige;
+            border: 1px solid #28a745;
+        }
+        .slider_type input[type="radio"]:checked + label  {
+            background-color: #d4edda;
+            border: 1px solid #28a745;
+        }
+
+    </style>
 @endsection
 
 @section('js')

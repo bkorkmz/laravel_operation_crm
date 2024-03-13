@@ -10,17 +10,18 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="position-relative newsletter-inner">
-                        <div class="newsletter-content text-center">
-                            <h2 class="mb-20">
-                                Hemen Bültene Abone oldun!
-                            </h2>
-                            <p class="mb-45"> Sağlığınızı korumak için ihtiyacınız olan tüm takviye edici gıdalar mağazamızda.</p>
-                            <form class="form-subcriber d-inline-flex">
-                                <input type="email" placeholder="Email adresi giriniz" />
-                                <button class="btn" type="submit">Katıl</button>
-                            </form>
-                        </div>
+                    <div class="position-relative newsletter-inner" onclick="sendWhatsApp('Ürünler hakkında bilgi almak istiyorum')"
+                         style="background: url({{asset('images/banner-img-info.jpg')}}) no-repeat center; cursor: pointer;">
+{{--                        <div class="newsletter-content text-center">--}}
+{{--                            <h2 class="mb-20">--}}
+{{--                                Hemen Bültene Abone oldun!--}}
+{{--                            </h2>--}}
+{{--                            <p class="mb-45"> Sağlığınızı korumak için ihtiyacınız olan tüm takviye edici gıdalar mağazamızda.</p>--}}
+{{--                            <form class="form-subcriber d-inline-flex">--}}
+{{--                                <input type="email" placeholder="Email adresi giriniz" />--}}
+{{--                                <button class="btn" type="submit">Katıl</button>--}}
+{{--                            </form>--}}
+{{--                        </div>--}}
 {{--                        <img src="{{asset('frontend/assets/imgs/banner/banner-9.png')}}" alt="newsletter" />--}}
                     </div>
                 </div>

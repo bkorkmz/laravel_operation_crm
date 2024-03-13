@@ -52,7 +52,7 @@
 
                                 <div class="form-group ">
                                     <div class="form-group form-primary">
-                                        <label class="float-label">Kategori Fotoğrafı</label>
+                                        <label class="float-label">Kategori Fotoğrafı (120x120)</label>
                                         <input type="file" class="form-control form-control-normal dropify"
                                                placeholder="" name="image"
                                                accept=".jpg,.jpeg,.png,.tiff,.gif,.svg,.webp,.bmp,.ico">

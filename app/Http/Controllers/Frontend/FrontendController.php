@@ -8,21 +8,27 @@ use App\Models\Article;
 use App\Models\Category;
 use App\Models\InfoMessage;
 use App\Models\Newsletter;
+use App\Models\Order;
 use App\Models\Page;
 use App\Models\PortFolio;
 use App\Models\Products;
+use App\Models\Promotion;
 use App\Models\Test;
 use App\Models\TestDefinition;
 use Carbon\Carbon;
+use Cart;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
-use Cart;
 
 class FrontendController extends Controller
 {
@@ -41,18 +47,6 @@ class FrontendController extends Controller
         return view($this->theme.'.frontend.pages.products', compact('products', 'categories'));
 
     }
-
-    public function sliders(): array
-    {
-        $portfolios = PortFolio::where('type', 'slider')
-            ->where('status', 1)
-            ->get();
-        $sliders = $portfolios->whereNull('banner_image');
-        $banners = $portfolios->whereNotNull('banner_image')->first();
-
-        return compact('sliders', 'banners');
-    }
-
 
     public function popularProducts(): array
     {
@@ -76,31 +70,94 @@ class FrontendController extends Controller
 
     public function bestSalesProduct(): array
     {
-        $products = Products::where(['status' => 1])->where('stock', '>', 0)
-            ->whereJsonContains('attributes->best-sales', '1')->latest()->limit(3)->get();
 
-        return compact('products');
+        $portfolios = PortFolio::where('type', 'slider')
+            ->where('status', 1);
+        $treeSlider = $portfolios->where('banner_image',2)->get();
+
+
+        return compact('treeSlider');
     }
 
-
-
-    public function deals_of_day()
+    public function sliders(): array
     {
+        $portfolios = PortFolio::where('type', 'slider')
+            ->where('status', 1)
+            ->where(function($query) {
+                $query->where('banner_image', 0)
+                    ->orWhere('banner_image', 1)
+                    ->orWhereNull('banner_image');
+            })->latest()
+            ->get();
+        $sliders = $portfolios->where('banner_image', 0)->where('banner_image',Null);
+        $banners = $portfolios->where('banner_image', 1);
 
+
+        return compact('sliders', 'banners');
     }
 
-    public function categorySliders(): array
+    public function categorySliders(): array // Slider altı kategori slider alanı
     {
         $categories = Category::product()->where(['show' => 1])->whereHas('getProduct')->withCount('getProduct')->get();
 
         return compact('categories');
     }
 
-    public function DailyBestSells()
+    public function DailyBestSells() //Öne çıkan kategori alanı 1
     {
-        //        $categories = Category::product()->where(['show' => 1])->whereHas('getProduct')->withCount('getProduct')->get();
-        //
-        //        return compact('categories');
+        $promotionCategoryOne = Promotion::where('id', 1)
+            ->whereHas('categories.getProduct')
+            ->with(['categories' => function ($query) {
+                $query->product()
+                    ->with('getProduct');
+            }])->first();
+
+        return compact('promotionCategoryOne');
+    }
+
+    public function dealsOfDay()       // Öne çıkan kategori alanı 2
+    {
+        $promotionCategoryTwo = Promotion::where('id', 2)
+            ->whereHas('categories.getProduct', function (Builder $query) {
+                $query->where('show', 1);
+            })->with(['categories' => function ($query) {
+                $query->product()
+                    ->with('getProduct', function ($query) {
+                        $query->limit(4);
+                    });
+            }])->first();
+
+        return compact('promotionCategoryTwo');
+
+    }
+
+    public function topSelling()       // Öne çıkan kategori alanı 3
+    {
+        $groupedProducts = [];
+        $promotionCategoryTree = Promotion::where('id', 3)
+            ->whereHas('categories.getProduct', function (Builder $query) {
+                $query->where('show', 1);
+            })->with(['categories' => function ($query) {
+                $query->product()
+                    ->with('getProduct',function ($query) {
+                        $query->latest()
+                            ->limit(12);
+                    });
+            }])->first();
+        if (!blank($promotionCategoryTree)){
+            if (!blank($promotionCategoryTree['categories'])){
+                $products = collect($promotionCategoryTree->categories->pluck('getProduct')->collapse());
+
+                $groupSize = ceil($products->count() / 4);
+                $groupedProducts = $products->chunk($groupSize);
+            }
+
+        }
+
+
+
+        return compact('promotionCategoryTree','groupedProducts');
+
     }
 
     public function index()
@@ -109,14 +166,13 @@ class FrontendController extends Controller
 
         $pages['sliders'] = 'sliders'; // Slider
         $pages['bestSalesProduct'] = 'bestSalesProduct';   // Slider tanıtım
-        $pages['categorySliders'] = 'categorySliders'; // Kategori ler
+        $pages['categorySliders'] = 'categorySliders'; // Kategoriler
         $pages['popularProducts'] = 'popularProducts'; // Popüler ürünler
         $pages['DailyBestSells'] = 'DailyBestSells';
-        $pages['deals_of_day'] = 'deals_of_day';
+        $pages['dealsOfDay'] = 'dealsOfDay';
+        $pages['topSelling'] = 'topSelling';
 
-
-//                $pages['top_selling'] = 'top_selling';
-//                $pages['end_deals'] = 'end_deals';
+        //                        $pages['end_deals'] = 'end_deals';
 
         foreach ($pages as $key => $page) {
             $contents->put($key, $this->$page());
@@ -480,8 +536,10 @@ class FrontendController extends Controller
     public function productInformation($id): JsonResponse
     {
         $product = Products::where('status', 1)
-            ->where('id', $id)->select('id', 'attributes', 'name', 'photo', 'price', 'slug', 'stock', 'short_detail', 'created_at')
-            ->with('category:id,name')->first();
+            ->where('id', $id)
+            ->select('id', 'attributes', 'name', 'photo', 'price', 'old_price', 'slug', 'stock', 'short_detail', 'created_at')
+            ->with('category:id,name')
+            ->first();
 
         return response()->json(['product' => $product]);
 
@@ -514,29 +572,78 @@ class FrontendController extends Controller
     }
 
     //#### CİHAN ÇALIŞMA ALANI #####
+    public function myaccount()
+    {
+        $orders = Order::where('user_id', Auth::user()->id)->get();
+        $previousUrl = URL::previous();
+        if (strpos($previousUrl, route('login')) !== false) {
+            if (Cart::count() > 0) {
+                return redirect()->route('frontend.cart');
+            }
+        }
+
+        return view($this->theme.'.frontend.cart.myaccount', compact('orders'));
+    }
+
     public function cart_add(Request $request, $slug)
     {
         $product = Products::where('slug', $slug)->first();
+        if (!blank($product)){
+            if ($product->stock > 0){
+                Cart::add(
+                    [
+                        'id' => $product->id,
+                        'name' => $product->name,
+                        'qty' => 1,
+                        'price' => $product->price,
+                        'options' => ['attributes' => $product->attributes, 'photo' => $product->photo],
+                    ]
+                );
+                $message = [
+                    'status' =>'success',
+                    'message'=>'Ürün sepete eklendi'
+                ];
 
-        Cart::add(
-            [
-                'id' => $product->id,
-                'name' => $product->name,
-                'qty' => 1,
-                'price' => $product->price,
-                'options' => ['attributes' => $product->attributes, 'photo' => $product->photo],
-            ]
-        );
+                $statusCode = 200;
+            }else{
+                $message = [
+                    'status' =>'error',
+                    'message'=>'Ürün stokta yok'
+                ];
+                $statusCode = 409;
+            }
+
+        }else {
+            $message = [
+                'status' =>'error',
+                'message'=>'Doğru ürün üzerinde işlem yaptığınızdan emin olun.Bu ürün yok'
+            ];
+            $statusCode = 404 ;
+        }
+        $message['cartCount']= [
+            'cart_count' =>  Cart::count(),
+            'cart_total' =>  Cart::total(),
+            'tax' =>Cart::tax(),
+            'sub_total' =>   Cart::total() -  Cart::tax(),
+        ];
+
+
+
+        if ($request->ajax()){
+            return response()->json($message,$statusCode);
+        }
 
         return redirect(route('frontend.cart'));
     }
 
-    public function cart_update(Request $request, $rowId)
+    public function cart_update(Request $request, $rowId, $qty)
     {
-        $qty = $request->qty;
+        $qty = strip_tags($qty);
         Cart::update($rowId, $qty);
 
-        return redirect(route('frontend.cart'));
+        //$arr = ['qty' => $qty, 'rowId' => $rowId];
+
+        return response()->json("ok");
     }
 
     public function cart_remove(Request $request, $rowId)
@@ -556,8 +663,238 @@ class FrontendController extends Controller
     public function cart()
     {
         $cart_content = Cart::content();
+        $cart_content_count = Cart::content()->count();
 
-        return view($this->theme.'.frontend.cart.cart', compact('cart_content'));
+        return view($this->theme.'.frontend.cart.cart', compact('cart_content', 'cart_content_count'));
+    }
+
+    public function paytrOdeme()
+    {
+
+        if (! Auth::check()) {
+            return redirect(route('register'));
+            exit();
+        }
+
+        if (Auth::user()->address == null || Auth::user()->phone == null) {
+            return redirect(route('frontend.myaccount'));
+            exit();
+        }
+
+        $total_price = Cart::total();
+        $cart_content = Cart::content();
+        $arrayProduct = json_decode(json_encode($cart_content), true);
+
+        //
+        //# API Entegrasyon Bilgileri - Mağaza paneline giriş yaparak BİLGİ sayfasından alabilirsiniz.
+        $merchant_id = '441360';
+        $merchant_key = 'uUUo5Hux3AdnQytF';
+        $merchant_salt = 'iBiHxBFirPJS8QnK';
+        //
+
+        $email = Auth::user()->email;
+        //
+
+        $payment_amount = $total_price * 100; //9.99 için 9.99 * 100 = 999 gönderilmelidir.
+        //
+        //# Sipariş numarası: Her işlemde benzersiz olmalıdır!! Bu bilgi bildirim sayfanıza yapılacak bildirimde geri gönderilir.
+        $merchant_oid = md5($email).rand(0, 999);
+        session(['merchant_oid' => $merchant_oid]);
+        //
+
+        $user_name = Auth::user()->name;
+
+        $user_address = Auth::user()->address;
+
+        $user_phone = Auth::user()->phone;
+        //
+        //# Başarılı ödeme sonrası müşterinizin yönlendirileceği sayfa
+        //# !!! Bu sayfa siparişi onaylayacağınız sayfa değildir! Yalnızca müşterinizi bilgilendireceğiniz sayfadır!
+        //# !!! Siparişi onaylayacağız sayfa "Bildirim URL" sayfasıdır (Bakınız: 2.ADIM Klasörü).
+        $merchant_ok_url = route('paytrOdemeBasarili');
+        //
+        //# Ödeme sürecinde beklenmedik bir hata oluşması durumunda müşterinizin yönlendirileceği sayfa
+        //# !!! Bu sayfa siparişi iptal edeceğiniz sayfa değildir! Yalnızca müşterinizi bilgilendireceğiniz sayfadır!
+        //# !!! Siparişi iptal edeceğiniz sayfa "Bildirim URL" sayfasıdır (Bakınız: 2.ADIM Klasörü).
+        $merchant_fail_url = route('paytrOdemeBasarisiz');
+        //
+        //# Müşterinin sepet/sipariş içeriği
+        $user_basket = base64_encode(json_encode(
+            $arrayProduct
+        ));
+        //
+        /* ÖRNEK $user_basket oluşturma - Ürün adedine göre array'leri çoğaltabilirsiniz
+        $user_basket = base64_encode(json_encode(array(
+            array("Örnek ürün 1", "18.00", 1), // 1. ürün (Ürün Ad - Birim Fiyat - Adet )
+            array("Örnek ürün 2", "33.25", 2), // 2. ürün (Ürün Ad - Birim Fiyat - Adet )
+            array("Örnek ürün 3", "45.42", 1)  // 3. ürün (Ürün Ad - Birim Fiyat - Adet )
+        )));
+        */
+        //###########################################################################################
+
+        //# Kullanıcının IP adresi
+        if (isset($_SERVER['HTTP_CLIENT_IP'])) {
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+
+        $user_ip = $ip;
+        //#
+
+        //# İşlem zaman aşımı süresi - dakika cinsinden
+        $timeout_limit = '30';
+
+        //# Hata mesajlarının ekrana basılması için entegrasyon ve test sürecinde 1 olarak bırakın. Daha sonra 0 yapabilirsiniz.
+        $debug_on = 1;
+
+        //# Mağaza canlı modda iken test işlem yapmak için 1 olarak gönderilebilir.
+        $test_mode = 0;
+
+        $no_installment = 0; // Taksit yapılmasını istemiyorsanız, sadece tek çekim sunacaksanız 1 yapın
+
+        //# Sayfada görüntülenecek taksit adedini sınırlamak istiyorsanız uygun şekilde değiştirin.
+        //# Sıfır (0) gönderilmesi durumunda yürürlükteki en fazla izin verilen taksit geçerli olur.
+        $max_installment = 0;
+
+        $currency = 'TL';
+
+        //###### Bu kısımda herhangi bir değişiklik yapmanıza gerek yoktur. #######
+        $hash_str = $merchant_id.$user_ip.$merchant_oid.$email.$payment_amount.$user_basket.$no_installment.$max_installment.$currency.$test_mode;
+        $paytr_token = base64_encode(hash_hmac('sha256', $hash_str.$merchant_salt, $merchant_key, true));
+        $post_vals = [
+            'merchant_id' => $merchant_id,
+            'user_ip' => $user_ip,
+            'merchant_oid' => $merchant_oid,
+            'email' => $email,
+            'payment_amount' => $payment_amount,
+            'paytr_token' => $paytr_token,
+            'user_basket' => $user_basket,
+            'debug_on' => $debug_on,
+            'no_installment' => $no_installment,
+            'max_installment' => $max_installment,
+            'user_name' => $user_name,
+            'user_address' => $user_address,
+            'user_phone' => $user_phone,
+            'merchant_ok_url' => $merchant_ok_url,
+            'merchant_fail_url' => $merchant_fail_url,
+            'timeout_limit' => $timeout_limit,
+            'currency' => $currency,
+            'test_mode' => $test_mode,
+        ];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://www.paytr.com/odeme/api/get-token');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_vals);
+        curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+
+        // XXX: DİKKAT: lokal makinanızda "SSL certificate problem: unable to get local issuer certificate" uyarısı alırsanız eğer
+        // aşağıdaki kodu açıp deneyebilirsiniz. ANCAK, güvenlik nedeniyle sunucunuzda (gerçek ortamınızda) bu kodun kapalı kalması çok önemlidir!
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+        $result = @curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            exit('PAYTR IFRAME connection error. err:'.curl_error($ch));
+        }
+
+        curl_close($ch);
+
+        $result = json_decode($result, 1);
+
+        if ($result['status'] == 'success') {
+            $token = $result['token'];
+        } else {
+            exit('PAYTR IFRAME failed. reason:'.$result['reason']);
+        }
+        //########################################################################
+
+        return view($this->theme.'.frontend.cart.paytrodeme', compact('token'));
+    }
+
+    public function paytrOdemeBasarili()
+    {
+        if (url()->previous() !== 'https://www.paytr.com/') {
+            return redirect(route('frontend.index'));
+            exit();
+        }
+
+        $merchant_oid = session('merchant_oid');
+        DB::table('orders')->insert(
+            [
+                'merchant_oid' => $merchant_oid,
+                'user_id' => Auth::user()->id,
+                'order_date' => date('Y-m-d H:i:s'),
+                'detail' => json_encode($cart_content = Cart::content()),
+                'status' => 'pending',
+            ]
+        );
+        Cart::destroy();
+
+        return view($this->theme.'.frontend.cart.odemebasarili');
+    }
+
+    public function paytrOdemeBasarisiz()
+    {
+        if (url()->previous() !== 'https://www.paytr.com/') {
+            return redirect(route('frontend.index'));
+            exit();
+        }
+
+        $merchant_oid = session('merchant_oid');
+        DB::table('orders')->insert(
+            [
+                'merchant_oid' => $merchant_oid,
+                'user_id' => Auth::user()->id,
+                'order_date' => date('Y-m-d H:i:s'),
+                'detail' => json_encode($cart_content = Cart::content()),
+                'status' => 'cancelled',
+            ]
+        );
+
+        return view($this->theme.'.frontend.cart.odemebasarisiz');
+    }
+
+    public function paytrOdemeBildirim(Request $request)
+    {
+        $post = $_POST;
+
+        $merchant_key = 'uUUo5Hux3AdnQytF';
+        $merchant_salt = 'iBiHxBFirPJS8QnK';
+
+        //###### Bu kısımda herhangi bir değişiklik yapmanıza gerek yoktur. #######
+        //
+        //# POST değerleri ile hash oluştur.
+        $hash = base64_encode(hash_hmac('sha256', $post['merchant_oid'].$merchant_salt.$post['status'].$post['total_amount'], $merchant_key, true));
+        //
+        //# Oluşturulan hash'i, paytr'dan gelen post içindeki hash ile karşılaştır (isteğin paytr'dan geldiğine ve değişmediğine emin olmak için)
+        //# Bu işlemi yapmazsanız maddi zarara uğramanız olasıdır.
+        if ($hash != $post['hash']) {
+            exit('PAYTR notification failed: bad hash');
+        }
+        //##########################################################################
+
+        $merchant_oid = $post['merchant_oid'];
+        if ($post['status'] == 'success') { //# Ödeme Onaylandı
+            DB::table('orders')->where('merchant_oid', $merchant_oid)->update(['status' => 'completed']);
+
+        } else { //# Ödemeye Onay Verilmedi
+
+            DB::table('orders')
+                ->where('merchant_oid', $merchant_oid)
+                ->update(['status' => 'cancelled', 'response' => $post['failed_reason_code'].$post['failed_reason_msg']]);
+
+        }
+        unset($_SESSION[$merchant_oid]);
+
+        //# Bildirimin alındığını PayTR sistemine bildir.
+        echo 'OK';
+        exit;
     }
     //#### CİHAN ÇALIŞMA ALANI #####
 

@@ -1,8 +1,18 @@
+<style>
+    .max-height{
+        max-height: 2rem;
+        height: 33px;
+    }
+    .max-height h6{
+        font-size: 14px;
+    }
+</style>
+
 <section class="popular-categories section-padding">
     <div class="container wow animate__animated animate__fadeIn">
         <div class="section-title">
             <div class="title">
-                <h3>Öne Çıkanlar Kategoriler</h3>
+                <h3>Kategoriler </h3>
             </div>
             <div class="slider-arrow slider-arrow-2 flex-right carausel-10-columns-arrow" id="carausel-10-columns-arrows"></div>
         </div>
@@ -12,9 +22,15 @@
 
                 <div class="card-2 bg-{{$loop->iteration}} wow animate__animated animate__fadeInUp" data-wow-delay=".{{$loop->index}}s">
                     <figure class="img-hover-scale overflow-hidden">
-                        <a href=""><img src="{{asset('frontend/assets/imgs/shop/cat-1.png')}}" alt="{{$category->name}}" /></a>
+                        <a href="{{ route('frontend.page', $category->slug) }}">
+                            <img src="{{asset($category->image ?? 'frontend/assets/imgs/shop/cat-1.png')}}"
+                                 title="{{$category->name}}"
+                                 alt="{{$category->name}}" />
+                        </a>
                     </figure>
-                    <h6><a href="">{{$category->name}}</a></h6>
+                    <div class="my-2 max-height">
+                        <h6><a href="{{ route('frontend.page', $category->slug) }}">{{$category->name}}</a></h6>
+                    </div>
                     <span>{{$category->get_product_count}} ürün</span>
                 </div>
                 @endforeach

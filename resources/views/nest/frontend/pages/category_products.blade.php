@@ -85,8 +85,8 @@
                                         <span>{{$product->price != 0 ?$product->price." TL" : ""}}</span>
 {{--                                                                                        <span class="old-price">{{$product->old_price != 0 ?$product->old_price." TL" : ""}}</span>--}}
                                     </div>
-                                    <div class="add-cart">
-                                        <a class="add" target="_blank" href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$product->name}}"><i class="fi-rs-shopping-cart mr-5"></i> Ekle</a>
+                                    <div class="add-cart align-self-end">
+                                        <a class="add" target="_blank" href="{{route('frontend.product_detail',['slug'=>$product['slug']])}}"><i class="fi-rs-shopping-cart mr-5"></i> Ekle</a>
                                     </div>
                                 </div>
                             </div>
@@ -133,79 +133,79 @@
 </div>
 
 
-<div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">
-                        <div class="detail-gallery">
-                            <span class="zoom-icon"><i class="fi-rs-search"></i></span>
-                            <!-- MAIN SLIDES -->
-                            <div class="product-image-slider" id="slider">
+{{--<div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel"--}}
+{{--     aria-hidden="true">--}}
+{{--    <div class="modal-dialog">--}}
+{{--        <div class="modal-content">--}}
+{{--            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--}}
+{{--            <div class="modal-body">--}}
+{{--                <div class="row">--}}
+{{--                    <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">--}}
+{{--                        <div class="detail-gallery">--}}
+{{--                            <span class="zoom-icon"><i class="fi-rs-search"></i></span>--}}
+{{--                            <!-- MAIN SLIDES -->--}}
+{{--                            <div class="product-image-slider" id="slider">--}}
 
-                            </div>
-                            <!-- THUMBNAILS -->
-                            <div class="slider-nav-thumbnails" id="slider-thumbnails">
+{{--                            </div>--}}
+{{--                            <!-- THUMBNAILS -->--}}
+{{--                            <div class="slider-nav-thumbnails" id="slider-thumbnails">--}}
 
-                            </div>
-                        </div>
-                        <!-- End Gallery -->
-                    </div>
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                        <div class="detail-info pr-30 pl-30">
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <!-- End Gallery -->--}}
+{{--                    </div>--}}
+{{--                    <div class="col-md-6 col-sm-12 col-xs-12">--}}
+{{--                        <div class="detail-info pr-30 pl-30">--}}
 {{--                            <span class="stock-status out-stock"> Popüler </span>--}}
-                            <h3 class="title-detail"><a href="" class="text-heading product-title"></a></h3>
-                            <div class="product-detail-rating">
-                                <div class="product-rate-cover product-desc" >
+{{--                            <h3 class="title-detail"><a href="" class="text-heading product-title"></a></h3>--}}
+{{--                            <div class="product-detail-rating">--}}
+{{--                                <div class="product-rate-cover product-desc" >--}}
 
-                                </div>
+{{--                                </div>--}}
 
-                            </div>
-                            <div class="font-xs">
-                                <ul id="product-attributes">
-                                </ul>
-                            </div>
-                            <div class="clearfix product-price-cover">
-                                <div class="product-price primary-color float-left">
-                                    <span class="current-price text-brand" id= "price"> </span>
-                                      <span>
-                                         <span class="save-price font-md color3 ml-15"> </span>
-                                         <span class="old-price font-md ml-15"></span>
-                                      </span>
-                                </div>
-                            </div>
-                            <div class="detail-extralink mb-30">
-                                <form class="add-to-cart-form" method="POST" action="">
-                                    @csrf
-                                    <input type="hidden" name="id" class="hidden-product-id" value="37">
-                                    <div class="detail-extralink mb-50">
-                                        <div class="detail-qty border radius">
-                                            <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                            <input type="number" min="1" value="1" name="qty" class="qty-val qty-input">
-                                            <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                                        </div>
+{{--                            </div>--}}
+{{--                            <div class="font-xs">--}}
+{{--                                <ul id="product-attributes">--}}
+{{--                                </ul>--}}
+{{--                            </div>--}}
+{{--                            <div class="clearfix product-price-cover">--}}
+{{--                                <div class="product-price primary-color float-left">--}}
+{{--                                    <span class="current-price text-brand" id= "price"> </span>--}}
+{{--                                      <span>--}}
+{{--                                         <span class="save-price font-md color3 ml-15"> </span>--}}
+{{--                                         <span class="old-price font-md ml-15"></span>--}}
+{{--                                      </span>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="detail-extralink mb-30">--}}
+{{--                                <form class="add-to-cart-form" method="POST" action="">--}}
+{{--                                    @csrf--}}
+{{--                                    <input type="hidden" name="id" class="hidden-product-id" value="37">--}}
+{{--                                    <div class="detail-extralink mb-50">--}}
+{{--                                        <div class="detail-qty border radius">--}}
+{{--                                            <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>--}}
+{{--                                            <input type="number" min="1" value="1" name="qty" class="qty-val qty-input">--}}
+{{--                                            <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>--}}
+{{--                                        </div>--}}
 
-                                        <div class="product-extra-link2  has-buy-now-button ">
-                                            <button type="submit" class="button button-add-to-cart">
-                                                <i class="fi-rs-shopping-cart"></i> Ekle</button>
+{{--                                        <div class="product-extra-link2  has-buy-now-button ">--}}
+{{--                                            <button type="submit" class="button button-add-to-cart">--}}
+{{--                                                --}}{{--<i class="fi-rs-shopping-cart"></i>--}}{{--Sepete Ekle</button>--}}
 
-                                            <a aria-label="Favoriye Ekle" class="action-btn hover-up js-add-to-wishlist-button" data-url="" href="#"><i class="fi-rs-heart"></i></a>
-                                            {{--                                            <a aria-label="Add To Compare" href="#" class="action-btn hover-up js-add-to-compare-button" data-url="https://nest.botble.com/compare/4"><i class="fi-rs-shuffle"></i></a>--}}
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <!-- Detail Info -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+{{--                                            <a aria-label="Favoriye Ekle" class="action-btn hover-up js-add-to-wishlist-button" data-url="" href="#"><i class="fi-rs-heart"></i></a>--}}
+{{--                                            --}}{{--                                            <a aria-label="Add To Compare" href="#" class="action-btn hover-up js-add-to-compare-button" data-url="https://nest.botble.com/compare/4"><i class="fi-rs-shuffle"></i></a>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </form>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <!-- Detail Info -->--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
 
 
 
@@ -219,55 +219,55 @@
 @section('after-js')
     <script>
 
-        function quickModal(id) {
-            let modal = $('#quickViewModal');
-            $.ajax({
-                url: '{{ route('product-info') }}/'+id,
-                dataType: "json",
-                success: function (data) {
-                    let product = data.product;
-                    let attributesHtml = '';
-                    let attributes = JSON.parse(product.attributes);
+        {{--function quickModal(id) {--}}
+        {{--    let modal = $('#quickViewModal');--}}
+        {{--    $.ajax({--}}
+        {{--        url: '{{ route('product-info') }}/'+id,--}}
+        {{--        dataType: "json",--}}
+        {{--        success: function (data) {--}}
+        {{--            let product = data.product;--}}
+        {{--            let attributesHtml = '';--}}
+        {{--            let attributes = JSON.parse(product.attributes);--}}
 
 
-                    Object.entries(attributes).map(([key, value]) => {
+        {{--            Object.entries(attributes).map(([key, value]) => {--}}
 
-                        if (key === 'popular') {
-                            return;
-                        }
-                        attributesHtml += `<li class="mb-5">${key}: <span class="text-brand">${value}</span></li>`;
-                    });
-
-
-                    $('#quickViewModal .modal-body #slider').html(`<figure class="border-radius-10">
-                                        <img src="${product.photo}"
-                                              alt="${product.slug}" title="${product.name}"/>
-                                    </figure>`);
-
-                    $('#quickViewModal .modal-body #slider-thumbnails').html(`
-                                     <div>
-                                            <img src="${product.photo ?? ""  }"
-                                              alt="${product.slug}" title="${product.name}" width="77" height="77"/>
-                                    </div>`);
-
-                    $('#quickViewModal .modal-body .product-title').html(`${product.name}`);
-                    $('#quickViewModal .modal-body .product-desc').html(`${product.short_detail? product.short_detail : ""}`);
-                    $('#quickViewModal .modal-body #product-attributes').html(`${attributesHtml?attributesHtml:""}`);
-                    modal.find('.modal-body #price').html(`${product.price != null ? product.price + 'TL' : "" }`);
-                    modal.find('.modal-body .old-price ').html(`${product.old_price != null ? product.old_price + 'TL' : "" }`);
+        {{--                if (key === 'popular') {--}}
+        {{--                    return;--}}
+        {{--                }--}}
+        {{--                attributesHtml += `<li class="mb-5">${key}: <span class="text-brand">${value}</span></li>`;--}}
+        {{--            });--}}
 
 
+        {{--            $('#quickViewModal .modal-body #slider').html(`<figure class="border-radius-10">--}}
+        {{--                                <img src="${product.photo}"--}}
+        {{--                                      alt="${product.slug}" title="${product.name}"/>--}}
+        {{--                            </figure>`);--}}
 
-                    modal.modal('show');
+        {{--            $('#quickViewModal .modal-body #slider-thumbnails').html(`--}}
+        {{--                             <div>--}}
+        {{--                                    <img src="${product.photo ?? ""  }"--}}
+        {{--                                      alt="${product.slug}" title="${product.name}" width="77" height="77"/>--}}
+        {{--                            </div>`);--}}
 
-                },
-                error:(function (error,data){
-                    console.error('Ajax hatası ');
-                })
-            });
+        {{--            $('#quickViewModal .modal-body .product-title').html(`${product.name}`);--}}
+        {{--            $('#quickViewModal .modal-body .product-desc').html(`${product.short_detail? product.short_detail : ""}`);--}}
+        {{--            $('#quickViewModal .modal-body #product-attributes').html(`${attributesHtml?attributesHtml:""}`);--}}
+        {{--            modal.find('.modal-body #price').html(`${product.price != null ? product.price + 'TL' : "" }`);--}}
+        {{--            modal.find('.modal-body .old-price ').html(`${product.old_price != null ? product.old_price + 'TL' : "" }`);--}}
 
 
-        }
+
+        {{--            modal.modal('show');--}}
+
+        {{--        },--}}
+        {{--        error:(function (error,data){--}}
+        {{--            console.error('Ajax hatası ');--}}
+        {{--        })--}}
+        {{--    });--}}
+
+
+        {{--}--}}
 
         const button = document.getElementById('whatsapp_share');
 

@@ -29,8 +29,8 @@ class PermissionsSeeders extends Seeder
         Permissions::firstOrCreate(['name' => 'update_my_profile_users', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'bloke_my_profile_users', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'news_letter_list_download_users', 'guard_name' => 'web']);
-        
-        
+
+
         ///Roles Permissions
         Permissions::firstOrCreate(['name' => 'view_menu_roles', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'view_all_roles', 'guard_name' => 'web']);
@@ -48,6 +48,7 @@ class PermissionsSeeders extends Seeder
         Permissions::firstOrCreate(['name' => 'restore_product', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'view_product', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'view_trashed_product', 'guard_name' => 'web']);
+        Permissions::firstOrCreate(['name' => 'productpromotion_categories_product', 'guard_name' => 'web']);
         //Post module
         Permissions::firstOrCreate(['name' => 'view_menu_post', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'view_all_post', 'guard_name' => 'web']);
@@ -57,7 +58,7 @@ class PermissionsSeeders extends Seeder
         Permissions::firstOrCreate(['name' => 'delete_post', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'restore_post', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'view_news_ajans_post', 'guard_name' => 'web']);
-        
+
         //post Category
         Permissions::firstOrCreate(['name' => 'view_menu_category', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'view_category', 'guard_name' => 'web']);
@@ -89,7 +90,7 @@ class PermissionsSeeders extends Seeder
         Permissions::firstOrCreate(['name' => 'read_comment', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'delete_comment', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'publish_comment', 'guard_name' => 'web']);
-        
+
         Permissions::firstOrCreate(['name' => 'message_information_comment', 'guard_name' => 'web']);
 
         //settings
@@ -131,7 +132,7 @@ class PermissionsSeeders extends Seeder
         Permissions::firstOrCreate(['name' => 'update_services', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'delete_services', 'guard_name' => 'web']);
 
-        
+
         //QuesionBank
         Permissions::firstOrCreate(['name' => 'view_menu_questionbank', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'view_questionbank', 'guard_name' => 'web']);
@@ -149,9 +150,9 @@ class PermissionsSeeders extends Seeder
         Permissions::firstOrCreate(['name' => 'show_question', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'update_question', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'delete_question', 'guard_name' => 'web']);
-        
-        
-        //Tests 
+
+
+        //Tests
         Permissions::firstOrCreate(['name' => 'view_menu_tests', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'create_tests', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'edit_tests', 'guard_name' => 'web']);
@@ -159,14 +160,14 @@ class PermissionsSeeders extends Seeder
         Permissions::firstOrCreate(['name' => 'show_tests', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'delete_tests', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'view_all_tests', 'guard_name' => 'web']);
-        
+
         Permissions::firstOrCreate(['name' => 'view_analysis_list_tests', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'view_my_tests', 'guard_name' => 'web']);
         Permissions::firstOrCreate(['name' => 'show_analysis_tests', 'guard_name' => 'web']);
- 
-        
-        
-        
+
+
+
+
         //pages
         //Slider - Portfolio
         Permissions::firstOrCreate(['name' => 'view_menu_pages', 'guard_name' => 'web']);

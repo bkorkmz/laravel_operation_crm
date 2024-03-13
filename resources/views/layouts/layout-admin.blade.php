@@ -26,7 +26,6 @@
     <link href="{{ asset('vendor/dropify/dist/css/dropify.css?v=1.0') }}" rel="stylesheet" type="text/css" />,
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css?v=1.0" rel="stylesheet"/>
 
-    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"> --}}
 
     <!-- Required Fremwork -->
     <link rel="stylesheet" type="text/css" href="{{ asset('admin/bower_components/bootstrap/css/bootstrap.min.css?v=1.0') }}">

@@ -1,409 +1,416 @@
 {
-  "menu": [
-    {
-      "text": "Ana Sayfa",
-      "icon": "feather icon-home",
-      "route": "admin.index",
-      "path": "/^backend/",
-      "badge": "false",
-      "permission": ""
-    },
-    {
-      "text": "Profilim",
-      "icon": "feather icon-user-check",
-      "route": "profile.index",
-      "path": "/^profile/",
-      "badge": "false",
-      "permission": "view_my_profile_users"
-    },
-      {
-          "text": "E-ticaret",
-          "icon": "feather icon-pie-chart",
-          "route": "",
-          "path": "/^product/",
-          "badge": "false",
-          "permission": [
-              "view_menu_product"
-          ],
-          "submenu": [
-              {
-                  "text": "Ürün Listesi",
-                  "icon": "feather icon-users",
-                  "route": "product.index",
-                  "path": "/^product(\\/index|\\/create|\\/edit|\\/show|\\/)?$/",
-                  "badge": "false",
-                  "permission": [
-                      "view_product"
-                  ]
-              }
-          ]
-      },
+    "menu": [
+        {
+            "text": "Ana Sayfa",
+            "icon": "feather icon-home",
+            "route": "admin.index",
+            "path": "/^backend/",
+            "badge": "false",
+            "permission": ""
+        },
+        {
+            "text": "Profilim",
+            "icon": "feather icon-user-check",
+            "route": "profile.index",
+            "path": "/^profile/",
+            "badge": "false",
+            "permission": "view_my_profile_users"
+        },
+        {
+            "text": "E-ticaret",
+            "icon": "feather icon-pie-chart",
+            "route": "",
+            "path": "/^(product|promotion-categories)/",
+            "badge": "false",
+            "permission": [
+                "view_menu_product"
+            ],
+            "submenu": [
+                {
+                    "text": "Ürün Listesi",
+                    "icon": "feather icon-users",
+                    "route": "product.index",
+                    "path": "/^product(\\/index|\\/create|\\/edit|\\/show|\\/)?$/",
+                    "badge": "false",
+                    "permission": [
+                        "view_product"
+                    ]
+                }, {
+                    "text": "Öne Çıkan Kategoriler",
+                    "icon": "feather icon-users",
+                    "route": "promotion-categories.promotionCategoriesList",
+                    "path": "/^promotion-categories(\\/index|\\/create|\\/edit|\\/show|\\/)?$/",
+                    "badge": "false",
+                    "permission": [
+                        "view_product"
+                    ]
+                }
 
-      {
-      "text": "Testler",
-      "icon": "feather icon-zap",
-      "route": "",
-      "path": "/^test/",
-      "badge": "false",
-      "permission": "view_menu_tests",
-      "submenu": [
-        {
-          "text": "Testler Listesi",
-          "icon": "feather icon-users",
-          "route": "test.index",
-          "path": "/^test(\\/index|\\/create|\\/edit|\\/show|\\/)?$/",
-          "badge": "false",
-          "permission": [
-            "create_tests"
-          ]
+            ]
         },
         {
-          "text": "Test Sonuçları",
-          "icon": "feather icon-users",
-          "route": "test.testDefinition",
-          "path": "/^test_definetion/",
-          "badge": "false",
-          "permission": [
-            "view_analysis_list_tests"
-          ]
+            "text": "Testler",
+            "icon": "feather icon-zap",
+            "route": "",
+            "path": "/^test/",
+            "badge": "false",
+            "permission": "view_menu_tests",
+            "submenu": [
+                {
+                    "text": "Testler Listesi",
+                    "icon": "feather icon-users",
+                    "route": "test.index",
+                    "path": "/^test(\\/index|\\/create|\\/edit|\\/show|\\/)?$/",
+                    "badge": "false",
+                    "permission": [
+                        "create_tests"
+                    ]
+                },
+                {
+                    "text": "Test Sonuçları",
+                    "icon": "feather icon-users",
+                    "route": "test.testDefinition",
+                    "path": "/^test_definetion/",
+                    "badge": "false",
+                    "permission": [
+                        "view_analysis_list_tests"
+                    ]
+                }
+            ]
+        },
+        {
+            "text": "Kullanıcı Ayarları",
+            "icon": "feather icon-users",
+            "route": "",
+            "path": "/^(user|roles)/",
+            "badge": "false",
+            "permission": [
+                "view_menu_users",
+                "view_menu_roles",
+                "view_menu_teams"
+            ],
+            "submenu": [
+                {
+                    "text": "Kullanıcı Listesi",
+                    "icon": "feather icon-users",
+                    "route": "user.index",
+                    "path": "/^user(\\/index|\\/create|\\/edit|\\/trashed_index|\\/)?$/",
+                    "badge": "false",
+                    "permission": [
+                        "view_menu_users"
+                    ]
+                },
+                {
+                    "text": "Roller",
+                    "icon": "",
+                    "route": "roles.index",
+                    "path": "/^user\\/roles(\\/index|\\/create|\\/edit|\\/trashed_index|\\/)?$/",
+                    "badge": "false",
+                    "permission": "view_menu_roles"
+                },
+                {
+                    "text": "Takım Listesi",
+                    "icon": "",
+                    "route": "user.teams.index",
+                    "path": "/^user\\/teams(\\/index|\\/create|\\/edit|\\/)?$/",
+                    "badge": "false",
+                    "permission": [
+                        "view_menu_teams"
+                    ]
+                },
+                {
+                    "text": "Satın Alma",
+                    "icon": "",
+                    "route": "",
+                    "path": "/^sales/",
+                    "badge": "false",
+                    "permission": [
+                        ""
+                    ]
+                },
+                {
+                    "text": "Destek Masası",
+                    "icon": "",
+                    "route": "",
+                    "path": "/^help/",
+                    "badge": "false",
+                    "permission": [
+                        ""
+                    ]
+                },
+                {
+                    "text": "Pazarlama İletişimi",
+                    "icon": "",
+                    "route": "",
+                    "path": "/^sales-info/",
+                    "badge": "false",
+                    "permission": [
+                        ""
+                    ]
+                },
+                {
+                    "text": "Geribildirim Yönetimi",
+                    "icon": "",
+                    "route": "",
+                    "path": "/^feedback/",
+                    "badge": "false",
+                    "permission": [
+                        ""
+                    ]
+                }
+            ]
+        },
+        {
+            "text": "Haber Bülteni ",
+            "icon": "feather icon-globe",
+            "route": "",
+            "path": "/^(post|photo_gallery|video_gallery)/",
+            "badge": "false",
+            "permission": [
+                "view_menu_post",
+                "view_photogallery",
+                "view_videogallery"
+            ],
+            "submenu": [
+                {
+                    "text": "Haber Listesi",
+                    "icon": "feather icon-users",
+                    "route": "post.index",
+                    "path": "/^post(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
+                    "badge": "false",
+                    "permission": [
+                        "view_all_post"
+                    ]
+                },
+                {
+                    "text": "Foto Galeri",
+                    "icon": "",
+                    "route": "",
+                    "path": "/^photo_gallery(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
+                    "badge": "false",
+                    "permission": [
+                        "view_photogallery",
+                        "view_all_photogallery"
+                    ]
+                },
+                {
+                    "text": "Video Galeri",
+                    "icon": "",
+                    "route": "",
+                    "path": "/^video_gallery/",
+                    "badge": "false",
+                    "permission": [
+                        "view_videogallery",
+                        "view_all_videogallery"
+                    ]
+                },
+                {
+                    "text": "Haber Ajansları",
+                    "icon": "",
+                    "route": "post.ajanss",
+                    "path": "/^ajanss/",
+                    "badge": "false",
+                    "permission": [
+                        "view_news_ajans_post"
+                    ]
+                }
+            ]
+        },
+        {
+            "text": "Soru Bankası",
+            "icon": "fas fa-cubes",
+            "route": "",
+            "path": "/^(questionbank|question)/",
+            "badge": "false",
+            "permission": [
+                "view_menu_questionbank"
+            ],
+            "submenu": [
+                {
+                    "text": "Soru Bankası Listesi",
+                    "icon": "feather icon-users",
+                    "route": "questionbank.index",
+                    "path": "/^(questionbank(\\/index|\\/create|\\/edit|\\/trashed_index|\\/question)|question)/",
+                    "badge": "false",
+                    "permission": [
+                        "view_menu_questionbank"
+                    ]
+                }
+            ]
+        },
+        {
+            "text": "Kategoriler",
+            "icon": "feather icon-layers",
+            "route": "",
+            "path": "/^(category)/",
+            "badge": "false",
+            "permission": [
+                "view_menu_category"
+            ],
+            "submenu": [
+                {
+                    "text": "Kategori Listesi",
+                    "icon": "feather icon-users",
+                    "route": "category.index",
+                    "path": "/^category(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
+                    "badge": "false",
+                    "permission": [
+                        "view_category"
+                    ]
+                }
+            ]
+        },
+        {
+            "text": "Modüller ",
+            "icon": "feather icon-image",
+            "route": "",
+            "path": "/^(slider|portfolio|faq_sss|page)/",
+            "badge": "false",
+            "permission": [
+                "view_menu_slider",
+                "view_slider"
+            ],
+            "submenu": [
+                {
+                    "text": "PortFolyo ",
+                    "icon": "feather icon-users",
+                    "route": "portfolio.index",
+                    "path": "/^portfolio(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
+                    "badge": "false",
+                    "permission": [
+                        "view_slider"
+                    ]
+                },
+                {
+                    "text": "Slider",
+                    "icon": "feather icon-users",
+                    "route": "slider.index",
+                    "path": "/^slider(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
+                    "badge": "false",
+                    "permission": [
+                        "view_slider"
+                    ]
+                },
+                {
+                    "text": "Hakkımızda Sayfası",
+                    "icon": "feather icon-users",
+                    "route": "page.about",
+                    "path": "/^page(\\/about)?$/",
+                    "badge": "false",
+                    "permission": [
+                        "view_slider"
+                    ]
+                },
+                {
+                    "text": "Sıkça Sorulan Sorular",
+                    "icon": "feather icon-users",
+                    "route": "faq_sss.index",
+                    "path": "/^faq_sss(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
+                    "badge": "false",
+                    "permission": [
+                        "view_slider"
+                    ]
+                },
+                {
+                    "text": "Sayfalar",
+                    "icon": "feather icon-users",
+                    "route": "pages.index",
+                    "path": "/^pages(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
+                    "badge": "false",
+                    "permission": [
+                        "view_slider"
+                    ]
+                }
+            ]
+        },
+        {
+            "text": "İçerik Üreticisi ",
+            "icon": "feather icon-edit",
+            "route": "",
+            "path": "/^(article|services)/",
+            "badge": "false",
+            "permission": [
+                "view_menu_article",
+                "view_menu_services"
+            ],
+            "submenu": [
+                {
+                    "text": "Makaleler",
+                    "icon": "feather icon-users",
+                    "route": "article.index",
+                    "path": "/^article(\\/index|\\/create|\\/edit\\/|\\/trashed_index)?$/",
+                    "badge": "false",
+                    "permission": [
+                        "view_article"
+                    ]
+                },
+                {
+                    "text": "Hizmetler",
+                    "icon": "feather icon-users",
+                    "route": "services.index",
+                    "path": "/^services(\\/index|\\/create|\\/edit\\/|\\/trashed_index)?$/",
+                    "badge": "false",
+                    "permission": [
+                        "view_menu_services"
+                    ]
+                }
+            ]
+        },
+        {
+            "text": "Yorumlar",
+            "icon": "feather icon-message-circle",
+            "route": "",
+            "path": "/^comments/",
+            "badge": "false",
+            "permission": [
+                "view_comment",
+                "view_all_comment"
+            ],
+            "submenu": [
+                {
+                    "text": "Yorumlar Listesi",
+                    "icon": "feather icon-users",
+                    "route": "",
+                    "path": "/^article/",
+                    "badge": "true",
+                    "permission": [
+                        "view_comment"
+                    ]
+                }
+            ]
+        },
+        {
+            "text": "Ayarlar",
+            "icon": "feather icon-settings",
+            "route": "",
+            "path": "/^settings/",
+            "badge": "false",
+            "permission": [
+                "view_menu_settings",
+                "view_settings"
+            ],
+            "submenu": [
+                {
+                    "text": "Site  Ayarları ",
+                    "icon": "feather icon-users",
+                    "route": "settings.index",
+                    "path": "/^settings/",
+                    "badge": "false",
+                    "permission": [
+                        "view_menu_settings"
+                    ]
+                }
+            ]
+        },
+        {
+            "text": "İletişim Talepleri",
+            "icon": "feather icon-message-circle",
+            "route": "admin.info_message",
+            "path": "/^info-message/",
+            "badge": "frue",
+            "permission": [
+                "message_information_comment"
+            ]
         }
-        ]
-    },
-    {
-      "text": "Kullanıcı Ayarları",
-      "icon": "feather icon-users",
-      "route": "",
-      "path": "/^(user|roles)/",
-      "badge": "false",
-      "permission": [
-        "view_menu_users",
-        "view_menu_roles",
-        "view_menu_teams"
-      ],
-      "submenu": [
-        {
-          "text": "Kullanıcı Listesi",
-          "icon": "feather icon-users",
-          "route": "user.index",
-          "path": "/^user(\\/index|\\/create|\\/edit|\\/trashed_index|\\/)?$/",
-          "badge": "false",
-          "permission": [
-            "view_menu_users"
-          ]
-        },
-        {
-          "text": "Roller",
-          "icon": "",
-          "route": "roles.index",
-          "path": "/^user\\/roles(\\/index|\\/create|\\/edit|\\/trashed_index|\\/)?$/",
-          "badge": "false",
-          "permission": "view_menu_roles"
-        },
-        {
-          "text": "Takım Listesi",
-          "icon": "",
-          "route": "user.teams.index",
-          "path": "/^user\\/teams(\\/index|\\/create|\\/edit|\\/)?$/",
-          "badge": "false",
-          "permission": [
-            "view_menu_teams"
-          ]
-        },
-        {
-          "text": "Satın Alma",
-          "icon": "",
-          "route": "",
-          "path": "/^sales/",
-          "badge": "false",
-          "permission": [
-            ""
-          ]
-        },
-        {
-          "text": "Destek Masası",
-          "icon": "",
-          "route": "",
-          "path": "/^help/",
-          "badge": "false",
-          "permission": [
-            ""
-          ]
-        },
-        {
-          "text": "Pazarlama İletişimi",
-          "icon": "",
-          "route": "",
-          "path": "/^sales-info/",
-          "badge": "false",
-          "permission": [
-            ""
-          ]
-        },
-        {
-          "text": "Geribildirim Yönetimi",
-          "icon": "",
-          "route": "",
-          "path": "/^feedback/",
-          "badge": "false",
-          "permission": [
-            ""
-          ]
-        }
-      ]
-    },
-    {
-      "text": "Haber Bülteni ",
-      "icon": "feather icon-globe",
-      "route": "",
-      "path": "/^(post|photo_gallery|video_gallery)/",
-      "badge": "false",
-      "permission": [
-        "view_menu_post",
-        "view_photogallery",
-        "view_videogallery"
-      ],
-      "submenu": [
-        {
-          "text": "Haber Listesi",
-          "icon": "feather icon-users",
-          "route": "post.index",
-          "path": "/^post(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
-          "badge": "false",
-          "permission": [
-            "view_all_post"
-          ]
-        },
-        {
-          "text": "Foto Galeri",
-          "icon": "",
-          "route": "",
-          "path": "/^photo_gallery(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
-          "badge": "false",
-          "permission": [
-            "view_photogallery",
-            "view_all_photogallery"
-          ]
-        },
-        {
-          "text": "Video Galeri",
-          "icon": "",
-          "route": "",
-          "path": "/^video_gallery/",
-          "badge": "false",
-          "permission": [
-            "view_videogallery",
-            "view_all_videogallery"
-          ]
-        },
-        {
-          "text": "Haber Ajansları",
-          "icon": "",
-          "route": "post.ajanss",
-          "path": "/^ajanss/",
-          "badge": "false",
-          "permission": [
-            "view_news_ajans_post"
-          ]
-        }
-      ]
-    },
-    {
-      "text": "Soru Bankası",
-      "icon": "fas fa-cubes",
-      "route": "",
-      "path": "/^(questionbank|question)/",
-      "badge": "false",
-      "permission": [
-        "view_menu_questionbank"
-      ],
-      "submenu": [
-        {
-          "text": "Soru Bankası Listesi",
-          "icon": "feather icon-users",
-          "route": "questionbank.index",
-          "path": "/^(questionbank(\\/index|\\/create|\\/edit|\\/trashed_index|\\/question)|question)/",
-          "badge": "false",
-          "permission": [
-            "view_menu_questionbank"
-          ]
-        }
-      ]
-    },
-    {
-      "text": "Kategoriler",
-      "icon": "feather icon-layers",
-      "route": "",
-      "path": "/^(category)/",
-      "badge": "false",
-      "permission": [
-        "view_menu_category"
-      ],
-      "submenu": [
-        {
-          "text": "Kategori Listesi",
-          "icon": "feather icon-users",
-          "route": "category.index",
-          "path": "/^category(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
-          "badge": "false",
-          "permission": [
-            "view_category"
-          ]
-        }
-      ]
-    },
-    {
-      "text": "Modüller ",
-      "icon": "feather icon-image",
-      "route": "",
-      "path": "/^(slider|portfolio|faq_sss|page)/",
-      "badge": "false",
-      "permission": [
-        "view_menu_slider",
-        "view_slider"
-      ],
-      "submenu": [
-        {
-          "text": "PortFolyo ",
-          "icon": "feather icon-users",
-          "route": "portfolio.index",
-          "path": "/^portfolio(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
-          "badge": "false",
-          "permission": [
-            "view_slider"
-          ]
-        },
-        {
-          "text": "Slider",
-          "icon": "feather icon-users",
-          "route": "slider.index",
-          "path": "/^slider(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
-          "badge": "false",
-          "permission": [
-            "view_slider"
-          ]
-        },
-        {
-          "text": "Hakkımızda Sayfası",
-          "icon": "feather icon-users",
-          "route": "page.about",
-          "path": "/^page(\\/about)?$/",
-          "badge": "false",
-          "permission": [
-            "view_slider"
-          ]
-        },
-        {
-          "text": "Sıkça Sorulan Sorular",
-          "icon": "feather icon-users",
-          "route": "faq_sss.index",
-          "path": "/^faq_sss(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
-          "badge": "false",
-          "permission": [
-            "view_slider"
-          ]
-        },
-        {
-          "text": "Sayfalar",
-          "icon": "feather icon-users",
-          "route": "pages.index",
-          "path": "/^pages(\\/index|\\/create|\\/edit|\\/trashed_index)?$/",
-          "badge": "false",
-          "permission": [
-            "view_slider"
-          ]
-        }
-      ]
-    },
-    {
-      "text": "İçerik Üreticisi ",
-      "icon": "feather icon-edit",
-      "route": "",
-      "path": "/^(article|services)/",
-      "badge": "false",
-      "permission": [
-        "view_menu_article",
-        "view_menu_services"
-      ],
-      "submenu": [
-        {
-          "text": "Makaleler",
-          "icon": "feather icon-users",
-          "route": "article.index",
-          "path": "/^article(\\/index|\\/create|\\/edit\\/|\\/trashed_index)?$/",
-          "badge": "false",
-          "permission": [
-            "view_article"
-          ]
-        },
-        {
-          "text": "Hizmetler",
-          "icon": "feather icon-users",
-          "route": "services.index",
-          "path": "/^services(\\/index|\\/create|\\/edit\\/|\\/trashed_index)?$/",
-          "badge": "false",
-          "permission": [
-            "view_menu_services"
-          ]
-        }
-      ]
-    },
-    {
-      "text": "Yorumlar",
-      "icon": "feather icon-message-circle",
-      "route": "",
-      "path": "/^comments/",
-      "badge": "false",
-      "permission": [
-        "view_comment",
-        "view_all_comment"
-      ],
-      "submenu": [
-        {
-          "text": "Yorumlar Listesi",
-          "icon": "feather icon-users",
-          "route": "",
-          "path": "/^article/",
-          "badge": "true",
-          "permission": [
-            "view_comment"
-          ]
-        }
-      ]
-    },
-
-
-    {
-      "text": "Ayarlar",
-      "icon": "feather icon-settings",
-      "route": "",
-      "path": "/^settings/",
-      "badge": "false",
-      "permission": [
-        "view_menu_settings",
-        "view_settings"
-      ],
-      "submenu": [
-        {
-          "text": "Site  Ayarları ",
-          "icon": "feather icon-users",
-          "route": "settings.index",
-          "path": "/^settings/",
-          "badge": "false",
-          "permission": [
-            "view_menu_settings"
-          ]
-        }
-      ]
-    },
-    {
-      "text": "İletişim Talepleri",
-      "icon": "feather icon-message-circle",
-      "route": "admin.info_message",
-      "path": "/^info-message/",
-      "badge": "frue",
-      "permission": [
-        "message_information_comment"
-      ]
-    }
-  ]
+    ]
 }

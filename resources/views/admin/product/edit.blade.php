@@ -5,7 +5,7 @@
 @section('content')
 
     @php
- $attributes = !blank($products->attributes) ? json_decode($products->attributes,true) : "" ; @endphp
+ $attributes = !blank($products->attributes) ? json_decode($products->attributes,true) : [] ; @endphp
 
     <div class="pcoded-inner-content">
         <div class="main-body">
@@ -86,26 +86,18 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-4 col-form-label">Miktar / Stok</label>
                                                 <div class="col-sm-8">
-
-                                                    <input type="text" class="form-control autonumber fill"
-                                                           placeholder="Stok 500"
-                                                           data-v-max="999999" data-v-min="0" name="stock"
+                                                    <input type="text" class="form-control fill"
+                                                           placeholder="Stok 500" min="1" max="6"
+                                                           data-v-max="9999999" data-v-min="1" name="stock"
                                                            value="{{ $products->stock}}">
-
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-sm-4 col-form-label" for="price">Fiyat</label>
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control number-mask  fill"
-                                                           max="9999999" min="1" placeholder="Eski Fiyat 5.000"
+                                                           minlength="1" placeholder="Fiyat 5.000" maxlength="10"
                                                            name="price" step="0000.01"     value="{{ $products->price}}">
-
-
-{{--                                                        <input type="text" class="form-control autonumber fill"  id="price"--}}
-{{--                                                               name="price" placeholder="Fiyat Giriniz"--}}
-{{--                                                               value="{{ $products->price}}">--}}
-
                                                 </div>
 
                                             </div>
@@ -113,14 +105,8 @@
                                                 <label class="col-sm-4 col-form-label" for="old_price">Eski Fiyat</label>
                                                 <div class="col-sm-8">
                                                     <input type="text" class="form-control number-mask  fill"
-                                                           max="9999999" min="1" placeholder="Eski Fiyat 5.000"
+                                                           minlength="1" placeholder="Eski Fiyat 5.000" maxlength="10"
                                                            name="old_price" step="0000.01" value="{{$products->old_price}}">
-
-
-
-{{--                                                        <input type="text" class="form-control autonumber fill" id="old_price"--}}
-{{--                                                               placeholder="Eski Fiyat 5.000"--}}
-{{--                                                               name="old_price" step="0000.01" value="{{$products->old_price}}">--}}
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -301,7 +287,7 @@
                 }
 
                 let selectedText = $('select[id="attributes"] option:selected').text();
-                if (selectedAttr === 'popular') {
+                if (selectedAttr === 'popular'|| selectedAttr === 'best-sales') {
                     input =
                         '<div class="row m-2 input-group mb-3" id="attr_' + random_id + '">' +
                         '<div class="input-group-prepend"><span class="input-group-text" id="inputGroup-sizing-default">' + selectedText + ' </span></div>' +
@@ -338,7 +324,7 @@
     </script>
 
     <script>
-        $('.autonumber').autoNumeric('init');
+        // $('.autonumber').autoNumeric('init');
         $('#category_id').select2({
             theme: 'bootstrap'
         });
@@ -378,11 +364,7 @@
         $(document).ready(function() {
             $('.number-mask').inputmask({
                 alias: 'numeric',
-                groupSeparator: ',',
-                autoGroup: false,
-                placeholder: '0',
                 rightAlign: false,
-                allowMinus: false
             });
         });
     </script>

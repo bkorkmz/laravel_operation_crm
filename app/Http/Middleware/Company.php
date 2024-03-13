@@ -17,7 +17,7 @@ class Company
     public function handle(Request $request, Closure $next)
     {
         if (Auth::user()->hasRole('user')) {
-            return redirect()->route('student.index');
+            return redirect()->route('frontend.myaccount');
        }else{
             return $next($request);
         }

@@ -1,9 +1,8 @@
 @php
     $sliders = $content['sliders'];
-    $banners = $content['banners'];
+    $banners = $content['banners'][0];
 
  @endphp
-
 <style>
     .banner-img.style-3 .banner-text {
         bottom: 0px;

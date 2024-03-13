@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = [];
 
@@ -26,7 +26,6 @@ class Category extends Model
                 ->orWhere('parent_id', '=', 0);
         });
     }
-
 
 
     protected static function boot(): void
@@ -86,5 +85,11 @@ class Category extends Model
         return $query->where(function ($query) {
             $query->parentNull()->where('model', 'article');
         });
+    }
+
+
+    public function promotions()
+    {
+        return $this->belongsToMany(Promotion::class, 'promotion_category', 'category_id', 'promotion_id');
     }
 }

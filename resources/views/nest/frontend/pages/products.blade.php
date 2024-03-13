@@ -99,13 +99,13 @@
                                     </div>
                                     <div class="product-card-bottom">
                                         <div class="product-price">
-                                            <span>{{$product['price'] !=0 ?$product['price'].' TL':"" }}</span>
+                                            <span>{{$product['price'] !=0 ?$product['price'].' TL':"" }}</span><br>
                                             <span
                                                 class="old-price">{{ $product['old_price'] !=0 ?$product['old_price'].' TL':"" }}</span>
                                         </div>
-                                        <div class="add-cart">
+                                        <div class="add-cart align-self-end">
                                             <a class="add" target="_blank"
-                                               href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text={{$product->name}}">{{--<i class="fi-rs-shopping-cart mr-5"></i>--}}
+                                               href="{{route('frontend.product_detail',['slug'=>$product['slug']])}}"><i class="fi-rs-shopping-cart mr-5"></i>
                                                 Ekle </a>
                                         </div>
                                     </div>
@@ -324,71 +324,71 @@
     </div>
 
 
-    <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">
-                            <div class="detail-gallery">
-                                <span class="zoom-icon"><i class="fi-rs-search"></i></span>
-                                <!-- MAIN SLIDES -->
-                                <div class="product-image-slider" id="slider">
+{{--    <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel"--}}
+{{--         aria-hidden="true">--}}
+{{--        <div class="modal-dialog">--}}
+{{--            <div class="modal-content">--}}
+{{--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--}}
+{{--                <div class="modal-body">--}}
+{{--                    <div class="row">--}}
+{{--                        <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">--}}
+{{--                            <div class="detail-gallery">--}}
+{{--                                <span class="zoom-icon"><i class="fi-rs-search"></i></span>--}}
+{{--                                <!-- MAIN SLIDES -->--}}
+{{--                                <div class="product-image-slider" id="slider">--}}
 
-                                </div>
-                                <!-- THUMBNAILS -->
-                                <div class="slider-nav-thumbnails" id="slider-thumbnails">
+{{--                                </div>--}}
+{{--                                <!-- THUMBNAILS -->--}}
+{{--                                <div class="slider-nav-thumbnails" id="slider-thumbnails">--}}
 
-                                </div>
-                            </div>
-                            <!-- End Gallery -->
-                        </div>
-                        <div class="col-md-6 col-sm-12 col-xs-12">
-                            <div class="detail-info pr-30 pl-30">
-                                <span class="stock-status out-stock"> Popüler </span>
-                                <h3 class="title-detail"><a href="" class="text-heading product-title">Ürün adı</a></h3>
-                                <div class="product-detail-rating">
-                                    <div class="product-rate-cover product-desc">
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <!-- End Gallery -->--}}
+{{--                        </div>--}}
+{{--                        <div class="col-md-6 col-sm-12 col-xs-12">--}}
+{{--                            <div class="detail-info pr-30 pl-30">--}}
+{{--                                <span class="stock-status out-stock"> Popüler </span>--}}
+{{--                                <h3 class="title-detail"><a href="" class="text-heading product-title">Ürün adı</a></h3>--}}
+{{--                                <div class="product-detail-rating">--}}
+{{--                                    <div class="product-rate-cover product-desc">--}}
 
-                                    </div>
+{{--                                    </div>--}}
 
-                                </div>
-                                <div class="font-xs">
-                                    <ul id="product-attributes">
-                                    </ul>
-                                </div>
-                                <div class="clearfix product-price-cover">
-                                    <div class="product-price primary-color float-left">
-                                        <span class="current-price text-brand" id="price"> </span>
-                                        {{--                                    <span>--}}
-                                        {{--                                       <span class="save-price font-md color3 ml-15">26% </span>--}}
-                                        {{--                                       <span class="old-price font-md ml-15">$52</span>--}}
-                                        {{--                                    </span>--}}
-                                    </div>
-                                </div>
-                                <div class="detail-extralink mb-30">
-                                    <div class="detail-qty border radius">
-                                        <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                        <span class="qty-val">1</span>
-                                        <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
-                                    </div>
-                                    <div class="product-extra-link2">
-                                        <button id="whatsapp_share" type="submit" class="button button-add-to-cart"><i
-                                                class="fi-rs-shopping-cart"></i>-Sepete Ekle
-                                        </button>
+{{--                                </div>--}}
+{{--                                <div class="font-xs">--}}
+{{--                                    <ul id="product-attributes">--}}
+{{--                                    </ul>--}}
+{{--                                </div>--}}
+{{--                                <div class="clearfix product-price-cover">--}}
+{{--                                    <div class="product-price primary-color float-left">--}}
+{{--                                        <span class="current-price text-brand" id="price"> </span>--}}
+{{--                                        --}}{{--                                    <span>--}}
+{{--                                        --}}{{--                                       <span class="save-price font-md color3 ml-15">26% </span>--}}
+{{--                                        --}}{{--                                       <span class="old-price font-md ml-15">$52</span>--}}
+{{--                                        --}}{{--                                    </span>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <div class="detail-extralink mb-30">--}}
+{{--                                    <div class="detail-qty border radius">--}}
+{{--                                        <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>--}}
+{{--                                        <span class="qty-val">1</span>--}}
+{{--                                        <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="product-extra-link2">--}}
+{{--                                        <button id="whatsapp_share" type="submit" class="button button-add-to-cart">--}}
+{{--                                           --}}{{-- <i class="fi-rs-shopping-cart"></i>--}}{{---Sepete Ekle--}}
+{{--                                        </button>--}}
 
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Detail Info -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <!-- Detail Info -->--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
 @endsection
 
@@ -400,54 +400,54 @@
 @section('after-js')
     <script>
 
-        function quickModal(id) {
-            let modal = $('#quickViewModal');
-            $.ajax({
-                url: '{{ route('product-info') }}/' + id,
-                dataType: "json",
-                success: function (data) {
-                    let product = data.product;
-                    let attributesHtml = '';
-                    let attributes = JSON.parse(product.attributes);
+        {{--function quickModal(id) {--}}
+        {{--    let modal = $('#quickViewModal');--}}
+        {{--    $.ajax({--}}
+        {{--        url: '{{ route('product-info') }}/' + id,--}}
+        {{--        dataType: "json",--}}
+        {{--        success: function (data) {--}}
+        {{--            let product = data.product;--}}
+        {{--            let attributesHtml = '';--}}
+        {{--            let attributes = JSON.parse(product.attributes);--}}
 
 
-                    Object.entries(attributes).map(([key, value]) => {
+        {{--            Object.entries(attributes).map(([key, value]) => {--}}
 
-                        console.log(key, value)
-                        if (key === 'popular') {
-                            return;
-                        }
-                        attributesHtml += `<li class="mb-5">${key}: <span class="text-brand">${value}</span></li>`;
-                    });
-                    debugger;
+        {{--                console.log(key, value)--}}
+        {{--                if (key === 'popular') {--}}
+        {{--                    return;--}}
+        {{--                }--}}
+        {{--                attributesHtml += `<li class="mb-5">${key}: <span class="text-brand">${value}</span></li>`;--}}
+        {{--            });--}}
+        {{--            debugger;--}}
 
-                    $('#quickViewModal .modal-body #slider').html(`<figure class="border-radius-10">
-                                        <img src="${product.photo}"
-                                              alt="${product.slug}" title="${product.name}"/>
-                                    </figure>`);
+        {{--            $('#quickViewModal .modal-body #slider').html(`<figure class="border-radius-10">--}}
+        {{--                                <img src="${product.photo}"--}}
+        {{--                                      alt="${product.slug}" title="${product.name}"/>--}}
+        {{--                            </figure>`);--}}
 
-                    $('#quickViewModal .modal-body #slider-thumbnails').html(`
-                                     <div>
-                                            <img src="${product.photo ?? ""}"
-                                              alt="${product.slug}" title="${product.name}" width="77" height="77"/>
-                                    </div>`);
+        {{--            $('#quickViewModal .modal-body #slider-thumbnails').html(`--}}
+        {{--                             <div>--}}
+        {{--                                    <img src="${product.photo ?? ""}"--}}
+        {{--                                      alt="${product.slug}" title="${product.name}" width="77" height="77"/>--}}
+        {{--                            </div>`);--}}
 
-                    $('#quickViewModal .modal-body .product-title').html(`${product.name}`);
-                    $('#quickViewModal .modal-body .product-desc').html(`${product.short_detail ? product.short_detail : ""}`);
-                    $('#quickViewModal .modal-body #product-attributes').html(`${attributesHtml ? attributesHtml : ""}`);
-                    // $('#quickViewModal .modal-body #price').html(`${product.price} TL`);
-
-
-                    modal.modal('show');
-
-                },
-                error: (function (error, data) {
-                    console.error('Ajax hatası ');
-                })
-            });
+        {{--            $('#quickViewModal .modal-body .product-title').html(`${product.name}`);--}}
+        {{--            $('#quickViewModal .modal-body .product-desc').html(`${product.short_detail ? product.short_detail : ""}`);--}}
+        {{--            $('#quickViewModal .modal-body #product-attributes').html(`${attributesHtml ? attributesHtml : ""}`);--}}
+        {{--            // $('#quickViewModal .modal-body #price').html(`${product.price} TL`);--}}
 
 
-        }
+        {{--            modal.modal('show');--}}
+
+        {{--        },--}}
+        {{--        error: (function (error, data) {--}}
+        {{--            console.error('Ajax hatası ');--}}
+        {{--        })--}}
+        {{--    });--}}
+
+
+        {{--}--}}
 
         const button = document.getElementById('whatsapp_share');
 

@@ -10,6 +10,7 @@
             position: absolute;
             right: 0;
         }
+
     </style>
     @foreach ($contents as $key => $content)
         @include('admin.includes.' . $key, ['contents' => $content])

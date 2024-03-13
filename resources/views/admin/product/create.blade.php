@@ -90,9 +90,9 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-2 col-form-label">Miktar / Stok</label>
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control autonumber fill"
-                                                           placeholder="Stok 500"
-                                                           data-v-max="999999" data-v-min="0" name="stock"
+                                                    <input type="text" class="form-control  fill" required
+                                                           placeholder="Stok 500" max="6" min="1"
+                                                           data-v-max="999999" data-v-min="1" name="stock"
                                                            value="{{old('stock')}}">
                                                 </div>
                                             </div>
@@ -100,7 +100,7 @@
                                                 <label class="col-sm-2 col-form-label">Fiyat</label>
                                                 <div class="col-sm-6">
                                                     <input type="text" class="form-control number-mask fill"
-                                                           max="9999999" min="1" placeholder="Fiyat 5.000"
+                                                           minlength="1" placeholder="Fiyat 5.000" maxlength="10"
                                                            name="price" value="{{old('price')}}">
                                                 </div>
                                             </div>
@@ -216,8 +216,11 @@
     {{--    <script src="{{asset('admin/assets/js/page-build/submit.js')}}"></script>--}}
 
     <script>
-
-        $(document).ready(function () {
+        $(document).ready(function() {
+            $('.number-mask').inputmask({
+                alias: 'numeric',
+                rightAlign: false,
+            });
             $('#detail').summernote({
                 lang: 'tr-TR',
                 height: 200,
@@ -277,14 +280,11 @@
                 }
             });
 
-
-
             $(document).on('click', '.remove-attr', function () {
                 var id = $(this).data('id');
                 console.log(id);
                 $('#attr_' + id).remove();
             });
-
 
         });
 
@@ -294,7 +294,10 @@
     <script>
 
 
-        $('.autonumber').autoNumeric('init');
+        // $('.autonumber').autoNumeric('init');
+
+
+
         $('#category_id').select2({
             theme: 'bootstrap'
         });
@@ -330,15 +333,15 @@
         }
 
 
-        $(document).ready(function() {
-            $('.number-mask').inputmask({
-                alias: 'numeric',
-                groupSeparator: ',',
-                autoGroup: false,
-                placeholder: '0',
-                rightAlign: false,
-                allowMinus: false
-            });
-        });
+        // $(document).ready(function() {
+        //     $('.number-mask').inputmask({
+        //         alias: 'numeric',
+        //         groupSeparator: ',',
+        //         autoGroup: false,
+        //         placeholder: '0',
+        //         rightAlign: false,
+        //         allowMinus: false
+        //     });
+        // });
     </script>
 @endsection

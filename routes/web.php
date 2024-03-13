@@ -39,7 +39,7 @@ use Symfony\Component\Console\Output\StreamOutput;
 //    });
 //});
 
-Auth::routes(['register' => false]);
+Auth::routes(['register' => true]);
 
 
 
@@ -65,7 +65,9 @@ Route::get('user_block', function () {
 
 
 Route::get('/jobs-run', function () {
-    Artisan::call('site-map');
+
+
+//    Artisan::call('site-map');
 //    Artisan::call('evrim-news');
     return back();
 });
@@ -79,9 +81,7 @@ Route::get('product-info/{id?}',[FrontendController::class,'productInformation']
 
 //Route::prefix('student')->middleware(['auth',])->group(function () {
 //    Route::get('/',  function (){
-//        dd('merhaba');
 //    })->name('student.index');
-//    Route::controller(StudentController::class)->group(function () {
 //        Route::get('/',  'index')->name('student.index');
 //        Route::get('/status',  'status')->name('student.status');
 //    });
@@ -97,7 +97,7 @@ Route::get('product-info/{id?}',[FrontendController::class,'productInformation']
 //    });
 //});
 
-Route::prefix('backend')->middleware('auth')->group(function () {
+Route::prefix('backend')->middleware('auth','company')->group(function () {
 
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::post('/sehirler', [HomeController::class, 'cities'])->name('sehirler');
@@ -156,6 +156,16 @@ Route::prefix('backend')->middleware('auth')->group(function () {
         Route::get('/trashed_data', 'trashed_data')->name($module_name.'.trashed_data')->middleware('permission:view_trashed_product');
         Route::get('/restored/{products?}', 'restore')->name($module_name.'.restored')->middleware('permission:restore_product');
         Route::get('/trashed/{products?}', 'trashed')->name($module_name.'.trashed')->middleware('permission:delete_product');
+    });
+
+    Route::controller(ProductsController::class)->prefix('promotion-categories')->group(function () {
+        $module_name = 'promotion-categories';
+        Route::get('/', 'promotionCategoriesList')->name($module_name.'.promotionCategoriesList')->middleware('permission:productpromotion_categories_product');
+        Route::get('/promotion-add/', 'promotionCategoriesAdd')->name($module_name.'.create')->middleware('permission:promotion_categories_product');
+        Route::post('/categories-add/', 'promotionCategoriesStore')->name($module_name.'.store')->middleware('permission:promotion_categories_product');
+        Route::get('/categories-edit/{id}', 'promotionCategoriesEdit')->name($module_name.'.edit')->middleware('permission:promotion_categories_product');
+        Route::post('/categories-edit/', 'promotionCategoriesUpdate')->name($module_name.'.update')->middleware('permission:promotion_categories_product');
+        Route::delete('/categories-delete/{id?}', 'promotionCategoriesDestroy')->name($module_name.'.delete')->middleware('permission:promotion_categories_product');
 
     });
 
@@ -398,6 +408,9 @@ Route::prefix('backend')->middleware('auth')->group(function () {
 //Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
+Route::prefix('student')->middleware(['auth'])->group(function () {
+
+});
 
 
 
@@ -405,13 +418,17 @@ Route::prefix('backend')->middleware('auth')->group(function () {
 
 
 //Route Frontend
-
 ##### CİHAN ÇALIŞMA ALANI #####
-Route::get('/sepeteekle/{slug}', [FrontendController::class, 'cart_add'])->name('frontend.cart_add');
-Route::post('/sepetguncelle/{rowId}', [FrontendController::class, 'cart_update'])->name('frontend.cart_update');
+Route::get('/hesap-bilgileri', [FrontendController::class, 'myaccount'])->name('frontend.myaccount')->middleware('auth');
+Route::get('/sepeteekle/{slug?}', [FrontendController::class, 'cart_add'])->name('frontend.cart_add');
+Route::post('/sepetguncelle/{rowId}/{qty}', [FrontendController::class, 'cart_update'])->name('frontend.cart_update');
 Route::get('/sepettensil/{rowId}', [FrontendController::class, 'cart_remove'])->name('frontend.cart_remove');
 Route::get('/sepetbosalt', [FrontendController::class, 'cart_destroy'])->name('frontend.cart_destroy');
 Route::get('/sepet', [FrontendController::class, 'cart'])->name('frontend.cart');
+Route::get('/odeme', [FrontendController::class, 'paytrOdeme'])->name('paytrOdeme')->middleware('auth');
+Route::get('/odemebasarili', [FrontendController::class, 'paytrOdemeBasarili'])->name('paytrOdemeBasarili');
+Route::get('/odemebasarisiz', [FrontendController::class, 'paytrOdemeBasarisiz'])->name('paytrOdemeBasarisiz');
+Route::post('/odemebildirim', [FrontendController::class, 'paytrOdemeBildirim'])->name('paytrOdemeBildirim');
 ##### CİHAN ÇALIŞMA ALANI #####
 
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
@@ -419,8 +436,8 @@ Route::get('/blog', [FrontendController::class, 'blog'])->name('frontend.blog');
 Route::get('/blog/{model?}', [FrontendController::class, 'blog_detail'])->name('frontend.blog_detail');
 //Route::get('/post', [FrontendController::class, 'blog'])->name('frontend.post');
 Route::get('/post-detail/{model?}', [FrontendController::class, 'postDetail'])->name('frontend.post_detail');
-Route::get('/ürünler', [FrontendController::class, 'products'])->name('frontend.products');
-Route::get('/ürünler/{slug?}', [FrontendController::class, 'productDetail'])->name('frontend.product_detail');
+Route::get('/urunler', [FrontendController::class, 'products'])->name('frontend.products');
+Route::get('/urunler/{slug?}', [FrontendController::class, 'productDetail'])->name('frontend.product_detail');
 
 
 Route::get('/tests', [FrontendController::class, 'tests'])->name('frontend.tests');
