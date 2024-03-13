@@ -47,7 +47,7 @@ class FrontendController extends Controller
         $portfolios = PortFolio::where('type', 'slider')
             ->where('status', 1)
             ->get();
-        $sliders = $portfolios->whereNull('banner_image');
+        $sliders = $portfolios->where('banner_image',Null);
         $banners = $portfolios->whereNotNull('banner_image')->first();
 
         return compact('sliders', 'banners');
