@@ -105,8 +105,7 @@
                                         </div>
                                         <div class="add-cart align-self-end">
                                             <a class="add" target="_blank"
-                                               href="{{route('frontend.product_detail',['slug'=>$product['slug']])}}"><i class="fi-rs-shopping-cart mr-5"></i>
-                                                Ekle </a>
+                                               href="{{route('frontend.product_detail',['slug'=>$product['slug']])}}">{{--<i class="fi-rs-shopping-cart mr-5"></i>--}}İncele</a>
                                         </div>
                                     </div>
                                 </div>
@@ -324,72 +323,6 @@
     </div>
 
 
-{{--    <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel"--}}
-{{--         aria-hidden="true">--}}
-{{--        <div class="modal-dialog">--}}
-{{--            <div class="modal-content">--}}
-{{--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--}}
-{{--                <div class="modal-body">--}}
-{{--                    <div class="row">--}}
-{{--                        <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">--}}
-{{--                            <div class="detail-gallery">--}}
-{{--                                <span class="zoom-icon"><i class="fi-rs-search"></i></span>--}}
-{{--                                <!-- MAIN SLIDES -->--}}
-{{--                                <div class="product-image-slider" id="slider">--}}
-
-{{--                                </div>--}}
-{{--                                <!-- THUMBNAILS -->--}}
-{{--                                <div class="slider-nav-thumbnails" id="slider-thumbnails">--}}
-
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <!-- End Gallery -->--}}
-{{--                        </div>--}}
-{{--                        <div class="col-md-6 col-sm-12 col-xs-12">--}}
-{{--                            <div class="detail-info pr-30 pl-30">--}}
-{{--                                <span class="stock-status out-stock"> Popüler </span>--}}
-{{--                                <h3 class="title-detail"><a href="" class="text-heading product-title">Ürün adı</a></h3>--}}
-{{--                                <div class="product-detail-rating">--}}
-{{--                                    <div class="product-rate-cover product-desc">--}}
-
-{{--                                    </div>--}}
-
-{{--                                </div>--}}
-{{--                                <div class="font-xs">--}}
-{{--                                    <ul id="product-attributes">--}}
-{{--                                    </ul>--}}
-{{--                                </div>--}}
-{{--                                <div class="clearfix product-price-cover">--}}
-{{--                                    <div class="product-price primary-color float-left">--}}
-{{--                                        <span class="current-price text-brand" id="price"> </span>--}}
-{{--                                        --}}{{--                                    <span>--}}
-{{--                                        --}}{{--                                       <span class="save-price font-md color3 ml-15">26% </span>--}}
-{{--                                        --}}{{--                                       <span class="old-price font-md ml-15">$52</span>--}}
-{{--                                        --}}{{--                                    </span>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="detail-extralink mb-30">--}}
-{{--                                    <div class="detail-qty border radius">--}}
-{{--                                        <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>--}}
-{{--                                        <span class="qty-val">1</span>--}}
-{{--                                        <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="product-extra-link2">--}}
-{{--                                        <button id="whatsapp_share" type="submit" class="button button-add-to-cart">--}}
-{{--                                           --}}{{-- <i class="fi-rs-shopping-cart"></i>--}}{{---Sepete Ekle--}}
-{{--                                        </button>--}}
-
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <!-- Detail Info -->--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-
 @endsection
 
 
@@ -398,64 +331,5 @@
 
 
 @section('after-js')
-    <script>
 
-        {{--function quickModal(id) {--}}
-        {{--    let modal = $('#quickViewModal');--}}
-        {{--    $.ajax({--}}
-        {{--        url: '{{ route('product-info') }}/' + id,--}}
-        {{--        dataType: "json",--}}
-        {{--        success: function (data) {--}}
-        {{--            let product = data.product;--}}
-        {{--            let attributesHtml = '';--}}
-        {{--            let attributes = JSON.parse(product.attributes);--}}
-
-
-        {{--            Object.entries(attributes).map(([key, value]) => {--}}
-
-        {{--                console.log(key, value)--}}
-        {{--                if (key === 'popular') {--}}
-        {{--                    return;--}}
-        {{--                }--}}
-        {{--                attributesHtml += `<li class="mb-5">${key}: <span class="text-brand">${value}</span></li>`;--}}
-        {{--            });--}}
-        {{--            debugger;--}}
-
-        {{--            $('#quickViewModal .modal-body #slider').html(`<figure class="border-radius-10">--}}
-        {{--                                <img src="${product.photo}"--}}
-        {{--                                      alt="${product.slug}" title="${product.name}"/>--}}
-        {{--                            </figure>`);--}}
-
-        {{--            $('#quickViewModal .modal-body #slider-thumbnails').html(`--}}
-        {{--                             <div>--}}
-        {{--                                    <img src="${product.photo ?? ""}"--}}
-        {{--                                      alt="${product.slug}" title="${product.name}" width="77" height="77"/>--}}
-        {{--                            </div>`);--}}
-
-        {{--            $('#quickViewModal .modal-body .product-title').html(`${product.name}`);--}}
-        {{--            $('#quickViewModal .modal-body .product-desc').html(`${product.short_detail ? product.short_detail : ""}`);--}}
-        {{--            $('#quickViewModal .modal-body #product-attributes').html(`${attributesHtml ? attributesHtml : ""}`);--}}
-        {{--            // $('#quickViewModal .modal-body #price').html(`${product.price} TL`);--}}
-
-
-        {{--            modal.modal('show');--}}
-
-        {{--        },--}}
-        {{--        error: (function (error, data) {--}}
-        {{--            console.error('Ajax hatası ');--}}
-        {{--        })--}}
-        {{--    });--}}
-
-
-        {{--}--}}
-
-        const button = document.getElementById('whatsapp_share');
-
-        button.addEventListener('click', function () {
-            const whatsapp_number = "{{config('settings.site_whatsapp_phone')}}";
-            const productName = $('#quickViewModal .modal-body .product-title')[0].text;
-            const whatsappUrl = `https://wa.me/${whatsapp_number}?text=${productName}`;
-            window.open(whatsappUrl, '_blank');
-        });
-    </script>
 @endsection

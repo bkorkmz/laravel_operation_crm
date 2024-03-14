@@ -86,7 +86,7 @@
 
                                                 <a class="add" href="{{route('frontend.product_detail',['slug'=>$productOne['slug']])}}">
                                                     {{--<i class="fi-rs-shopping-cart mr-5"></i>--}}
-                                                    Sepete Ekle</a>
+                                                    İncele</a>
                                             </div>
                                         </div>
                                     </div>
@@ -155,7 +155,7 @@
                                                 <a class="add" href="{{route('frontend.product_detail',['slug'=>$productOne['slug']])}}">
                                                      {{--<i class="fi-rs-shopping-cart mr-5"></i>--}}
 {{--                                                    <i class="fi-rs-info"></i>--}}
-                                                    Sepete Ekle</a>
+                                                    İncele</a>
                                             </div>
                                         </div>
                                     </div>
@@ -175,70 +175,3 @@
 </section>
 
 @endif
-<script>
-
-    {{--function quickModal(id) {--}}
-    {{--    let modal = $('#quickViewModal');--}}
-    {{--    modal.find('.modal-body .hidden-product-id').val("");--}}
-
-    {{--    $.ajax({--}}
-    {{--        url: '{{ route('product-info') }}/'+id,--}}
-    {{--        dataType: "json",--}}
-    {{--        success: function (data) {--}}
-    {{--            console.log('data',data)--}}
-    {{--            let product = data.product;--}}
-    {{--            let attributesHtml = '';--}}
-    {{--            let attributes = JSON.parse(product.attributes);--}}
-
-
-    {{--            Object.entries(attributes).map(([key, value]) => {--}}
-    {{--                // Eğer özellik "popular" ise döngüyü atla--}}
-    {{--                console.log(key,value)--}}
-    {{--                if (key === 'popular') {--}}
-    {{--                    return;--}}
-    {{--                }--}}
-    {{--                attributesHtml += `<li class="mb-5">${key}: <span class="text-brand">${value}</span></li>`;--}}
-    {{--            });--}}
-
-
-    {{--            modal.find('.modal-body #slider').html(`<figure class="border-radius-10">--}}
-    {{--                                    <img src="${product.photo}"--}}
-    {{--                                          alt="${product.slug}" title="${product.name}"/>--}}
-    {{--                                </figure>`);--}}
-
-    {{--            modal.find('.modal-body #slider-thumbnails').html(`--}}
-    {{--                                 <div>--}}
-    {{--                                        <img src="${product.photo ?? ""  }"--}}
-    {{--                                          alt="${product.slug}" title="${product.name}" width="77" height="77"/>--}}
-    {{--                                </div>`);--}}
-
-    {{--            modal.find(' .modal-body .product-title').html(`${product.name}`);--}}
-    {{--            modal.find(' .modal-body .hidden-product-id').val(`${product.id}`);--}}
-
-    {{--            modal.find(' .modal-body .product-desc').html(`${product.short_detail? product.short_detail : ""}`);--}}
-    {{--            modal.find(' .modal-body #product-attributes').html(`${attributesHtml?attributesHtml:""}`);--}}
-    {{--            modal.find('.modal-body #price').html(`${product.price != null ? product.price + 'TL' : "" }`);--}}
-    {{--            modal.find('.modal-body .old-price ').html(`${product.old_price != null ? product.old_price + 'TL' : "" }`);--}}
-
-
-    {{--             modal.modal('show');--}}
-
-    {{--        },--}}
-    {{--        error:(function (error,data){--}}
-    {{--            console.error('Ajax hatası ');--}}
-    {{--        })--}}
-    {{--    });--}}
-
-    {{--}--}}
-
-    const button = document.getElementById('whatsapp_share');
-
-    button.addEventListener('click', function() {
-        const whatsapp_number= "{{config('settings.site_whatsapp_phone')}}";
-        const productName = $('#quickViewModal .modal-body .product-title')[0].text;
-        const whatsappUrl = `https://wa.me/${whatsapp_number}?text=${productName}`;
-        window.open(whatsappUrl, '_blank');
-    });
-</script>
-
-

@@ -325,6 +325,7 @@
 
                         <!-- Product sidebar Widget -->
                         <div class="sidebar-widget product-sidebar mb-30 p-30 bg-grey border-radius-10">
+                        <div class="sidebar-widget product-sidebar mb-30 p-30 bg-grey border-radius-10">
                             <h5 class="section-title style-1 mb-30">Yeni Ürünler</h5>
 
                             @foreach($otherProducts as $newProduct)
@@ -361,18 +362,5 @@
 
 
         @section('after-js')
-            <script>
 
-
-                const button = document.getElementById('whatsapp_share');
-
-                button.addEventListener('click', function () {
-                    const whatsapp_number = "{{config('settings.site_whatsapp_phone')}}";
-                    const productName = $('#quickViewModal .modal-body .product-title')[0].text;
-                    const whatsappUrl = `https://wa.me/${whatsapp_number}?text=${productName}`;
-                    window.open(whatsappUrl, '_blank');
-                });
-
-
-            </script>
 @endsection

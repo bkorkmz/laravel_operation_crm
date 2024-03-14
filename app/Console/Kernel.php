@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('site-map')->everyFourHours();
-        $schedule->command('evrim-news')->everyFourHours();
+//        $schedule->command('evrim-news')->everyFourHours();
 
     }
 

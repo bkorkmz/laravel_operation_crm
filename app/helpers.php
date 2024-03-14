@@ -2,6 +2,7 @@
 
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\Products;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -150,7 +151,7 @@ if (! function_exists('siteMap')) {
         ];
 
         $article = Article::where('publish', 0)
-            ->select('slug', 'updated_at')
+            ->select(['slug', 'updated_at'])
             ->get();
         $categories = Category::where('model', 'article')
             ->where('show', 1)
@@ -159,12 +160,25 @@ if (! function_exists('siteMap')) {
             ->orderBy('name', 'desc')
             ->get();
 
+        $products = Products::where('status' ,1)
+            ->where('stock', '>', 0)
+            ->select(['id', 'name', 'slug', 'price', 'updated'])
+            ->get();
+
+        foreach ($products as $product) {
+            $productSlug = ! blank($product->slug) ? $product->slug : slug_format($product->name);
+            $urls[] = [
+                'date' => date("Y-m-d\Th:m:s+00:00", $product->updated_at->timestamp),
+                'url' => request()->schemeAndHttpHost().'/urunler/'.$productSlug.'/'.$product->id,
+                'priority' => priorityStatus('/urunler/'.$productSlug),
+            ];
+        }
         foreach ($categories as $cat) {
             $catSlug = ! blank($cat->slug) ? $cat->slug : slug_format($cat->name);
             $urls[] = [
                 'date' => date("Y-m-d\Th:m:s+00:00", $cat->updated_at->timestamp),
-                'url' => request()->schemeAndHttpHost().'/kategori/'.$catSlug.'/'.$cat->id,
-                'priority' => priorityStatus('/kategori/'.$catSlug),
+                'url' => request()->schemeAndHttpHost().'/'.$catSlug.'/'.$cat->id,
+                'priority' => priorityStatus('/'.$catSlug),
             ];
         }
 
@@ -210,6 +224,6 @@ if (! function_exists('categories')) {
             ->orderBy('name', 'desc')->limit($limit)
             ->get();
 
-        return  $categories;
+        return $categories;
     }
 }

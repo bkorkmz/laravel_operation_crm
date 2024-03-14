@@ -43,7 +43,9 @@
             </div>
             <div class="col-lg-4 d-none d-xl-block">
                 @if(!blank($banners))
-                    <div class="banner-img style-3 animated animated" style="background-image: url({{asset($banners->image)}})">
+                    <div class="banner-img style-3 animated animated"
+                         onclick="return window.location.href = '{{$banners->link??"javascript:void(0)"}}'"
+                         style="background-image: url({{asset($banners->image)}})">
                         <div class="banner-text mt-50">
                             @if(!blank($banners->name))
                             <h2 class="mb-50">
@@ -51,9 +53,9 @@
                                 <span class="text-brand"> {{$banners->value}}</span>
                             </h2>
                             @endif
-                            @if($banners->link)
-                                    <a href=" {{$banners->link}}" class="btn btn-xs">Linke git <i class="fi-rs-arrow-small-right"></i></a>
-                            @endif
+{{--                            @if($banners->link)--}}
+{{--                                    <a href=" {{$banners->link}}" class="btn btn-xs">Linke git <i class="fi-rs-arrow-small-right"></i></a>--}}
+{{--                            @endif--}}
                         </div>
                     </div>
 

@@ -101,7 +101,7 @@
 
                                                     <a class="add" href="{{route('frontend.product_detail',['slug'=>$product->slug])}}">
                                                         {{--<i class="fi-rs-shopping-cart mr-5"></i>--}}
-                                                        Sepete Ekle</a>
+                                                        İncele</a>
                                                 </div>
                                             </div>
                                         </div>

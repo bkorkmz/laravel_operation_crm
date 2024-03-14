@@ -41,9 +41,6 @@ use Symfony\Component\Console\Output\StreamOutput;
 
 Auth::routes(['register' => true]);
 
-
-
-
 Route::get('lang/{locale}', [LanguageController::class, 'swap']);
 
 //Route::get('/migrate/{parameter}', function ($parameter) {
@@ -65,10 +62,7 @@ Route::get('user_block', function () {
 
 
 Route::get('/jobs-run', function () {
-
-
-//    Artisan::call('site-map');
-//    Artisan::call('evrim-news');
+    Artisan::call('queue:work');
     return back();
 });
 
@@ -426,9 +420,9 @@ Route::get('/sepettensil/{rowId}', [FrontendController::class, 'cart_remove'])->
 Route::get('/sepetbosalt', [FrontendController::class, 'cart_destroy'])->name('frontend.cart_destroy');
 Route::get('/sepet', [FrontendController::class, 'cart'])->name('frontend.cart');
 Route::get('/odeme', [FrontendController::class, 'paytrOdeme'])->name('paytrOdeme')->middleware('auth');
-Route::get('/odemebasarili', [FrontendController::class, 'paytrOdemeBasarili'])->name('paytrOdemeBasarili');
-Route::get('/odemebasarisiz', [FrontendController::class, 'paytrOdemeBasarisiz'])->name('paytrOdemeBasarisiz');
-Route::post('/odemebildirim', [FrontendController::class, 'paytrOdemeBildirim'])->name('paytrOdemeBildirim');
+Route::get('/odemebasarili', [FrontendController::class, 'paytrOdemeBasarili'])->name('paytrOdemeBasarili')->middleware('auth');
+Route::get('/odemebasarisiz', [FrontendController::class, 'paytrOdemeBasarisiz'])->name('paytrOdemeBasarisiz')->middleware('auth');
+Route::post('/odemebildirim', [FrontendController::class, 'paytrOdemeBildirim'])->name('paytrOdemeBildirim')->middleware('auth');
 ##### CİHAN ÇALIŞMA ALANI #####
 
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
@@ -449,4 +443,6 @@ Route::get('/site-map', [FrontendController::class, 'siteMap'])->name('frontend.
 Route::post('/contact', [FrontendController::class, 'contactsubmit'])->name('frontend.contactsubmit');
 Route::get('/{model}', [FrontendController::class, 'page'])->name('frontend.page');
 Route::post('/newsletter', [FrontendController::class, 'newsletter'])->name('frontend.newsletter');
+
+Route::post('/ilceler', [FrontendController::class, 'ilceler'])->name('ilceler');
 

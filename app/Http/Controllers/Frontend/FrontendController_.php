@@ -535,7 +535,7 @@ class FrontendController extends Controller
     {
         $product = Products::where('status', 1)
             ->where('id', $id)
-            ->select('id', 'attributes', 'name', 'photo', 'price', 'old_price', 'slug', 'stock', 'short_detail', 'created_at')
+            ->select('id','attributes', 'name', 'photo', 'price', 'old_price', 'slug', 'short_detail',)
             ->with('category:id,name')
             ->first();
 

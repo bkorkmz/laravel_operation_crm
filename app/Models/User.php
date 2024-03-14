@@ -33,8 +33,11 @@ class User extends Authenticatable
         'gender',
         'phone',
         'address',
-        'country',
-        'zip_code'
+        'county',
+        'state',
+        'city',
+        'zip_code',
+
 
     ];
 
@@ -82,6 +85,9 @@ class User extends Authenticatable
         return $this->getRoleNames();
     }
 
-
+    public function palcity()
+    {
+        return $this->hasOne(City::class,'id','city');
+    }
 
 }
