@@ -2,7 +2,7 @@
 @section('css')
 
 @endsection
-@section('title','sepet')
+@section('title','Hesap Bilgilerim')
 
 @section('head')
 
@@ -30,11 +30,30 @@
                             <div class="dashboard-menu">
                                 <ul class="nav flex-column" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="true"><i class="fi-rs-settings-sliders mr-10"></i>Siparişlerim</a>
+                                        <a class="nav-link active" id="dashboard-tab" data-bs-toggle="tab"
+                                           href="#dashboard" role="tab" aria-controls="dashboard"
+                                           aria-selected="true"><i class="fi-rs-shopping-cart mr-10"></i>Siparişlerim</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="orders-tab" data-bs-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false"><i class="fi-rs-shopping-bag mr-10"></i>Hesap Güvenliği</a>
+                                        <a class="nav-link " id="dashboard-tab" data-bs-toggle="tab"
+                                           href="#address" role="tab" aria-controls="address"
+                                           aria-selected="true"><i class="fi-rs-settings-sliders mr-10"></i>Adres Bİlgilerim</a>
                                     </li>
+{{--                                    <li class="nav-item">--}}
+{{--                                        <a class="nav-link " id="dashboard-tab" data-bs-toggle="tab"--}}
+{{--                                           href="#track-orders" role="tab" aria-controls="track-orders"--}}
+{{--                                           aria-selected="true"><i class="fi-rs-settings-sliders mr-10"></i>Kargo Takibi</a>--}}
+{{--                                    </li>--}}
+                                    <li class="nav-item">
+                                        <a class="nav-link d-none" id="dashboard-tab" data-bs-toggle="tab"
+                                           href="#account" role="tab" aria-controls="account"
+                                           aria-selected="true"><i class="fi-rs-settings-sliders mr-10"></i>Hesap Bİlgilerim</a>
+                                    </li>
+{{--                                    <li class="nav-item">--}}
+{{--                                        <a class="nav-link" id="orders-tab" data-bs-toggle="tab" href="#orders"--}}
+{{--                                           role="tab" aria-controls="orders" aria-selected="false"><i--}}
+{{--                                                class="fi-rs-shopping-bag mr-10"></i>Hesap Güvenliği</a>--}}
+{{--                                    </li>--}}
                                     <li class="nav-item">
                                         <a href="{{ route('logout') }}" class="nav-link"
                                            onclick="event.preventDefault();
@@ -50,41 +69,45 @@
                         </div>
                         <div class="col-md-9">
                             <div class="tab-content account dashboard-content pl-50">
-                                <div class="tab-pane fade active show" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                                <div class="tab-pane fade active show" id="dashboard" role="tabpanel"
+                                     aria-labelledby="dashboard-tab">
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="table-responsive">
                                                 @if(count($orders)>0)
-                                                <table class="table">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Sip. No</th>
-                                                        <th>Tarih</th>
-                                                        <th>Durum</th>
-                                                        <th>Görüntüle</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    @foreach($orders as $order)
-                                                    <tr>
-                                                        <td>#{{$order->id}}</td>
-                                                        <td>{{ date('d/m/Y', strtotime($order->order_date)) }}</td>
-                                                        <td>
-                                                        @if($order->status=="completed")
-                                                                Onaylandı
-                                                            @elseif($order->status=="pending")
-                                                                Bekliyor
-                                                            @else
-                                                                İptal
-                                                            @endif
-                                                        </td>
-                                                        <td><a href="#" class="btn-small d-block">Görüntüle</a></td>
-                                                    </tr>
-                                                    @endforeach
-                                                    </tbody>
-                                                </table>
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Sip. No</th>
+                                                            <th>Tarih</th>
+                                                            <th>Durum</th>
+                                                            <th>Görüntüle</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($orders as $order)
+                                                            <tr>
+                                                                <td>#{{$order->id}}</td>
+                                                                <td>{{ date('d/m/Y', strtotime($order->order_date)) }}</td>
+                                                                <td>
+                                                                    @if($order->status=="completed")
+                                                                        Onaylandı
+                                                                    @elseif($order->status=="pending")
+                                                                        Bekliyor
+                                                                    @elseif($order->status=="cancelled")
+                                                                        İptal
+                                                                    @else
+                                                                        Başarısız İşlem
+                                                                    @endif
+                                                                </td>
+                                                                <td><a href="#" class="btn-small d-block">Görüntüle</a>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
                                                 @else
-                                                <div class="alert alert-warning">Siparişiniz bulunmuyor.</div>
+                                                    <div class="alert alert-warning">Siparişiniz bulunmuyor.</div>
                                                 @endif
                                             </div>
                                         </div>
@@ -135,25 +158,34 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="track-orders" role="tabpanel" aria-labelledby="track-orders-tab">
+                                <div class="tab-pane fade" id="track-orders" role="tabpanel"
+                                     aria-labelledby="track-orders-tab">
                                     <div class="card">
                                         <div class="card-header">
                                             <h3 class="mb-0">Orders tracking</h3>
                                         </div>
                                         <div class="card-body contact-from-area">
-                                            <p>To track your order please enter your OrderID in the box below and press "Track" button. This was given to you on your receipt and in the confirmation email you should have received.</p>
+                                            <p>To track your order please enter your OrderID in the box below and press
+                                                "Track" button. This was given to you on your receipt and in the
+                                                confirmation email you should have received.</p>
                                             <div class="row">
                                                 <div class="col-lg-8">
-                                                    <form class="contact-form-style mt-30 mb-50" action="#" method="post">
+                                                    <form class="contact-form-style mt-30 mb-50" action="#"
+                                                          method="post">
                                                         <div class="input-style mb-20">
                                                             <label>Order ID</label>
-                                                            <input name="order-id" placeholder="Found in your order confirmation email" type="text">
+                                                            <input name="order-id"
+                                                                   placeholder="Found in your order confirmation email"
+                                                                   type="text">
                                                         </div>
                                                         <div class="input-style mb-20">
                                                             <label>Billing email</label>
-                                                            <input name="billing-email" placeholder="Email you used during checkout" type="email">
+                                                            <input name="billing-email"
+                                                                   placeholder="Email you used during checkout"
+                                                                   type="email">
                                                         </div>
-                                                        <button class="submit submit-auto-width" type="submit">Track</button>
+                                                        <button class="submit submit-auto-width" type="submit">Track
+                                                        </button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -165,43 +197,40 @@
                                         <div class="col-lg-6">
                                             <div class="card mb-3 mb-lg-0">
                                                 <div class="card-header">
-                                                    <h3 class="mb-0">Billing Address</h3>
+                                                    <h3 class="mb-0">Geçerli Adres</h3>
                                                 </div>
                                                 <div class="card-body">
                                                     <address>
-                                                        3522 Interstate<br>
-                                                        75 Business Spur,<br>
-                                                        Sault Ste. <br>Marie, MI 49783
+                                                       {{auth()->user()->address}}
                                                     </address>
-                                                    <p>New York</p>
-                                                    <a href="#" class="btn-small">Edit</a>
+                                                    <p>{{auth()->user()->state ." / ".auth()->user()->palcity?auth()->user()->palcity->name :""}}</p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="card">
                                                 <div class="card-header">
-                                                    <h5 class="mb-0">Shipping Address</h5>
+                                                    <h5 class="mb-0">Teslimat Adresi</h5>
                                                 </div>
                                                 <div class="card-body">
                                                     <address>
-                                                        4299 Express Lane<br>
-                                                        Sarasota, <br>FL 34249 USA <br>Phone: 1.941.227.4444
+                                                        {{auth()->user()->address}}
                                                     </address>
-                                                    <p>Sarasota</p>
-                                                    <a href="#" class="btn-small">Edit</a>
+                                                    <p>{{auth()->user()->state ." / ".auth()->user()->palcity?auth()->user()->palcity->name :""}}</p>
+                                                    <a href="#" class="btn-small">Düzenle</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="account-detail" role="tabpanel" aria-labelledby="account-detail-tab">
+                                <div class="tab-pane fade" id="account" role="tabpanel"
+                                     aria-labelledby="account-detail-tab">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5>Account Details</h5>
+                                            <h5>Hesap Detayları</h5>
                                         </div>
                                         <div class="card-body">
-                                            <p>Already have an account? <a href="/page-login">Log in instead!</a></p>
+{{--                                            <p>Already have an account? <a href="/page-login">Log in instead!</a></p>--}}
                                             <form method="post" name="enq">
                                                 <div class="row">
                                                     <div class="form-group col-md-6">
@@ -214,26 +243,34 @@
                                                     </div>
                                                     <div class="form-group col-md-12">
                                                         <label>Display Name <span class="required">*</span></label>
-                                                        <input required="" class="form-control" name="dname" type="text">
+                                                        <input required="" class="form-control" name="dname"
+                                                               type="text">
                                                     </div>
                                                     <div class="form-group col-md-12">
                                                         <label>Email Address <span class="required">*</span></label>
-                                                        <input required="" class="form-control" name="email" type="email">
+                                                        <input required="" class="form-control" name="email"
+                                                               type="email">
                                                     </div>
                                                     <div class="form-group col-md-12">
                                                         <label>Current Password <span class="required">*</span></label>
-                                                        <input required="" class="form-control" name="password" type="password">
+                                                        <input required="" class="form-control" name="password"
+                                                               type="password">
                                                     </div>
                                                     <div class="form-group col-md-12">
                                                         <label>New Password <span class="required">*</span></label>
-                                                        <input required="" class="form-control" name="npassword" type="password">
+                                                        <input required="" class="form-control" name="npassword"
+                                                               type="password">
                                                     </div>
                                                     <div class="form-group col-md-12">
                                                         <label>Confirm Password <span class="required">*</span></label>
-                                                        <input required="" class="form-control" name="cpassword" type="password">
+                                                        <input required="" class="form-control" name="cpassword"
+                                                               type="password">
                                                     </div>
                                                     <div class="col-md-12">
-                                                        <button type="submit" class="btn btn-fill-out submit font-weight-bold" name="submit" value="Submit">Save Change</button>
+                                                        <button type="submit"
+                                                                class="btn btn-fill-out submit font-weight-bold"
+                                                                name="submit" value="Submit">Save Change
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -248,10 +285,14 @@
         </div>
     </div>
 
+
 @endsection
 
 
 @section('js')
+    <script>
+
+    </script>
 @endsection
 
 

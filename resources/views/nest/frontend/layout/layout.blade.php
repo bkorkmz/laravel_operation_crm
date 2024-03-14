@@ -224,26 +224,32 @@ Telefon:  0532 637 27 52</span>
                                                 </li>
                                             @endif
                                         @else
+
+                                            @if(auth()->user()->hasAnyRole(['super admin','admin']))
                                             <li>
-                                                @if(auth()->user()->hasAnyRole(['super admin','admin']))
-                                                    <a href="{{route('admin.index')}}"><i
-                                                            class="fi fi-rs-bank mr-10"></i>{{ __('Yönetim Paneli') }}
-                                                    </a>
-                                                @else
-                                                    <a href="{{ route('frontend.myaccount') }}"><i class="fi fi-rs-user mr-10"></i>Hesabım</a>
-                                                @endif
+                                                <a href="{{route('admin.index')}}"><i
+                                                        class="fi fi-rs-bank mr-10"></i>{{ __('Yönetim Paneli') }}
+                                                </a>
                                             </li>
-{{--                                            <li><a href=""><i class="fi fi-rs-location-alt mr-10"></i>Siparişlerim</a>--}}
-{{--                                            </li>--}}
+                                            @endif
+
+                                            <li>
+                                            <a href="{{ route('frontend.myaccount') }}"><i
+                                                            class="fi fi-rs-user mr-10"></i>Hesabım</a>
+                                            </li>
+                                            <li><a href="{{ route('frontend.myaccount') }}"><i class="fi fi-rs-location-alt mr-10"></i>Siparişlerim</a>
+                                            </li>
+
 {{--                                            <li><a href="javascript:void(0)"><i class="fi fi-rs-heart mr-10"></i>Favori--}}
 {{--                                                    Listem</a></li>--}}
-{{--                                            <li><a href="javascript:void(0)"><i--}}
-{{--                                                        class="fi fi-rs-settings-sliders mr-10"></i>Ayarlar</a></li>--}}
-{{--                                            <li>--}}
+
+                                            <li><a href="{{ route('frontend.myaccount') }}#account"><i
+                                                        class="fi fi-rs-settings-sliders mr-10"></i>Ayarlar</a></li>
+                                            <li>
                                                 <a href="{{ route('logout') }}"
-                                                      onclick="event.preventDefault();
+                                                   onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();"><i
-                                                            class="fi fi-rs-sign-out mr-10"></i>{{ __('auth.loguth') }}</a>
+                                                        class="fi fi-rs-sign-out mr-10"></i>{{ __('auth.loguth') }}</a>
                                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                                       class="d-none">
                                                     @csrf
@@ -289,8 +295,8 @@ Telefon:  0532 637 27 52</span>
                                          src="{{asset('frontend/assets/imgs/theme/whatsapp.png')}}"/>
                                     {{--                                    <span class="pro-count blue">0</span>--}}
                                 </a>
-                                <a href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text=Bilgi almak istiyorum">
-                                    <span class="lable">İletişim</span></a>
+{{--                                <a href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text=Bilgi almak istiyorum">--}}
+{{--                                    <span class="lable">İletişim</span></a>--}}
                             </div>
                             <div class="header-action-icon-2 d-none">
                                 <a class="mini-cart-icon" href="javascript:void(0)">
@@ -684,7 +690,7 @@ Telefon:  0532 637 27 52</span>
                                         {{--                                            </div>--}}
 
                                         <div class="product-extra-link2  has-buy-now-button ">
-                                            <button type="button" class="button button-add-to-cart">
+                                            <button type="button" class="button button-add-to-cart" id="modal_addto_cart">
                                                 <i class="fi-rs-shopping-cart"></i>Sepete Ekle
                                             </button>
 
@@ -693,6 +699,8 @@ Telefon:  0532 637 27 52</span>
                                                href="#"><i class="fi-rs-heart"></i></a>
                                             {{--                                            <a aria-label="Add To Compare" href="#" class="action-btn hover-up js-add-to-compare-button" data-url="https://nest.botble.com/compare/4"><i class="fi-rs-shuffle"></i></a>--}}
                                         </div>
+
+                                        <input type="hidden" name="slug" id="product_slug" value="">
                                     </div>
                                     {{--                                    </form>--}}
                                 </div>
@@ -737,6 +745,7 @@ Telefon:  0532 637 27 52</span>
                 let product = data.product;
                 let attributesHtml = '';
                 let popularAttribute = '';
+                let product_slug = '';
 
                 let attributes = JSON.parse(product.attributes);
                 let price = product.price;
@@ -775,11 +784,12 @@ Telefon:  0532 637 27 52</span>
                 if (price != 0 && price != '' && price != null) {
                     modal.find('.modal-body #price').html(`${price + 'TL'}`);
                 }
-                console.log('old_price', old_price)
 
                 if (old_price != 0 && old_price != '' && old_price != null) {
                     modal.find('.modal-body #old-price ').html(`${old_price + 'TL'}`);
                 }
+
+                modal.find('.modal-body #product_slug').val(`${product.slug}`);
                 modal.modal('show');
 
             },
@@ -803,7 +813,6 @@ Telefon:  0532 637 27 52</span>
             url: '{{ route("frontend.cart_add") }}/' + slug,
             method: 'GET',
             success: function (response) {
-                console.log(response.message)
                 updateProductCount(response.cartCount);
                 toastr.success(response.message);
             },
@@ -821,11 +830,21 @@ Telefon:  0532 637 27 52</span>
 
 
     function updateProductCount(newCount) {
-            $('.pro-count').text(newCount.cart_count);
-            $('#cart-sub-total').text(newCount.sub_total);
-            $('#cart-tax').text(newCount.tax);
-            $('#cart-total').text(newCount.cart_total);
+        $('.pro-count').text(newCount.cart_count);
+        $('#cart-sub-total').text(newCount.sub_total);
+        $('#cart-tax').text(newCount.tax);
+        $('#cart-total').text(newCount.cart_total);
     }
+
+
+
+    $('#modal_addto_cart').click(function (e) {
+        let modal = $('#quickViewModal');
+        let slug = modal.find('.modal-body #product_slug').val();
+        addToCart(slug);
+    });
+
+
 
 
 </script>

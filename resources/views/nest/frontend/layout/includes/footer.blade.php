@@ -111,7 +111,7 @@
                     @foreach(config('pages') as $page)
                         <li><a href="{{ route('frontend.page', $page->slug) }}">{{$page->title}}</a></li>
                     @endforeach
-                    <li><a href="#">İletişim</a></li>
+{{--                    <li><a href="#">İletişim</a></li>--}}
 
                 </ul>
             </div>
@@ -147,7 +147,8 @@
             <div class="footer-link-widget widget-install-app col wow animate__animated animate__fadeInUp" data-wow-delay=".5s">
                 <h4 class="widget-title">Ödeme Yöntemleri</h4>
                 <p class="mb-20">Güvenle ödeme yapın</p>
-                <img class="" src="{{asset('frontend/assets/imgs/theme/payment-method.png')}}" alt="" />
+{{--                <img class="" src="{{asset('frontend/assets/imgs/theme/payment-method.png')}}" alt="" />--}}
+                <img class="" src="{{asset('images/payment-method2.png')}}" alt="" />
             </div>
         </div>
     </section>

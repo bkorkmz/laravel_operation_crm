@@ -2,7 +2,7 @@
 @section('css')
 
 @endsection
-@section('title','sepet')
+@section('title','Sepet')
 
 @section('head')
 
