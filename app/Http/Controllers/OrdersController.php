@@ -4,15 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class OrdersController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+
+        return view('admin.product.orders.index');
+
+    }
+
+
+    public function index_data()
+    {
+            $orders =  Order::with('user')->latest();
+
+
+            return DataTables::of($orders)
+                ->addIndexColumn()
+                ->addColumn('actions', function ($data) {
+                    return ['id' => $data->id];
+                })
+                ->toJson();
+
     }
 
     /**

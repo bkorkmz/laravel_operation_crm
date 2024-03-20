@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html class="no-js" lang="{{app()->getLocale()}}">
-
 <head>
     <meta charset="utf-8"/>
     <title>@yield('title')</title>
@@ -16,7 +15,7 @@
     <link rel="stylesheet" href="{{asset('frontend/assets/css/plugins/animate.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('frontend/assets/css/main.css?v=5.6.css')}}"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css?v=1.0" rel="stylesheet"/>
-
+    {!! config('settings.site_analytics') !!}
     <style>
         .header-action-2 .header-action-icon-2 > a img {
             max-width: 25px;
@@ -44,15 +43,15 @@
 </head>
 
 <body>
-<div id="preloader-active">
-    <div class="preloader d-flex align-items-center justify-content-center">
-        <div class="preloader-inner position-relative">
-            <div class="text-center">
-                <img src="{{asset('frontend/assets/imgs/theme/loading.gif')}}" alt="Herballayf Turkey"/>
-            </div>
-        </div>
-    </div>
-</div>
+{{--<div id="preloader-active d-none">--}}
+{{--    <div class="preloader d-flex align-items-center justify-content-center">--}}
+{{--        <div class="preloader-inner position-relative">--}}
+{{--            <div class="text-center">--}}
+{{--                <img src="{{asset('frontend/assets/imgs/theme/loading.gif')}}" alt="Herballayf Turkey"/>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
 @php
     $cart_count =  Cart::count();
     $cart_total =  Cart::total();
@@ -60,65 +59,35 @@
     $sub_total =  $cart_total -  $tax;
 
 @endphp
-    <!-- Modal -->
-<div class="modal fade custom-modal" id="onloadModal" tabindex="-1" aria-labelledby="onloadModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            <div class="modal-body">
-                <div class="deal" style="background-image: url('frontend/assets/imgs/banner/popup-1.png')">
-                    <div class="deal-top">
-                        <h6 class="mb-10 text-brand-2">Deal of the Day</h6>
-                    </div>
-                    <div class="deal-content detail-info">
-                        <h4 class="product-title"><a href="javascript:void(0)" class="text-heading">Organic fruit for
-                                your family's
-                                health</a></h4>
-                        <div class="clearfix product-price-cover">
-                            <div class="product-price primary-color float-left">
-                                <span class="current-price text-brand"></span>
-                                <span>
-                                        <span class="save-price font-md color3 ml-15">26% Off</span>
-                                        <span class="old-price font-md ml-15">$52</span>
-                                    </span>
-                            </div>
+
+    <!-- Quick view -->
+<header class="header-area header-style-1 header-style-5 header-height-2">
+    <div class="mobile-promotion">
+        <span>Herbalife Yetkili Satıcısı</span>
+    </div>
+    <div class="header-top header-top-ptb-1 d-none d-lg-block">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <div class="text-center">
+                        <div id="news-flash" class="d-inline-block">
+                            <ul>
+                                <li>Herbalife Yetkili Disribütörü</li>
+                            </ul>
                         </div>
-                    </div>
-                    <div class="deal-bottom">
-                        <p class="mb-20">Hurry Up! Offer End In:</p>
-                        <div class="deals-countdown pl-5" data-countdown="2025/03/25 00:00:00">
-                            <span class="countdown-section"><span class="countdown-amount hover-up">03</span><span
-                                    class="countdown-period"> days </span></span><span class="countdown-section"><span
-                                    class="countdown-amount hover-up">02</span><span
-                                    class="countdown-period"> hours </span></span><span class="countdown-section"><span
-                                    class="countdown-amount hover-up">43</span><span
-                                    class="countdown-period"> mins </span></span><span class="countdown-section"><span
-                                    class="countdown-amount hover-up">29</span><span
-                                    class="countdown-period"> sec </span></span>
-                        </div>
-                        <div class="product-detail-rating">
-                            <div class="product-rate-cover text-end">
-                                <div class="product-rate d-inline-block">
-                                    <div class="product-rating" style="width: 90%"></div>
-                                </div>
-                                <span class="font-small ml-5 text-muted"> (32 rates)</span>
-                            </div>
-                        </div>
-                        <a href="javascript:void(0)" class="btn hover-up">Shop Now <i class="fi-rs-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
-</div>
-<!-- Quick view -->
-<header class="header-area header-style-1 header-style-5 header-height-2">
-    {{--<header class="header-area header-style-1 header-height-2">--}}
-    <div class="mobile-promotion">
-        <span>Herbalife Bağımsız Distribütör - Hayri Mandollu
-Telefon:  0532 637 27 52</span>
-    </div>
+
+
+
+    {{--    <div class="mobile-promotion">--}}
+    {{--        <span>Herbalife Bağımsız Distribütör - Hayri Mandollu--}}
+    {{--            Telefon:  0532 637 27 52</span>--}}
+    {{--    </div>--}}
 
     <div class="header-middle header-middle-ptb-1 d-none d-lg-block">
         <div class="container">
@@ -128,14 +97,16 @@ Telefon:  0532 637 27 52</span>
                 </div>
                 <div class="header-right">
                     <div class="search-style-2">
-                        <form action="#">
-                            <select class="select-active">
-                                <option>Tüm Kategoriler</option>
-                                @foreach(categories('product') as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
-                                @endforeach
-                            </select>
-                            <input type="text" placeholder="Ürün ara"/>
+                        <form action="{{ route('frontend.products_search') }}">
+
+                            {{--                            <select class="select-active">--}}
+                            {{--                                <option>Tüm Kategoriler</option>--}}
+                            {{--                                @foreach(categories('product') as $category)--}}
+                            {{--                                    <option value="{{$category->id}}">{{$category->name}}</option>--}}
+                            {{--                                @endforeach--}}
+                            {{--                            </select>--}}
+                            <input type="text" name="search" maxlength="50" max="50" required placeholder="Ürün arayın ..." value="{{$searchTerm? $searchTerm : ""}}"/>
+                            {{--                            <button type="submit"><i class="fi-rs-search"></i></button>--}}
                         </form>
                     </div>
                     <div class="header-action-right">
@@ -169,8 +140,13 @@ Telefon:  0532 637 27 52</span>
                                     <img alt="Sepet" src="{{asset('frontend/assets/imgs/theme/icons/icon-cart.svg')}}"/>
                                     <span class="pro-count blue">{{$cart_count}}</span>
                                 </a>
-                                <a href="{{route('frontend.cart')}}"><span class="lable">Sepet</span></a>
+                                <a href="javascript:void(0);"><span class="lable">Sepet</span></a>
                                 <div class="cart-dropdown-wrap cart-dropdown-hm2">
+                                    {{--                                    @if($cart_count <= 0)--}}
+                                    {{--                                        <div class="col-lg-12">--}}
+                                    {{--                                            <div class="alert alert-warning">Sepet Boş</div>--}}
+                                    {{--                                        </div>--}}
+                                    {{--                                    @else--}}
                                     <ul>
 
                                         <li>
@@ -186,8 +162,8 @@ Telefon:  0532 637 27 52</span>
                                                 <span id="cart-sub-total">{{$sub_total}}</span>
                                             </h5>
                                             <div class="clearfix"></div>
-                                            <h5><strong class="d-inline-block">Vergi:</strong>
-                                                <span id="cart-tax">  {{$tax}}</span></h5>
+                                            {{--                                            <h5><strong class="d-inline-block">Kdv:</strong>--}}
+                                            {{--                                                <span id="cart-tax">  {{$tax}}</span></h5>--}}
                                             <div class="clearfix"></div>
                                             <h4><strong class="d-inline-block">Toplam:</strong>
                                                 <span id="cart-total">{{ $cart_total }} TL</span>
@@ -195,9 +171,10 @@ Telefon:  0532 637 27 52</span>
                                         </div>
                                         <div class="shopping-cart-button">
                                             <a href="{{route('frontend.cart')}}" class="outline">Sepeti Göster</a>
-                                            <a href="{{route('paytrOdeme')}}">Kasaya Git</a>
+                                            {{--                                            <a href="{{route('paytrOdeme')}}">Ödeme yap</a>--}}
                                         </div>
                                     </div>
+                                    {{--                                    @endif--}}
                                 </div>
                             </div>
                             <div class="header-action-icon-2">
@@ -205,7 +182,7 @@ Telefon:  0532 637 27 52</span>
                                     <img class="svgInject" alt="Nest"
                                          src="{{asset('frontend/assets/imgs/theme/icons/icon-user.svg')}}"/>
                                 </a>
-                                <a href="{{route('frontend.myaccount')}}"><span class="lable ml-0">Hesabım</span></a>
+                                <a href="javascript:void(0)"><span class="lable ml-0">{{auth()->check() ? auth()->user()->name." ".auth()->user()->surname :"Hesabım"}}</span></a>
                                 <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
                                     <ul>
                                         @guest
@@ -226,22 +203,22 @@ Telefon:  0532 637 27 52</span>
                                         @else
 
                                             @if(auth()->user()->hasAnyRole(['super admin','admin']))
-                                            <li>
-                                                <a href="{{route('admin.index')}}"><i
-                                                        class="fi fi-rs-bank mr-10"></i>{{ __('Yönetim Paneli') }}
-                                                </a>
-                                            </li>
+                                                <li>
+                                                    <a href="{{route('admin.index')}}"><i
+                                                            class="fi fi-rs-bank mr-10"></i>{{ __('Yönetim Paneli') }}
+                                                    </a>
+                                                </li>
                                             @endif
 
                                             <li>
-                                            <a href="{{ route('frontend.myaccount') }}"><i
-                                                            class="fi fi-rs-user mr-10"></i>Hesabım</a>
+                                                <a href="{{ route('frontend.myaccount') }}"><i
+                                                        class="fi fi-rs-user mr-10"></i>Hesabım</a>
                                             </li>
                                             <li><a href="{{ route('frontend.myaccount') }}"><i class="fi fi-rs-location-alt mr-10"></i>Siparişlerim</a>
                                             </li>
 
-{{--                                            <li><a href="javascript:void(0)"><i class="fi fi-rs-heart mr-10"></i>Favori--}}
-{{--                                                    Listem</a></li>--}}
+                                            {{--                                            <li><a href="javascript:void(0)"><i class="fi fi-rs-heart mr-10"></i>Favori--}}
+                                            {{--                                                    Listem</a></li>--}}
 
                                             <li><a href="{{ route('frontend.myaccount') }}#account"><i
                                                         class="fi fi-rs-settings-sliders mr-10"></i>Ayarlar</a></li>
@@ -277,14 +254,14 @@ Telefon:  0532 637 27 52</span>
 
                 <div class="header-right">
                     <div class="search-style-2">
-                        <form action="#" class="float-end mr-100">
-                            <select class="select-active">
-                                <option>Tüm Kategoriler</option>
-                                @foreach(categories('product') as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
-                                @endforeach
-                            </select>
-                            <input type="text" placeholder="Bİr şeyler arayın ..."/>
+                        <form action="{{ route('frontend.products_search') }}" class="float-end mr-100">
+                            {{--                            <select class="select-active">--}}
+                            {{--                                <option>Tüm Kategoriler</option>--}}
+                            {{--                                @foreach(categories('product') as $category)--}}
+                            {{--                                    <option value="{{$category->id}}">{{$category->name}}</option>--}}
+                            {{--                                @endforeach--}}
+                            {{--                            </select>--}}
+                            <input type="text" name="search" maxlength="50" max="50" required placeholder="Ürün arayın ..." value="{{$searchTerm ? $searchTerm : ""}}"/>
                         </form>
                     </div>
                     <div class="header-action-right">
@@ -293,49 +270,45 @@ Telefon:  0532 637 27 52</span>
                                 <a href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text=Bilgi almak istiyorum">
                                     <img class="svgInject" alt="Herballayf Turkey"
                                          src="{{asset('frontend/assets/imgs/theme/whatsapp.png')}}"/>
-                                    {{--                                    <span class="pro-count blue">0</span>--}}
                                 </a>
-{{--                                <a href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text=Bilgi almak istiyorum">--}}
-{{--                                    <span class="lable">İletişim</span></a>--}}
+                                <a href="{{ route('frontend.contact_page') }}">
+                                    <span class="lable">İletişim</span></a>
                             </div>
-                            <div class="header-action-icon-2 d-none">
-                                <a class="mini-cart-icon" href="javascript:void(0)">
+                            <div class="header-action-icon-2">
+                                <a class="mini-cart-icon" href="javascript:void(0);">
                                     <img alt="Herballayf Turkey"
                                          src="{{asset('frontend/assets/imgs/theme/icons/icon-cart.svg')}}"/>
-                                    <span class="pro-count blue">3</span>
+
+                                    <span class="pro-count blue">{{$cart_count}}</span>
                                 </a>
                                 <a href="javascript:void(0)"><span class="lable">Sepet</span></a>
-                                <div class="cart-dropdown-wrap cart-dropdown-hm2 d-none">
+                                <div class="cart-dropdown-wrap cart-dropdown-hm2 ">
+
+                                    {{--                                    @if($cart_count <= 0)--}}
+                                    {{--                                        <div class="col-lg-12">--}}
+                                    {{--                                            <div class="alert alert-warning">Sepet Boş</div>--}}
+                                    {{--                                        </div>--}}
+                                    {{--                                    @else--}}
                                     <ul>
                                         <li>
                                             <div class="shopping-cart-title">
-                                                <h4><a href="javascript:void(0)">Sepetteki Ürün Sayısı: </a>
-                                                    <span>3</span></h4>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="shopping-cart-img">
-                                                <a href="javascript:void(0)"><img alt="Herballayf Turkey"
-                                                                                  src="{{asset('frontend/assets/imgs/shop/thumbnail-2.jpg')}}"/></a>
-                                            </div>
-                                            <div class="shopping-cart-title">
-                                                <h4><a href="javascript:void(0)">Corduroy Shirts</a></h4>
-                                                <h4><span>1 × </span>$3200.00</h4>
-                                            </div>
-                                            <div class="shopping-cart-delete">
-                                                <a href="#"><i class="fi-rs-cross-small"></i></a>
+                                                <h4><a href="javascript:void(0)">Sepetteki Ürün Sayısı: </a> <span
+                                                        class="pro-count">{{$cart_count}}</span></h4>
                                             </div>
                                         </li>
                                     </ul>
                                     <div class="shopping-cart-footer">
                                         <div class="shopping-cart-total">
-                                            <h4>Toplam <span>0</span></h4>
+                                            <h5>Ara Toplam<span id="cart-sub-total">{{$sub_total}}</span></h5>
+                                            {{--                                        <h5>Kdv<span id="cart-tax">  {{$tax}}</span></h5>--}}
+                                            <h4>Toplam <span>{{ $cart_total }} TL</span></h4>
                                         </div>
                                         <div class="shopping-cart-button">
-                                            <a href="javascript:void(0)" class="outline">Sepeti Göster</a>
-                                            <a href="javascript:void(0)">Kasaya Git</a>
+                                            <a href="{{route('frontend.cart')}}" class="outline">Sepeti Göster</a>
+                                            {{--                                            <a href="{{route('paytrOdeme')}}">Ödeme yap</a>--}}
                                         </div>
                                     </div>
+                                    {{--                                    @endif--}}
                                 </div>
                             </div>
                             <div class="header-action-icon-2">
@@ -465,9 +438,16 @@ Telefon:  0532 637 27 52</span>
                                 <li>
                                     <a href="{{route('frontend.products')}}" class="">Ürünler <i class=""></i></a>
                                 </li>
+                                @foreach(categories('product')->take(4) as $cat)
+
+                                    <li>
+                                        <a  href="{{ route('frontend.page', $cat->slug) }}" class="">{{$cat->name}}</a>
+                                    </li>
+
+                                @endforeach
 
                                 <li>
-                                    <a href="javascript:void(0)">İletişim </a>
+                                    <a href="{{ route('frontend.contact_page') }}">İletişim </a>
                                 </li>
                             </ul>
                         </nav>
@@ -491,54 +471,43 @@ Telefon:  0532 637 27 52</span>
                             <a href="https://wa.me/{{config('settings.site_whatsapp_phone')}}?text=Bilgi almak istiyorum">
                                 <img alt="Herballayf Turkey"
                                      src="{{asset('frontend/assets/imgs/theme/whatsapp.png')}}"/>
-                                {{--                                <span class="pro-count white"></span>--}}
                             </a>
                         </div>
-                        <div class="header-action-icon-2 d-none">
+                        <div class="header-action-icon-2">
                             {{--                        <div class="header-action-icon-2 d-lg-none">--}}
-                            <a class="mini-cart-icon" href="#">
+                            <a class="mini-cart-icon" href="javascript:void(0);">
                                 <img alt="Herballayf Turkey"
                                      src="{{asset('frontend/assets/imgs/theme/icons/icon-cart.svg')}}"/>
-                                <span class="pro-count white">0</span>
+                                <span class="pro-count white">{{$cart_count}}</span>
                             </a>
                             <div class="cart-dropdown-wrap cart-dropdown-hm2">
+                                {{--                                @if($cart_count <= 0)--}}
+                                {{--                                    <div class="col-lg-12">--}}
+                                {{--                                        <div class="alert alert-warning">Sepet Boş</div>--}}
+                                {{--                                    </div>--}}
+                                {{--                                @else--}}
                                 <ul>
+
                                     <li>
-                                        <div class="shopping-cart-img">
-                                            <a href="javascript:void(0)"><img alt="Herballayf Turkey"
-                                                                              src="{{asset('frontend/assets/imgs/shop/thumbnail-3.jpg')}}')}}"/></a>
-                                        </div>
                                         <div class="shopping-cart-title">
-                                            <h4><a href="javascript:void(0)">Plain Striola Shirts</a></h4>
-                                            <h3><span>1 × </span>$800.00</h3>
-                                        </div>
-                                        <div class="shopping-cart-delete">
-                                            <a href="#"><i class="fi-rs-cross-small"></i></a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="shopping-cart-img">
-                                            <a href="javascript:void(0)"><img alt="Herballayf Turkey"
-                                                                              src="{{asset('frontend/assets/imgs/shop/thumbnail-4.jpg')}}')}}"/></a>
-                                        </div>
-                                        <div class="shopping-cart-title">
-                                            <h4><a href="javascript:void(0)">Macbook Pro 2022</a></h4>
-                                            <h3><span>1 × </span>$3500.00</h3>
-                                        </div>
-                                        <div class="shopping-cart-delete">
-                                            <a href="#"><i class="fi-rs-cross-small"></i></a>
+                                            <h4><a href="javascript:void(0)">Sepetteki Ürün Sayısı: </a> <span
+                                                    class="pro-count">{{$cart_count}}</span></h4>
                                         </div>
                                     </li>
                                 </ul>
+
                                 <div class="shopping-cart-footer">
                                     <div class="shopping-cart-total">
-                                        <h4>Total <span>$383.00</span></h4>
+                                        <h5>Ara Toplam<span id="cart-sub-total">{{$sub_total}}</span></h5>
+                                        {{--                                        <h5>Kdv<span id="cart-tax">  {{$tax}}</span></h5>--}}
+                                        <h4>Toplam <span>{{ $cart_total }} TL</span></h4>
                                     </div>
                                     <div class="shopping-cart-button">
-                                        <a href="javascript:void(0)">View cart</a>
-                                        <a href="javascript:void(0)">Checkout</a>
+                                        <a href="{{route('frontend.cart')}}" class="outline">Sepeti Göster</a>
+                                        {{--                                        <a href="{{route('paytrOdeme')}}">Ödeme yap</a>--}}
                                     </div>
                                 </div>
+                                {{--                                @endif--}}
                             </div>
                         </div>
                     </div>
@@ -562,8 +531,8 @@ Telefon:  0532 637 27 52</span>
         </div>
         <div class="mobile-header-content-area">
             <div class="mobile-search search-style-3 mobile-header-border">
-                <form action="">
-                    <input type="text" placeholder="Ürün ara ..."/>
+                <form action="{{ route('frontend.products_search') }}">
+                    <input type="text" name="search" maxlength="50" max="50" required placeholder="Ürün arayın ..." value="{{$searchTerm? $searchTerm : ""}}"/>
                     <button type="submit"><i class="fi-rs-search"></i></button>
                 </form>
             </div>
@@ -830,10 +799,20 @@ Telefon:  0532 637 27 52</span>
 
 
     function updateProductCount(newCount) {
-        $('.pro-count').text(newCount.cart_count);
-        $('#cart-sub-total').text(newCount.sub_total);
-        $('#cart-tax').text(newCount.tax);
-        $('#cart-total').text(newCount.cart_total);
+        $('.pro-count').each(function() {
+            $(this).text(newCount.cart_count);
+        });
+        $('#cart-sub-total').each(function() {
+            $(this).text(newCount.sub_total);
+        });
+
+        $('#cart-tax').each(function() {
+            $(this)   .text(newCount.tax);
+        });
+
+        $('#cart-total').each(function() {
+            $(this).text(newCount.cart_total);
+        });
     }
 
 

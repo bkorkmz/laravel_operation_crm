@@ -22,3 +22,4 @@
 <!-- Template  JS -->
 <script src="{{asset('frontend/assets/js/main.js?v=5.6')}}"></script>
 <script src="{{asset('frontend/assets/js/shop.js?v=5.6')}}"></script>
+<script src="{{asset('/frontend/js/php-email-form/validate.js')}}"></script>

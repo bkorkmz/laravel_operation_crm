@@ -2,7 +2,11 @@
     .hotline p {
         font-size: 18px;
     }
-
+    @media screen and (max-width: 767px) {
+        .newsletter .newsletter-inner {
+            background-size: contain !important;
+        }
+    }
 </style>
 
 <footer class="main">
@@ -10,8 +14,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="position-relative newsletter-inner" onclick="sendWhatsApp('Ürünler hakkında bilgi almak istiyorum')"
-                         style="background: url({{asset('images/banner-img-info.jpg')}}) no-repeat center; cursor: pointer;">
+                    <div class="position-relative newsletter-inner" onclick="sendWhatsApp('Ürünler hakkında bilgi almak istiyorum')">
 {{--                        <div class="newsletter-content text-center">--}}
 {{--                            <h2 class="mb-20">--}}
 {{--                                Hemen Bültene Abone oldun!--}}
@@ -107,14 +110,14 @@
                 </div>
                 <div class="footer-link-widget col wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
                         <h4 class="widget-title">Kurumsal</h4>
-                <ul class="footer-list mb-sm-5 mb-md-0">
-                    @foreach(config('pages') as $page)
-                        <li><a href="{{ route('frontend.page', $page->slug) }}">{{$page->title}}</a></li>
-                    @endforeach
-{{--                    <li><a href="#">İletişim</a></li>--}}
+                    <ul class="footer-list mb-sm-5 mb-md-0">
+                        @foreach(config('pages') as $page)
+                            <li><a href="{{ route('frontend.page', $page->slug) }}">{{$page->title}}</a></li>
+                        @endforeach
+                        <li><a href="{{ route('frontend.contact_page') }}">İletişim</a></li>
 
-                </ul>
-            </div>
+                    </ul>
+                </div>
                 @php $categories = categories('product'); $totalCategories = count($categories); $half = ceil($totalCategories / 2); @endphp
 
 
@@ -144,13 +147,15 @@
                     </ul>
                 </div>
 
-            <div class="footer-link-widget widget-install-app col wow animate__animated animate__fadeInUp" data-wow-delay=".5s">
+                 <div class="footer-link-widget widget-install-app col wow animate__animated animate__fadeInUp" data-wow-delay=".5s">
                 <h4 class="widget-title">Ödeme Yöntemleri</h4>
                 <p class="mb-20">Güvenle ödeme yapın</p>
 {{--                <img class="" src="{{asset('frontend/assets/imgs/theme/payment-method.png')}}" alt="" />--}}
                 <img class="" src="{{asset('images/payment-method2.png')}}" alt="" />
             </div>
+             </div>
         </div>
+
     </section>
     <div class="container pb-30">
         <div class="row align-items-center">

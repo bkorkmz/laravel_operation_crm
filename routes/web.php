@@ -9,6 +9,7 @@ use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\StudentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PortFolioController;
 use App\Http\Controllers\PostController;
@@ -66,7 +67,6 @@ Route::get('/jobs-run', function () {
     return back();
 });
 
-Route::get('product-info/{id?}',[FrontendController::class,'productInformation'])->name('product-info');
 
 
 
@@ -162,6 +162,23 @@ Route::prefix('backend')->middleware('auth','company')->group(function () {
         Route::delete('/categories-delete/{id?}', 'promotionCategoriesDestroy')->name($module_name.'.delete')->middleware('permission:promotion_categories_product');
 
     });
+    Route::controller(OrdersController::class)->prefix('siparisler')->group(function () {
+        $module_name = 'orders';
+        Route::get('/', 'index')->name($module_name.'.index')->middleware('permission:add_product');
+        Route::get('index-data', 'index_data')->name($module_name.'.index_data')->middleware('permission:add_product');
+//        Route::get('/promotion-add/', 'promotionCategoriesAdd')->name($module_name.'.create')->middleware('permission:promotion_categories_product');
+//        Route::post('/categories-add/', 'promotionCategoriesStore')->name($module_name.'.store')->middleware('permission:promotion_categories_product');
+//        Route::get('/categories-edit/{id}', 'promotionCategoriesEdit')->name($module_name.'.edit')->middleware('permission:promotion_categories_product');
+//        Route::post('/categories-edit/', 'promotionCategoriesUpdate')->name($module_name.'.update')->middleware('permission:promotion_categories_product');
+//        Route::delete('/categories-delete/{id?}', 'promotionCategoriesDestroy')->name($module_name.'.delete')->middleware('permission:promotion_categories_product');
+
+    });
+
+
+
+
+
+
 
     Route::controller(RolesController::class)->prefix('roles')->group(function () {
         $module_name = 'roles';
@@ -402,9 +419,9 @@ Route::prefix('backend')->middleware('auth','company')->group(function () {
 //Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
-Route::prefix('student')->middleware(['auth'])->group(function () {
-
-});
+//Route::prefix('student')->middleware(['auth'])->group(function () {
+//
+//});
 
 
 
@@ -419,20 +436,21 @@ Route::post('/sepetguncelle/{rowId}/{qty}', [FrontendController::class, 'cart_up
 Route::get('/sepettensil/{rowId}', [FrontendController::class, 'cart_remove'])->name('frontend.cart_remove');
 Route::get('/sepetbosalt', [FrontendController::class, 'cart_destroy'])->name('frontend.cart_destroy');
 Route::get('/sepet', [FrontendController::class, 'cart'])->name('frontend.cart');
-Route::get('/odeme', [FrontendController::class, 'paytrOdeme'])->name('paytrOdeme')->middleware('auth');
-Route::get('/odemebasarili', [FrontendController::class, 'paytrOdemeBasarili'])->name('paytrOdemeBasarili')->middleware('auth');
-Route::get('/odemebasarisiz', [FrontendController::class, 'paytrOdemeBasarisiz'])->name('paytrOdemeBasarisiz')->middleware('auth');
-Route::post('/odemebildirim', [FrontendController::class, 'paytrOdemeBildirim'])->name('paytrOdemeBildirim')->middleware('auth');
+Route::match(['get', 'post'],'/odeme', [FrontendController::class, 'paytrOdeme'])->name('paytrOdeme');
+Route::get('/odemebasarili', [FrontendController::class, 'paytrOdemeBasarili'])->name('paytrOdemeBasarili');
+Route::get('/odemebasarisiz', [FrontendController::class, 'paytrOdemeBasarisiz'])->name('paytrOdemeBasarisiz');
+Route::post('/odemebildirim', [FrontendController::class, 'paytrOdemeBildirim'])->name('paytrOdemeBildirim');
 ##### CİHAN ÇALIŞMA ALANI #####
 
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
 Route::get('/blog', [FrontendController::class, 'blog'])->name('frontend.blog');
 Route::get('/blog/{model?}', [FrontendController::class, 'blog_detail'])->name('frontend.blog_detail');
-//Route::get('/post', [FrontendController::class, 'blog'])->name('frontend.post');
-Route::get('/post-detail/{model?}', [FrontendController::class, 'postDetail'])->name('frontend.post_detail');
+//Route::get('/post-detail/{model?}', [FrontendController::class, 'postDetail'])->name('frontend.post_detail');
 Route::get('/urunler', [FrontendController::class, 'products'])->name('frontend.products');
+Route::get('/urunler-ara/{s?}', [FrontendController::class, 'products'])->name('frontend.products_search');
 Route::get('/urunler/{slug?}', [FrontendController::class, 'productDetail'])->name('frontend.product_detail');
 
+Route::get('/iletisim',function (){return view('nest.frontend.pages.contact');})->name('frontend.contact_page');
 
 Route::get('/tests', [FrontendController::class, 'tests'])->name('frontend.tests');
 Route::get('/test/{slug?}/{id?}', [FrontendController::class, 'test'])->name('frontend.test');
@@ -445,4 +463,5 @@ Route::get('/{model}', [FrontendController::class, 'page'])->name('frontend.page
 Route::post('/newsletter', [FrontendController::class, 'newsletter'])->name('frontend.newsletter');
 
 Route::post('/ilceler', [FrontendController::class, 'ilceler'])->name('ilceler');
-
+Route::get('product-info/{id?}',[FrontendController::class,'productInformation'])->name('product-info');
+//Route::get('/ürün-ara/',[FrontendController::class,'productInformation'])->name('product-info');

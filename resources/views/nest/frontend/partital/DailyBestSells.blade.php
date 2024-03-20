@@ -1,17 +1,21 @@
 
 @php
     $dailyBestSells = !blank($contents['DailyBestSells']) ? $contents['DailyBestSells'] : [];
-    $promotion      = !blank($dailyBestSells['promotionCategoryOne']) ? $dailyBestSells['promotionCategoryOne'] : [];
-    $categories     = !blank($promotion['categories']) ? $promotion['categories'] : [];
-    $firstCategory  = !blank($categories) ?$categories->first(): [];
+    $promotion      = !empty($dailyBestSells['promotionCategoryOne']) ? $dailyBestSells['promotionCategoryOne'] : [];
+    $categories     = !empty($promotion['categories']) ? $promotion['categories'] : [];
+    $firstCategory  = !empty($categories) ?$categories->first(): [];
 @endphp
+
 <style>
     .product-cart-wrap.style-2 .product-img-action-wrap {
         /*width: max-content;*/
         /*display: block;*/
         /*margin: auto;*/
     }
+
+
 </style>
+@if(!blank($firstCategory))
 <section class="section-padding pb-5">
     <div class="container">
         <div class="section-title wow animate__animated animate__fadeIn">
@@ -30,7 +34,7 @@
         </div>
         <div class="row">
             <div class="col-lg-3 d-none d-lg-flex wow animate__animated animate__fadeIn">
-                <div class="banner-img style-2" style="background: url({{asset('images/banner-4.jpg')}}) no-repeat center;background-size: contain;">
+                <div class="banner-img style-2" style="background: url({{asset('images/banner-4.jpg')}}) no-repeat center;background-size: cover;">
                     <div class="banner-text">
 {{--                        <h2 class="mb-100">Bring nature into your home</h2>--}}
 {{--                        <a href="javascript:void(0)" class="btn btn-xs">Shop Now <i class="fi-rs-arrow-small-right"></i></a>--}}
@@ -120,3 +124,5 @@
         </div>
     </div>
 </section>
+
+@endif

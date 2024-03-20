@@ -6,6 +6,19 @@
     .max-height h6{
         font-size: 14px;
     }
+
+    @media screen and (max-width: 767px) {
+        .section-title {
+            display: flex!important;
+            margin-bottom: 15px;
+        }
+
+        .slider-arrow.slider-arrow-2.flex-right {
+            display: -webkit-inline-box!important;
+            margin-bottom: 14px;
+        }
+    }
+
 </style>
 
 <section class="popular-categories section-padding">

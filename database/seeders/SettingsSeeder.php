@@ -22,6 +22,8 @@ class SettingsSeeder extends Seeder
             ["name" => "site_email", "value" => "info@hellonewmedia.com", "group" => "general", "type" => "string"],
             ["name" => "site_phone", "value" => "555-555-55-55", "group" => "general", "type" => "string"],
             ["name" => "site_address", "value" => "Maslak Mahallesi, Aos 55. Sk. 42 Maslak </br> A Blog, No:2 İç Kapl:25 </br> Sarıyer/İstanbul", "group" => "general", "type" => "string"],
+            ["name" => "site_address_two", "value" => "Maslak Mahallesi, Aos 55. Sk. 42 Maslak </br> A Blog, No:2 İç Kapl:25 </br> Sarıyer/İstanbul", "group" => "general", "type" => "string"],
+            ["name" => "site_address_tree", "value" => "Maslak Mahallesi, Aos 55. Sk. 42 Maslak </br> A Blog, No:2 İç Kapl:25 </br> Sarıyer/İstanbul", "group" => "general", "type" => "string"],
             ["name" => "site_copyright", "value" => "2023 &copy; <a href='poyrazyazilim.com'>  Poyraz yazılım</a> Tüm hakları saklıdır", "group" => "general", "type" => "string"],
             ["name" => "site_refresh", "value" => "", "group" => "general", "type" => "string"],
 

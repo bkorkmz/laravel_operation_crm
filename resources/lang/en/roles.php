@@ -8,19 +8,21 @@ return [
             "image"=>"Resim Ayarları",
             "email_sms"=>"Sms Mail Ayarları",
             "ceo"=>"Dış Bağlantılar",
-            
+
             "general_desc"=>"Genel Ayarlar",
             "image_desc"=>"Resim Ayarları",
             "email_sms_desc"=>"Sms Mail Ayarları",
             "ceo_desc"=>"Dış Bağlantılar",
-            
+
             "site_title"=>"Site Başlığı",
             "site_keywords"=>"Site Anahtar Kelimeleri",
             "site_description"=>"Site Açıklması",
             "site_newsname"=>"Google News Adı",
             "site_email"=>"Email Adresi",
             "site_phone"=>"Telefon Numarası",
-            "site_address"=>"Adres",
+            'site_address' => 'Ofis Adresi 1',
+            'site_address_two' => 'Ofis Adresi 2',
+            'site_address_tree' => 'Mağaza Adresi',
             "site_copyright"=>"Footer Copyright",
             "site_refresh"=>"Sayfa Yenileme Süresi",
             "site_publish"=>"Yayın Durumu",
@@ -41,10 +43,10 @@ return [
             "site_register_img"=>"Kayıt Sayfası Resmi ",
             "CAPTCHA_SECRET"=>"Recaptca SecretKey",
             "CAPTCHA_SITEKEY"=>"Recaptca SiteKey"
-            
-            
+
+
         ],
-        
+
     ],
     'role'=>[
         "group"=>[
@@ -58,7 +60,7 @@ return [
                 "comment" =>  "YorumAyarları",
                 "settings"=> "Site Ayarları",
         ],
-        "name"=>[           
+        "name"=>[
             "view_all_users" =>"Tüm kullanıcıları Gör",
             "add_users" =>"Kullanıcı ekle ",
             "edit_users" =>"Kullanıcı Düzenle",
@@ -122,7 +124,7 @@ return [
             "edit_settings" =>"Site Ayarlarını Düzenle",
             "update_settings" =>"Site Ayarlarını Güncelle",
     ],
-        "info"=>[           
+        "info"=>[
                 "view_all_users" =>"Tüm kullanıcıları Görme Yetkisi",
                 "add_users" =>"Kullanıcı ekleme Yetkisi",
                 "edit_users" =>"Kullanıcı Düzenle Yetkisi ",
@@ -186,11 +188,11 @@ return [
                 "edit_settings" =>" Yetkisi",
                 "update_settings" =>" Yetkisi",
         ],
-        ], 
+        ],
     "super admin" =>"Super Admin",
     "administrator" =>"Yönetici",
     "teacher" =>"Öğretmen",
     "student" =>"Öğrenci",
     "user" =>"Kullanıcı",
-  
+
 ];

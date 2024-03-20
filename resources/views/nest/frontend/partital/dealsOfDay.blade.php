@@ -2,11 +2,13 @@
 
 @php
     $dealsOfDay = !blank($contents['dealsOfDay']) ? $contents['dealsOfDay'] : [];
-    $promotion      = !blank($dealsOfDay['promotionCategoryTwo']) ? $dealsOfDay['promotionCategoryTwo'] : [];
-    $categories     = !blank($promotion['categories']) ? $promotion['categories'] : [];
-    $firstCategory  = !blank($categories) ?$categories->first(): [];
+    $promotion      = !empty($dealsOfDay['promotionCategoryTwo']) ? $dealsOfDay['promotionCategoryTwo'] : [];
+    $categories     = !empty($promotion['categories']) ? $promotion['categories'] : [];
+    $firstCategory  = !empty($categories) ?$categories->first(): [];
 
 @endphp
+
+@if(!blank($firstCategory))
 <section class="section-padding pb-5">
     <div class="container">
         <div class="section-title wow animate__animated animate__fadeIn" data-wow-delay="0">
@@ -62,3 +64,4 @@
         </div>
     </div>
 </section>
+@endif

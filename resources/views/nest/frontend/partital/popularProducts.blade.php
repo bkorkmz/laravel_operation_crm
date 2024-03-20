@@ -51,7 +51,7 @@
                                                      alt="{{$productOne['name']}}" title="{{$productOne['name']}}" />
                                             </a>
                                         </div>
-                                        <div class="product-action-1">
+                                        <div class="product-action-1 d-none d-xl-block">
                                             <a aria-label="Favorilere Ekle" class="action-btn d-none" href="" ><i
                                                     class="fi-rs-heart"></i></a>
                                             {{--                                            <a aria-label="Compare" class="action-btn" href=""><i--}}

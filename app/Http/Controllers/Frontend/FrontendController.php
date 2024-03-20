@@ -16,8 +16,8 @@ use App\Models\Products;
 use App\Models\Promotion;
 use App\Models\Test;
 use App\Models\TestDefinition;
+use App\Models\User;
 use Carbon\Carbon;
-use Cart;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Application;
@@ -25,7 +25,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
@@ -37,15 +37,28 @@ class FrontendController extends Controller
     {
         // Current Theme
         $this->theme = config('app.CURRENT_THEME');
-
+        $this->misafir_id = 0;
     }
 
     public function products(): \Illuminate\Contracts\View\View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $products = Products::where('status', 1)
-            ->where('stock', '>', 0)
-            ->with('category:id,name,slug')
-            ->paginate('20');
+        $searchTerm = request()->search;
+
+        if (!blank($searchTerm) && !empty($searchTerm) ){
+            $products = Products::where('name', 'like', "%$searchTerm%")
+                     ->where('status', 1)
+                    ->where('stock', '>', 0)
+                    ->with('category:id,name,slug')->paginate('20');
+
+
+            $querystringArray = ['search' => $searchTerm];
+            $products->appends($querystringArray);
+        }else{
+            $products =    Products::where('status', 1)
+                ->where('stock', '>', 0)
+                ->with('category:id,name,slug')->paginate('20');
+        }
+
 
         $categories = Category::product()
             ->whereHas('getProduct')
@@ -53,7 +66,7 @@ class FrontendController extends Controller
             ->withCount('getProduct')
             ->get();
 
-        return view($this->theme.'.frontend.pages.products', compact('products', 'categories'));
+        return view($this->theme.'.frontend.pages.products', compact('products', 'categories','searchTerm'));
 
     }
 
@@ -65,12 +78,31 @@ class FrontendController extends Controller
                 ->where(['status' => 1]);
         })
             ->with(['getProduct' => function ($query) {
-                $query->where(['status' => 1])->where('stock', '>', 0)
-                    ->whereJsonContains('attributes->popular', '1')->latest()->limit(10);
+                $query->where(['status' => 1])
+                    ->where('stock', '>', 0)
+                    ->whereJsonContains('attributes->popular', '1')
+                    ->limit(10)
+                    ->latest();
             }, 'getProduct.category'])
             ->limit(5)
             ->latest()
             ->get(['id', 'name']);
+//             $categoryIds = $categoriesWithPopularProducts->pluck('id');
+//
+//        $productsByCategory =Products::with(['category'=>function ($query) use ($categoryIds){
+//            $query->whereIn('category_id', $categoryIds);
+//        }])
+//            ->where('status', 1)
+//            ->where('stock', '>', 0)
+//            ->whereJsonContains('attributes->popular', '1')
+//            ->latest()
+//            ->limit(4)
+//            ->get();
+//        dd( $categoriesWithPopularProducts);
+//
+//        foreach ($categoriesWithPopularProducts as $category) {
+//            $category->products = $productsByCategory->where('category_id', $category->id);
+//        }
 
         $allProduct = $categoriesWithPopularProducts->pluck('getProduct.*')->flatten()->toArray();
 
@@ -102,7 +134,8 @@ class FrontendController extends Controller
             ->where(function($query) {
                 $query->where('banner_image', 1);
             })
-            ->get();
+            ->first();
+
 
 
         return compact('sliders', 'banners');
@@ -110,7 +143,9 @@ class FrontendController extends Controller
 
     public function categorySliders(): array // Slider altı kategori slider alanı
     {
-        $categories = Category::product()->where(['show' => 1])->whereHas('getProduct')->withCount('getProduct')->get();
+        $categories = Category::product()->where(['show' => 1])
+//            ->whereHas('getProduct')
+            ->withCount('getProduct')->get();
 
         return compact('categories');
     }
@@ -203,17 +238,15 @@ class FrontendController extends Controller
             'message' => 'nullable|max:255',
             'resume_file' => 'sometimes|mimes:word,pdf,jpg,jpeg,webp|max:4096',
             'subject' => 'required',
+            'phone' => 'required|numeric|max:999999999999',
 
-        ], [
-            'name.required' => 'İsim alanı  gereklidir.',
-            'email.required' => 'Eposta gereklidir.',
-            'email.email' => 'Lütfen geçerli bir e-posta adresi girin.',
-            'subject.required' => 'Konu alanı  gereklidir.',
-            'message.required' => 'Mesaj alanı  gereklidir.',
-            'message.max' => 'Mesaj alanı en fazla 255 karakter olmalıdır.',
-            'resume_file.sometimes' => 'Yüklenen dosya sadece izin verilen dosya türünde olmalıdır',
-            'resume_file.mimes' => 'Yüklenen dosya sadece izin verilen dosya türünde olmalıdır',
-            'resume_file.max' => 'Yüklenen dosya en fazla 4 MB büyüklükte olmalıdır  olmalıdır',
+        ],[],[
+            'name' => 'Ad - Soyad',
+            'email' => 'Eposta',
+            'subject' => 'Konu',
+            'message' => 'Mesaj',
+            'phone' => 'Telefon',
+            'resume_file' => 'Dosya',
 
         ]);
 
@@ -377,6 +410,7 @@ class FrontendController extends Controller
 
     public function siteMap(): RedirectResponse
     {
+
         return siteMap();
     }
 
@@ -682,51 +716,98 @@ class FrontendController extends Controller
         return view($this->theme.'.frontend.cart.cart', compact('cart_content', 'cart_content_count'));
     }
 
-    public function paytrOdeme()
+    public function createOrGetUser(Request $request)
     {
+        if (!Auth::check()) {
+            if (!blank($request->email)) {
+                $user = User::where('email', $request->email)->first();
+                if ($user) {
+                    $user->update([
+                        'phone' => $request->phone,
+                        'address' => $request->address,
+                    ]);
+                } else {
+                    $user = User::create([
+                        'email' => $request->email,
+                        'name' => $request->name,
+                        'phone' => $request->phone,
+                        'address' => $request->address,
+                        'password' => bcrypt($request->email)
+                    ]);
+                    $user->assignRole(['user']);
+                }
 
-        if (! Auth::check()) {
-            return redirect(route('register'));
-            exit();
+                session()->put('misafir_id', $user->id);
+
+            }else{
+
+                return false;
+            }
+        }else{
+            $user = Auth::user();
+        }
+        return $user;
+    }
+
+
+
+    public function paytrOdeme(Request $request)
+    {
+        if (Cart::count() == 0){
+            return redirect()->route('frontend.index');
         }
 
-        if (Auth::user()->address == null || Auth::user()->phone == null) {
-            return redirect(route('frontend.myaccount'));
-            exit();
+
+        session()->forget('misafir_id');
+
+        if($request->post()){
+            $request->validate([
+                'name' => 'required|max:50',
+                'email' => 'required|email|max:200',
+                'phone' => 'required|max:11',
+                'address' => 'required|max:500',
+            ],[],[
+                'name' => 'İsin Soyisim',
+                'email' => 'E posta',
+                'phone' => 'Telefon',
+                'address' => 'Adres',
+            ]);
         }
+      $user =   $this->createOrGetUser($request);
+        if (!$user) {
+            return redirect()->route('frontend.index');
+        }
+        if ($user->address == null || $user->phone == null){
+            return back()->with('error', 'Adres yada telefon alanını doldurunuz');
+        }
+        $email = $user->email;
+        $user_name = $user->name;
+        $user_address = $user->address;
+        $user_phone = $user->phone;
 
         $total_price = Cart::total();
         $cart_content = Cart::content();
         $arrayProduct = json_decode(json_encode($cart_content), true);
 
-        //
         //# API Entegrasyon Bilgileri - Mağaza paneline giriş yaparak BİLGİ sayfasından alabilirsiniz.
         $merchant_id = '441360';
         $merchant_key = 'uUUo5Hux3AdnQytF';
         $merchant_salt = 'iBiHxBFirPJS8QnK';
-        //
 
-        $email = Auth::user()->email;
-        //
 
         $payment_amount = $total_price * 100; //9.99 için 9.99 * 100 = 999 gönderilmelidir.
         //
         //# Sipariş numarası: Her işlemde benzersiz olmalıdır!! Bu bilgi bildirim sayfanıza yapılacak bildirimde geri gönderilir.
         $merchant_oid = md5($email).rand(0, 999);
         session(['merchant_oid' => $merchant_oid]);
-        //
 
-        $user_name = Auth::user()->name;
 
-        $user_address = Auth::user()->address;
-
-        $user_phone = Auth::user()->phone;
-        //
         //# Başarılı ödeme sonrası müşterinizin yönlendirileceği sayfa
         //# !!! Bu sayfa siparişi onaylayacağınız sayfa değildir! Yalnızca müşterinizi bilgilendireceğiniz sayfadır!
         //# !!! Siparişi onaylayacağız sayfa "Bildirim URL" sayfasıdır (Bakınız: 2.ADIM Klasörü).
         $merchant_ok_url = route('paytrOdemeBasarili');
-        //
+
+
         //# Ödeme sürecinde beklenmedik bir hata oluşması durumunda müşterinizin yönlendirileceği sayfa
         //# !!! Bu sayfa siparişi iptal edeceğiniz sayfa değildir! Yalnızca müşterinizi bilgilendireceğiniz sayfadır!
         //# !!! Siparişi iptal edeceğiniz sayfa "Bildirim URL" sayfasıdır (Bakınız: 2.ADIM Klasörü).
@@ -809,7 +890,7 @@ class FrontendController extends Controller
 
         // XXX: DİKKAT: lokal makinanızda "SSL certificate problem: unable to get local issuer certificate" uyarısı alırsanız eğer
         // aşağıdaki kodu açıp deneyebilirsiniz. ANCAK, güvenlik nedeniyle sunucunuzda (gerçek ortamınızda) bu kodun kapalı kalması çok önemlidir!
-        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+//         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 
         $result = @curl_exec($ch);
 
@@ -835,19 +916,9 @@ class FrontendController extends Controller
     {
         if (url()->previous() !== 'https://www.paytr.com/') {
             return redirect(route('frontend.index'));
-            exit();
         }
-
-        $merchant_oid = session('merchant_oid');
-        Order::insert(
-            [
-                'merchant_oid' => $merchant_oid,
-                'user_id' => Auth::user()->id,
-                'order_date' => date('Y-m-d H:i:s'),
-                'detail' => json_encode($cart_content = Cart::content()),
-                'status' => 'pending',
-            ]
-        );
+        $data= ['status' => 'pending'];
+        $this->orderCreate($data);
         Cart::destroy();
 
         return view($this->theme.'.frontend.cart.odemebasarili');
@@ -857,21 +928,30 @@ class FrontendController extends Controller
     {
         if (url()->previous() !== 'https://www.paytr.com/') {
             return redirect(route('frontend.index'));
-            exit();
         }
+        $data= ['status' => 'cancelled'];
+        $this->orderCreate($data);
+        return view($this->theme.'.frontend.cart.odemebasarisiz');
+    }
 
-        $merchant_oid = session('merchant_oid');
+    protected function orderCreate($data)
+    {
+
         Order::create(
             [
-                'merchant_oid' => $merchant_oid,
-                'user_id' => Auth::user()->id,
-                'order_date' => date('Y-m-d H:i:s'),
-                'detail' => json_encode($cart_content = Cart::content()),
-                'status' => 'cancelled',
+                'merchant_oid' => session('merchant_oid'),
+                'user_id' => session('misafir_id'),
+                'order_date' => \Carbon\Carbon::now(),
+                'detail' => json_encode(Cart::content()),
+                'status' => $data['status'],
             ]
         );
 
-        return view($this->theme.'.frontend.cart.odemebasarisiz');
+//        if ($this->misafir_id !== 0){
+//            Auth::logout();
+//        }
+
+        return true;
     }
 
     public function paytrOdemeBildirim(Request $request)
@@ -904,6 +984,9 @@ class FrontendController extends Controller
 
         }
         unset($_SESSION[$merchant_oid]);
+        session()->forget($merchant_oid);
+        session()->forget($merchant_oid);
+
 
         //# Bildirimin alındığını PayTR sistemine bildir.
         echo 'OK';
@@ -927,15 +1010,6 @@ class FrontendController extends Controller
             }
         }
         return $ilce;
-    }
-
-    public function search(Request $request)
-    {
-        $searchTerm = $request->input('search');
-
-        $products = Products::where('name', 'like', "%$searchTerm%")->paginate(20);
-
-        return view('search-results', ['products' => $products]);
     }
 
 

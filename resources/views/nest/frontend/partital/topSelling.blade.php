@@ -3,30 +3,30 @@
     $dealsOfDay = !blank($contents['topSelling']) ? $contents['topSelling'] : [];
     $promotion      = !blank($dealsOfDay['promotionCategoryTree']) ? $dealsOfDay['promotionCategoryTree'] : [];
     $groupedProducts      = !blank($dealsOfDay['groupedProducts']) ? $dealsOfDay['groupedProducts'] : [];
-//        dd(!blank($groupedProducts) && $groupedProducts->count() > 0);
-
     $categories     = !blank($promotion) ? $promotion['categories'] : "";
     $firstCategory  = !blank($categories) ?$categories->first(): [];
+    if (!blank($groupedProducts)){
+        $group1 = [];
+        $group2 = [];
+        $group3 = [];
+        $group4 = [];
 
-    $group1 = [];
-    $group2 = [];
-    $group3 = [];
-    $group4 = [];
+        if (!blank($groupedProducts) && $groupedProducts->count() > 0) {
+            $group1 = collect($groupedProducts[0]->all());
+        }
+        if (!blank($groupedProducts) &&$groupedProducts->count() > 1) {
+            $group2 = collect($groupedProducts[1]->all());
+        }
+        if (!blank($groupedProducts) &&$groupedProducts->count() > 2) {
+            $group3 = collect($groupedProducts[2]->all());
+        }
+        if (!blank($groupedProducts) &&$groupedProducts->count() > 3) {
+            $group4 = collect($groupedProducts[3]->all());
+        }
 
-    if (!blank($groupedProducts) && $groupedProducts->count() > 0) {
-        $group1 = collect($groupedProducts[0]->all());
-    }
-    if (!blank($groupedProducts) &&$groupedProducts->count() > 1) {
-        $group2 = collect($groupedProducts[1]->all());
-    }
-    if (!blank($groupedProducts) &&$groupedProducts->count() > 2) {
-        $group3 = collect($groupedProducts[2]->all());
-    }
-    if (!blank($groupedProducts) &&$groupedProducts->count() > 3) {
-        $group4 = collect($groupedProducts[3]->all());
-    }
+     }
 @endphp
-
+@if (!blank($groupedProducts)){
 <section class="section-padding mb-30">
     <div class="container">
         <div class="row">
@@ -151,3 +151,4 @@
         </div>
     </div>
 </section>
+@endif
